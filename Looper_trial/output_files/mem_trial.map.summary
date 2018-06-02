@@ -1,0 +1,17 @@
+Analysis & Synthesis Status : Successful - Sat Jun 02 03:00:14 2018
+Quartus Prime Version : 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+Revision Name : mem_trial
+Top-level Entity Name : experiment_digital_recorder
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 522
+Total pins : 18
+Total virtual pins : 0
+Total block memory bits : 4,195,360
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0
