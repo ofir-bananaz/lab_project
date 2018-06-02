@@ -12,7 +12,17 @@ entity Looper_integrator is
           clk      : in  std_logic                    ;
 			 
           din      : in  std_logic_vector(15 downto 0) ; -- input vector
-			 ActiveCh : in  std_logic_vector(2 downto 0) ; -- number of curr active Channels
+			 dinAddr      : in  std_logic_vector(17 downto 0) ; -- input vector
+			 
+			 ActiveChCount : in  std_logic_vector(2 downto 0) ; -- number of curr active Channels
+			 
+			 -- Active chanels:
+			 Ch0Active: in  std_logic                    ;
+			 Ch1Active: in  std_logic                    ;
+			 Ch2Active: in  std_logic                    ;
+			 Ch3Active: in  std_logic                    ;
+			
+			 
 			 
 			 dout_new : out  std_logic                    ; -- bit if a new output is ready
           dout     : out std_logic_vector(15 downto 0) -- the new out put
@@ -22,12 +32,14 @@ end Looper_integrator ;
 
 
 architecture arc_Looper_integrator of Looper_integrator is
+	signal data : std_logic_vector(15 downto 0);
 	signal proc_dout_new : std_logic ;
 	signal proc_out : std_logic_vector(15 downto 0);
 
 begin
 
 process(clk,resetN)
+	 variable currActive: integer range 0 to 3;
 	 variable counter: integer range 0 to 3;
 	 constant max: integer := 3;
 	 
@@ -42,14 +54,21 @@ process(clk,resetN)
 			  proc_out <= conv_std_logic_vector(0, dout'length);
 
 		elsif rising_edge(CLK) then
+			currActive:=conv_integer(dinAddr(1 downto 0));
+			-- din is summed only if channel is Active
+			if (currActive = 0 and Ch0Active = '1') or (currActive = 1 and Ch1Active = '1') or (currActive = 2 and Ch2Active = '1') or (currActive = 3 and Ch3Active = '1') then
+				data<=din;
+			else
+				data <= conv_std_logic_vector(0, data'length);
+			end if;
 			
-			sum := conv_integer(din) + sum;
+			sum := conv_integer(data) + sum;
 			
 			if (counter  = max) then
-				if (ActiveCh = "000") then
+				if (ActiveChCount = "000") then
 					proc_out <= conv_std_logic_vector(0, dout'length); -- No channel is active -> mute output
 				else
-					div := conv_integer(ActiveCh);
+					div := conv_integer(ActiveChCount);
 					proc_out <= conv_std_logic_vector(sum/div, dout'length);
 				end if;
 				

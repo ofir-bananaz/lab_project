@@ -1,5 +1,5 @@
 Analysis & Synthesis report for mem_trial
-Sat Jun 02 03:00:14 2018
+Sat Jun 02 10:41:47 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -25,11 +25,13 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
  17. Parameter Settings for User Entity Instance: recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
  18. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_COMPARE:inst24
  19. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst3
- 20. Parameter Settings for Inferred Entity Instance: Looper_integrator:inst11|lpm_divide:Div0
- 21. altsyncram Parameter Settings by Entity Instance
- 22. Post-Synthesis Netlist Statistics for Top Partition
- 23. Elapsed Time Per Partition
- 24. Analysis & Synthesis Messages
+ 20. Parameter Settings for User Entity Instance: LPM_CONSTANT:inst14
+ 21. Parameter Settings for User Entity Instance: LPM_CONSTANT:inst13
+ 22. Parameter Settings for Inferred Entity Instance: Looper_integrator:inst3|lpm_divide:Div0
+ 23. altsyncram Parameter Settings by Entity Instance
+ 24. Post-Synthesis Netlist Statistics for Top Partition
+ 25. Elapsed Time Per Partition
+ 26. Analysis & Synthesis Messages
 
 
 
@@ -56,13 +58,13 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sat Jun 02 03:00:14 2018       ;
+; Analysis & Synthesis Status     ; Successful - Sat Jun 02 10:41:47 2018       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; mem_trial                                   ;
 ; Top-level Entity Name           ; experiment_digital_recorder                 ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 522                                         ;
+; Total registers                 ; 538                                         ;
 ; Total pins                      ; 18                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 4,195,360                                   ;
@@ -227,14 +229,14 @@ agreement for further details.
 +---------------------------------------------+----------------+
 ; Estimate of Logic utilization (ALMs needed) ; 718            ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 1132           ;
+; Combinational ALUT usage for logic          ; 1149           ;
 ;     -- 7 input functions                    ; 1              ;
-;     -- 6 input functions                    ; 277            ;
-;     -- 5 input functions                    ; 128            ;
-;     -- 4 input functions                    ; 141            ;
-;     -- <=3 input functions                  ; 585            ;
+;     -- 6 input functions                    ; 261            ;
+;     -- 5 input functions                    ; 105            ;
+;     -- 4 input functions                    ; 144            ;
+;     -- <=3 input functions                  ; 638            ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 522            ;
+; Dedicated logic registers                   ; 538            ;
 ;                                             ;                ;
 ; I/O pins                                    ; 18             ;
 ; Total MLAB memory bits                      ; 0              ;
@@ -244,8 +246,8 @@ agreement for further details.
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
 ; Maximum fan-out                             ; 811            ;
-; Total fan-out                               ; 14585          ;
-; Average fan-out                             ; 6.61           ;
+; Total fan-out                               ; 14573          ;
+; Average fan-out                             ; 6.51           ;
 +---------------------------------------------+----------------+
 
 
@@ -254,13 +256,13 @@ agreement for further details.
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------+--------------+
 ; Compilation Hierarchy Node                                      ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                   ; Entity Name                 ; Library Name ;
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------+--------------+
-; |experiment_digital_recorder                                    ; 1132 (0)            ; 522 (0)                   ; 4195360           ; 0          ; 18   ; 0            ; |experiment_digital_recorder                                                                                                                                                                                                                                                          ; experiment_digital_recorder ; work         ;
-;    |Looper_integrator:inst11|                                   ; 457 (36)            ; 50 (50)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst11                                                                                                                                                                                                                                 ; Looper_integrator           ; work         ;
-;       |lpm_divide:Div0|                                         ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst11|lpm_divide:Div0                                                                                                                                                                                                                 ; lpm_divide                  ; work         ;
-;          |lpm_divide_apo:auto_generated|                        ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst11|lpm_divide:Div0|lpm_divide_apo:auto_generated                                                                                                                                                                                   ; lpm_divide_apo              ; work         ;
-;             |abs_divider_jbg:divider|                           ; 421 (32)            ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst11|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider                                                                                                                                                           ; abs_divider_jbg             ; work         ;
-;                |alt_u_div_mve:divider|                          ; 357 (357)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst11|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider|alt_u_div_mve:divider                                                                                                                                     ; alt_u_div_mve               ; work         ;
-;                |lpm_abs_4p9:my_abs_num|                         ; 32 (32)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst11|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider|lpm_abs_4p9:my_abs_num                                                                                                                                    ; lpm_abs_4p9                 ; work         ;
+; |experiment_digital_recorder                                    ; 1149 (0)            ; 538 (0)                   ; 4195360           ; 0          ; 18   ; 0            ; |experiment_digital_recorder                                                                                                                                                                                                                                                          ; experiment_digital_recorder ; work         ;
+;    |Looper_integrator:inst3|                                    ; 634 (213)           ; 66 (66)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3                                                                                                                                                                                                                                  ; Looper_integrator           ; work         ;
+;       |lpm_divide:Div0|                                         ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0                                                                                                                                                                                                                  ; lpm_divide                  ; work         ;
+;          |lpm_divide_apo:auto_generated|                        ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0|lpm_divide_apo:auto_generated                                                                                                                                                                                    ; lpm_divide_apo              ; work         ;
+;             |abs_divider_jbg:divider|                           ; 421 (32)            ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider                                                                                                                                                            ; abs_divider_jbg             ; work         ;
+;                |alt_u_div_mve:divider|                          ; 357 (357)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider|alt_u_div_mve:divider                                                                                                                                      ; alt_u_div_mve               ; work         ;
+;                |lpm_abs_4p9:my_abs_num|                         ; 32 (32)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider|lpm_abs_4p9:my_abs_num                                                                                                                                     ; lpm_abs_4p9                 ; work         ;
 ;    |audio_codec_controller:audio_codec_controller_inst|         ; 353 (3)             ; 396 (0)                   ; 1056              ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst                                                                                                                                                                                                       ; audio_codec_controller      ; work         ;
 ;       |CLOCK_500:CLOCK_500_inst|                                ; 33 (33)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|CLOCK_500:CLOCK_500_inst                                                                                                                                                                              ; CLOCK_500                   ; work         ;
 ;       |DBounce:DBounce_inst|                                    ; 21 (21)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|DBounce:DBounce_inst                                                                                                                                                                                  ; DBounce                     ; work         ;
@@ -322,14 +324,13 @@ agreement for further details.
 ;                   |cmpr_uu5:wrfull_eq_comp|                     ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cmpr_uu5:wrfull_eq_comp                          ; cmpr_uu5                    ; work         ;
 ;                   |cntr_ded:cntr_b|                             ; 7 (7)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cntr_ded:cntr_b                                  ; cntr_ded                    ; work         ;
 ;       |i2c:i2c_inst|                                            ; 31 (31)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst                                                                                                                                                                                          ; i2c                         ; work         ;
-;    |recorder_module_looper:inst|                                ; 322 (0)             ; 76 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst                                                                                                                                                                                                                              ; recorder_module_looper      ; work         ;
+;    |recorder_module_looper:inst|                                ; 162 (0)             ; 76 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst                                                                                                                                                                                                                              ; recorder_module_looper      ; work         ;
 ;       |addr_counter:inst4|                                      ; 43 (43)             ; 33 (33)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|addr_counter:inst4                                                                                                                                                                                                           ; addr_counter                ; work         ;
-;       |dpram:inst1|                                             ; 237 (0)             ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1                                                                                                                                                                                                                  ; dpram                       ; work         ;
-;          |altsyncram:altsyncram_component|                      ; 237 (0)             ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component                                                                                                                                                                                  ; altsyncram                  ; work         ;
-;             |altsyncram_o6v3:auto_generated|                    ; 237 (0)             ; 10 (10)                   ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated                                                                                                                                                   ; altsyncram_o6v3             ; work         ;
-;                |decode_sma:decode2|                             ; 35 (35)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:decode2                                                                                                                                ; decode_sma                  ; work         ;
-;                |decode_sma:rden_decode_b|                       ; 42 (42)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:rden_decode_b                                                                                                                          ; decode_sma                  ; work         ;
-;                |mux_rib:mux3|                                   ; 160 (160)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|mux_rib:mux3                                                                                                                                      ; mux_rib                     ; work         ;
+;       |dpram:inst1|                                             ; 77 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1                                                                                                                                                                                                                  ; dpram                       ; work         ;
+;          |altsyncram:altsyncram_component|                      ; 77 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component                                                                                                                                                                                  ; altsyncram                  ; work         ;
+;             |altsyncram_o6v3:auto_generated|                    ; 77 (0)              ; 10 (10)                   ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated                                                                                                                                                   ; altsyncram_o6v3             ; work         ;
+;                |decode_sma:decode2|                             ; 37 (37)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:decode2                                                                                                                                ; decode_sma                  ; work         ;
+;                |decode_sma:rden_decode_b|                       ; 40 (40)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:rden_decode_b                                                                                                                          ; decode_sma                  ; work         ;
 ;       |lpm_compare:inst24|                                      ; 1 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|lpm_compare:inst24                                                                                                                                                                                                           ; lpm_compare                 ; work         ;
 ;          |cmpr_ihd:auto_generated|                              ; 1 (1)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|lpm_compare:inst24|cmpr_ihd:auto_generated                                                                                                                                                                                   ; cmpr_ihd                    ; work         ;
 ;       |prescaler:inst27|                                        ; 41 (41)             ; 33 (33)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|prescaler:inst27                                                                                                                                                                                                             ; prescaler                   ; work         ;
@@ -363,11 +364,11 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------------------------------------------+------------------------------------------------------------------------+
 ; Register name                                          ; Reason for Removal                                                     ;
 +--------------------------------------------------------+------------------------------------------------------------------------+
+; recorder_module_looper:inst|addr_counter:inst4|sig[1]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[1]  ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[15] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[15] ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[14] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[14] ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[13] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[13] ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[17] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[17] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[1]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[1]  ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[16] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[16] ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[2]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[2]  ;
 ; recorder_module_looper:inst|addr_counter:inst4|sig[3]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[3]  ;
@@ -389,12 +390,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 522   ;
-; Number of registers using Synchronous Clear  ; 127   ;
+; Total registers                              ; 538   ;
+; Number of registers using Synchronous Clear  ; 143   ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 219   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 183   ;
+; Number of registers using Clock Enable       ; 199   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -445,13 +446,13 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                                                                                                       ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                                                             ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; 32:1               ; 16 bits   ; 336 LEs       ; 336 LEs              ; 0 LEs                  ; No         ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|mux_rib:mux3|l5_w15_n0_mux_dataout ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
+; 33:1               ; 16 bits   ; 352 LEs       ; 336 LEs              ; 16 LEs                 ; Yes        ; |experiment_digital_recorder|Looper_integrator:inst3|data[14] ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------------------------+
@@ -954,26 +955,52 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+-------------------------------------------------------------------------------------------+
-; Parameter Settings for Inferred Entity Instance: Looper_integrator:inst11|lpm_divide:Div0 ;
-+------------------------+----------------+-------------------------------------------------+
-; Parameter Name         ; Value          ; Type                                            ;
-+------------------------+----------------+-------------------------------------------------+
-; LPM_WIDTHN             ; 32             ; Untyped                                         ;
-; LPM_WIDTHD             ; 4              ; Untyped                                         ;
-; LPM_NREPRESENTATION    ; SIGNED         ; Untyped                                         ;
-; LPM_DREPRESENTATION    ; SIGNED         ; Untyped                                         ;
-; LPM_PIPELINE           ; 0              ; Untyped                                         ;
-; LPM_REMAINDERPOSITIVE  ; FALSE          ; Untyped                                         ;
-; MAXIMIZE_SPEED         ; 5              ; Untyped                                         ;
-; CBXI_PARAMETER         ; lpm_divide_apo ; Untyped                                         ;
-; CARRY_CHAIN            ; MANUAL         ; Untyped                                         ;
-; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                         ;
-; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                      ;
-; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                    ;
-; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                    ;
-; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                  ;
-+------------------------+----------------+-------------------------------------------------+
++------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: LPM_CONSTANT:inst14 ;
++--------------------+------------------+--------------------------+
+; Parameter Name     ; Value            ; Type                     ;
++--------------------+------------------+--------------------------+
+; LPM_WIDTH          ; 1                ; Untyped                  ;
+; LPM_CVALUE         ; 0                ; Signed Integer           ;
+; ENABLE_RUNTIME_MOD ; NO               ; Untyped                  ;
+; CBXI_PARAMETER     ; lpm_constant_s64 ; Untyped                  ;
++--------------------+------------------+--------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: LPM_CONSTANT:inst13 ;
++--------------------+------------------+--------------------------+
+; Parameter Name     ; Value            ; Type                     ;
++--------------------+------------------+--------------------------+
+; LPM_WIDTH          ; 1                ; Untyped                  ;
+; LPM_CVALUE         ; 1                ; Signed Integer           ;
+; ENABLE_RUNTIME_MOD ; NO               ; Untyped                  ;
+; CBXI_PARAMETER     ; lpm_constant_t64 ; Untyped                  ;
++--------------------+------------------+--------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: Looper_integrator:inst3|lpm_divide:Div0 ;
++------------------------+----------------+------------------------------------------------+
+; Parameter Name         ; Value          ; Type                                           ;
++------------------------+----------------+------------------------------------------------+
+; LPM_WIDTHN             ; 32             ; Untyped                                        ;
+; LPM_WIDTHD             ; 4              ; Untyped                                        ;
+; LPM_NREPRESENTATION    ; SIGNED         ; Untyped                                        ;
+; LPM_DREPRESENTATION    ; SIGNED         ; Untyped                                        ;
+; LPM_PIPELINE           ; 0              ; Untyped                                        ;
+; LPM_REMAINDERPOSITIVE  ; FALSE          ; Untyped                                        ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                        ;
+; CBXI_PARAMETER         ; lpm_divide_apo ; Untyped                                        ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                        ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                        ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                     ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                   ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                   ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                 ;
++------------------------+----------------+------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -1002,27 +1029,28 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------------------------------------------------------+-------+
 ; Type                                                   ; Count ;
 +--------------------------------------------------------+-------+
-; arriav_ff                                              ; 126   ;
+; arriav_ff                                              ; 142   ;
 ;     CLR                                                ; 3     ;
 ;     CLR SCLR                                           ; 64    ;
 ;     ENA CLR                                            ; 3     ;
 ;     ENA CLR SCLR                                       ; 46    ;
+;     ENA SCLR                                           ; 16    ;
 ;     plain                                              ; 10    ;
-; arriav_lcell_comb                                      ; 779   ;
+; arriav_lcell_comb                                      ; 796   ;
 ;     arith                                              ; 346   ;
 ;         0 data inputs                                  ; 59    ;
 ;         1 data inputs                                  ; 96    ;
-;         2 data inputs                                  ; 60    ;
+;         2 data inputs                                  ; 76    ;
 ;         3 data inputs                                  ; 28    ;
-;         4 data inputs                                  ; 75    ;
+;         4 data inputs                                  ; 59    ;
 ;         5 data inputs                                  ; 28    ;
-;     normal                                             ; 424   ;
+;     normal                                             ; 441   ;
 ;         1 data inputs                                  ; 1     ;
-;         2 data inputs                                  ; 105   ;
-;         3 data inputs                                  ; 28    ;
-;         4 data inputs                                  ; 17    ;
-;         5 data inputs                                  ; 61    ;
-;         6 data inputs                                  ; 212   ;
+;         2 data inputs                                  ; 125   ;
+;         3 data inputs                                  ; 45    ;
+;         4 data inputs                                  ; 36    ;
+;         5 data inputs                                  ; 38    ;
+;         6 data inputs                                  ; 196   ;
 ;     shared                                             ; 9     ;
 ;         0 data inputs                                  ; 3     ;
 ;         2 data inputs                                  ; 3     ;
@@ -1032,8 +1060,8 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; boundary_port                                          ; 18    ;
 ; stratixv_ram_block                                     ; 512   ;
 ;                                                        ;       ;
-; Max LUT depth                                          ; 59.60 ;
-; Average LUT depth                                      ; 45.65 ;
+; Max LUT depth                                          ; 57.60 ;
+; Average LUT depth                                      ; 23.00 ;
 +--------------------------------------------------------+-------+
 
 
@@ -1052,7 +1080,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Sat Jun 02 02:59:54 2018
+    Info: Processing started: Sat Jun 02 10:41:26 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off mem_trial -c mem_trial
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
@@ -1072,7 +1100,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file recorde
 Info (12021): Found 1 design units, including 1 entities, in source file experiment_digital_recorder.bdf
     Info (12023): Found entity 1: experiment_digital_recorder
 Info (12021): Found 2 design units, including 1 entities, in source file looper_integrator.vhd
-    Info (12022): Found design unit 1: Looper_integrator-arc_Looper_integrator File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 24
+    Info (12022): Found design unit 1: Looper_integrator-arc_Looper_integrator File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 34
     Info (12023): Found entity 1: Looper_integrator File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 10
 Info (12021): Found 2 design units, including 1 entities, in source file prescaler_new.vhd
     Info (12022): Found design unit 1: prescaler_new-behave File: C:/intelFPGA_lite/lab_project/Looper_trial/prescaler_new.vhd Line: 26
@@ -1082,7 +1110,7 @@ Info (12021): Found 2 design units, including 1 entities, in source file addr_co
     Info (12023): Found entity 1: addr_counter_new File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter_new.vhd Line: 7
 Info (12127): Elaborating entity "experiment_digital_recorder" for the top level hierarchy
 Info (12128): Elaborating entity "audio_codec_controller" for hierarchy "audio_codec_controller:audio_codec_controller_inst"
-Info (12128): Elaborating entity "Looper_integrator" for hierarchy "Looper_integrator:inst11"
+Info (12128): Elaborating entity "Looper_integrator" for hierarchy "Looper_integrator:inst3"
 Info (12128): Elaborating entity "recorder_module_looper" for hierarchy "recorder_module_looper:inst"
 Info (12128): Elaborating entity "prescaler" for hierarchy "recorder_module_looper:inst|prescaler:inst27"
 Info (12128): Elaborating entity "LPM_CONSTANT" for hierarchy "recorder_module_looper:inst|LPM_CONSTANT:inst"
@@ -1166,11 +1194,16 @@ Info (12130): Elaborated megafunction instantiation "recorder_module_looper:inst
 Info (12133): Instantiated megafunction "recorder_module_looper:inst|LPM_CONSTANT:inst3" with the following parameter:
     Info (12134): Parameter "LPM_CVALUE" = "1"
     Info (12134): Parameter "LPM_WIDTH" = "1"
+Info (12128): Elaborating entity "LPM_CONSTANT" for hierarchy "LPM_CONSTANT:inst14"
+Info (12130): Elaborated megafunction instantiation "LPM_CONSTANT:inst14"
+Info (12133): Instantiated megafunction "LPM_CONSTANT:inst14" with the following parameter:
+    Info (12134): Parameter "LPM_CVALUE" = "0"
+    Info (12134): Parameter "LPM_WIDTH" = "1"
 Warning (12240): Synthesis found one or more imported partitions that will be treated as black boxes for timing analysis during synthesis
 Info (278001): Inferred 1 megafunctions from design logic
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Looper_integrator:inst11|Div0" File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 53
-Info (12130): Elaborated megafunction instantiation "Looper_integrator:inst11|lpm_divide:Div0" File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 53
-Info (12133): Instantiated megafunction "Looper_integrator:inst11|lpm_divide:Div0" with the following parameter: File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 53
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Looper_integrator:inst3|Div0" File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 72
+Info (12130): Elaborated megafunction instantiation "Looper_integrator:inst3|lpm_divide:Div0" File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 72
+Info (12133): Instantiated megafunction "Looper_integrator:inst3|lpm_divide:Div0" with the following parameter: File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 72
     Info (12134): Parameter "LPM_WIDTHN" = "32"
     Info (12134): Parameter "LPM_WIDTHD" = "4"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "SIGNED"
@@ -1367,16 +1400,16 @@ Info (35003): Optimize away 53 nodes that do not fanout to OUTPUT or BIDIR pins
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[14]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[15]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|ram_address_a[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-Info (21057): Implemented 1951 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1968 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 13 input pins
     Info (21059): Implemented 4 output pins
     Info (21060): Implemented 1 bidirectional pins
-    Info (21061): Implemented 1418 logic cells
+    Info (21061): Implemented 1435 logic cells
     Info (21064): Implemented 515 RAM segments
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 9 warnings
-    Info: Peak virtual memory: 4966 megabytes
-    Info: Processing ended: Sat Jun 02 03:00:14 2018
-    Info: Elapsed time: 00:00:20
-    Info: Total CPU time (on all processors): 00:00:40
+    Info: Peak virtual memory: 4963 megabytes
+    Info: Processing ended: Sat Jun 02 10:41:47 2018
+    Info: Elapsed time: 00:00:21
+    Info: Total CPU time (on all processors): 00:00:42
 
 

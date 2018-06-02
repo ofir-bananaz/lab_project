@@ -1,5 +1,5 @@
 TimeQuest Timing Analyzer report for mem_trial
-Sat Jun 02 03:05:19 2018
+Sat Jun 02 10:47:48 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -102,12 +102,12 @@ agreement for further details.
 ; Number detected on machine ; 4           ;
 ; Maximum allowed            ; 2           ;
 ;                            ;             ;
-; Average used               ; 1.60        ;
+; Average used               ; 1.58        ;
 ; Maximum used               ; 2           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  59.6%      ;
+;     Processor 2            ;  58.1%      ;
 +----------------------------+-------------+
 
 
@@ -127,9 +127,9 @@ agreement for further details.
 +------------+-----------------+------------------------------------------------------------+------+
 ; Fmax       ; Restricted Fmax ; Clock Name                                                 ; Note ;
 +------------+-----------------+------------------------------------------------------------+------+
-; 16.75 MHz  ; 16.75 MHz       ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ;      ;
-; 163.99 MHz ; 163.99 MHz      ; CLOCK_50                                                   ;      ;
-; 225.58 MHz ; 225.58 MHz      ; AUD_BCLK                                                   ;      ;
+; 16.87 MHz  ; 16.87 MHz       ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ;      ;
+; 161.16 MHz ; 161.16 MHz      ; CLOCK_50                                                   ;      ;
+; 163.99 MHz ; 163.99 MHz      ; AUD_BCLK                                                   ;      ;
 +------------+-----------------+------------------------------------------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -145,9 +145,9 @@ HTML report is unavailable in plain text report export.
 +------------------------------------------------------------+---------+---------------+
 ; Clock                                                      ; Slack   ; End Point TNS ;
 +------------------------------------------------------------+---------+---------------+
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -64.488 ; -1280.123     ;
-; AUD_BCLK                                                   ; -5.529  ; -289.972      ;
-; CLOCK_50                                                   ; -5.098  ; -66605.600    ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -58.287 ; -1113.193     ;
+; AUD_BCLK                                                   ; -6.265  ; -293.261      ;
+; CLOCK_50                                                   ; -5.205  ; -64454.662    ;
 +------------------------------------------------------------+---------+---------------+
 
 
@@ -156,9 +156,9 @@ HTML report is unavailable in plain text report export.
 +------------------------------------------------------------+-------+---------------+
 ; Clock                                                      ; Slack ; End Point TNS ;
 +------------------------------------------------------------+-------+---------------+
-; CLOCK_50                                                   ; 0.028 ; 0.000         ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.135 ; 0.000         ;
-; AUD_BCLK                                                   ; 0.350 ; 0.000         ;
+; CLOCK_50                                                   ; 0.137 ; 0.000         ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.141 ; 0.000         ;
+; AUD_BCLK                                                   ; 0.371 ; 0.000         ;
 +------------------------------------------------------------+-------+---------------+
 
 
@@ -167,8 +167,8 @@ HTML report is unavailable in plain text report export.
 +----------+--------+--------------------+
 ; Clock    ; Slack  ; End Point TNS      ;
 +----------+--------+--------------------+
-; CLOCK_50 ; -7.258 ; -70.388            ;
-; AUD_BCLK ; -5.915 ; -289.307           ;
+; CLOCK_50 ; -7.564 ; -191.238           ;
+; AUD_BCLK ; -6.497 ; -307.353           ;
 +----------+--------+--------------------+
 
 
@@ -177,8 +177,8 @@ HTML report is unavailable in plain text report export.
 +----------+-------+--------------------+
 ; Clock    ; Slack ; End Point TNS      ;
 +----------+-------+--------------------+
-; AUD_BCLK ; 0.790 ; 0.000              ;
-; CLOCK_50 ; 0.861 ; 0.000              ;
+; AUD_BCLK ; 0.792 ; 0.000              ;
+; CLOCK_50 ; 0.935 ; 0.000              ;
 +----------+-------+--------------------+
 
 
@@ -187,9 +187,9 @@ HTML report is unavailable in plain text report export.
 +------------------------------------------------------------+--------+---------------+
 ; Clock                                                      ; Slack  ; End Point TNS ;
 +------------------------------------------------------------+--------+---------------+
-; CLOCK_50                                                   ; -2.174 ; -76570.564    ;
-; AUD_BCLK                                                   ; -2.174 ; -294.434      ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.394 ; -34.231       ;
+; CLOCK_50                                                   ; -2.174 ; -76574.168    ;
+; AUD_BCLK                                                   ; -2.174 ; -308.168      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.394 ; -39.643       ;
 +------------------------------------------------------------+--------+---------------+
 
 
@@ -205,9 +205,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------+-----------------+------------------------------------------------------------+------+
 ; Fmax       ; Restricted Fmax ; Clock Name                                                 ; Note ;
 +------------+-----------------+------------------------------------------------------------+------+
-; 16.02 MHz  ; 16.02 MHz       ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ;      ;
-; 168.58 MHz ; 168.58 MHz      ; CLOCK_50                                                   ;      ;
-; 232.13 MHz ; 232.13 MHz      ; AUD_BCLK                                                   ;      ;
+; 16.12 MHz  ; 16.12 MHz       ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ;      ;
+; 168.41 MHz ; 168.41 MHz      ; CLOCK_50                                                   ;      ;
+; 169.35 MHz ; 169.35 MHz      ; AUD_BCLK                                                   ;      ;
 +------------+-----------------+------------------------------------------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -217,9 +217,9 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +------------------------------------------------------------+---------+---------------+
 ; Clock                                                      ; Slack   ; End Point TNS ;
 +------------------------------------------------------------+---------+---------------+
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -67.109 ; -1321.629     ;
-; AUD_BCLK                                                   ; -5.299  ; -276.139      ;
-; CLOCK_50                                                   ; -4.932  ; -61781.795    ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -61.051 ; -1158.526     ;
+; AUD_BCLK                                                   ; -6.030  ; -282.341      ;
+; CLOCK_50                                                   ; -4.938  ; -59767.144    ;
 +------------------------------------------------------------+---------+---------------+
 
 
@@ -228,9 +228,9 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +------------------------------------------------------------+--------+---------------+
 ; Clock                                                      ; Slack  ; End Point TNS ;
 +------------------------------------------------------------+--------+---------------+
-; CLOCK_50                                                   ; -0.253 ; -0.933        ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.123  ; 0.000         ;
-; AUD_BCLK                                                   ; 0.346  ; 0.000         ;
+; CLOCK_50                                                   ; -0.143 ; -0.414        ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.129  ; 0.000         ;
+; AUD_BCLK                                                   ; 0.354  ; 0.000         ;
 +------------------------------------------------------------+--------+---------------+
 
 
@@ -239,8 +239,8 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+--------+-------------------+
 ; Clock    ; Slack  ; End Point TNS     ;
 +----------+--------+-------------------+
-; CLOCK_50 ; -6.869 ; -64.937           ;
-; AUD_BCLK ; -5.713 ; -277.434          ;
+; CLOCK_50 ; -7.127 ; -178.660          ;
+; AUD_BCLK ; -6.199 ; -292.563          ;
 +----------+--------+-------------------+
 
 
@@ -249,8 +249,8 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+-------+-------------------+
 ; Clock    ; Slack ; End Point TNS     ;
 +----------+-------+-------------------+
-; AUD_BCLK ; 0.624 ; 0.000             ;
-; CLOCK_50 ; 0.803 ; 0.000             ;
+; AUD_BCLK ; 0.602 ; 0.000             ;
+; CLOCK_50 ; 0.873 ; 0.000             ;
 +----------+-------+-------------------+
 
 
@@ -259,9 +259,9 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +------------------------------------------------------------+--------+---------------+
 ; Clock                                                      ; Slack  ; End Point TNS ;
 +------------------------------------------------------------+--------+---------------+
-; CLOCK_50                                                   ; -2.174 ; -76384.890    ;
-; AUD_BCLK                                                   ; -2.174 ; -291.844      ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.394 ; -34.033       ;
+; CLOCK_50                                                   ; -2.174 ; -76388.148    ;
+; AUD_BCLK                                                   ; -2.174 ; -306.019      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.394 ; -39.543       ;
 +------------------------------------------------------------+--------+---------------+
 
 
@@ -277,9 +277,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+---------+---------------+
 ; Clock                                                      ; Slack   ; End Point TNS ;
 +------------------------------------------------------------+---------+---------------+
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -32.892 ; -663.804      ;
-; AUD_BCLK                                                   ; -3.888  ; -110.542      ;
-; CLOCK_50                                                   ; -3.090  ; -35744.285    ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -29.303 ; -564.154      ;
+; AUD_BCLK                                                   ; -4.105  ; -108.526      ;
+; CLOCK_50                                                   ; -2.975  ; -34014.981    ;
 +------------------------------------------------------------+---------+---------------+
 
 
@@ -288,9 +288,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+-------+---------------+
 ; Clock                                                      ; Slack ; End Point TNS ;
 +------------------------------------------------------------+-------+---------------+
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.024 ; 0.000         ;
-; CLOCK_50                                                   ; 0.030 ; 0.000         ;
-; AUD_BCLK                                                   ; 0.162 ; 0.000         ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.028 ; 0.000         ;
+; CLOCK_50                                                   ; 0.093 ; 0.000         ;
+; AUD_BCLK                                                   ; 0.181 ; 0.000         ;
 +------------------------------------------------------------+-------+---------------+
 
 
@@ -299,8 +299,8 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +----------+--------+--------------------+
 ; Clock    ; Slack  ; End Point TNS      ;
 +----------+--------+--------------------+
-; CLOCK_50 ; -4.774 ; -23.740            ;
-; AUD_BCLK ; -3.704 ; -187.097           ;
+; CLOCK_50 ; -4.856 ; -104.959           ;
+; AUD_BCLK ; -3.952 ; -193.887           ;
 +----------+--------+--------------------+
 
 
@@ -309,8 +309,8 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +----------+-------+--------------------+
 ; Clock    ; Slack ; End Point TNS      ;
 +----------+-------+--------------------+
-; CLOCK_50 ; 0.504 ; 0.000              ;
-; AUD_BCLK ; 0.691 ; 0.000              ;
+; CLOCK_50 ; 0.546 ; 0.000              ;
+; AUD_BCLK ; 0.619 ; 0.000              ;
 +----------+-------+--------------------+
 
 
@@ -319,9 +319,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+--------+---------------+
 ; Clock                                                      ; Slack  ; End Point TNS ;
 +------------------------------------------------------------+--------+---------------+
-; CLOCK_50                                                   ; -2.174 ; -77591.777    ;
-; AUD_BCLK                                                   ; -2.174 ; -304.458      ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.080 ; -2.594        ;
+; CLOCK_50                                                   ; -2.174 ; -77587.663    ;
+; AUD_BCLK                                                   ; -2.174 ; -323.962      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.090 ; -1.546        ;
 +------------------------------------------------------------+--------+---------------+
 
 
@@ -337,9 +337,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+---------+---------------+
 ; Clock                                                      ; Slack   ; End Point TNS ;
 +------------------------------------------------------------+---------+---------------+
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -31.262 ; -626.683      ;
-; AUD_BCLK                                                   ; -3.246  ; -87.779       ;
-; CLOCK_50                                                   ; -2.562  ; -28959.422    ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -27.969 ; -534.891      ;
+; AUD_BCLK                                                   ; -3.458  ; -85.716       ;
+; CLOCK_50                                                   ; -2.526  ; -27420.025    ;
 +------------------------------------------------------------+---------+---------------+
 
 
@@ -348,9 +348,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+--------+---------------+
 ; Clock                                                      ; Slack  ; End Point TNS ;
 +------------------------------------------------------------+--------+---------------+
-; CLOCK_50                                                   ; -0.174 ; -1.036        ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.012  ; 0.000         ;
-; AUD_BCLK                                                   ; 0.104  ; 0.000         ;
+; CLOCK_50                                                   ; -0.108 ; -0.618        ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.014  ; 0.000         ;
+; AUD_BCLK                                                   ; 0.118  ; 0.000         ;
 +------------------------------------------------------------+--------+---------------+
 
 
@@ -359,8 +359,8 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +----------+--------+-------------------+
 ; Clock    ; Slack  ; End Point TNS     ;
 +----------+--------+-------------------+
-; CLOCK_50 ; -4.061 ; -16.268           ;
-; AUD_BCLK ; -3.074 ; -153.876          ;
+; CLOCK_50 ; -4.111 ; -85.395           ;
+; AUD_BCLK ; -3.217 ; -158.334          ;
 +----------+--------+-------------------+
 
 
@@ -369,8 +369,8 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +----------+-------+-------------------+
 ; Clock    ; Slack ; End Point TNS     ;
 +----------+-------+-------------------+
-; AUD_BCLK ; 0.297 ; 0.000             ;
-; CLOCK_50 ; 0.446 ; 0.000             ;
+; AUD_BCLK ; 0.207 ; 0.000             ;
+; CLOCK_50 ; 0.479 ; 0.000             ;
 +----------+-------+-------------------+
 
 
@@ -379,9 +379,9 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+--------+---------------+
 ; Clock                                                      ; Slack  ; End Point TNS ;
 +------------------------------------------------------------+--------+---------------+
-; CLOCK_50                                                   ; -2.174 ; -78880.156    ;
-; AUD_BCLK                                                   ; -2.174 ; -322.572      ;
-; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.035 ; -0.839        ;
+; CLOCK_50                                                   ; -2.174 ; -78879.473    ;
+; AUD_BCLK                                                   ; -2.174 ; -342.285      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.048 ; -0.376        ;
 +------------------------------------------------------------+--------+---------------+
 
 
@@ -397,14 +397,14 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +-------------------------------------------------------------+------------+--------+----------+---------+---------------------+
 ; Clock                                                       ; Setup      ; Hold   ; Recovery ; Removal ; Minimum Pulse Width ;
 +-------------------------------------------------------------+------------+--------+----------+---------+---------------------+
-; Worst-case Slack                                            ; -67.109    ; -0.253 ; -7.258   ; 0.297   ; -2.174              ;
-;  AUD_BCLK                                                   ; -5.529     ; 0.104  ; -5.915   ; 0.297   ; -2.174              ;
-;  CLOCK_50                                                   ; -5.098     ; -0.253 ; -7.258   ; 0.446   ; -2.174              ;
-;  recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -67.109    ; 0.012  ; N/A      ; N/A     ; -0.394              ;
-; Design-wide TNS                                             ; -68175.695 ; -1.036 ; -359.695 ; 0.0     ; -79203.567          ;
-;  AUD_BCLK                                                   ; -289.972   ; 0.000  ; -289.307 ; 0.000   ; -322.572            ;
-;  CLOCK_50                                                   ; -66605.600 ; -1.036 ; -70.388  ; 0.000   ; -78880.156          ;
-;  recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -1321.629  ; 0.000  ; N/A      ; N/A     ; -34.231             ;
+; Worst-case Slack                                            ; -61.051    ; -0.143 ; -7.564   ; 0.207   ; -2.174              ;
+;  AUD_BCLK                                                   ; -6.265     ; 0.118  ; -6.497   ; 0.207   ; -2.174              ;
+;  CLOCK_50                                                   ; -5.205     ; -0.143 ; -7.564   ; 0.479   ; -2.174              ;
+;  recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -61.051    ; 0.014  ; N/A      ; N/A     ; -0.394              ;
+; Design-wide TNS                                             ; -65861.116 ; -0.618 ; -498.591 ; 0.0     ; -79222.134          ;
+;  AUD_BCLK                                                   ; -293.261   ; 0.000  ; -307.353 ; 0.000   ; -342.285            ;
+;  CLOCK_50                                                   ; -64454.662 ; -0.618 ; -191.238 ; 0.000   ; -78879.473          ;
+;  recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -1158.526  ; 0.000  ; N/A      ; N/A     ; -39.643             ;
 +-------------------------------------------------------------+------------+--------+----------+---------+---------------------+
 
 
@@ -500,12 +500,12 @@ Design MTBF is not calculated because the design doesn't meet its timing require
 +------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
 ; From Clock                                                 ; To Clock                                                   ; RR Paths     ; FR Paths ; RF Paths ; FF Paths ;
 +------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
-; AUD_BCLK                                                   ; AUD_BCLK                                                   ; 1254         ; 14       ; 4        ; 168      ;
+; AUD_BCLK                                                   ; AUD_BCLK                                                   ; 1317         ; 14       ; 4        ; 168      ;
 ; CLOCK_50                                                   ; AUD_BCLK                                                   ; 30           ; 0        ; 0        ; 0        ;
 ; AUD_BCLK                                                   ; CLOCK_50                                                   ; 25           ; 0        ; 0        ; 0        ;
-; CLOCK_50                                                   ; CLOCK_50                                                   ; 53208        ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                   ; CLOCK_50                                                   ; 53098        ; 0        ; 0        ; 0        ;
 ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; CLOCK_50                                                   ; 305          ; 33       ; 0        ; 0        ;
-; CLOCK_50                                                   ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; > 2147483647 ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                   ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 880          ; 0        ; 0        ; 0        ;
 ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; > 2147483647 ; 0        ; 0        ; 0        ;
 +------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
@@ -516,12 +516,12 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
 ; From Clock                                                 ; To Clock                                                   ; RR Paths     ; FR Paths ; RF Paths ; FF Paths ;
 +------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
-; AUD_BCLK                                                   ; AUD_BCLK                                                   ; 1254         ; 14       ; 4        ; 168      ;
+; AUD_BCLK                                                   ; AUD_BCLK                                                   ; 1317         ; 14       ; 4        ; 168      ;
 ; CLOCK_50                                                   ; AUD_BCLK                                                   ; 30           ; 0        ; 0        ; 0        ;
 ; AUD_BCLK                                                   ; CLOCK_50                                                   ; 25           ; 0        ; 0        ; 0        ;
-; CLOCK_50                                                   ; CLOCK_50                                                   ; 53208        ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                   ; CLOCK_50                                                   ; 53098        ; 0        ; 0        ; 0        ;
 ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; CLOCK_50                                                   ; 305          ; 33       ; 0        ; 0        ;
-; CLOCK_50                                                   ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; > 2147483647 ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                   ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 880          ; 0        ; 0        ; 0        ;
 ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; > 2147483647 ; 0        ; 0        ; 0        ;
 +------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
@@ -532,8 +532,8 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +------------+----------+----------+----------+----------+----------+
 ; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +------------+----------+----------+----------+----------+----------+
-; CLOCK_50   ; AUD_BCLK ; 21       ; 0        ; 30       ; 0        ;
-; CLOCK_50   ; CLOCK_50 ; 76       ; 0        ; 0        ; 0        ;
+; CLOCK_50   ; AUD_BCLK ; 22       ; 0        ; 30       ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 87       ; 0        ; 0        ; 0        ;
 +------------+----------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -543,8 +543,8 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +------------+----------+----------+----------+----------+----------+
 ; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +------------+----------+----------+----------+----------+----------+
-; CLOCK_50   ; AUD_BCLK ; 21       ; 0        ; 30       ; 0        ;
-; CLOCK_50   ; CLOCK_50 ; 76       ; 0        ; 0        ; 0        ;
+; CLOCK_50   ; AUD_BCLK ; 22       ; 0        ; 30       ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 87       ; 0        ; 0        ; 0        ;
 +------------+----------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -569,7 +569,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Illegal Clocks                  ; 0     ; 0    ;
 ; Unconstrained Clocks            ; 0     ; 0    ;
 ; Unconstrained Input Ports       ; 11    ; 11   ;
-; Unconstrained Input Port Paths  ; 3333  ; 3333 ;
+; Unconstrained Input Port Paths  ; 3345  ; 3345 ;
 ; Unconstrained Output Ports      ; 5     ; 5    ;
 ; Unconstrained Output Port Paths ; 8     ; 8    ;
 +---------------------------------+-------+------+
@@ -656,7 +656,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime TimeQuest Timing Analyzer
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Sat Jun 02 03:04:51 2018
+    Info: Processing started: Sat Jun 02 10:47:09 2018
 Info: Command: quartus_sta mem_trial -c mem_trial
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -681,34 +681,34 @@ Info: Found TIMEQUEST_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1100mV 85C Model
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case setup slack is -64.488
+Info (332146): Worst-case setup slack is -58.287
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):   -64.488           -1280.123 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):    -5.529            -289.972 AUD_BCLK 
-    Info (332119):    -5.098          -66605.600 CLOCK_50 
-Info (332146): Worst-case hold slack is 0.028
+    Info (332119):   -58.287           -1113.193 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -6.265            -293.261 AUD_BCLK 
+    Info (332119):    -5.205          -64454.662 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.137
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.028               0.000 CLOCK_50 
-    Info (332119):     0.135               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):     0.350               0.000 AUD_BCLK 
-Info (332146): Worst-case recovery slack is -7.258
+    Info (332119):     0.137               0.000 CLOCK_50 
+    Info (332119):     0.141               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.371               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -7.564
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -7.258             -70.388 CLOCK_50 
-    Info (332119):    -5.915            -289.307 AUD_BCLK 
-Info (332146): Worst-case removal slack is 0.790
+    Info (332119):    -7.564            -191.238 CLOCK_50 
+    Info (332119):    -6.497            -307.353 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.792
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.790               0.000 AUD_BCLK 
-    Info (332119):     0.861               0.000 CLOCK_50 
+    Info (332119):     0.792               0.000 AUD_BCLK 
+    Info (332119):     0.935               0.000 CLOCK_50 
 Info (332146): Worst-case minimum pulse width slack is -2.174
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.174          -76570.564 CLOCK_50 
-    Info (332119):    -2.174            -294.434 AUD_BCLK 
-    Info (332119):    -0.394             -34.231 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -2.174          -76574.168 CLOCK_50 
+    Info (332119):    -2.174            -308.168 AUD_BCLK 
+    Info (332119):    -0.394             -39.643 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
 Info (332114): Report Metastability: Found 51 synchronizer chains.
     Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
 Info: Analyzing Slow 1100mV 0C Model
@@ -717,34 +717,34 @@ Info (334004): Delay annotation completed successfully
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case setup slack is -67.109
+Info (332146): Worst-case setup slack is -61.051
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):   -67.109           -1321.629 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):    -5.299            -276.139 AUD_BCLK 
-    Info (332119):    -4.932          -61781.795 CLOCK_50 
-Info (332146): Worst-case hold slack is -0.253
+    Info (332119):   -61.051           -1158.526 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -6.030            -282.341 AUD_BCLK 
+    Info (332119):    -4.938          -59767.144 CLOCK_50 
+Info (332146): Worst-case hold slack is -0.143
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.253              -0.933 CLOCK_50 
-    Info (332119):     0.123               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):     0.346               0.000 AUD_BCLK 
-Info (332146): Worst-case recovery slack is -6.869
+    Info (332119):    -0.143              -0.414 CLOCK_50 
+    Info (332119):     0.129               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.354               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -7.127
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -6.869             -64.937 CLOCK_50 
-    Info (332119):    -5.713            -277.434 AUD_BCLK 
-Info (332146): Worst-case removal slack is 0.624
+    Info (332119):    -7.127            -178.660 CLOCK_50 
+    Info (332119):    -6.199            -292.563 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.602
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.624               0.000 AUD_BCLK 
-    Info (332119):     0.803               0.000 CLOCK_50 
+    Info (332119):     0.602               0.000 AUD_BCLK 
+    Info (332119):     0.873               0.000 CLOCK_50 
 Info (332146): Worst-case minimum pulse width slack is -2.174
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.174          -76384.890 CLOCK_50 
-    Info (332119):    -2.174            -291.844 AUD_BCLK 
-    Info (332119):    -0.394             -34.033 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -2.174          -76388.148 CLOCK_50 
+    Info (332119):    -2.174            -306.019 AUD_BCLK 
+    Info (332119):    -0.394             -39.543 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
 Info (332114): Report Metastability: Found 51 synchronizer chains.
     Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
 Info: Analyzing Fast 1100mV 85C Model
@@ -753,76 +753,76 @@ Info (334004): Delay annotation completed successfully
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case setup slack is -32.892
+Info (332146): Worst-case setup slack is -29.303
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):   -32.892            -663.804 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):    -3.888            -110.542 AUD_BCLK 
-    Info (332119):    -3.090          -35744.285 CLOCK_50 
-Info (332146): Worst-case hold slack is 0.024
+    Info (332119):   -29.303            -564.154 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -4.105            -108.526 AUD_BCLK 
+    Info (332119):    -2.975          -34014.981 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.028
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.024               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):     0.030               0.000 CLOCK_50 
-    Info (332119):     0.162               0.000 AUD_BCLK 
-Info (332146): Worst-case recovery slack is -4.774
+    Info (332119):     0.028               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.093               0.000 CLOCK_50 
+    Info (332119):     0.181               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -4.856
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.774             -23.740 CLOCK_50 
-    Info (332119):    -3.704            -187.097 AUD_BCLK 
-Info (332146): Worst-case removal slack is 0.504
+    Info (332119):    -4.856            -104.959 CLOCK_50 
+    Info (332119):    -3.952            -193.887 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.546
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.504               0.000 CLOCK_50 
-    Info (332119):     0.691               0.000 AUD_BCLK 
+    Info (332119):     0.546               0.000 CLOCK_50 
+    Info (332119):     0.619               0.000 AUD_BCLK 
 Info (332146): Worst-case minimum pulse width slack is -2.174
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.174          -77591.777 CLOCK_50 
-    Info (332119):    -2.174            -304.458 AUD_BCLK 
-    Info (332119):    -0.080              -2.594 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -2.174          -77587.663 CLOCK_50 
+    Info (332119):    -2.174            -323.962 AUD_BCLK 
+    Info (332119):    -0.090              -1.546 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
 Info (332114): Report Metastability: Found 51 synchronizer chains.
     Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
 Info: Analyzing Fast 1100mV 0C Model
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-Info (332146): Worst-case setup slack is -31.262
+Info (332146): Worst-case setup slack is -27.969
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):   -31.262            -626.683 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):    -3.246             -87.779 AUD_BCLK 
-    Info (332119):    -2.562          -28959.422 CLOCK_50 
-Info (332146): Worst-case hold slack is -0.174
+    Info (332119):   -27.969            -534.891 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -3.458             -85.716 AUD_BCLK 
+    Info (332119):    -2.526          -27420.025 CLOCK_50 
+Info (332146): Worst-case hold slack is -0.108
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.174              -1.036 CLOCK_50 
-    Info (332119):     0.012               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
-    Info (332119):     0.104               0.000 AUD_BCLK 
-Info (332146): Worst-case recovery slack is -4.061
+    Info (332119):    -0.108              -0.618 CLOCK_50 
+    Info (332119):     0.014               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.118               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -4.111
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.061             -16.268 CLOCK_50 
-    Info (332119):    -3.074            -153.876 AUD_BCLK 
-Info (332146): Worst-case removal slack is 0.297
+    Info (332119):    -4.111             -85.395 CLOCK_50 
+    Info (332119):    -3.217            -158.334 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.207
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.297               0.000 AUD_BCLK 
-    Info (332119):     0.446               0.000 CLOCK_50 
+    Info (332119):     0.207               0.000 AUD_BCLK 
+    Info (332119):     0.479               0.000 CLOCK_50 
 Info (332146): Worst-case minimum pulse width slack is -2.174
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -2.174          -78880.156 CLOCK_50 
-    Info (332119):    -2.174            -322.572 AUD_BCLK 
-    Info (332119):    -0.035              -0.839 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -2.174          -78879.473 CLOCK_50 
+    Info (332119):    -2.174            -342.285 AUD_BCLK 
+    Info (332119):    -0.048              -0.376 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
 Info (332114): Report Metastability: Found 51 synchronizer chains.
     Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime TimeQuest Timing Analyzer was successful. 0 errors, 6 warnings
-    Info: Peak virtual memory: 5263 megabytes
-    Info: Processing ended: Sat Jun 02 03:05:19 2018
-    Info: Elapsed time: 00:00:28
-    Info: Total CPU time (on all processors): 00:00:42
+    Info: Peak virtual memory: 5269 megabytes
+    Info: Processing ended: Sat Jun 02 10:47:48 2018
+    Info: Elapsed time: 00:00:39
+    Info: Total CPU time (on all processors): 00:00:49
 
 
