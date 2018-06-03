@@ -1,5 +1,5 @@
 Analysis & Synthesis report for mem_trial
-Sat Jun 02 10:41:47 2018
+Sun Jun 03 20:50:13 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -15,23 +15,22 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Analysis & Synthesis RAM Summary
   9. Analysis & Synthesis IP Cores Summary
- 10. Registers Removed During Synthesis
- 11. General Register Statistics
- 12. Inverted Register Statistics
- 13. Multiplexer Restructuring Statistics (Restructuring Performed)
- 14. Source assignments for audio_codec_controller:audio_codec_controller_inst
- 15. Source assignments for recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated
- 16. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst
- 17. Parameter Settings for User Entity Instance: recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
- 18. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_COMPARE:inst24
- 19. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst3
- 20. Parameter Settings for User Entity Instance: LPM_CONSTANT:inst14
- 21. Parameter Settings for User Entity Instance: LPM_CONSTANT:inst13
- 22. Parameter Settings for Inferred Entity Instance: Looper_integrator:inst3|lpm_divide:Div0
- 23. altsyncram Parameter Settings by Entity Instance
- 24. Post-Synthesis Netlist Statistics for Top Partition
- 25. Elapsed Time Per Partition
- 26. Analysis & Synthesis Messages
+ 10. State Machine - |experiment_digital_recorder|LooperSM:inst1|state
+ 11. Registers Removed During Synthesis
+ 12. General Register Statistics
+ 13. Inverted Register Statistics
+ 14. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 15. Source assignments for audio_codec_controller:audio_codec_controller_inst
+ 16. Source assignments for recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated
+ 17. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst
+ 18. Parameter Settings for User Entity Instance: recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
+ 19. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_COMPARE:inst24
+ 20. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst3
+ 21. Parameter Settings for Inferred Entity Instance: Looper_integrator:inst3|lpm_divide:Div0
+ 22. altsyncram Parameter Settings by Entity Instance
+ 23. Post-Synthesis Netlist Statistics for Top Partition
+ 24. Elapsed Time Per Partition
+ 25. Analysis & Synthesis Messages
 
 
 
@@ -58,14 +57,14 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sat Jun 02 10:41:47 2018       ;
+; Analysis & Synthesis Status     ; Successful - Sun Jun 03 20:50:12 2018       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; mem_trial                                   ;
 ; Top-level Entity Name           ; experiment_digital_recorder                 ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 538                                         ;
-; Total pins                      ; 18                                          ;
+; Total registers                 ; 673                                         ;
+; Total pins                      ; 21                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 4,195,360                                   ;
 ; Total DSP Blocks                ; 0                                           ;
@@ -194,6 +193,7 @@ agreement for further details.
 ; recorder_module_looper.bdf       ; yes             ; User Block Diagram/Schematic File  ; C:/intelFPGA_lite/lab_project/Looper_trial/recorder_module_looper.bdf        ;         ;
 ; experiment_digital_recorder.bdf  ; yes             ; User Block Diagram/Schematic File  ; C:/intelFPGA_lite/lab_project/Looper_trial/experiment_digital_recorder.bdf   ;         ;
 ; Looper_integrator.vhd            ; yes             ; User VHDL File                     ; C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd             ;         ;
+; SM/LooperSM.vhd                  ; yes             ; User VHDL File                     ; C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd                   ;         ;
 ; lpm_constant.tdf                 ; yes             ; Megafunction                       ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_constant.tdf      ;         ;
 ; altsyncram.tdf                   ; yes             ; Megafunction                       ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
 ; stratix_ram_block.inc            ; yes             ; Megafunction                       ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
@@ -227,27 +227,27 @@ agreement for further details.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 718            ;
+; Estimate of Logic utilization (ALMs needed) ; 847            ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 1149           ;
-;     -- 7 input functions                    ; 1              ;
-;     -- 6 input functions                    ; 261            ;
-;     -- 5 input functions                    ; 105            ;
-;     -- 4 input functions                    ; 144            ;
-;     -- <=3 input functions                  ; 638            ;
+; Combinational ALUT usage for logic          ; 1356           ;
+;     -- 7 input functions                    ; 2              ;
+;     -- 6 input functions                    ; 304            ;
+;     -- 5 input functions                    ; 160            ;
+;     -- 4 input functions                    ; 180            ;
+;     -- <=3 input functions                  ; 710            ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 538            ;
+; Dedicated logic registers                   ; 673            ;
 ;                                             ;                ;
-; I/O pins                                    ; 18             ;
+; I/O pins                                    ; 21             ;
 ; Total MLAB memory bits                      ; 0              ;
 ; Total block memory bits                     ; 4195360        ;
 ;                                             ;                ;
 ; Total DSP Blocks                            ; 0              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 811            ;
-; Total fan-out                               ; 14573          ;
-; Average fan-out                             ; 6.51           ;
+; Maximum fan-out                             ; 946            ;
+; Total fan-out                               ; 15986          ;
+; Average fan-out                             ; 6.18           ;
 +---------------------------------------------+----------------+
 
 
@@ -256,7 +256,8 @@ agreement for further details.
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------+--------------+
 ; Compilation Hierarchy Node                                      ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                   ; Entity Name                 ; Library Name ;
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------+--------------+
-; |experiment_digital_recorder                                    ; 1149 (0)            ; 538 (0)                   ; 4195360           ; 0          ; 18   ; 0            ; |experiment_digital_recorder                                                                                                                                                                                                                                                          ; experiment_digital_recorder ; work         ;
+; |experiment_digital_recorder                                    ; 1356 (0)            ; 673 (0)                   ; 4195360           ; 0          ; 21   ; 0            ; |experiment_digital_recorder                                                                                                                                                                                                                                                          ; experiment_digital_recorder ; work         ;
+;    |LooperSM:inst1|                                             ; 179 (179)           ; 118 (118)                 ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|LooperSM:inst1                                                                                                                                                                                                                                           ; LooperSM                    ; work         ;
 ;    |Looper_integrator:inst3|                                    ; 634 (213)           ; 66 (66)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3                                                                                                                                                                                                                                  ; Looper_integrator           ; work         ;
 ;       |lpm_divide:Div0|                                         ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0                                                                                                                                                                                                                  ; lpm_divide                  ; work         ;
 ;          |lpm_divide_apo:auto_generated|                        ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|Looper_integrator:inst3|lpm_divide:Div0|lpm_divide_apo:auto_generated                                                                                                                                                                                    ; lpm_divide_apo              ; work         ;
@@ -324,15 +325,13 @@ agreement for further details.
 ;                   |cmpr_uu5:wrfull_eq_comp|                     ; 2 (2)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cmpr_uu5:wrfull_eq_comp                          ; cmpr_uu5                    ; work         ;
 ;                   |cntr_ded:cntr_b|                             ; 7 (7)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cntr_ded:cntr_b                                  ; cntr_ded                    ; work         ;
 ;       |i2c:i2c_inst|                                            ; 31 (31)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst                                                                                                                                                                                          ; i2c                         ; work         ;
-;    |recorder_module_looper:inst|                                ; 162 (0)             ; 76 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst                                                                                                                                                                                                                              ; recorder_module_looper      ; work         ;
-;       |addr_counter:inst4|                                      ; 43 (43)             ; 33 (33)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|addr_counter:inst4                                                                                                                                                                                                           ; addr_counter                ; work         ;
-;       |dpram:inst1|                                             ; 77 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1                                                                                                                                                                                                                  ; dpram                       ; work         ;
-;          |altsyncram:altsyncram_component|                      ; 77 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component                                                                                                                                                                                  ; altsyncram                  ; work         ;
-;             |altsyncram_o6v3:auto_generated|                    ; 77 (0)              ; 10 (10)                   ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated                                                                                                                                                   ; altsyncram_o6v3             ; work         ;
-;                |decode_sma:decode2|                             ; 37 (37)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:decode2                                                                                                                                ; decode_sma                  ; work         ;
-;                |decode_sma:rden_decode_b|                       ; 40 (40)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:rden_decode_b                                                                                                                          ; decode_sma                  ; work         ;
-;       |lpm_compare:inst24|                                      ; 1 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|lpm_compare:inst24                                                                                                                                                                                                           ; lpm_compare                 ; work         ;
-;          |cmpr_ihd:auto_generated|                              ; 1 (1)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|lpm_compare:inst24|cmpr_ihd:auto_generated                                                                                                                                                                                   ; cmpr_ihd                    ; work         ;
+;    |recorder_module_looper:inst|                                ; 190 (0)             ; 93 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst                                                                                                                                                                                                                              ; recorder_module_looper      ; work         ;
+;       |addr_counter:inst4|                                      ; 79 (79)             ; 50 (50)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|addr_counter:inst4                                                                                                                                                                                                           ; addr_counter                ; work         ;
+;       |dpram:inst1|                                             ; 70 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1                                                                                                                                                                                                                  ; dpram                       ; work         ;
+;          |altsyncram:altsyncram_component|                      ; 70 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component                                                                                                                                                                                  ; altsyncram                  ; work         ;
+;             |altsyncram_o6v3:auto_generated|                    ; 70 (0)              ; 10 (10)                   ; 4194304           ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated                                                                                                                                                   ; altsyncram_o6v3             ; work         ;
+;                |decode_sma:decode2|                             ; 33 (33)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:decode2                                                                                                                                ; decode_sma                  ; work         ;
+;                |decode_sma:rden_decode_b|                       ; 37 (37)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:rden_decode_b                                                                                                                          ; decode_sma                  ; work         ;
 ;       |prescaler:inst27|                                        ; 41 (41)             ; 33 (33)                   ; 0                 ; 0          ; 0    ; 0            ; |experiment_digital_recorder|recorder_module_looper:inst|prescaler:inst27                                                                                                                                                                                                             ; prescaler                   ; work         ;
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
@@ -359,30 +358,35 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------+--------------+---------+--------------+--------------+----------------------------------------------------------------------+-----------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                                                              ;
-+--------------------------------------------------------+------------------------------------------------------------------------+
-; Register name                                          ; Reason for Removal                                                     ;
-+--------------------------------------------------------+------------------------------------------------------------------------+
-; recorder_module_looper:inst|addr_counter:inst4|sig[1]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[1]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[15] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[15] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[14] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[14] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[13] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[13] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[17] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[17] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[16] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[16] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[2]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[2]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[3]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[3]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[4]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[4]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[5]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[5]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[6]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[6]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[7]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[7]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[8]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[8]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[9]  ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[9]  ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[10] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[10] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[11] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[11] ;
-; recorder_module_looper:inst|addr_counter:inst4|sig[12] ; Merged with recorder_module_looper:inst|addr_counter:inst4|counter[12] ;
-; Total Number of Removed Registers = 17                 ;                                                                        ;
-+--------------------------------------------------------+------------------------------------------------------------------------+
+Encoding Type:  One-Hot
++-------------------------------------------------------------------------------------------------------+
+; State Machine - |experiment_digital_recorder|LooperSM:inst1|state                                     ;
++------------------+-----------------+---------------+------------------+-----------------+-------------+
+; Name             ; state.REC_OTHER ; state.PRE_REC ; state.CH_CONTROL ; state.REC_FIRST ; state.EMPTY ;
++------------------+-----------------+---------------+------------------+-----------------+-------------+
+; state.EMPTY      ; 0               ; 0             ; 0                ; 0               ; 0           ;
+; state.REC_FIRST  ; 0               ; 0             ; 0                ; 1               ; 1           ;
+; state.CH_CONTROL ; 0               ; 0             ; 1                ; 0               ; 1           ;
+; state.PRE_REC    ; 0               ; 1             ; 0                ; 0               ; 1           ;
+; state.REC_OTHER  ; 1               ; 0             ; 0                ; 0               ; 1           ;
++------------------+-----------------+---------------+------------------+-----------------+-------------+
+
+
++-------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                  ;
++----------------------------------------+--------------------------------------------+
+; Register name                          ; Reason for Removal                         ;
++----------------------------------------+--------------------------------------------+
+; LooperSM:inst1|arch_Ch0END[19..30]     ; Merged with LooperSM:inst1|arch_Ch0END[18] ;
+; LooperSM:inst1|arch_Ch1END[19..30]     ; Merged with LooperSM:inst1|arch_Ch1END[18] ;
+; LooperSM:inst1|arch_Ch2END[19..30]     ; Merged with LooperSM:inst1|arch_Ch2END[18] ;
+; LooperSM:inst1|arch_Ch3END[19..30]     ; Merged with LooperSM:inst1|arch_Ch3END[18] ;
+; LooperSM:inst1|arch_Ch0END[18]         ; Stuck at GND due to stuck port data_in     ;
+; LooperSM:inst1|arch_Ch1END[18]         ; Stuck at GND due to stuck port data_in     ;
+; LooperSM:inst1|arch_Ch2END[18]         ; Stuck at GND due to stuck port data_in     ;
+; LooperSM:inst1|arch_Ch3END[18]         ; Stuck at GND due to stuck port data_in     ;
+; Total Number of Removed Registers = 52 ;                                            ;
++----------------------------------------+--------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -390,69 +394,144 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 538   ;
-; Number of registers using Synchronous Clear  ; 143   ;
-; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 219   ;
+; Total registers                              ; 673   ;
+; Number of registers using Synchronous Clear  ; 161   ;
+; Number of registers using Synchronous Load   ; 30    ;
+; Number of registers using Asynchronous Clear ; 350   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 199   ;
+; Number of registers using Clock Enable       ; 262   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Inverted Register Statistics                                                                                                                                                                                                                             ;
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
-; Inverted Register                                                                                                                                                                                                                              ; Fan out ;
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
-; audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst|I2C_clk_0                                                                                                                                                                      ; 2       ;
-; audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst|I2C_clk_en                                                                                                                                                                     ; 2       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_lsb_aeb                                             ; 9       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_msb_aeb                                             ; 9       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_lsb_aeb                                            ; 9       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_msb_aeb                                            ; 9       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cntr_ded:cntr_b|counter_reg_bit0        ; 2       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt_del[3]                                                                                                                                         ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt_del[2]                                                                                                                                         ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt_del[1]                                                                                                                                         ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt_del[0]                                                                                                                                         ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cntr_ded:cntr_b|counter_reg_bit0       ; 2       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt_del[3]                                                                                                                                        ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt_del[2]                                                                                                                                        ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt_del[1]                                                                                                                                        ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt_del[0]                                                                                                                                        ; 1       ;
-; audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst|SDO                                                                                                                                                                            ; 2       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|serial_rdy                                                                                                                                              ; 12      ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|a_graycounter_cu6:rdptr_g1p|counter5a0                            ; 8       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy                                                                                                                                             ; 11      ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|a_graycounter_cu6:rdptr_g1p|counter5a0                           ; 7       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|a_graycounter_6ub:wrptr_g1p|counter7a0  ; 6       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|a_graycounter_9g6:rdptr_g1p|parity5     ; 5       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt[3]                                                                                                                                             ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt[2]                                                                                                                                             ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt[1]                                                                                                                                             ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt[0]                                                                                                                                             ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|a_graycounter_6ub:wrptr_g1p|counter7a0 ; 6       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|a_graycounter_9g6:rdptr_g1p|parity5    ; 5       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt[3]                                                                                                                                            ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt[2]                                                                                                                                            ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt[1]                                                                                                                                            ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|parallel_cnt[0]                                                                                                                                            ; 3       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|a_graycounter_8cc:wrptr_g1p|counter7a0                            ; 6       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|serial_cnt[4]                                                                                                                                           ; 2       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|a_graycounter_8cc:wrptr_g1p|counter7a0                           ; 6       ;
-; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_cnt[4]                                                                                                                                          ; 2       ;
-; Total number of inverted registers = 37                                                                                                                                                                                                        ;         ;
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Inverted Register Statistics                                                                                                                                                                                                                      ;
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; Inverted Register                                                                                                                                                                                                                       ; Fan out ;
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; LooperSM:inst1|arch_loop_start                                                                                                                                                                                                          ; 76      ;
+; LooperSM:inst1|arch_Ch0END[14]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch0END[13]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch0END[12]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch0END[11]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch0END[10]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch0END[9]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[8]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[7]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[6]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[5]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[4]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[3]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[2]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[1]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[0]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch0END[17]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch0END[16]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch0END[15]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch2END[14]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch2END[13]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch2END[12]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch2END[11]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch2END[10]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch2END[9]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[8]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[7]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[6]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[5]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[4]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[3]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[2]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[1]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[0]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch2END[17]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch2END[16]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch2END[15]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch1END[14]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch1END[13]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch1END[12]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch1END[11]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch1END[10]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch1END[9]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[8]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[7]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[6]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[5]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[4]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[3]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[2]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[1]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[0]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch1END[17]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch1END[16]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch1END[15]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch3END[14]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch3END[13]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch3END[12]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch3END[11]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch3END[10]                                                                                                                                                                                                          ; 1       ;
+; LooperSM:inst1|arch_Ch3END[9]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[8]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[7]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[6]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[5]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[4]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[3]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[2]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[1]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[0]                                                                                                                                                                                                           ; 1       ;
+; LooperSM:inst1|arch_Ch3END[17]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch3END[16]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|arch_Ch3END[15]                                                                                                                                                                                                          ; 2       ;
+; LooperSM:inst1|memEndAddr[12]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[13]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[14]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[15]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[16]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[17]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[0]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[1]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[2]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[3]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[4]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[5]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[6]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[7]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[8]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[9]                                                                                                                                                                                                            ; 2       ;
+; LooperSM:inst1|memEndAddr[10]                                                                                                                                                                                                           ; 2       ;
+; LooperSM:inst1|memEndAddr[11]                                                                                                                                                                                                           ; 2       ;
+; audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst|I2C_clk_0                                                                                                                                                               ; 2       ;
+; audio_codec_controller:audio_codec_controller_inst|i2c:i2c_inst|I2C_clk_en                                                                                                                                                              ; 2       ;
+; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_lsb_aeb                                      ; 9       ;
+; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_msb_aeb                                      ; 9       ;
+; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_lsb_aeb                                     ; 9       ;
+; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|rdemp_eq_comp_msb_aeb                                     ; 9       ;
+; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|cntr_ded:cntr_b|counter_reg_bit0 ; 2       ;
+; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt_del[3]                                                                                                                                  ; 1       ;
+; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|parallel_cnt_del[2]                                                                                                                                  ; 1       ;
+; Total number of inverted registers = 128*                                                                                                                                                                                               ;         ;
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+* Table truncated at 100 items. To change the number of inverted registers reported, set the "Number of Inverted Registers Reported" option under Assignments->Settings->Analysis and Synthesis Settings->More Settings
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                              ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                    ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
-; 33:1               ; 16 bits   ; 352 LEs       ; 336 LEs              ; 16 LEs                 ; Yes        ; |experiment_digital_recorder|Looper_integrator:inst3|data[14] ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------+
+; 3:1                ; 30 bits   ; 60 LEs        ; 0 LEs                ; 60 LEs                 ; Yes        ; |experiment_digital_recorder|recorder_module_looper:inst|addr_counter:inst4|counter[3] ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |experiment_digital_recorder|LooperSM:inst1|arch_recSel[0]                             ;
+; 33:1               ; 16 bits   ; 352 LEs       ; 336 LEs              ; 16 LEs                 ; Yes        ; |experiment_digital_recorder|Looper_integrator:inst3|data[1]                           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |experiment_digital_recorder|recorder_module_looper:inst|addr_counter:inst4|counter[0] ;
+; 6:1                ; 18 bits   ; 72 LEs        ; 18 LEs               ; 54 LEs                 ; Yes        ; |experiment_digital_recorder|LooperSM:inst1|arch_Ch1END[4]                             ;
+; 6:1                ; 18 bits   ; 72 LEs        ; 18 LEs               ; 54 LEs                 ; Yes        ; |experiment_digital_recorder|LooperSM:inst1|arch_Ch2END[1]                             ;
+; 6:1                ; 18 bits   ; 72 LEs        ; 18 LEs               ; 54 LEs                 ; Yes        ; |experiment_digital_recorder|LooperSM:inst1|arch_Ch3END[15]                            ;
+; 6:1                ; 18 bits   ; 72 LEs        ; 18 LEs               ; 54 LEs                 ; Yes        ; |experiment_digital_recorder|LooperSM:inst1|arch_Ch0END[12]                            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |experiment_digital_recorder|LooperSM:inst1|recCounter                                 ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |experiment_digital_recorder|LooperSM:inst1|Mux138                                     ;
+; 4:1                ; 18 bits   ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |experiment_digital_recorder|LooperSM:inst1|Selector160                                ;
+; 11:1               ; 5 bits    ; 35 LEs        ; 20 LEs               ; 15 LEs                 ; No         ; |experiment_digital_recorder|LooperSM:inst1|Selector164                                ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------------------------+
@@ -955,32 +1034,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+------------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: LPM_CONSTANT:inst14 ;
-+--------------------+------------------+--------------------------+
-; Parameter Name     ; Value            ; Type                     ;
-+--------------------+------------------+--------------------------+
-; LPM_WIDTH          ; 1                ; Untyped                  ;
-; LPM_CVALUE         ; 0                ; Signed Integer           ;
-; ENABLE_RUNTIME_MOD ; NO               ; Untyped                  ;
-; CBXI_PARAMETER     ; lpm_constant_s64 ; Untyped                  ;
-+--------------------+------------------+--------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+------------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: LPM_CONSTANT:inst13 ;
-+--------------------+------------------+--------------------------+
-; Parameter Name     ; Value            ; Type                     ;
-+--------------------+------------------+--------------------------+
-; LPM_WIDTH          ; 1                ; Untyped                  ;
-; LPM_CVALUE         ; 1                ; Signed Integer           ;
-; ENABLE_RUNTIME_MOD ; NO               ; Untyped                  ;
-; CBXI_PARAMETER     ; lpm_constant_t64 ; Untyped                  ;
-+--------------------+------------------+--------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
 +------------------------------------------------------------------------------------------+
 ; Parameter Settings for Inferred Entity Instance: Looper_integrator:inst3|lpm_divide:Div0 ;
 +------------------------+----------------+------------------------------------------------+
@@ -1029,39 +1082,43 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------------------------------------------------------+-------+
 ; Type                                                   ; Count ;
 +--------------------------------------------------------+-------+
-; arriav_ff                                              ; 142   ;
-;     CLR                                                ; 3     ;
+; arriav_ff                                              ; 277   ;
+;     CLR                                                ; 45    ;
 ;     CLR SCLR                                           ; 64    ;
-;     ENA CLR                                            ; 3     ;
-;     ENA CLR SCLR                                       ; 46    ;
+;     CLR SCLR SLD                                       ; 30    ;
+;     ENA                                                ; 4     ;
+;     ENA CLR                                            ; 74    ;
+;     ENA CLR SCLR                                       ; 34    ;
 ;     ENA SCLR                                           ; 16    ;
 ;     plain                                              ; 10    ;
-; arriav_lcell_comb                                      ; 796   ;
+; arriav_lcell_comb                                      ; 1003  ;
 ;     arith                                              ; 346   ;
 ;         0 data inputs                                  ; 59    ;
-;         1 data inputs                                  ; 96    ;
-;         2 data inputs                                  ; 76    ;
+;         1 data inputs                                  ; 64    ;
+;         2 data inputs                                  ; 108   ;
 ;         3 data inputs                                  ; 28    ;
 ;         4 data inputs                                  ; 59    ;
 ;         5 data inputs                                  ; 28    ;
-;     normal                                             ; 441   ;
+;     extend                                             ; 1     ;
+;         7 data inputs                                  ; 1     ;
+;     normal                                             ; 647   ;
 ;         1 data inputs                                  ; 1     ;
-;         2 data inputs                                  ; 125   ;
-;         3 data inputs                                  ; 45    ;
-;         4 data inputs                                  ; 36    ;
-;         5 data inputs                                  ; 38    ;
-;         6 data inputs                                  ; 196   ;
+;         2 data inputs                                  ; 189   ;
+;         3 data inputs                                  ; 53    ;
+;         4 data inputs                                  ; 72    ;
+;         5 data inputs                                  ; 93    ;
+;         6 data inputs                                  ; 239   ;
 ;     shared                                             ; 9     ;
 ;         0 data inputs                                  ; 3     ;
 ;         2 data inputs                                  ; 3     ;
 ;         4 data inputs                                  ; 3     ;
 ; blackbox                                               ; 1     ;
 ;     audio_codec_controller:audio_codec_controller_inst ; 1     ;
-; boundary_port                                          ; 18    ;
+; boundary_port                                          ; 21    ;
 ; stratixv_ram_block                                     ; 512   ;
 ;                                                        ;       ;
 ; Max LUT depth                                          ; 57.60 ;
-; Average LUT depth                                      ; 23.00 ;
+; Average LUT depth                                      ; 19.78 ;
 +--------------------------------------------------------+-------+
 
 
@@ -1070,7 +1127,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -1080,7 +1137,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Sat Jun 02 10:41:26 2018
+    Info: Processing started: Sun Jun 03 20:49:49 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off mem_trial -c mem_trial
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
@@ -1090,7 +1147,7 @@ Info (12021): Found 2 design units, including 1 entities, in source file prescal
 Info (12021): Found 1 design units, including 1 entities, in source file audio_codec_controller.qxp
     Info (12023): Found entity 1: audio_codec_controller File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
 Info (12021): Found 2 design units, including 1 entities, in source file addr_counter.vhd
-    Info (12022): Found design unit 1: addr_counter-addr_counter_arch File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 13
+    Info (12022): Found design unit 1: addr_counter-addr_counter_arch File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 15
     Info (12023): Found entity 1: addr_counter File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file dpram.vhd
     Info (12022): Found design unit 1: dpram-SYN File: C:/intelFPGA_lite/lab_project/Looper_trial/dpram.vhd Line: 57
@@ -1108,6 +1165,9 @@ Info (12021): Found 2 design units, including 1 entities, in source file prescal
 Info (12021): Found 2 design units, including 1 entities, in source file addr_counter_new.vhd
     Info (12022): Found design unit 1: addr_counter_new-addr_counter_new_arch File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter_new.vhd Line: 17
     Info (12023): Found entity 1: addr_counter_new File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter_new.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file sm/loopersm.vhd
+    Info (12022): Found design unit 1: LooperSM-arc_LooperSM File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 55
+    Info (12023): Found entity 1: LooperSM File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 10
 Info (12127): Elaborating entity "experiment_digital_recorder" for the top level hierarchy
 Info (12128): Elaborating entity "audio_codec_controller" for hierarchy "audio_codec_controller:audio_codec_controller_inst"
 Info (12128): Elaborating entity "Looper_integrator" for hierarchy "Looper_integrator:inst3"
@@ -1194,11 +1254,7 @@ Info (12130): Elaborated megafunction instantiation "recorder_module_looper:inst
 Info (12133): Instantiated megafunction "recorder_module_looper:inst|LPM_CONSTANT:inst3" with the following parameter:
     Info (12134): Parameter "LPM_CVALUE" = "1"
     Info (12134): Parameter "LPM_WIDTH" = "1"
-Info (12128): Elaborating entity "LPM_CONSTANT" for hierarchy "LPM_CONSTANT:inst14"
-Info (12130): Elaborated megafunction instantiation "LPM_CONSTANT:inst14"
-Info (12133): Instantiated megafunction "LPM_CONSTANT:inst14" with the following parameter:
-    Info (12134): Parameter "LPM_CVALUE" = "0"
-    Info (12134): Parameter "LPM_WIDTH" = "1"
+Info (12128): Elaborating entity "LooperSM" for hierarchy "LooperSM:inst1"
 Warning (12240): Synthesis found one or more imported partitions that will be treated as black boxes for timing analysis during synthesis
 Info (278001): Inferred 1 megafunctions from design logic
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Looper_integrator:inst3|Div0" File: C:/intelFPGA_lite/lab_project/Looper_trial/Looper_integrator.vhd Line: 72
@@ -1225,8 +1281,98 @@ Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Critical Warning (18061): Ignored Power-Up Level option on the following registers
     Critical Warning (18010): Register recorder_module_looper:inst|prescaler:inst27|PRESCALER_COUNTER[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/prescaler.vhd Line: 38
     Critical Warning (18010): Register recorder_module_looper:inst|prescaler:inst27|PRESCALER_COUNTER[0] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/prescaler.vhd Line: 38
-    Critical Warning (18010): Register recorder_module_looper:inst|addr_counter:inst4|counter[0] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 22
-    Critical Warning (18010): Register recorder_module_looper:inst|addr_counter:inst4|counter[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 22
+    Critical Warning (18010): Register recorder_module_looper:inst|addr_counter:inst4|counter[0] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 25
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[17] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[16] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[15] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[14] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[13] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[12] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[11] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[10] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[9] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[8] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[7] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[6] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[5] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[4] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[3] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[2] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch0END[1] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[17] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[16] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[15] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[14] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[13] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[12] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[11] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[10] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[9] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[8] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[7] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[6] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[5] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[4] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[3] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[2] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch2END[1] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[17] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[16] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[15] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[14] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[13] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[12] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[11] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[10] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[9] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[8] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[7] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[6] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[5] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[4] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[3] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[2] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch1END[1] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[17] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[16] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[15] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[14] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[13] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[12] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[11] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[10] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[9] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[8] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[7] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[6] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[5] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[4] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[3] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[2] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|arch_Ch3END[1] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[0] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[1] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[2] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[3] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[4] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[5] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[6] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[7] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[8] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[9] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[10] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[11] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[12] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[13] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[14] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[15] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[16] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register LooperSM:inst1|memEndAddr[17] will power up to High File: C:/intelFPGA_lite/lab_project/Looper_trial/SM/LooperSM.vhd Line: 89
+    Critical Warning (18010): Register recorder_module_looper:inst|addr_counter:inst4|counter[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper_trial/addr_counter.vhd Line: 25
 Info (35026): Attempting to remove 132 I/O cell(s) that do not connect to top-level pins or have illegal connectivity
     Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[0]~output"
     Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[0]"
@@ -1400,16 +1546,16 @@ Info (35003): Optimize away 53 nodes that do not fanout to OUTPUT or BIDIR pins
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[14]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[15]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|ram_address_a[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-Info (21057): Implemented 1968 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 13 input pins
+Info (21057): Implemented 2265 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 16 input pins
     Info (21059): Implemented 4 output pins
     Info (21060): Implemented 1 bidirectional pins
-    Info (21061): Implemented 1435 logic cells
+    Info (21061): Implemented 1729 logic cells
     Info (21064): Implemented 515 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 9 warnings
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 99 warnings
     Info: Peak virtual memory: 4963 megabytes
-    Info: Processing ended: Sat Jun 02 10:41:47 2018
-    Info: Elapsed time: 00:00:21
-    Info: Total CPU time (on all processors): 00:00:42
+    Info: Processing ended: Sun Jun 03 20:50:13 2018
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:48
 
 

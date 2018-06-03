@@ -17,7 +17,7 @@
 -- PROGRAM "Quartus Prime"
 -- VERSION "Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition"
 
--- DATE "06/01/2018 16:50:37"
+-- DATE "06/03/2018 19:19:51"
 
 -- 
 -- Device: Altera 5CSXFC6D6F31C6 Package FBGA896
@@ -36,18 +36,33 @@ USE ALTERA_LNSIM.ALTERA_LNSIM_COMPONENTS.ALL;
 USE CYCLONEV.CYCLONEV_COMPONENTS.ALL;
 USE IEEE.STD_LOGIC_1164.ALL;
 
-ENTITY 	Looper_integrator IS
+ENTITY 	LooperSM IS
     PORT (
-	resetN : IN std_logic;
 	clk : IN std_logic;
-	din : IN std_logic_vector(15 DOWNTO 0);
-	ActiveCh : IN std_logic_vector(2 DOWNTO 0);
-	dout_new : OUT std_logic;
-	dout : OUT std_logic_vector(15 DOWNTO 0)
+	ResetN : IN std_logic;
+	KB_Selchannel : IN std_logic_vector(1 DOWNTO 0);
+	KB_RecOnMet : IN std_logic;
+	KB_PLAY : IN std_logic;
+	KB_ALLPLAY : IN std_logic;
+	KB_REC : IN std_logic;
+	KB_STOP : IN std_logic;
+	KB_ClearCH : IN std_logic;
+	KB_IMMstart : IN std_logic;
+	recSel : OUT std_logic_vector(1 DOWNTO 0);
+	recording : OUT std_logic;
+	loop_start : OUT std_logic;
+	Imm_start : OUT std_logic;
+	CurrState : OUT std_logic_vector(2 DOWNTO 0);
+	ENDMemAddress : OUT std_logic_vector(17 DOWNTO 0);
+	currentMemAddress : OUT std_logic_vector(17 DOWNTO 0);
+	Ch0Activate : OUT std_logic;
+	Ch1Activate : OUT std_logic;
+	Ch2Activate : OUT std_logic;
+	Ch3Activate : OUT std_logic
 	);
-END Looper_integrator;
+END LooperSM;
 
-ARCHITECTURE structure OF Looper_integrator IS
+ARCHITECTURE structure OF LooperSM IS
 SIGNAL gnd : std_logic := '0';
 SIGNAL vcc : std_logic := '1';
 SIGNAL unknown : std_logic := 'X';
@@ -57,756 +72,399 @@ SIGNAL devpor : std_logic := '1';
 SIGNAL ww_devoe : std_logic;
 SIGNAL ww_devclrn : std_logic;
 SIGNAL ww_devpor : std_logic;
-SIGNAL ww_resetN : std_logic;
 SIGNAL ww_clk : std_logic;
-SIGNAL ww_din : std_logic_vector(15 DOWNTO 0);
-SIGNAL ww_ActiveCh : std_logic_vector(2 DOWNTO 0);
-SIGNAL ww_dout_new : std_logic;
-SIGNAL ww_dout : std_logic_vector(15 DOWNTO 0);
-SIGNAL \dout_new~output_o\ : std_logic;
-SIGNAL \dout[0]~output_o\ : std_logic;
-SIGNAL \dout[1]~output_o\ : std_logic;
-SIGNAL \dout[2]~output_o\ : std_logic;
-SIGNAL \dout[3]~output_o\ : std_logic;
-SIGNAL \dout[4]~output_o\ : std_logic;
-SIGNAL \dout[5]~output_o\ : std_logic;
-SIGNAL \dout[6]~output_o\ : std_logic;
-SIGNAL \dout[7]~output_o\ : std_logic;
-SIGNAL \dout[8]~output_o\ : std_logic;
-SIGNAL \dout[9]~output_o\ : std_logic;
-SIGNAL \dout[10]~output_o\ : std_logic;
-SIGNAL \dout[11]~output_o\ : std_logic;
-SIGNAL \dout[12]~output_o\ : std_logic;
-SIGNAL \dout[13]~output_o\ : std_logic;
-SIGNAL \dout[14]~output_o\ : std_logic;
-SIGNAL \dout[15]~output_o\ : std_logic;
+SIGNAL ww_ResetN : std_logic;
+SIGNAL ww_KB_Selchannel : std_logic_vector(1 DOWNTO 0);
+SIGNAL ww_KB_RecOnMet : std_logic;
+SIGNAL ww_KB_PLAY : std_logic;
+SIGNAL ww_KB_ALLPLAY : std_logic;
+SIGNAL ww_KB_REC : std_logic;
+SIGNAL ww_KB_STOP : std_logic;
+SIGNAL ww_KB_ClearCH : std_logic;
+SIGNAL ww_KB_IMMstart : std_logic;
+SIGNAL ww_recSel : std_logic_vector(1 DOWNTO 0);
+SIGNAL ww_recording : std_logic;
+SIGNAL ww_loop_start : std_logic;
+SIGNAL ww_Imm_start : std_logic;
+SIGNAL ww_CurrState : std_logic_vector(2 DOWNTO 0);
+SIGNAL ww_ENDMemAddress : std_logic_vector(17 DOWNTO 0);
+SIGNAL ww_currentMemAddress : std_logic_vector(17 DOWNTO 0);
+SIGNAL ww_Ch0Activate : std_logic;
+SIGNAL ww_Ch1Activate : std_logic;
+SIGNAL ww_Ch2Activate : std_logic;
+SIGNAL ww_Ch3Activate : std_logic;
+SIGNAL \KB_RecOnMet~input_o\ : std_logic;
+SIGNAL \KB_IMMstart~input_o\ : std_logic;
+SIGNAL \recSel[0]~output_o\ : std_logic;
+SIGNAL \recSel[1]~output_o\ : std_logic;
+SIGNAL \recording~output_o\ : std_logic;
+SIGNAL \loop_start~output_o\ : std_logic;
+SIGNAL \Imm_start~output_o\ : std_logic;
+SIGNAL \CurrState[0]~output_o\ : std_logic;
+SIGNAL \CurrState[1]~output_o\ : std_logic;
+SIGNAL \CurrState[2]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[0]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[1]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[2]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[3]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[4]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[5]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[6]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[7]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[8]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[9]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[10]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[11]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[12]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[13]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[14]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[15]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[16]~output_o\ : std_logic;
+SIGNAL \ENDMemAddress[17]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[0]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[1]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[2]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[3]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[4]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[5]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[6]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[7]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[8]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[9]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[10]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[11]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[12]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[13]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[14]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[15]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[16]~output_o\ : std_logic;
+SIGNAL \currentMemAddress[17]~output_o\ : std_logic;
+SIGNAL \Ch0Activate~output_o\ : std_logic;
+SIGNAL \Ch1Activate~output_o\ : std_logic;
+SIGNAL \Ch2Activate~output_o\ : std_logic;
+SIGNAL \Ch3Activate~output_o\ : std_logic;
 SIGNAL \clk~input_o\ : std_logic;
-SIGNAL \resetN~input_o\ : std_logic;
-SIGNAL \counter[0]~_wirecell_combout\ : std_logic;
-SIGNAL \Add1~0_combout\ : std_logic;
+SIGNAL \KB_Selchannel[0]~input_o\ : std_logic;
+SIGNAL \KB_REC~input_o\ : std_logic;
+SIGNAL \KB_PLAY~input_o\ : std_logic;
+SIGNAL \KB_ALLPLAY~input_o\ : std_logic;
+SIGNAL \Add3~1_sumout\ : std_logic;
+SIGNAL \ResetN~input_o\ : std_logic;
+SIGNAL \Add3~2\ : std_logic;
+SIGNAL \Add3~5_sumout\ : std_logic;
+SIGNAL \Add3~6\ : std_logic;
+SIGNAL \Add3~9_sumout\ : std_logic;
+SIGNAL \Add3~10\ : std_logic;
+SIGNAL \Add3~13_sumout\ : std_logic;
+SIGNAL \Add3~14\ : std_logic;
+SIGNAL \Add3~17_sumout\ : std_logic;
+SIGNAL \Add3~18\ : std_logic;
+SIGNAL \Add3~21_sumout\ : std_logic;
+SIGNAL \Add3~22\ : std_logic;
+SIGNAL \Add3~25_sumout\ : std_logic;
+SIGNAL \Add3~26\ : std_logic;
+SIGNAL \Add3~29_sumout\ : std_logic;
+SIGNAL \Add3~30\ : std_logic;
+SIGNAL \Add3~33_sumout\ : std_logic;
+SIGNAL \Add3~34\ : std_logic;
+SIGNAL \Add3~37_sumout\ : std_logic;
+SIGNAL \Add3~38\ : std_logic;
+SIGNAL \Add3~41_sumout\ : std_logic;
+SIGNAL \Add3~42\ : std_logic;
+SIGNAL \Add3~45_sumout\ : std_logic;
+SIGNAL \Add3~46\ : std_logic;
+SIGNAL \Add3~49_sumout\ : std_logic;
+SIGNAL \Add3~50\ : std_logic;
+SIGNAL \Add3~53_sumout\ : std_logic;
+SIGNAL \Add3~54\ : std_logic;
+SIGNAL \Add3~57_sumout\ : std_logic;
+SIGNAL \Add3~58\ : std_logic;
+SIGNAL \Add3~61_sumout\ : std_logic;
+SIGNAL \Add3~62\ : std_logic;
+SIGNAL \Add3~65_sumout\ : std_logic;
+SIGNAL \Add3~66\ : std_logic;
+SIGNAL \Add3~69_sumout\ : std_logic;
 SIGNAL \Equal0~0_combout\ : std_logic;
-SIGNAL \din[15]~input_o\ : std_logic;
-SIGNAL \din[14]~input_o\ : std_logic;
-SIGNAL \din[13]~input_o\ : std_logic;
-SIGNAL \din[12]~input_o\ : std_logic;
-SIGNAL \din[11]~input_o\ : std_logic;
-SIGNAL \din[10]~input_o\ : std_logic;
-SIGNAL \din[9]~input_o\ : std_logic;
-SIGNAL \din[8]~input_o\ : std_logic;
-SIGNAL \din[7]~input_o\ : std_logic;
-SIGNAL \din[6]~input_o\ : std_logic;
-SIGNAL \din[5]~input_o\ : std_logic;
-SIGNAL \din[4]~input_o\ : std_logic;
-SIGNAL \din[3]~input_o\ : std_logic;
-SIGNAL \din[2]~input_o\ : std_logic;
-SIGNAL \din[1]~input_o\ : std_logic;
-SIGNAL \din[0]~input_o\ : std_logic;
-SIGNAL \Add0~125_sumout\ : std_logic;
-SIGNAL \Add0~126\ : std_logic;
-SIGNAL \Add0~117_sumout\ : std_logic;
-SIGNAL \Add0~118\ : std_logic;
-SIGNAL \Add0~93_sumout\ : std_logic;
-SIGNAL \Add0~94\ : std_logic;
-SIGNAL \Add0~85_sumout\ : std_logic;
-SIGNAL \Add0~86\ : std_logic;
+SIGNAL \Equal0~1_combout\ : std_logic;
+SIGNAL \Equal0~2_combout\ : std_logic;
+SIGNAL \process_0~0_combout\ : std_logic;
+SIGNAL \Selector3~2_combout\ : std_logic;
+SIGNAL \KB_ClearCH~input_o\ : std_logic;
+SIGNAL \KB_STOP~input_o\ : std_logic;
+SIGNAL \recCounter~0_combout\ : std_logic;
+SIGNAL \KB_Selchannel[1]~input_o\ : std_logic;
+SIGNAL \ch0HT~0_combout\ : std_logic;
+SIGNAL \Selector165~0_combout\ : std_logic;
+SIGNAL \state.REC_OTHER~q\ : std_logic;
+SIGNAL \Selector136~0_combout\ : std_logic;
+SIGNAL \Selector1~0_combout\ : std_logic;
+SIGNAL \arch_recSel[0]~0_combout\ : std_logic;
+SIGNAL \Mux32~0_combout\ : std_logic;
+SIGNAL \Equal0~3_combout\ : std_logic;
+SIGNAL \Selector137~0_combout\ : std_logic;
+SIGNAL \Selector136~1_combout\ : std_logic;
+SIGNAL \ch0HT~q\ : std_logic;
+SIGNAL \ch2HT~0_combout\ : std_logic;
+SIGNAL \Mux51~0_combout\ : std_logic;
+SIGNAL \Selector138~0_combout\ : std_logic;
+SIGNAL \ch2HT~q\ : std_logic;
+SIGNAL \ch1HT~0_combout\ : std_logic;
+SIGNAL \Mux51~1_combout\ : std_logic;
+SIGNAL \Selector137~1_combout\ : std_logic;
+SIGNAL \ch1HT~q\ : std_logic;
+SIGNAL \ch3HT~0_combout\ : std_logic;
+SIGNAL \Mux51~2_combout\ : std_logic;
+SIGNAL \Selector139~0_combout\ : std_logic;
+SIGNAL \ch3HT~q\ : std_logic;
+SIGNAL \process_0~1_combout\ : std_logic;
+SIGNAL \recCounter~1_combout\ : std_logic;
+SIGNAL \recCounter~2_combout\ : std_logic;
+SIGNAL \Selector142~0_combout\ : std_logic;
+SIGNAL \Selector141~0_combout\ : std_logic;
+SIGNAL \Selector142~1_combout\ : std_logic;
+SIGNAL \Selector141~1_combout\ : std_logic;
+SIGNAL \Selector140~0_combout\ : std_logic;
+SIGNAL \Selector140~1_combout\ : std_logic;
+SIGNAL \Selector164~3_combout\ : std_logic;
+SIGNAL \Selector164~7_combout\ : std_logic;
+SIGNAL \state.PRE_REC~0_combout\ : std_logic;
+SIGNAL \state.PRE_REC~q\ : std_logic;
+SIGNAL \Selector164~2_combout\ : std_logic;
+SIGNAL \Selector162~0_combout\ : std_logic;
+SIGNAL \state.REC_FIRST~q\ : std_logic;
+SIGNAL \Selector154~0_combout\ : std_logic;
+SIGNAL \Add0~1_sumout\ : std_logic;
+SIGNAL \Selector160~0_combout\ : std_logic;
+SIGNAL \Equal6~0_combout\ : std_logic;
+SIGNAL \Add0~2\ : std_logic;
+SIGNAL \Add0~5_sumout\ : std_logic;
+SIGNAL \Selector159~0_combout\ : std_logic;
+SIGNAL \Equal6~1_combout\ : std_logic;
+SIGNAL \Add0~6\ : std_logic;
+SIGNAL \Add0~26\ : std_logic;
+SIGNAL \Add0~9_sumout\ : std_logic;
+SIGNAL \Selector157~0_combout\ : std_logic;
+SIGNAL \Equal6~2_combout\ : std_logic;
+SIGNAL \Add0~10\ : std_logic;
+SIGNAL \Add0~13_sumout\ : std_logic;
+SIGNAL \Selector156~0_combout\ : std_logic;
+SIGNAL \Equal6~3_combout\ : std_logic;
+SIGNAL \Add0~14\ : std_logic;
+SIGNAL \Add0~30\ : std_logic;
+SIGNAL \Add0~34\ : std_logic;
 SIGNAL \Add0~17_sumout\ : std_logic;
+SIGNAL \Selector153~0_combout\ : std_logic;
+SIGNAL \Equal6~4_combout\ : std_logic;
 SIGNAL \Add0~18\ : std_logic;
 SIGNAL \Add0~21_sumout\ : std_logic;
-SIGNAL \Add0~22\ : std_logic;
+SIGNAL \Selector152~0_combout\ : std_logic;
+SIGNAL \Equal6~5_combout\ : std_logic;
+SIGNAL \Equal6~6_combout\ : std_logic;
 SIGNAL \Add0~25_sumout\ : std_logic;
-SIGNAL \Add0~26\ : std_logic;
+SIGNAL \Selector158~0_combout\ : std_logic;
+SIGNAL \memEndAddr[2]~0_combout\ : std_logic;
+SIGNAL \Equal6~7_combout\ : std_logic;
 SIGNAL \Add0~29_sumout\ : std_logic;
-SIGNAL \Add0~30\ : std_logic;
+SIGNAL \Selector155~0_combout\ : std_logic;
+SIGNAL \memEndAddr[5]~1_combout\ : std_logic;
+SIGNAL \Equal6~8_combout\ : std_logic;
 SIGNAL \Add0~33_sumout\ : std_logic;
-SIGNAL \Add0~34\ : std_logic;
+SIGNAL \Selector154~1_combout\ : std_logic;
+SIGNAL \memEndAddr[6]~2_combout\ : std_logic;
+SIGNAL \Equal6~9_combout\ : std_logic;
+SIGNAL \Add0~22\ : std_logic;
 SIGNAL \Add0~37_sumout\ : std_logic;
+SIGNAL \Selector151~0_combout\ : std_logic;
+SIGNAL \Equal6~10_combout\ : std_logic;
 SIGNAL \Add0~38\ : std_logic;
 SIGNAL \Add0~41_sumout\ : std_logic;
+SIGNAL \Selector150~0_combout\ : std_logic;
+SIGNAL \Equal6~11_combout\ : std_logic;
 SIGNAL \Add0~42\ : std_logic;
+SIGNAL \Add0~58\ : std_logic;
+SIGNAL \Add0~62\ : std_logic;
 SIGNAL \Add0~45_sumout\ : std_logic;
+SIGNAL \Selector147~0_combout\ : std_logic;
+SIGNAL \Equal6~12_combout\ : std_logic;
 SIGNAL \Add0~46\ : std_logic;
 SIGNAL \Add0~49_sumout\ : std_logic;
+SIGNAL \Selector146~0_combout\ : std_logic;
+SIGNAL \Equal6~13_combout\ : std_logic;
 SIGNAL \Add0~50\ : std_logic;
-SIGNAL \Add0~53_sumout\ : std_logic;
-SIGNAL \Add0~54\ : std_logic;
-SIGNAL \Add0~57_sumout\ : std_logic;
-SIGNAL \Add0~58\ : std_logic;
-SIGNAL \Add0~61_sumout\ : std_logic;
-SIGNAL \Add0~62\ : std_logic;
-SIGNAL \Add0~65_sumout\ : std_logic;
 SIGNAL \Add0~66\ : std_logic;
-SIGNAL \Add0~69_sumout\ : std_logic;
 SIGNAL \Add0~70\ : std_logic;
-SIGNAL \Add0~73_sumout\ : std_logic;
-SIGNAL \Add0~74\ : std_logic;
-SIGNAL \Add0~77_sumout\ : std_logic;
-SIGNAL \Add0~78\ : std_logic;
-SIGNAL \Add0~97_sumout\ : std_logic;
-SIGNAL \Add0~98\ : std_logic;
-SIGNAL \Add0~101_sumout\ : std_logic;
-SIGNAL \Add0~102\ : std_logic;
-SIGNAL \Add0~105_sumout\ : std_logic;
-SIGNAL \Add0~106\ : std_logic;
-SIGNAL \Add0~109_sumout\ : std_logic;
-SIGNAL \Add0~110\ : std_logic;
-SIGNAL \Add0~121_sumout\ : std_logic;
-SIGNAL \Add0~122\ : std_logic;
-SIGNAL \Add0~113_sumout\ : std_logic;
-SIGNAL \Add0~114\ : std_logic;
-SIGNAL \Add0~89_sumout\ : std_logic;
-SIGNAL \Add0~90\ : std_logic;
-SIGNAL \Add0~81_sumout\ : std_logic;
-SIGNAL \Add0~82\ : std_logic;
-SIGNAL \Add0~13_sumout\ : std_logic;
-SIGNAL \Add0~14\ : std_logic;
-SIGNAL \Add0~9_sumout\ : std_logic;
-SIGNAL \Add0~10\ : std_logic;
-SIGNAL \Add0~5_sumout\ : std_logic;
-SIGNAL \Add0~6\ : std_logic;
-SIGNAL \Add0~1_sumout\ : std_logic;
-SIGNAL \ActiveCh[2]~input_o\ : std_logic;
-SIGNAL \ActiveCh[0]~input_o\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~94\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~90\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~70\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~66\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~2\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~30\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~34\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~38\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~42\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~46\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~50\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~54\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~58\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~62\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~74\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~78\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~82\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~86\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~98\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~102\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~106\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~110\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~114\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~118\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~122\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~2\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~3\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\ : std_logic;
-SIGNAL \ActiveCh[1]~input_o\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~7\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~11\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[6]~140_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[0]~141_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~7\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~11\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~15\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[6]~142_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[5]~136_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[12]~139_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[12]~143_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[11]~137_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[10]~131_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[10]~132_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_24~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~10_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[17]~135_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[17]~138_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[16]~133_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[15]~126_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[15]~127_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_27~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[22]~130_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[22]~134_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[21]~128_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[20]~121_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[20]~122_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_28~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[27]~125_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[27]~129_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[26]~123_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[25]~116_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[25]~117_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_29~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[32]~120_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[32]~124_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[31]~118_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[30]~111_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[30]~112_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_30~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~10_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[37]~115_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[37]~119_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[36]~113_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[35]~106_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[35]~107_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_31~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[42]~110_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[42]~114_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[41]~108_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[40]~101_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[40]~102_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_32~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[47]~105_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[47]~109_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[46]~103_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[45]~96_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[45]~97_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_3~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[52]~100_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[52]~104_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[51]~98_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[50]~91_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[50]~92_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_4~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~10_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[57]~95_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[57]~99_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[56]~93_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[55]~86_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[55]~87_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_5~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[62]~90_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[62]~94_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[61]~88_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[60]~76_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[60]~77_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_6~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[67]~85_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[67]~89_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[66]~78_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[65]~71_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[65]~72_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_7~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[72]~75_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[72]~79_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[71]~73_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[70]~66_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[70]~67_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_8~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[77]~70_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[77]~74_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[76]~68_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[75]~61_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[75]~62_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_9~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[82]~65_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[82]~69_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[81]~63_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[80]~56_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[80]~57_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_10~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[87]~60_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[87]~64_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[86]~58_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[85]~51_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[85]~52_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_11~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[92]~55_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[92]~59_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[91]~53_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[90]~46_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[90]~47_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_12~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[97]~50_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[97]~54_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[96]~48_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[95]~41_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[95]~42_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_14~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[102]~45_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[102]~49_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[101]~43_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[100]~36_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[100]~37_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_15~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[107]~40_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[107]~44_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[106]~38_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[105]~31_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[105]~32_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_16~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[112]~35_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[112]~39_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[111]~33_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[110]~26_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[110]~27_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_17~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[117]~30_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[117]~34_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[116]~28_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[115]~21_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[115]~22_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_18~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[122]~25_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[122]~29_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[121]~23_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[120]~16_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[120]~17_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_19~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[127]~20_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[127]~24_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[126]~18_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[125]~11_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[125]~12_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_20~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[132]~15_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[132]~19_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[131]~13_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[130]~6_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[130]~7_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_21~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[137]~10_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[137]~14_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[136]~8_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[135]~1_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[135]~2_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_22~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[142]~5_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[142]~9_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[141]~3_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[140]~80_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[140]~81_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_23~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[147]~0_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[147]~4_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[146]~82_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[145]~83_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|StageOut[145]~84_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_25~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|op_1~93_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~26_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~22_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~18_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~14_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~10_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~6_cout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|op_26~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[0]~0_combout\ : std_logic;
-SIGNAL \Equal1~0_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~2\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[1]~1_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~6\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[2]~2_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~10\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[3]~3_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~14\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[4]~4_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~18\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[5]~5_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~22\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[6]~6_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~26\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~29_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[7]~7_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~30\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~33_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[8]~8_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~34\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~37_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[9]~9_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~38\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~41_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[10]~10_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~42\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~45_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[11]~11_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~46\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~49_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[12]~12_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~50\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~53_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[13]~13_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~54\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~57_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[14]~14_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~58\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|op_1~61_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|quotient[15]~15_combout\ : std_logic;
-SIGNAL proc_out : std_logic_vector(15 DOWNTO 0);
-SIGNAL counter : std_logic_vector(1 DOWNTO 0);
-SIGNAL sum : std_logic_vector(31 DOWNTO 0);
-SIGNAL \Div0|auto_generated|divider|divider|selnose\ : std_logic_vector(1055 DOWNTO 0);
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_23~9_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~9_sumout\ : std_logic;
-SIGNAL ALT_INV_sum : std_logic_vector(31 DOWNTO 0);
-SIGNAL \ALT_INV_Add0~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~61_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~57_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~53_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~49_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~45_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~41_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~37_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~33_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~29_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\ : std_logic;
-SIGNAL ALT_INV_counter : std_logic_vector(1 DOWNTO 0);
-SIGNAL \Div0|auto_generated|divider|ALT_INV_op_1~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_26~1_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_6~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~69_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~85_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_25~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_23~21_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~81_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~77_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~73_sumout\ : std_logic;
+SIGNAL \Add0~53_sumout\ : std_logic;
+SIGNAL \Selector143~1_combout\ : std_logic;
+SIGNAL \Selector143~0_combout\ : std_logic;
+SIGNAL \Equal6~14_combout\ : std_logic;
+SIGNAL \Add0~57_sumout\ : std_logic;
+SIGNAL \Selector149~0_combout\ : std_logic;
+SIGNAL \Equal6~15_combout\ : std_logic;
+SIGNAL \Add0~61_sumout\ : std_logic;
+SIGNAL \Selector148~0_combout\ : std_logic;
+SIGNAL \Equal6~16_combout\ : std_logic;
+SIGNAL \Add0~65_sumout\ : std_logic;
+SIGNAL \Selector145~0_combout\ : std_logic;
+SIGNAL \Add0~69_sumout\ : std_logic;
+SIGNAL \Selector144~0_combout\ : std_logic;
+SIGNAL \Equal6~17_combout\ : std_logic;
+SIGNAL \Selector0~0_combout\ : std_logic;
+SIGNAL \arch_loop_start~0_combout\ : std_logic;
+SIGNAL \arch_loop_start~1_combout\ : std_logic;
+SIGNAL \arch_loop_start~q\ : std_logic;
+SIGNAL \Selector163~0_combout\ : std_logic;
+SIGNAL \Selector164~4_combout\ : std_logic;
+SIGNAL \Selector164~5_combout\ : std_logic;
+SIGNAL \Selector164~6_combout\ : std_logic;
+SIGNAL \Selector163~1_combout\ : std_logic;
+SIGNAL \state.CH_CONTROL~q\ : std_logic;
+SIGNAL \Selector161~0_combout\ : std_logic;
+SIGNAL \state.EMPTY~q\ : std_logic;
+SIGNAL \Selector2~0_combout\ : std_logic;
+SIGNAL \Selector3~0_combout\ : std_logic;
+SIGNAL \Selector3~1_combout\ : std_logic;
+SIGNAL \arch_recording~q\ : std_logic;
+SIGNAL \stateNum~0_combout\ : std_logic;
+SIGNAL \stateNum~1_combout\ : std_logic;
+SIGNAL \stateNum[2]~3_combout\ : std_logic;
+SIGNAL \arch_Ch0END[0]~0_combout\ : std_logic;
+SIGNAL \Selector29~0_combout\ : std_logic;
+SIGNAL \LessThan0~0_combout\ : std_logic;
+SIGNAL \Selector30~0_combout\ : std_logic;
+SIGNAL \LessThan0~1_combout\ : std_logic;
+SIGNAL \LessThan0~2_combout\ : std_logic;
+SIGNAL \Selector35~0_combout\ : std_logic;
+SIGNAL \LessThan0~3_combout\ : std_logic;
+SIGNAL \Selector33~0_combout\ : std_logic;
+SIGNAL \LessThan0~4_combout\ : std_logic;
+SIGNAL \LessThan0~5_combout\ : std_logic;
+SIGNAL \LessThan0~6_combout\ : std_logic;
+SIGNAL \LessThan0~7_combout\ : std_logic;
+SIGNAL \LessThan0~8_combout\ : std_logic;
+SIGNAL \LessThan0~9_combout\ : std_logic;
+SIGNAL \LessThan0~10_combout\ : std_logic;
+SIGNAL \LessThan0~11_combout\ : std_logic;
+SIGNAL \LessThan0~12_combout\ : std_logic;
+SIGNAL \LessThan0~13_combout\ : std_logic;
+SIGNAL \LessThan0~14_combout\ : std_logic;
+SIGNAL \LessThan0~15_combout\ : std_logic;
+SIGNAL \LessThan0~16_combout\ : std_logic;
+SIGNAL \LessThan0~17_combout\ : std_logic;
+SIGNAL \LessThan0~18_combout\ : std_logic;
+SIGNAL \Selector4~0_combout\ : std_logic;
+SIGNAL \Selector4~1_combout\ : std_logic;
+SIGNAL \arch_Ch0ACT~0_combout\ : std_logic;
+SIGNAL \Selector132~0_combout\ : std_logic;
+SIGNAL \Selector132~1_combout\ : std_logic;
+SIGNAL \Selector132~2_combout\ : std_logic;
+SIGNAL \arch_Ch0ACT~q\ : std_logic;
+SIGNAL \process_0~2_combout\ : std_logic;
+SIGNAL \process_0~3_combout\ : std_logic;
+SIGNAL \process_0~4_combout\ : std_logic;
+SIGNAL \arch_Ch0DEC~q\ : std_logic;
+SIGNAL \arch_Ch1END[5]~0_combout\ : std_logic;
+SIGNAL \LessThan1~0_combout\ : std_logic;
+SIGNAL \LessThan1~1_combout\ : std_logic;
+SIGNAL \LessThan1~2_combout\ : std_logic;
+SIGNAL \LessThan1~3_combout\ : std_logic;
+SIGNAL \LessThan1~4_combout\ : std_logic;
+SIGNAL \LessThan1~5_combout\ : std_logic;
+SIGNAL \LessThan1~6_combout\ : std_logic;
+SIGNAL \LessThan1~7_combout\ : std_logic;
+SIGNAL \LessThan1~8_combout\ : std_logic;
+SIGNAL \LessThan1~9_combout\ : std_logic;
+SIGNAL \LessThan1~10_combout\ : std_logic;
+SIGNAL \LessThan1~11_combout\ : std_logic;
+SIGNAL \LessThan1~12_combout\ : std_logic;
+SIGNAL \LessThan1~13_combout\ : std_logic;
+SIGNAL \LessThan1~14_combout\ : std_logic;
+SIGNAL \LessThan1~15_combout\ : std_logic;
+SIGNAL \LessThan1~16_combout\ : std_logic;
+SIGNAL \LessThan1~17_combout\ : std_logic;
+SIGNAL \LessThan1~18_combout\ : std_logic;
+SIGNAL \Selector36~0_combout\ : std_logic;
+SIGNAL \Selector36~1_combout\ : std_logic;
+SIGNAL \arch_Ch1ACT~0_combout\ : std_logic;
+SIGNAL \Selector133~0_combout\ : std_logic;
+SIGNAL \Selector133~1_combout\ : std_logic;
+SIGNAL \Selector133~2_combout\ : std_logic;
+SIGNAL \arch_Ch1ACT~q\ : std_logic;
+SIGNAL \process_0~5_combout\ : std_logic;
+SIGNAL \process_0~6_combout\ : std_logic;
+SIGNAL \process_0~7_combout\ : std_logic;
+SIGNAL \arch_Ch1DEC~q\ : std_logic;
+SIGNAL \arch_Ch2END[6]~0_combout\ : std_logic;
+SIGNAL \LessThan2~0_combout\ : std_logic;
+SIGNAL \LessThan2~1_combout\ : std_logic;
+SIGNAL \LessThan2~2_combout\ : std_logic;
+SIGNAL \LessThan2~3_combout\ : std_logic;
+SIGNAL \LessThan2~4_combout\ : std_logic;
+SIGNAL \LessThan2~5_combout\ : std_logic;
+SIGNAL \LessThan2~6_combout\ : std_logic;
+SIGNAL \LessThan2~7_combout\ : std_logic;
+SIGNAL \LessThan2~8_combout\ : std_logic;
+SIGNAL \LessThan2~9_combout\ : std_logic;
+SIGNAL \LessThan2~10_combout\ : std_logic;
+SIGNAL \LessThan2~11_combout\ : std_logic;
+SIGNAL \LessThan2~12_combout\ : std_logic;
+SIGNAL \LessThan2~13_combout\ : std_logic;
+SIGNAL \LessThan2~14_combout\ : std_logic;
+SIGNAL \LessThan2~15_combout\ : std_logic;
+SIGNAL \LessThan2~16_combout\ : std_logic;
+SIGNAL \LessThan2~17_combout\ : std_logic;
+SIGNAL \LessThan2~18_combout\ : std_logic;
+SIGNAL \Selector68~0_combout\ : std_logic;
+SIGNAL \Selector68~1_combout\ : std_logic;
+SIGNAL \arch_Ch2ACT~0_combout\ : std_logic;
+SIGNAL \Selector134~0_combout\ : std_logic;
+SIGNAL \Selector134~1_combout\ : std_logic;
+SIGNAL \Selector134~2_combout\ : std_logic;
+SIGNAL \arch_Ch2ACT~q\ : std_logic;
+SIGNAL \process_0~8_combout\ : std_logic;
+SIGNAL \process_0~9_combout\ : std_logic;
+SIGNAL \process_0~10_combout\ : std_logic;
+SIGNAL \arch_Ch2DEC~q\ : std_logic;
+SIGNAL \arch_Ch3END[5]~0_combout\ : std_logic;
+SIGNAL \LessThan3~0_combout\ : std_logic;
+SIGNAL \LessThan3~1_combout\ : std_logic;
+SIGNAL \LessThan3~2_combout\ : std_logic;
+SIGNAL \LessThan3~3_combout\ : std_logic;
+SIGNAL \LessThan3~4_combout\ : std_logic;
+SIGNAL \LessThan3~5_combout\ : std_logic;
+SIGNAL \LessThan3~6_combout\ : std_logic;
+SIGNAL \LessThan3~7_combout\ : std_logic;
+SIGNAL \LessThan3~8_combout\ : std_logic;
+SIGNAL \LessThan3~9_combout\ : std_logic;
+SIGNAL \LessThan3~10_combout\ : std_logic;
+SIGNAL \LessThan3~11_combout\ : std_logic;
+SIGNAL \LessThan3~12_combout\ : std_logic;
+SIGNAL \LessThan3~13_combout\ : std_logic;
+SIGNAL \LessThan3~14_combout\ : std_logic;
+SIGNAL \LessThan3~15_combout\ : std_logic;
+SIGNAL \LessThan3~16_combout\ : std_logic;
+SIGNAL \LessThan3~17_combout\ : std_logic;
+SIGNAL \LessThan3~18_combout\ : std_logic;
+SIGNAL \Selector100~0_combout\ : std_logic;
+SIGNAL \Selector100~1_combout\ : std_logic;
+SIGNAL \arch_Ch3ACT~0_combout\ : std_logic;
+SIGNAL \Selector135~0_combout\ : std_logic;
+SIGNAL \Selector135~1_combout\ : std_logic;
+SIGNAL \Selector135~2_combout\ : std_logic;
+SIGNAL \arch_Ch3ACT~q\ : std_logic;
+SIGNAL \process_0~11_combout\ : std_logic;
+SIGNAL \process_0~12_combout\ : std_logic;
+SIGNAL \process_0~13_combout\ : std_logic;
+SIGNAL \arch_Ch3DEC~q\ : std_logic;
+SIGNAL currMemAddress : std_logic_vector(17 DOWNTO 0);
+SIGNAL arch_Ch0END : std_logic_vector(31 DOWNTO 0);
+SIGNAL stateNum : std_logic_vector(31 DOWNTO 0);
+SIGNAL arch_Ch1END : std_logic_vector(31 DOWNTO 0);
+SIGNAL arch_Ch2END : std_logic_vector(31 DOWNTO 0);
+SIGNAL arch_Ch3END : std_logic_vector(31 DOWNTO 0);
+SIGNAL arch_recSel : std_logic_vector(1 DOWNTO 0);
+SIGNAL endAddr : std_logic_vector(17 DOWNTO 0);
+SIGNAL memEndAddr : std_logic_vector(17 DOWNTO 0);
+SIGNAL recCounter : std_logic_vector(2 DOWNTO 0);
 SIGNAL \ALT_INV_Add0~69_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~65_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~61_sumout\ : std_logic;
@@ -820,416 +478,229 @@ SIGNAL \ALT_INV_Add0~33_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~29_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~25_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~65_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_22~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_25~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_23~17_sumout\ : std_logic;
 SIGNAL \ALT_INV_Add0~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~61_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_6~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_5~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_8~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_7~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~57_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_7~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_6~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_9~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_8~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~53_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_8~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_7~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_10~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_9~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~49_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_9~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_8~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_11~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_10~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~45_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_10~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_9~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_12~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_11~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~41_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_11~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_10~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_14~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_12~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~37_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_12~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_11~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_15~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_14~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~33_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_14~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_12~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_16~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_15~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~29_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_15~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_14~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_17~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_16~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_16~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_15~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_18~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_17~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_17~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_16~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_19~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_18~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_18~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_17~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_20~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_19~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_19~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_18~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_21~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_20~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_20~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_19~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_22~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_21~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_21~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_20~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_23~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_22~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_22~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_21~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_25~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_27~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_30~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_29~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~105_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_29~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_28~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_31~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_30~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~101_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_30~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_29~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_32~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_31~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~97_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_31~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_30~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_3~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_32~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~93_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~117_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~113_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~109_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~105_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~101_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~97_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~89_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~93_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_25~21_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~89_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~85_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_32~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_31~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_4~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_3~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~81_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_3~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_32~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_5~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_4~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~77_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_4~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_3~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_6~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_5~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~73_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_5~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_4~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_7~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[112]~35_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[117]~34_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[111]~33_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~32_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~31_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[117]~30_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[122]~29_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[116]~28_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~27_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~26_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[122]~25_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[127]~24_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[121]~23_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~22_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~21_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[127]~20_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[132]~19_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[126]~18_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~17_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~16_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[132]~15_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[137]~14_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[131]~13_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~12_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~11_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[137]~10_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[142]~9_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[136]~8_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~7_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~6_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[142]~5_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[147]~4_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[141]~3_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~2_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~1_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[147]~0_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[1]~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[0]~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~125_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[1]~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_24~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[2]~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[0]~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~121_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[1]~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_27~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_24~13_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~117_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_24~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[0]~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_28~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_27~21_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~113_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_27~17_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_24~5_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_29~25_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_28~21_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~125_sumout\ : std_logic;
-SIGNAL \ALT_INV_Add0~121_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~109_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_op_28~9_sumout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_selnose\ : std_logic_vector(33 DOWNTO 0);
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[12]~143_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~142_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[0]~141_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~140_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[12]~139_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[17]~138_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[11]~137_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[5]~136_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[17]~135_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[22]~134_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[16]~133_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~132_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~131_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[22]~130_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[27]~129_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[21]~128_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~127_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~126_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[27]~125_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[32]~124_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[26]~123_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~122_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~121_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[32]~120_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[37]~119_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[31]~118_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~117_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~116_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[37]~115_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[42]~114_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[36]~113_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~112_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~111_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[42]~110_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[47]~109_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[41]~108_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~107_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~106_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[47]~105_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[52]~104_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[46]~103_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~102_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~101_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[52]~100_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[57]~99_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[51]~98_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~97_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~96_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[57]~95_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[62]~94_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[56]~93_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~92_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~91_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[62]~90_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[67]~89_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[61]~88_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~87_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~86_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[67]~85_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[145]~84_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[145]~83_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[146]~82_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~81_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~80_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[72]~79_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[66]~78_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~77_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~76_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[72]~75_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[77]~74_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[71]~73_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~72_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~71_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[77]~70_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[82]~69_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[76]~68_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~67_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~66_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[82]~65_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[87]~64_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[81]~63_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~62_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~61_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[87]~60_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[92]~59_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[86]~58_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~57_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~56_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[92]~55_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[97]~54_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[91]~53_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~52_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~51_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[97]~50_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[102]~49_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[96]~48_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~47_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~46_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[102]~45_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[107]~44_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[101]~43_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~42_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~41_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[107]~40_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[112]~39_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[106]~38_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~37_combout\ : std_logic;
-SIGNAL \Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~36_combout\ : std_logic;
-SIGNAL \ALT_INV_din[0]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[1]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[2]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[3]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[15]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[14]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[13]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[12]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[11]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[10]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[9]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[8]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[7]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[6]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[5]~input_o\ : std_logic;
-SIGNAL \ALT_INV_din[4]~input_o\ : std_logic;
-SIGNAL \ALT_INV_ActiveCh[1]~input_o\ : std_logic;
-SIGNAL \ALT_INV_ActiveCh[0]~input_o\ : std_logic;
-SIGNAL \ALT_INV_ActiveCh[2]~input_o\ : std_logic;
+SIGNAL \ALT_INV_Add0~9_sumout\ : std_logic;
+SIGNAL \ALT_INV_Add0~5_sumout\ : std_logic;
+SIGNAL \ALT_INV_Add0~1_sumout\ : std_logic;
+SIGNAL ALT_INV_currMemAddress : std_logic_vector(17 DOWNTO 0);
+SIGNAL \ALT_INV_state.CH_CONTROL~q\ : std_logic;
+SIGNAL \ALT_INV_state.EMPTY~q\ : std_logic;
+SIGNAL ALT_INV_stateNum : std_logic_vector(2 DOWNTO 0);
+SIGNAL \ALT_INV_arch_loop_start~q\ : std_logic;
+SIGNAL \ALT_INV_arch_recording~q\ : std_logic;
+SIGNAL ALT_INV_arch_recSel : std_logic_vector(1 DOWNTO 0);
+SIGNAL ALT_INV_arch_Ch3END : std_logic_vector(31 DOWNTO 0);
+SIGNAL ALT_INV_arch_Ch2END : std_logic_vector(31 DOWNTO 0);
+SIGNAL ALT_INV_arch_Ch1END : std_logic_vector(31 DOWNTO 0);
+SIGNAL ALT_INV_arch_Ch0END : std_logic_vector(31 DOWNTO 0);
+SIGNAL \ALT_INV_LessThan1~12_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~11_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~10_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~9_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~8_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~7_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~6_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~5_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~4_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~3_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~2_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~1_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~0_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~3_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~2_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch0ACT~q\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~18_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~17_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~16_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~15_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~14_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~13_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~12_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~11_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~10_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~9_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~8_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~7_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~6_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~5_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~4_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~3_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~2_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~1_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan0~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector154~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector155~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector158~0_combout\ : std_logic;
+SIGNAL \ALT_INV_stateNum~1_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_loop_start~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector0~0_combout\ : std_logic;
+SIGNAL ALT_INV_recCounter : std_logic_vector(2 DOWNTO 0);
+SIGNAL \ALT_INV_process_0~1_combout\ : std_logic;
+SIGNAL \ALT_INV_ch3HT~q\ : std_logic;
+SIGNAL \ALT_INV_ch1HT~q\ : std_logic;
+SIGNAL \ALT_INV_ch2HT~q\ : std_logic;
+SIGNAL \ALT_INV_ch0HT~q\ : std_logic;
+SIGNAL \ALT_INV_Equal6~17_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector144~0_combout\ : std_logic;
+SIGNAL ALT_INV_memEndAddr : std_logic_vector(17 DOWNTO 0);
+SIGNAL \ALT_INV_Selector145~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~16_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~15_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~14_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector143~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal0~3_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~13_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~12_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~11_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector150~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~10_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~9_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~8_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~7_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~6_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~5_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~4_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~3_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~2_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal6~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector154~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector163~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector3~0_combout\ : std_logic;
+SIGNAL \ALT_INV_state.PRE_REC~q\ : std_logic;
+SIGNAL \ALT_INV_state.REC_OTHER~q\ : std_logic;
+SIGNAL \ALT_INV_state.REC_FIRST~q\ : std_logic;
+SIGNAL \ALT_INV_process_0~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal0~2_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal0~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Equal0~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector134~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector134~0_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch2ACT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector68~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector133~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector133~0_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch1ACT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector36~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector132~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector132~0_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch0ACT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector4~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector140~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Mux51~2_combout\ : std_logic;
+SIGNAL \ALT_INV_ch3HT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Mux51~1_combout\ : std_logic;
+SIGNAL \ALT_INV_ch1HT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Mux51~0_combout\ : std_logic;
+SIGNAL \ALT_INV_ch2HT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector137~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Mux32~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector136~0_combout\ : std_logic;
+SIGNAL \ALT_INV_ch0HT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector141~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector142~0_combout\ : std_logic;
+SIGNAL \ALT_INV_recCounter~2_combout\ : std_logic;
+SIGNAL \ALT_INV_recCounter~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector164~7_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector3~2_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector164~6_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector164~5_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector164~4_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector164~3_combout\ : std_logic;
+SIGNAL \ALT_INV_recCounter~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector164~2_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~12_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~11_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch3ACT~q\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~18_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~17_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~16_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~15_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~14_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~13_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~12_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~11_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~10_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~9_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~8_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~7_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~6_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~5_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~4_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~3_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~2_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~1_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan3~0_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~9_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~8_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch2ACT~q\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~18_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~17_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~16_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~15_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~14_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~13_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~12_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~11_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~10_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~9_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~8_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~7_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~6_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~5_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~4_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~3_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~2_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~1_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan2~0_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~6_combout\ : std_logic;
+SIGNAL \ALT_INV_process_0~5_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch1ACT~q\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~18_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~17_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~16_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~15_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~14_combout\ : std_logic;
+SIGNAL \ALT_INV_LessThan1~13_combout\ : std_logic;
+SIGNAL \ALT_INV_KB_STOP~input_o\ : std_logic;
+SIGNAL \ALT_INV_KB_ClearCH~input_o\ : std_logic;
+SIGNAL \ALT_INV_KB_ALLPLAY~input_o\ : std_logic;
+SIGNAL \ALT_INV_KB_PLAY~input_o\ : std_logic;
+SIGNAL \ALT_INV_KB_Selchannel[1]~input_o\ : std_logic;
+SIGNAL \ALT_INV_KB_REC~input_o\ : std_logic;
+SIGNAL \ALT_INV_KB_Selchannel[0]~input_o\ : std_logic;
+SIGNAL \ALT_INV_Selector135~1_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector135~0_combout\ : std_logic;
+SIGNAL \ALT_INV_arch_Ch3ACT~0_combout\ : std_logic;
+SIGNAL \ALT_INV_Selector100~0_combout\ : std_logic;
 
 BEGIN
 
-ww_resetN <= resetN;
 ww_clk <= clk;
-ww_din <= din;
-ww_ActiveCh <= ActiveCh;
-dout_new <= ww_dout_new;
-dout <= ww_dout;
+ww_ResetN <= ResetN;
+ww_KB_Selchannel <= KB_Selchannel;
+ww_KB_RecOnMet <= KB_RecOnMet;
+ww_KB_PLAY <= KB_PLAY;
+ww_KB_ALLPLAY <= KB_ALLPLAY;
+ww_KB_REC <= KB_REC;
+ww_KB_STOP <= KB_STOP;
+ww_KB_ClearCH <= KB_ClearCH;
+ww_KB_IMMstart <= KB_IMMstart;
+recSel <= ww_recSel;
+recording <= ww_recording;
+loop_start <= ww_loop_start;
+Imm_start <= ww_Imm_start;
+CurrState <= ww_CurrState;
+ENDMemAddress <= ww_ENDMemAddress;
+currentMemAddress <= ww_currentMemAddress;
+Ch0Activate <= ww_Ch0Activate;
+Ch1Activate <= ww_Ch1Activate;
+Ch2Activate <= ww_Ch2Activate;
+Ch3Activate <= ww_Ch3Activate;
 ww_devoe <= devoe;
 ww_devclrn <= devclrn;
 ww_devpor <= devpor;
-\Div0|auto_generated|divider|divider|ALT_INV_op_23~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_23~9_sumout\;
-\ALT_INV_Add0~9_sumout\ <= NOT \Add0~9_sumout\;
-ALT_INV_sum(30) <= NOT sum(30);
-\ALT_INV_Add0~5_sumout\ <= NOT \Add0~5_sumout\;
-ALT_INV_sum(31) <= NOT sum(31);
-\Div0|auto_generated|divider|ALT_INV_op_1~61_sumout\ <= NOT \Div0|auto_generated|divider|op_1~61_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_9~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~57_sumout\ <= NOT \Div0|auto_generated|divider|op_1~57_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_10~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~53_sumout\ <= NOT \Div0|auto_generated|divider|op_1~53_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_11~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~49_sumout\ <= NOT \Div0|auto_generated|divider|op_1~49_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_12~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~45_sumout\ <= NOT \Div0|auto_generated|divider|op_1~45_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_14~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~41_sumout\ <= NOT \Div0|auto_generated|divider|op_1~41_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_15~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~37_sumout\ <= NOT \Div0|auto_generated|divider|op_1~37_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_16~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~33_sumout\ <= NOT \Div0|auto_generated|divider|op_1~33_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_17~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~29_sumout\ <= NOT \Div0|auto_generated|divider|op_1~29_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_18~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~25_sumout\ <= NOT \Div0|auto_generated|divider|op_1~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_19~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~21_sumout\ <= NOT \Div0|auto_generated|divider|op_1~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_20~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~17_sumout\ <= NOT \Div0|auto_generated|divider|op_1~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_21~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~13_sumout\ <= NOT \Div0|auto_generated|divider|op_1~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_22~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~9_sumout\ <= NOT \Div0|auto_generated|divider|op_1~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_23~1_sumout\;
-\Div0|auto_generated|divider|ALT_INV_op_1~5_sumout\ <= NOT \Div0|auto_generated|divider|op_1~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_25~1_sumout\;
-ALT_INV_counter(0) <= NOT counter(0);
-ALT_INV_counter(1) <= NOT counter(1);
-\Div0|auto_generated|divider|ALT_INV_op_1~1_sumout\ <= NOT \Div0|auto_generated|divider|op_1~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_26~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_26~1_sumout\;
-\ALT_INV_Add0~1_sumout\ <= NOT \Add0~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_6~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_6~21_sumout\;
-ALT_INV_sum(15) <= NOT sum(15);
-ALT_INV_sum(14) <= NOT sum(14);
-ALT_INV_sum(13) <= NOT sum(13);
-ALT_INV_sum(12) <= NOT sum(12);
-ALT_INV_sum(11) <= NOT sum(11);
-ALT_INV_sum(10) <= NOT sum(10);
-ALT_INV_sum(9) <= NOT sum(9);
-ALT_INV_sum(8) <= NOT sum(8);
-ALT_INV_sum(7) <= NOT sum(7);
-ALT_INV_sum(6) <= NOT sum(6);
-ALT_INV_sum(5) <= NOT sum(5);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~69_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\;
-\ALT_INV_Add0~85_sumout\ <= NOT \Add0~85_sumout\;
-ALT_INV_sum(4) <= NOT sum(4);
-\Div0|auto_generated|divider|divider|ALT_INV_op_25~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_25~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_23~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_23~21_sumout\;
-\ALT_INV_Add0~81_sumout\ <= NOT \Add0~81_sumout\;
-ALT_INV_sum(28) <= NOT sum(28);
-\ALT_INV_Add0~77_sumout\ <= NOT \Add0~77_sumout\;
-\ALT_INV_Add0~73_sumout\ <= NOT \Add0~73_sumout\;
 \ALT_INV_Add0~69_sumout\ <= NOT \Add0~69_sumout\;
 \ALT_INV_Add0~65_sumout\ <= NOT \Add0~65_sumout\;
 \ALT_INV_Add0~61_sumout\ <= NOT \Add0~61_sumout\;
@@ -1243,363 +714,315 @@ ALT_INV_sum(28) <= NOT sum(28);
 \ALT_INV_Add0~29_sumout\ <= NOT \Add0~29_sumout\;
 \ALT_INV_Add0~25_sumout\ <= NOT \Add0~25_sumout\;
 \ALT_INV_Add0~21_sumout\ <= NOT \Add0~21_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~65_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\;
 \ALT_INV_Add0~17_sumout\ <= NOT \Add0~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_22~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_22~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_25~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_25~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_23~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_23~17_sumout\;
 \ALT_INV_Add0~13_sumout\ <= NOT \Add0~13_sumout\;
-ALT_INV_sum(29) <= NOT sum(29);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~61_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_6~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_6~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_5~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_5~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_5~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_8~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_8~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_7~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_7~13_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~57_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_7~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_7~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_6~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_6~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_6~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_9~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_9~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_8~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_8~13_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~53_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_8~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_8~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_7~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_7~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_7~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_10~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_10~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_9~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_9~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~49_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_9~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_9~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_8~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_8~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_8~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_11~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_11~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_10~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_10~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~45_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_10~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_10~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_9~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_9~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_12~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_12~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_11~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_11~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~41_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_11~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_11~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_10~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_10~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_14~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_14~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_12~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_12~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~37_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_12~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_12~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_11~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_11~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_15~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_15~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_14~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_14~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~33_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_14~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_14~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_12~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_12~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_16~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_16~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_15~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_15~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~29_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_15~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_15~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_14~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_14~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_17~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_17~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_16~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_16~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~25_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_16~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_16~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_15~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_15~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_18~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_18~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_17~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_17~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~21_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_17~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_17~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_16~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_16~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_19~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_19~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_18~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_18~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~17_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_18~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_18~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_17~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_17~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_20~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_20~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_19~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_19~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~13_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_19~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_19~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_18~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_18~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_21~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_21~21_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_20~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_20~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~9_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_20~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_20~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_19~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_19~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_22~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_22~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_21~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_21~17_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~5_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_21~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_21~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_20~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_20~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_23~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_23~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_22~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_22~13_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~1_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_22~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_22~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_21~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_21~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_25~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_25~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_27~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_27~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_27~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_30~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_30~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_29~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_29~13_sumout\;
-ALT_INV_sum(22) <= NOT sum(22);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~105_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_29~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_29~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_28~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_28~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_28~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_31~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_31~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_30~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_30~13_sumout\;
-ALT_INV_sum(21) <= NOT sum(21);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~101_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_30~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_30~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_29~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_29~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_29~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_32~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_32~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_31~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_31~21_sumout\;
-ALT_INV_sum(20) <= NOT sum(20);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~97_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_31~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_31~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_30~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_30~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_30~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_3~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_3~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_32~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_32~21_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~93_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~93_sumout\;
-\ALT_INV_Add0~117_sumout\ <= NOT \Add0~117_sumout\;
-ALT_INV_sum(2) <= NOT sum(2);
-\ALT_INV_Add0~113_sumout\ <= NOT \Add0~113_sumout\;
-ALT_INV_sum(26) <= NOT sum(26);
-\ALT_INV_Add0~109_sumout\ <= NOT \Add0~109_sumout\;
-\ALT_INV_Add0~105_sumout\ <= NOT \Add0~105_sumout\;
-\ALT_INV_Add0~101_sumout\ <= NOT \Add0~101_sumout\;
-\ALT_INV_Add0~97_sumout\ <= NOT \Add0~97_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~89_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\;
-\ALT_INV_Add0~93_sumout\ <= NOT \Add0~93_sumout\;
-ALT_INV_sum(3) <= NOT sum(3);
-\Div0|auto_generated|divider|divider|ALT_INV_op_25~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_25~21_sumout\;
-\ALT_INV_Add0~89_sumout\ <= NOT \Add0~89_sumout\;
-ALT_INV_sum(27) <= NOT sum(27);
-ALT_INV_sum(19) <= NOT sum(19);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~85_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_32~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_32~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_31~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_31~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_31~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_4~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_4~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_3~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_3~13_sumout\;
-ALT_INV_sum(18) <= NOT sum(18);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~81_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_3~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_3~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_32~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_32~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_32~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_5~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_5~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_4~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_4~13_sumout\;
-ALT_INV_sum(17) <= NOT sum(17);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~77_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_4~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_4~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_3~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_3~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_3~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_6~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_6~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_5~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_5~21_sumout\;
-ALT_INV_sum(16) <= NOT sum(16);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~73_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_5~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_5~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_4~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_4~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_4~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_7~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_7~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[112]~35_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[112]~35_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[117]~34_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[117]~34_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[111]~33_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[111]~33_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~32_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[105]~32_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~31_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[105]~31_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[117]~30_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[117]~30_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[122]~29_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[122]~29_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[116]~28_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[116]~28_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~27_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[110]~27_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~26_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[110]~26_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[122]~25_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[122]~25_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[127]~24_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[127]~24_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[121]~23_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[121]~23_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~22_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[115]~22_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~21_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[115]~21_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[127]~20_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[127]~20_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[132]~19_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[132]~19_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[126]~18_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[126]~18_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~17_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[120]~17_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~16_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[120]~16_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[132]~15_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[132]~15_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[137]~14_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[137]~14_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[131]~13_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[131]~13_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~12_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[125]~12_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~11_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[125]~11_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[137]~10_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[137]~10_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[142]~9_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[142]~9_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[136]~8_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[136]~8_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~7_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[130]~7_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~6_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[130]~6_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[142]~5_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[142]~5_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[147]~4_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[147]~4_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[141]~3_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[141]~3_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~2_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[135]~2_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~1_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[135]~1_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[147]~0_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[147]~0_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[1]~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[0]~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~125_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[1]~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_24~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_24~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[2]~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[0]~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~121_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[1]~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_27~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_27~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_24~13_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_24~13_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~117_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_24~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_24~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[0]~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_28~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_28~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_27~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_27~21_sumout\;
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~113_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_27~17_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_27~17_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_24~5_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_24~5_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_24~1_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_29~25_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_29~25_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_28~21_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_28~21_sumout\;
-ALT_INV_sum(0) <= NOT sum(0);
-ALT_INV_sum(24) <= NOT sum(24);
-\ALT_INV_Add0~125_sumout\ <= NOT \Add0~125_sumout\;
-ALT_INV_sum(1) <= NOT sum(1);
-\ALT_INV_Add0~121_sumout\ <= NOT \Add0~121_sumout\;
-ALT_INV_sum(25) <= NOT sum(25);
-ALT_INV_sum(23) <= NOT sum(23);
-\Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~109_sumout\ <= NOT \Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_op_28~9_sumout\ <= NOT \Div0|auto_generated|divider|divider|op_28~9_sumout\;
-\Div0|auto_generated|divider|divider|ALT_INV_selnose\(0) <= NOT \Div0|auto_generated|divider|divider|selnose\(0);
-\Div0|auto_generated|divider|divider|ALT_INV_selnose\(33) <= NOT \Div0|auto_generated|divider|divider|selnose\(33);
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[12]~143_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[12]~143_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~142_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[6]~142_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[0]~141_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[0]~141_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~140_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[6]~140_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[12]~139_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[12]~139_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[17]~138_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[17]~138_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[11]~137_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[11]~137_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[5]~136_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[5]~136_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[17]~135_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[17]~135_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[22]~134_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[22]~134_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[16]~133_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[16]~133_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~132_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[10]~132_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~131_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[10]~131_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[22]~130_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[22]~130_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[27]~129_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[27]~129_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[21]~128_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[21]~128_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~127_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[15]~127_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~126_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[15]~126_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[27]~125_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[27]~125_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[32]~124_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[32]~124_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[26]~123_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[26]~123_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~122_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[20]~122_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~121_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[20]~121_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[32]~120_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[32]~120_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[37]~119_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[37]~119_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[31]~118_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[31]~118_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~117_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[25]~117_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~116_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[25]~116_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[37]~115_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[37]~115_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[42]~114_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[42]~114_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[36]~113_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[36]~113_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~112_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[30]~112_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~111_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[30]~111_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[42]~110_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[42]~110_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[47]~109_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[47]~109_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[41]~108_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[41]~108_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~107_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[35]~107_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~106_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[35]~106_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[47]~105_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[47]~105_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[52]~104_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[52]~104_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[46]~103_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[46]~103_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~102_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[40]~102_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~101_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[40]~101_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[52]~100_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[52]~100_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[57]~99_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[57]~99_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[51]~98_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[51]~98_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~97_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[45]~97_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~96_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[45]~96_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[57]~95_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[57]~95_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[62]~94_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[62]~94_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[56]~93_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[56]~93_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~92_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[50]~92_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~91_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[50]~91_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[62]~90_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[62]~90_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[67]~89_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[67]~89_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[61]~88_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[61]~88_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~87_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[55]~87_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~86_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[55]~86_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[67]~85_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[67]~85_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[145]~84_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[145]~84_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[145]~83_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[145]~83_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[146]~82_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[146]~82_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~81_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[140]~81_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~80_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[140]~80_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[72]~79_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[72]~79_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[66]~78_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[66]~78_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~77_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[60]~77_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~76_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[60]~76_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[72]~75_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[72]~75_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[77]~74_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[77]~74_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[71]~73_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[71]~73_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~72_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[65]~72_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~71_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[65]~71_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[77]~70_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[77]~70_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[82]~69_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[82]~69_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[76]~68_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[76]~68_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~67_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[70]~67_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~66_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[70]~66_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[82]~65_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[82]~65_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[87]~64_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[87]~64_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[81]~63_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[81]~63_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~62_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[75]~62_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~61_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[75]~61_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[87]~60_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[87]~60_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[92]~59_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[92]~59_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[86]~58_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[86]~58_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~57_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[80]~57_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~56_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[80]~56_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[92]~55_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[92]~55_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[97]~54_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[97]~54_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[91]~53_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[91]~53_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~52_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[85]~52_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~51_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[85]~51_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[97]~50_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[97]~50_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[102]~49_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[102]~49_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[96]~48_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[96]~48_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~47_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[90]~47_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~46_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[90]~46_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[102]~45_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[102]~45_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[107]~44_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[107]~44_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[101]~43_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[101]~43_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~42_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[95]~42_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~41_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[95]~41_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[107]~40_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[107]~40_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[112]~39_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[112]~39_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[106]~38_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[106]~38_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~37_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[100]~37_combout\;
-\Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~36_combout\ <= NOT \Div0|auto_generated|divider|divider|StageOut[100]~36_combout\;
-\ALT_INV_din[0]~input_o\ <= NOT \din[0]~input_o\;
-\ALT_INV_din[1]~input_o\ <= NOT \din[1]~input_o\;
-\ALT_INV_din[2]~input_o\ <= NOT \din[2]~input_o\;
-\ALT_INV_din[3]~input_o\ <= NOT \din[3]~input_o\;
-\ALT_INV_din[15]~input_o\ <= NOT \din[15]~input_o\;
-\ALT_INV_din[14]~input_o\ <= NOT \din[14]~input_o\;
-\ALT_INV_din[13]~input_o\ <= NOT \din[13]~input_o\;
-\ALT_INV_din[12]~input_o\ <= NOT \din[12]~input_o\;
-\ALT_INV_din[11]~input_o\ <= NOT \din[11]~input_o\;
-\ALT_INV_din[10]~input_o\ <= NOT \din[10]~input_o\;
-\ALT_INV_din[9]~input_o\ <= NOT \din[9]~input_o\;
-\ALT_INV_din[8]~input_o\ <= NOT \din[8]~input_o\;
-\ALT_INV_din[7]~input_o\ <= NOT \din[7]~input_o\;
-\ALT_INV_din[6]~input_o\ <= NOT \din[6]~input_o\;
-\ALT_INV_din[5]~input_o\ <= NOT \din[5]~input_o\;
-\ALT_INV_din[4]~input_o\ <= NOT \din[4]~input_o\;
-\ALT_INV_ActiveCh[1]~input_o\ <= NOT \ActiveCh[1]~input_o\;
-\ALT_INV_ActiveCh[0]~input_o\ <= NOT \ActiveCh[0]~input_o\;
-\ALT_INV_ActiveCh[2]~input_o\ <= NOT \ActiveCh[2]~input_o\;
+\ALT_INV_Add0~9_sumout\ <= NOT \Add0~9_sumout\;
+\ALT_INV_Add0~5_sumout\ <= NOT \Add0~5_sumout\;
+\ALT_INV_Add0~1_sumout\ <= NOT \Add0~1_sumout\;
+ALT_INV_currMemAddress(17) <= NOT currMemAddress(17);
+ALT_INV_currMemAddress(16) <= NOT currMemAddress(16);
+ALT_INV_currMemAddress(15) <= NOT currMemAddress(15);
+ALT_INV_currMemAddress(14) <= NOT currMemAddress(14);
+ALT_INV_currMemAddress(13) <= NOT currMemAddress(13);
+ALT_INV_currMemAddress(12) <= NOT currMemAddress(12);
+ALT_INV_currMemAddress(11) <= NOT currMemAddress(11);
+ALT_INV_currMemAddress(10) <= NOT currMemAddress(10);
+ALT_INV_currMemAddress(9) <= NOT currMemAddress(9);
+ALT_INV_currMemAddress(8) <= NOT currMemAddress(8);
+ALT_INV_currMemAddress(7) <= NOT currMemAddress(7);
+ALT_INV_currMemAddress(6) <= NOT currMemAddress(6);
+ALT_INV_currMemAddress(5) <= NOT currMemAddress(5);
+ALT_INV_currMemAddress(4) <= NOT currMemAddress(4);
+ALT_INV_currMemAddress(3) <= NOT currMemAddress(3);
+ALT_INV_currMemAddress(2) <= NOT currMemAddress(2);
+ALT_INV_currMemAddress(1) <= NOT currMemAddress(1);
+ALT_INV_currMemAddress(0) <= NOT currMemAddress(0);
+\ALT_INV_state.CH_CONTROL~q\ <= NOT \state.CH_CONTROL~q\;
+\ALT_INV_state.EMPTY~q\ <= NOT \state.EMPTY~q\;
+ALT_INV_stateNum(2) <= NOT stateNum(2);
+ALT_INV_stateNum(1) <= NOT stateNum(1);
+ALT_INV_stateNum(0) <= NOT stateNum(0);
+\ALT_INV_arch_loop_start~q\ <= NOT \arch_loop_start~q\;
+\ALT_INV_arch_recording~q\ <= NOT \arch_recording~q\;
+ALT_INV_arch_recSel(1) <= NOT arch_recSel(1);
+ALT_INV_arch_recSel(0) <= NOT arch_recSel(0);
+ALT_INV_arch_Ch3END(15) <= NOT arch_Ch3END(15);
+ALT_INV_arch_Ch3END(16) <= NOT arch_Ch3END(16);
+ALT_INV_arch_Ch3END(17) <= NOT arch_Ch3END(17);
+ALT_INV_arch_Ch3END(8) <= NOT arch_Ch3END(8);
+ALT_INV_arch_Ch3END(9) <= NOT arch_Ch3END(9);
+ALT_INV_arch_Ch3END(10) <= NOT arch_Ch3END(10);
+ALT_INV_arch_Ch3END(12) <= NOT arch_Ch3END(12);
+ALT_INV_arch_Ch3END(13) <= NOT arch_Ch3END(13);
+ALT_INV_arch_Ch3END(14) <= NOT arch_Ch3END(14);
+ALT_INV_arch_Ch3END(11) <= NOT arch_Ch3END(11);
+ALT_INV_arch_Ch3END(3) <= NOT arch_Ch3END(3);
+ALT_INV_arch_Ch3END(1) <= NOT arch_Ch3END(1);
+ALT_INV_arch_Ch3END(4) <= NOT arch_Ch3END(4);
+ALT_INV_arch_Ch3END(7) <= NOT arch_Ch3END(7);
+ALT_INV_arch_Ch2END(15) <= NOT arch_Ch2END(15);
+ALT_INV_arch_Ch2END(16) <= NOT arch_Ch2END(16);
+ALT_INV_arch_Ch2END(17) <= NOT arch_Ch2END(17);
+ALT_INV_arch_Ch2END(8) <= NOT arch_Ch2END(8);
+ALT_INV_arch_Ch2END(9) <= NOT arch_Ch2END(9);
+ALT_INV_arch_Ch2END(10) <= NOT arch_Ch2END(10);
+ALT_INV_arch_Ch2END(12) <= NOT arch_Ch2END(12);
+ALT_INV_arch_Ch2END(13) <= NOT arch_Ch2END(13);
+ALT_INV_arch_Ch2END(14) <= NOT arch_Ch2END(14);
+ALT_INV_arch_Ch2END(11) <= NOT arch_Ch2END(11);
+ALT_INV_arch_Ch2END(3) <= NOT arch_Ch2END(3);
+ALT_INV_arch_Ch2END(1) <= NOT arch_Ch2END(1);
+ALT_INV_arch_Ch2END(4) <= NOT arch_Ch2END(4);
+ALT_INV_arch_Ch2END(7) <= NOT arch_Ch2END(7);
+ALT_INV_arch_Ch1END(15) <= NOT arch_Ch1END(15);
+ALT_INV_arch_Ch1END(16) <= NOT arch_Ch1END(16);
+ALT_INV_arch_Ch1END(17) <= NOT arch_Ch1END(17);
+ALT_INV_arch_Ch1END(8) <= NOT arch_Ch1END(8);
+ALT_INV_arch_Ch1END(9) <= NOT arch_Ch1END(9);
+ALT_INV_arch_Ch1END(10) <= NOT arch_Ch1END(10);
+ALT_INV_arch_Ch1END(12) <= NOT arch_Ch1END(12);
+ALT_INV_arch_Ch1END(13) <= NOT arch_Ch1END(13);
+ALT_INV_arch_Ch1END(14) <= NOT arch_Ch1END(14);
+ALT_INV_arch_Ch1END(11) <= NOT arch_Ch1END(11);
+ALT_INV_arch_Ch1END(3) <= NOT arch_Ch1END(3);
+ALT_INV_arch_Ch1END(1) <= NOT arch_Ch1END(1);
+ALT_INV_arch_Ch1END(4) <= NOT arch_Ch1END(4);
+ALT_INV_arch_Ch1END(7) <= NOT arch_Ch1END(7);
+ALT_INV_arch_Ch0END(15) <= NOT arch_Ch0END(15);
+ALT_INV_arch_Ch0END(16) <= NOT arch_Ch0END(16);
+ALT_INV_arch_Ch0END(17) <= NOT arch_Ch0END(17);
+ALT_INV_arch_Ch0END(8) <= NOT arch_Ch0END(8);
+ALT_INV_arch_Ch0END(9) <= NOT arch_Ch0END(9);
+ALT_INV_arch_Ch0END(10) <= NOT arch_Ch0END(10);
+ALT_INV_arch_Ch0END(12) <= NOT arch_Ch0END(12);
+ALT_INV_arch_Ch0END(13) <= NOT arch_Ch0END(13);
+ALT_INV_arch_Ch0END(14) <= NOT arch_Ch0END(14);
+ALT_INV_arch_Ch0END(11) <= NOT arch_Ch0END(11);
+ALT_INV_arch_Ch0END(3) <= NOT arch_Ch0END(3);
+ALT_INV_arch_Ch0END(1) <= NOT arch_Ch0END(1);
+ALT_INV_arch_Ch0END(4) <= NOT arch_Ch0END(4);
+ALT_INV_arch_Ch0END(7) <= NOT arch_Ch0END(7);
+\ALT_INV_LessThan1~12_combout\ <= NOT \LessThan1~12_combout\;
+\ALT_INV_LessThan1~11_combout\ <= NOT \LessThan1~11_combout\;
+\ALT_INV_LessThan1~10_combout\ <= NOT \LessThan1~10_combout\;
+\ALT_INV_LessThan1~9_combout\ <= NOT \LessThan1~9_combout\;
+\ALT_INV_LessThan1~8_combout\ <= NOT \LessThan1~8_combout\;
+\ALT_INV_LessThan1~7_combout\ <= NOT \LessThan1~7_combout\;
+\ALT_INV_LessThan1~6_combout\ <= NOT \LessThan1~6_combout\;
+\ALT_INV_LessThan1~5_combout\ <= NOT \LessThan1~5_combout\;
+\ALT_INV_LessThan1~4_combout\ <= NOT \LessThan1~4_combout\;
+ALT_INV_arch_Ch1END(2) <= NOT arch_Ch1END(2);
+\ALT_INV_LessThan1~3_combout\ <= NOT \LessThan1~3_combout\;
+ALT_INV_arch_Ch1END(0) <= NOT arch_Ch1END(0);
+\ALT_INV_LessThan1~2_combout\ <= NOT \LessThan1~2_combout\;
+\ALT_INV_LessThan1~1_combout\ <= NOT \LessThan1~1_combout\;
+ALT_INV_arch_Ch1END(5) <= NOT arch_Ch1END(5);
+\ALT_INV_LessThan1~0_combout\ <= NOT \LessThan1~0_combout\;
+ALT_INV_arch_Ch1END(6) <= NOT arch_Ch1END(6);
+\ALT_INV_process_0~3_combout\ <= NOT \process_0~3_combout\;
+\ALT_INV_process_0~2_combout\ <= NOT \process_0~2_combout\;
+\ALT_INV_arch_Ch0ACT~q\ <= NOT \arch_Ch0ACT~q\;
+ALT_INV_arch_Ch0END(31) <= NOT arch_Ch0END(31);
+\ALT_INV_LessThan0~18_combout\ <= NOT \LessThan0~18_combout\;
+\ALT_INV_LessThan0~17_combout\ <= NOT \LessThan0~17_combout\;
+\ALT_INV_LessThan0~16_combout\ <= NOT \LessThan0~16_combout\;
+\ALT_INV_LessThan0~15_combout\ <= NOT \LessThan0~15_combout\;
+\ALT_INV_LessThan0~14_combout\ <= NOT \LessThan0~14_combout\;
+\ALT_INV_LessThan0~13_combout\ <= NOT \LessThan0~13_combout\;
+\ALT_INV_LessThan0~12_combout\ <= NOT \LessThan0~12_combout\;
+\ALT_INV_LessThan0~11_combout\ <= NOT \LessThan0~11_combout\;
+\ALT_INV_LessThan0~10_combout\ <= NOT \LessThan0~10_combout\;
+\ALT_INV_LessThan0~9_combout\ <= NOT \LessThan0~9_combout\;
+\ALT_INV_LessThan0~8_combout\ <= NOT \LessThan0~8_combout\;
+\ALT_INV_LessThan0~7_combout\ <= NOT \LessThan0~7_combout\;
+\ALT_INV_LessThan0~6_combout\ <= NOT \LessThan0~6_combout\;
+\ALT_INV_LessThan0~5_combout\ <= NOT \LessThan0~5_combout\;
+\ALT_INV_LessThan0~4_combout\ <= NOT \LessThan0~4_combout\;
+ALT_INV_arch_Ch0END(2) <= NOT arch_Ch0END(2);
+\ALT_INV_LessThan0~3_combout\ <= NOT \LessThan0~3_combout\;
+ALT_INV_arch_Ch0END(0) <= NOT arch_Ch0END(0);
+\ALT_INV_LessThan0~2_combout\ <= NOT \LessThan0~2_combout\;
+\ALT_INV_LessThan0~1_combout\ <= NOT \LessThan0~1_combout\;
+ALT_INV_arch_Ch0END(5) <= NOT arch_Ch0END(5);
+\ALT_INV_LessThan0~0_combout\ <= NOT \LessThan0~0_combout\;
+ALT_INV_arch_Ch0END(6) <= NOT arch_Ch0END(6);
+\ALT_INV_Selector154~1_combout\ <= NOT \Selector154~1_combout\;
+\ALT_INV_Selector155~0_combout\ <= NOT \Selector155~0_combout\;
+\ALT_INV_Selector158~0_combout\ <= NOT \Selector158~0_combout\;
+\ALT_INV_stateNum~1_combout\ <= NOT \stateNum~1_combout\;
+\ALT_INV_arch_loop_start~0_combout\ <= NOT \arch_loop_start~0_combout\;
+\ALT_INV_Selector0~0_combout\ <= NOT \Selector0~0_combout\;
+ALT_INV_recCounter(1) <= NOT recCounter(1);
+ALT_INV_recCounter(2) <= NOT recCounter(2);
+\ALT_INV_process_0~1_combout\ <= NOT \process_0~1_combout\;
+\ALT_INV_ch3HT~q\ <= NOT \ch3HT~q\;
+\ALT_INV_ch1HT~q\ <= NOT \ch1HT~q\;
+\ALT_INV_ch2HT~q\ <= NOT \ch2HT~q\;
+\ALT_INV_ch0HT~q\ <= NOT \ch0HT~q\;
+ALT_INV_recCounter(0) <= NOT recCounter(0);
+\ALT_INV_Equal6~17_combout\ <= NOT \Equal6~17_combout\;
+\ALT_INV_Selector144~0_combout\ <= NOT \Selector144~0_combout\;
+ALT_INV_memEndAddr(16) <= NOT memEndAddr(16);
+\ALT_INV_Selector145~0_combout\ <= NOT \Selector145~0_combout\;
+ALT_INV_memEndAddr(15) <= NOT memEndAddr(15);
+\ALT_INV_Equal6~16_combout\ <= NOT \Equal6~16_combout\;
+ALT_INV_memEndAddr(12) <= NOT memEndAddr(12);
+\ALT_INV_Equal6~15_combout\ <= NOT \Equal6~15_combout\;
+ALT_INV_memEndAddr(11) <= NOT memEndAddr(11);
+\ALT_INV_Equal6~14_combout\ <= NOT \Equal6~14_combout\;
+\ALT_INV_Selector143~0_combout\ <= NOT \Selector143~0_combout\;
+ALT_INV_memEndAddr(17) <= NOT memEndAddr(17);
+\ALT_INV_Equal0~3_combout\ <= NOT \Equal0~3_combout\;
+\ALT_INV_Equal6~13_combout\ <= NOT \Equal6~13_combout\;
+ALT_INV_memEndAddr(14) <= NOT memEndAddr(14);
+\ALT_INV_Equal6~12_combout\ <= NOT \Equal6~12_combout\;
+ALT_INV_memEndAddr(13) <= NOT memEndAddr(13);
+\ALT_INV_Equal6~11_combout\ <= NOT \Equal6~11_combout\;
+\ALT_INV_Selector150~0_combout\ <= NOT \Selector150~0_combout\;
+ALT_INV_memEndAddr(10) <= NOT memEndAddr(10);
+\ALT_INV_Equal6~10_combout\ <= NOT \Equal6~10_combout\;
+ALT_INV_memEndAddr(9) <= NOT memEndAddr(9);
+\ALT_INV_Equal6~9_combout\ <= NOT \Equal6~9_combout\;
+ALT_INV_memEndAddr(6) <= NOT memEndAddr(6);
+\ALT_INV_Equal6~8_combout\ <= NOT \Equal6~8_combout\;
+ALT_INV_memEndAddr(5) <= NOT memEndAddr(5);
+\ALT_INV_Equal6~7_combout\ <= NOT \Equal6~7_combout\;
+ALT_INV_memEndAddr(2) <= NOT memEndAddr(2);
+\ALT_INV_Equal6~6_combout\ <= NOT \Equal6~6_combout\;
+\ALT_INV_Equal6~5_combout\ <= NOT \Equal6~5_combout\;
+ALT_INV_memEndAddr(8) <= NOT memEndAddr(8);
+\ALT_INV_Equal6~4_combout\ <= NOT \Equal6~4_combout\;
+ALT_INV_memEndAddr(7) <= NOT memEndAddr(7);
+\ALT_INV_Equal6~3_combout\ <= NOT \Equal6~3_combout\;
+ALT_INV_memEndAddr(4) <= NOT memEndAddr(4);
+\ALT_INV_Equal6~2_combout\ <= NOT \Equal6~2_combout\;
+ALT_INV_memEndAddr(3) <= NOT memEndAddr(3);
+\ALT_INV_Equal6~1_combout\ <= NOT \Equal6~1_combout\;
+ALT_INV_memEndAddr(1) <= NOT memEndAddr(1);
+\ALT_INV_Equal6~0_combout\ <= NOT \Equal6~0_combout\;
+ALT_INV_memEndAddr(0) <= NOT memEndAddr(0);
+\ALT_INV_Selector154~0_combout\ <= NOT \Selector154~0_combout\;
+\ALT_INV_Selector163~0_combout\ <= NOT \Selector163~0_combout\;
+\ALT_INV_Selector3~0_combout\ <= NOT \Selector3~0_combout\;
+\ALT_INV_state.PRE_REC~q\ <= NOT \state.PRE_REC~q\;
+\ALT_INV_state.REC_OTHER~q\ <= NOT \state.REC_OTHER~q\;
+\ALT_INV_state.REC_FIRST~q\ <= NOT \state.REC_FIRST~q\;
+\ALT_INV_process_0~0_combout\ <= NOT \process_0~0_combout\;
+\ALT_INV_Equal0~2_combout\ <= NOT \Equal0~2_combout\;
+\ALT_INV_Equal0~1_combout\ <= NOT \Equal0~1_combout\;
+\ALT_INV_Equal0~0_combout\ <= NOT \Equal0~0_combout\;
+\ALT_INV_Selector134~1_combout\ <= NOT \Selector134~1_combout\;
+\ALT_INV_Selector134~0_combout\ <= NOT \Selector134~0_combout\;
+\ALT_INV_arch_Ch2ACT~0_combout\ <= NOT \arch_Ch2ACT~0_combout\;
+\ALT_INV_Selector68~0_combout\ <= NOT \Selector68~0_combout\;
+\ALT_INV_Selector133~1_combout\ <= NOT \Selector133~1_combout\;
+\ALT_INV_Selector133~0_combout\ <= NOT \Selector133~0_combout\;
+\ALT_INV_arch_Ch1ACT~0_combout\ <= NOT \arch_Ch1ACT~0_combout\;
+\ALT_INV_Selector36~0_combout\ <= NOT \Selector36~0_combout\;
+\ALT_INV_Selector132~1_combout\ <= NOT \Selector132~1_combout\;
+\ALT_INV_Selector132~0_combout\ <= NOT \Selector132~0_combout\;
+\ALT_INV_arch_Ch0ACT~0_combout\ <= NOT \arch_Ch0ACT~0_combout\;
+\ALT_INV_Selector4~0_combout\ <= NOT \Selector4~0_combout\;
+\ALT_INV_Selector140~0_combout\ <= NOT \Selector140~0_combout\;
+\ALT_INV_Mux51~2_combout\ <= NOT \Mux51~2_combout\;
+\ALT_INV_ch3HT~0_combout\ <= NOT \ch3HT~0_combout\;
+\ALT_INV_Mux51~1_combout\ <= NOT \Mux51~1_combout\;
+\ALT_INV_ch1HT~0_combout\ <= NOT \ch1HT~0_combout\;
+\ALT_INV_Mux51~0_combout\ <= NOT \Mux51~0_combout\;
+\ALT_INV_ch2HT~0_combout\ <= NOT \ch2HT~0_combout\;
+\ALT_INV_Selector137~0_combout\ <= NOT \Selector137~0_combout\;
+\ALT_INV_Mux32~0_combout\ <= NOT \Mux32~0_combout\;
+\ALT_INV_Selector136~0_combout\ <= NOT \Selector136~0_combout\;
+\ALT_INV_ch0HT~0_combout\ <= NOT \ch0HT~0_combout\;
+\ALT_INV_Selector141~0_combout\ <= NOT \Selector141~0_combout\;
+\ALT_INV_Selector142~0_combout\ <= NOT \Selector142~0_combout\;
+\ALT_INV_recCounter~2_combout\ <= NOT \recCounter~2_combout\;
+\ALT_INV_recCounter~1_combout\ <= NOT \recCounter~1_combout\;
+\ALT_INV_Selector164~7_combout\ <= NOT \Selector164~7_combout\;
+\ALT_INV_Selector3~2_combout\ <= NOT \Selector3~2_combout\;
+\ALT_INV_Selector164~6_combout\ <= NOT \Selector164~6_combout\;
+\ALT_INV_Selector164~5_combout\ <= NOT \Selector164~5_combout\;
+\ALT_INV_Selector164~4_combout\ <= NOT \Selector164~4_combout\;
+\ALT_INV_Selector164~3_combout\ <= NOT \Selector164~3_combout\;
+\ALT_INV_recCounter~0_combout\ <= NOT \recCounter~0_combout\;
+\ALT_INV_Selector164~2_combout\ <= NOT \Selector164~2_combout\;
+\ALT_INV_process_0~12_combout\ <= NOT \process_0~12_combout\;
+\ALT_INV_process_0~11_combout\ <= NOT \process_0~11_combout\;
+\ALT_INV_arch_Ch3ACT~q\ <= NOT \arch_Ch3ACT~q\;
+ALT_INV_arch_Ch3END(31) <= NOT arch_Ch3END(31);
+\ALT_INV_LessThan3~18_combout\ <= NOT \LessThan3~18_combout\;
+\ALT_INV_LessThan3~17_combout\ <= NOT \LessThan3~17_combout\;
+\ALT_INV_LessThan3~16_combout\ <= NOT \LessThan3~16_combout\;
+\ALT_INV_LessThan3~15_combout\ <= NOT \LessThan3~15_combout\;
+\ALT_INV_LessThan3~14_combout\ <= NOT \LessThan3~14_combout\;
+\ALT_INV_LessThan3~13_combout\ <= NOT \LessThan3~13_combout\;
+\ALT_INV_LessThan3~12_combout\ <= NOT \LessThan3~12_combout\;
+\ALT_INV_LessThan3~11_combout\ <= NOT \LessThan3~11_combout\;
+\ALT_INV_LessThan3~10_combout\ <= NOT \LessThan3~10_combout\;
+\ALT_INV_LessThan3~9_combout\ <= NOT \LessThan3~9_combout\;
+\ALT_INV_LessThan3~8_combout\ <= NOT \LessThan3~8_combout\;
+\ALT_INV_LessThan3~7_combout\ <= NOT \LessThan3~7_combout\;
+\ALT_INV_LessThan3~6_combout\ <= NOT \LessThan3~6_combout\;
+\ALT_INV_LessThan3~5_combout\ <= NOT \LessThan3~5_combout\;
+\ALT_INV_LessThan3~4_combout\ <= NOT \LessThan3~4_combout\;
+ALT_INV_arch_Ch3END(2) <= NOT arch_Ch3END(2);
+\ALT_INV_LessThan3~3_combout\ <= NOT \LessThan3~3_combout\;
+ALT_INV_arch_Ch3END(0) <= NOT arch_Ch3END(0);
+\ALT_INV_LessThan3~2_combout\ <= NOT \LessThan3~2_combout\;
+\ALT_INV_LessThan3~1_combout\ <= NOT \LessThan3~1_combout\;
+ALT_INV_arch_Ch3END(5) <= NOT arch_Ch3END(5);
+\ALT_INV_LessThan3~0_combout\ <= NOT \LessThan3~0_combout\;
+ALT_INV_arch_Ch3END(6) <= NOT arch_Ch3END(6);
+\ALT_INV_process_0~9_combout\ <= NOT \process_0~9_combout\;
+\ALT_INV_process_0~8_combout\ <= NOT \process_0~8_combout\;
+\ALT_INV_arch_Ch2ACT~q\ <= NOT \arch_Ch2ACT~q\;
+ALT_INV_arch_Ch2END(31) <= NOT arch_Ch2END(31);
+\ALT_INV_LessThan2~18_combout\ <= NOT \LessThan2~18_combout\;
+\ALT_INV_LessThan2~17_combout\ <= NOT \LessThan2~17_combout\;
+\ALT_INV_LessThan2~16_combout\ <= NOT \LessThan2~16_combout\;
+\ALT_INV_LessThan2~15_combout\ <= NOT \LessThan2~15_combout\;
+\ALT_INV_LessThan2~14_combout\ <= NOT \LessThan2~14_combout\;
+\ALT_INV_LessThan2~13_combout\ <= NOT \LessThan2~13_combout\;
+\ALT_INV_LessThan2~12_combout\ <= NOT \LessThan2~12_combout\;
+\ALT_INV_LessThan2~11_combout\ <= NOT \LessThan2~11_combout\;
+\ALT_INV_LessThan2~10_combout\ <= NOT \LessThan2~10_combout\;
+\ALT_INV_LessThan2~9_combout\ <= NOT \LessThan2~9_combout\;
+\ALT_INV_LessThan2~8_combout\ <= NOT \LessThan2~8_combout\;
+\ALT_INV_LessThan2~7_combout\ <= NOT \LessThan2~7_combout\;
+\ALT_INV_LessThan2~6_combout\ <= NOT \LessThan2~6_combout\;
+\ALT_INV_LessThan2~5_combout\ <= NOT \LessThan2~5_combout\;
+\ALT_INV_LessThan2~4_combout\ <= NOT \LessThan2~4_combout\;
+ALT_INV_arch_Ch2END(2) <= NOT arch_Ch2END(2);
+\ALT_INV_LessThan2~3_combout\ <= NOT \LessThan2~3_combout\;
+ALT_INV_arch_Ch2END(0) <= NOT arch_Ch2END(0);
+\ALT_INV_LessThan2~2_combout\ <= NOT \LessThan2~2_combout\;
+\ALT_INV_LessThan2~1_combout\ <= NOT \LessThan2~1_combout\;
+ALT_INV_arch_Ch2END(5) <= NOT arch_Ch2END(5);
+\ALT_INV_LessThan2~0_combout\ <= NOT \LessThan2~0_combout\;
+ALT_INV_arch_Ch2END(6) <= NOT arch_Ch2END(6);
+\ALT_INV_process_0~6_combout\ <= NOT \process_0~6_combout\;
+\ALT_INV_process_0~5_combout\ <= NOT \process_0~5_combout\;
+\ALT_INV_arch_Ch1ACT~q\ <= NOT \arch_Ch1ACT~q\;
+ALT_INV_arch_Ch1END(31) <= NOT arch_Ch1END(31);
+\ALT_INV_LessThan1~18_combout\ <= NOT \LessThan1~18_combout\;
+\ALT_INV_LessThan1~17_combout\ <= NOT \LessThan1~17_combout\;
+\ALT_INV_LessThan1~16_combout\ <= NOT \LessThan1~16_combout\;
+\ALT_INV_LessThan1~15_combout\ <= NOT \LessThan1~15_combout\;
+\ALT_INV_LessThan1~14_combout\ <= NOT \LessThan1~14_combout\;
+\ALT_INV_LessThan1~13_combout\ <= NOT \LessThan1~13_combout\;
+\ALT_INV_KB_STOP~input_o\ <= NOT \KB_STOP~input_o\;
+\ALT_INV_KB_ClearCH~input_o\ <= NOT \KB_ClearCH~input_o\;
+\ALT_INV_KB_ALLPLAY~input_o\ <= NOT \KB_ALLPLAY~input_o\;
+\ALT_INV_KB_PLAY~input_o\ <= NOT \KB_PLAY~input_o\;
+\ALT_INV_KB_Selchannel[1]~input_o\ <= NOT \KB_Selchannel[1]~input_o\;
+\ALT_INV_KB_REC~input_o\ <= NOT \KB_REC~input_o\;
+\ALT_INV_KB_Selchannel[0]~input_o\ <= NOT \KB_Selchannel[0]~input_o\;
+\ALT_INV_Selector135~1_combout\ <= NOT \Selector135~1_combout\;
+\ALT_INV_Selector135~0_combout\ <= NOT \Selector135~0_combout\;
+\ALT_INV_arch_Ch3ACT~0_combout\ <= NOT \arch_Ch3ACT~0_combout\;
+\ALT_INV_Selector100~0_combout\ <= NOT \Selector100~0_combout\;
 
-\dout_new~output\ : cyclonev_io_obuf
+\recSel[0]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1607,11 +1030,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => VCC,
+	i => arch_recSel(0),
 	devoe => ww_devoe,
-	o => \dout_new~output_o\);
+	o => \recSel[0]~output_o\);
 
-\dout[0]~output\ : cyclonev_io_obuf
+\recSel[1]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1619,11 +1042,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(0),
+	i => arch_recSel(1),
 	devoe => ww_devoe,
-	o => \dout[0]~output_o\);
+	o => \recSel[1]~output_o\);
 
-\dout[1]~output\ : cyclonev_io_obuf
+\recording~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1631,11 +1054,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(1),
+	i => \arch_recording~q\,
 	devoe => ww_devoe,
-	o => \dout[1]~output_o\);
+	o => \recording~output_o\);
 
-\dout[2]~output\ : cyclonev_io_obuf
+\loop_start~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1643,11 +1066,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(2),
+	i => \ALT_INV_arch_loop_start~q\,
 	devoe => ww_devoe,
-	o => \dout[2]~output_o\);
+	o => \loop_start~output_o\);
 
-\dout[3]~output\ : cyclonev_io_obuf
+\Imm_start~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1655,11 +1078,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(3),
+	i => GND,
 	devoe => ww_devoe,
-	o => \dout[3]~output_o\);
+	o => \Imm_start~output_o\);
 
-\dout[4]~output\ : cyclonev_io_obuf
+\CurrState[0]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1667,11 +1090,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(4),
+	i => ALT_INV_stateNum(0),
 	devoe => ww_devoe,
-	o => \dout[4]~output_o\);
+	o => \CurrState[0]~output_o\);
 
-\dout[5]~output\ : cyclonev_io_obuf
+\CurrState[1]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1679,11 +1102,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(5),
+	i => ALT_INV_stateNum(1),
 	devoe => ww_devoe,
-	o => \dout[5]~output_o\);
+	o => \CurrState[1]~output_o\);
 
-\dout[6]~output\ : cyclonev_io_obuf
+\CurrState[2]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1691,11 +1114,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(6),
+	i => ALT_INV_stateNum(2),
 	devoe => ww_devoe,
-	o => \dout[6]~output_o\);
+	o => \CurrState[2]~output_o\);
 
-\dout[7]~output\ : cyclonev_io_obuf
+\ENDMemAddress[0]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1703,11 +1126,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(7),
+	i => endAddr(0),
 	devoe => ww_devoe,
-	o => \dout[7]~output_o\);
+	o => \ENDMemAddress[0]~output_o\);
 
-\dout[8]~output\ : cyclonev_io_obuf
+\ENDMemAddress[1]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1715,11 +1138,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(8),
+	i => endAddr(1),
 	devoe => ww_devoe,
-	o => \dout[8]~output_o\);
+	o => \ENDMemAddress[1]~output_o\);
 
-\dout[9]~output\ : cyclonev_io_obuf
+\ENDMemAddress[2]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1727,11 +1150,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(9),
+	i => endAddr(2),
 	devoe => ww_devoe,
-	o => \dout[9]~output_o\);
+	o => \ENDMemAddress[2]~output_o\);
 
-\dout[10]~output\ : cyclonev_io_obuf
+\ENDMemAddress[3]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1739,11 +1162,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(10),
+	i => endAddr(3),
 	devoe => ww_devoe,
-	o => \dout[10]~output_o\);
+	o => \ENDMemAddress[3]~output_o\);
 
-\dout[11]~output\ : cyclonev_io_obuf
+\ENDMemAddress[4]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1751,11 +1174,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(11),
+	i => endAddr(4),
 	devoe => ww_devoe,
-	o => \dout[11]~output_o\);
+	o => \ENDMemAddress[4]~output_o\);
 
-\dout[12]~output\ : cyclonev_io_obuf
+\ENDMemAddress[5]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1763,11 +1186,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(12),
+	i => endAddr(5),
 	devoe => ww_devoe,
-	o => \dout[12]~output_o\);
+	o => \ENDMemAddress[5]~output_o\);
 
-\dout[13]~output\ : cyclonev_io_obuf
+\ENDMemAddress[6]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1775,11 +1198,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(13),
+	i => endAddr(6),
 	devoe => ww_devoe,
-	o => \dout[13]~output_o\);
+	o => \ENDMemAddress[6]~output_o\);
 
-\dout[14]~output\ : cyclonev_io_obuf
+\ENDMemAddress[7]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1787,11 +1210,11 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(14),
+	i => endAddr(7),
 	devoe => ww_devoe,
-	o => \dout[14]~output_o\);
+	o => \ENDMemAddress[7]~output_o\);
 
-\dout[15]~output\ : cyclonev_io_obuf
+\ENDMemAddress[8]~output\ : cyclonev_io_obuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
@@ -1799,9 +1222,381 @@ GENERIC MAP (
 	shift_series_termination_control => "false")
 -- pragma translate_on
 PORT MAP (
-	i => proc_out(15),
+	i => endAddr(8),
 	devoe => ww_devoe,
-	o => \dout[15]~output_o\);
+	o => \ENDMemAddress[8]~output_o\);
+
+\ENDMemAddress[9]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(9),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[9]~output_o\);
+
+\ENDMemAddress[10]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(10),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[10]~output_o\);
+
+\ENDMemAddress[11]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(11),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[11]~output_o\);
+
+\ENDMemAddress[12]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(12),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[12]~output_o\);
+
+\ENDMemAddress[13]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(13),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[13]~output_o\);
+
+\ENDMemAddress[14]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(14),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[14]~output_o\);
+
+\ENDMemAddress[15]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(15),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[15]~output_o\);
+
+\ENDMemAddress[16]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(16),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[16]~output_o\);
+
+\ENDMemAddress[17]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => endAddr(17),
+	devoe => ww_devoe,
+	o => \ENDMemAddress[17]~output_o\);
+
+\currentMemAddress[0]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(0),
+	devoe => ww_devoe,
+	o => \currentMemAddress[0]~output_o\);
+
+\currentMemAddress[1]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(1),
+	devoe => ww_devoe,
+	o => \currentMemAddress[1]~output_o\);
+
+\currentMemAddress[2]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(2),
+	devoe => ww_devoe,
+	o => \currentMemAddress[2]~output_o\);
+
+\currentMemAddress[3]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(3),
+	devoe => ww_devoe,
+	o => \currentMemAddress[3]~output_o\);
+
+\currentMemAddress[4]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(4),
+	devoe => ww_devoe,
+	o => \currentMemAddress[4]~output_o\);
+
+\currentMemAddress[5]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(5),
+	devoe => ww_devoe,
+	o => \currentMemAddress[5]~output_o\);
+
+\currentMemAddress[6]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(6),
+	devoe => ww_devoe,
+	o => \currentMemAddress[6]~output_o\);
+
+\currentMemAddress[7]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(7),
+	devoe => ww_devoe,
+	o => \currentMemAddress[7]~output_o\);
+
+\currentMemAddress[8]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(8),
+	devoe => ww_devoe,
+	o => \currentMemAddress[8]~output_o\);
+
+\currentMemAddress[9]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(9),
+	devoe => ww_devoe,
+	o => \currentMemAddress[9]~output_o\);
+
+\currentMemAddress[10]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(10),
+	devoe => ww_devoe,
+	o => \currentMemAddress[10]~output_o\);
+
+\currentMemAddress[11]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(11),
+	devoe => ww_devoe,
+	o => \currentMemAddress[11]~output_o\);
+
+\currentMemAddress[12]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(12),
+	devoe => ww_devoe,
+	o => \currentMemAddress[12]~output_o\);
+
+\currentMemAddress[13]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(13),
+	devoe => ww_devoe,
+	o => \currentMemAddress[13]~output_o\);
+
+\currentMemAddress[14]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(14),
+	devoe => ww_devoe,
+	o => \currentMemAddress[14]~output_o\);
+
+\currentMemAddress[15]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(15),
+	devoe => ww_devoe,
+	o => \currentMemAddress[15]~output_o\);
+
+\currentMemAddress[16]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(16),
+	devoe => ww_devoe,
+	o => \currentMemAddress[16]~output_o\);
+
+\currentMemAddress[17]~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => currMemAddress(17),
+	devoe => ww_devoe,
+	o => \currentMemAddress[17]~output_o\);
+
+\Ch0Activate~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => \arch_Ch0DEC~q\,
+	devoe => ww_devoe,
+	o => \Ch0Activate~output_o\);
+
+\Ch1Activate~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => \arch_Ch1DEC~q\,
+	devoe => ww_devoe,
+	o => \Ch1Activate~output_o\);
+
+\Ch2Activate~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => \arch_Ch2DEC~q\,
+	devoe => ww_devoe,
+	o => \Ch2Activate~output_o\);
+
+\Ch3Activate~output\ : cyclonev_io_obuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	open_drain_output => "false",
+	shift_series_termination_control => "false")
+-- pragma translate_on
+PORT MAP (
+	i => \arch_Ch3DEC~q\,
+	devoe => ww_devoe,
+	o => \Ch3Activate~output_o\);
 
 \clk~input\ : cyclonev_io_ibuf
 -- pragma translate_off
@@ -1813,8143 +1608,50 @@ PORT MAP (
 	i => ww_clk,
 	o => \clk~input_o\);
 
-\resetN~input\ : cyclonev_io_ibuf
+\KB_Selchannel[0]~input\ : cyclonev_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => ww_resetN,
-	o => \resetN~input_o\);
+	i => ww_KB_Selchannel(0),
+	o => \KB_Selchannel[0]~input_o\);
 
-\counter[0]~_wirecell\ : cyclonev_lcell_comb
--- Equation(s):
--- \counter[0]~_wirecell_combout\ = !counter(0)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "1010101010101010101010101010101010101010101010101010101010101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => ALT_INV_counter(0),
-	combout => \counter[0]~_wirecell_combout\);
-
-\counter[0]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \counter[0]~_wirecell_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => counter(0));
-
-\Add1~0\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add1~0_combout\ = !counter(1) $ (!counter(0))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => ALT_INV_counter(1),
-	datab => ALT_INV_counter(0),
-	combout => \Add1~0_combout\);
-
-\counter[1]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add1~0_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => counter(1));
-
-\Equal0~0\ : cyclonev_lcell_comb
--- Equation(s):
--- \Equal0~0_combout\ = (counter(1) & counter(0))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => ALT_INV_counter(1),
-	datab => ALT_INV_counter(0),
-	combout => \Equal0~0_combout\);
-
-\sum[31]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~1_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(31));
-
-\din[15]~input\ : cyclonev_io_ibuf
+\KB_REC~input\ : cyclonev_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => ww_din(15),
-	o => \din[15]~input_o\);
+	i => ww_KB_REC,
+	o => \KB_REC~input_o\);
 
-\din[14]~input\ : cyclonev_io_ibuf
+\KB_PLAY~input\ : cyclonev_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => ww_din(14),
-	o => \din[14]~input_o\);
+	i => ww_KB_PLAY,
+	o => \KB_PLAY~input_o\);
 
-\din[13]~input\ : cyclonev_io_ibuf
+\KB_ALLPLAY~input\ : cyclonev_io_ibuf
 -- pragma translate_off
 GENERIC MAP (
 	bus_hold => "false",
 	simulate_z_as => "z")
 -- pragma translate_on
 PORT MAP (
-	i => ww_din(13),
-	o => \din[13]~input_o\);
+	i => ww_KB_ALLPLAY,
+	o => \KB_ALLPLAY~input_o\);
 
-\din[12]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(12),
-	o => \din[12]~input_o\);
-
-\din[11]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(11),
-	o => \din[11]~input_o\);
-
-\din[10]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(10),
-	o => \din[10]~input_o\);
-
-\din[9]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(9),
-	o => \din[9]~input_o\);
-
-\din[8]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(8),
-	o => \din[8]~input_o\);
-
-\din[7]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(7),
-	o => \din[7]~input_o\);
-
-\din[6]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(6),
-	o => \din[6]~input_o\);
-
-\din[5]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(5),
-	o => \din[5]~input_o\);
-
-\din[4]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(4),
-	o => \din[4]~input_o\);
-
-\din[3]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(3),
-	o => \din[3]~input_o\);
-
-\din[2]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(2),
-	o => \din[2]~input_o\);
-
-\din[1]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(1),
-	o => \din[1]~input_o\);
-
-\din[0]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_din(0),
-	o => \din[0]~input_o\);
-
-\Add0~125\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~125_sumout\ = SUM(( sum(0) ) + ( \din[0]~input_o\ ) + ( !VCC ))
--- \Add0~126\ = CARRY(( sum(0) ) + ( \din[0]~input_o\ ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(0),
-	dataf => \ALT_INV_din[0]~input_o\,
-	cin => GND,
-	sumout => \Add0~125_sumout\,
-	cout => \Add0~126\);
-
-\sum[0]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~125_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(0));
-
-\Add0~117\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~117_sumout\ = SUM(( sum(1) ) + ( \din[1]~input_o\ ) + ( \Add0~126\ ))
--- \Add0~118\ = CARRY(( sum(1) ) + ( \din[1]~input_o\ ) + ( \Add0~126\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(1),
-	dataf => \ALT_INV_din[1]~input_o\,
-	cin => \Add0~126\,
-	sumout => \Add0~117_sumout\,
-	cout => \Add0~118\);
-
-\sum[1]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~117_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(1));
-
-\Add0~93\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~93_sumout\ = SUM(( sum(2) ) + ( \din[2]~input_o\ ) + ( \Add0~118\ ))
--- \Add0~94\ = CARRY(( sum(2) ) + ( \din[2]~input_o\ ) + ( \Add0~118\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(2),
-	dataf => \ALT_INV_din[2]~input_o\,
-	cin => \Add0~118\,
-	sumout => \Add0~93_sumout\,
-	cout => \Add0~94\);
-
-\sum[2]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~93_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(2));
-
-\Add0~85\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~85_sumout\ = SUM(( sum(3) ) + ( \din[3]~input_o\ ) + ( \Add0~94\ ))
--- \Add0~86\ = CARRY(( sum(3) ) + ( \din[3]~input_o\ ) + ( \Add0~94\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(3),
-	dataf => \ALT_INV_din[3]~input_o\,
-	cin => \Add0~94\,
-	sumout => \Add0~85_sumout\,
-	cout => \Add0~86\);
-
-\sum[3]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~85_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(3));
-
-\Add0~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~17_sumout\ = SUM(( sum(4) ) + ( \din[4]~input_o\ ) + ( \Add0~86\ ))
--- \Add0~18\ = CARRY(( sum(4) ) + ( \din[4]~input_o\ ) + ( \Add0~86\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(4),
-	dataf => \ALT_INV_din[4]~input_o\,
-	cin => \Add0~86\,
-	sumout => \Add0~17_sumout\,
-	cout => \Add0~18\);
-
-\sum[4]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~17_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(4));
-
-\Add0~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~21_sumout\ = SUM(( sum(5) ) + ( \din[5]~input_o\ ) + ( \Add0~18\ ))
--- \Add0~22\ = CARRY(( sum(5) ) + ( \din[5]~input_o\ ) + ( \Add0~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(5),
-	dataf => \ALT_INV_din[5]~input_o\,
-	cin => \Add0~18\,
-	sumout => \Add0~21_sumout\,
-	cout => \Add0~22\);
-
-\sum[5]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~21_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(5));
-
-\Add0~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~25_sumout\ = SUM(( sum(6) ) + ( \din[6]~input_o\ ) + ( \Add0~22\ ))
--- \Add0~26\ = CARRY(( sum(6) ) + ( \din[6]~input_o\ ) + ( \Add0~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(6),
-	dataf => \ALT_INV_din[6]~input_o\,
-	cin => \Add0~22\,
-	sumout => \Add0~25_sumout\,
-	cout => \Add0~26\);
-
-\sum[6]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~25_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(6));
-
-\Add0~29\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~29_sumout\ = SUM(( sum(7) ) + ( \din[7]~input_o\ ) + ( \Add0~26\ ))
--- \Add0~30\ = CARRY(( sum(7) ) + ( \din[7]~input_o\ ) + ( \Add0~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(7),
-	dataf => \ALT_INV_din[7]~input_o\,
-	cin => \Add0~26\,
-	sumout => \Add0~29_sumout\,
-	cout => \Add0~30\);
-
-\sum[7]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~29_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(7));
-
-\Add0~33\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~33_sumout\ = SUM(( sum(8) ) + ( \din[8]~input_o\ ) + ( \Add0~30\ ))
--- \Add0~34\ = CARRY(( sum(8) ) + ( \din[8]~input_o\ ) + ( \Add0~30\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(8),
-	dataf => \ALT_INV_din[8]~input_o\,
-	cin => \Add0~30\,
-	sumout => \Add0~33_sumout\,
-	cout => \Add0~34\);
-
-\sum[8]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~33_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(8));
-
-\Add0~37\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~37_sumout\ = SUM(( sum(9) ) + ( \din[9]~input_o\ ) + ( \Add0~34\ ))
--- \Add0~38\ = CARRY(( sum(9) ) + ( \din[9]~input_o\ ) + ( \Add0~34\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(9),
-	dataf => \ALT_INV_din[9]~input_o\,
-	cin => \Add0~34\,
-	sumout => \Add0~37_sumout\,
-	cout => \Add0~38\);
-
-\sum[9]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~37_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(9));
-
-\Add0~41\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~41_sumout\ = SUM(( sum(10) ) + ( \din[10]~input_o\ ) + ( \Add0~38\ ))
--- \Add0~42\ = CARRY(( sum(10) ) + ( \din[10]~input_o\ ) + ( \Add0~38\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(10),
-	dataf => \ALT_INV_din[10]~input_o\,
-	cin => \Add0~38\,
-	sumout => \Add0~41_sumout\,
-	cout => \Add0~42\);
-
-\sum[10]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~41_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(10));
-
-\Add0~45\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~45_sumout\ = SUM(( sum(11) ) + ( \din[11]~input_o\ ) + ( \Add0~42\ ))
--- \Add0~46\ = CARRY(( sum(11) ) + ( \din[11]~input_o\ ) + ( \Add0~42\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(11),
-	dataf => \ALT_INV_din[11]~input_o\,
-	cin => \Add0~42\,
-	sumout => \Add0~45_sumout\,
-	cout => \Add0~46\);
-
-\sum[11]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~45_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(11));
-
-\Add0~49\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~49_sumout\ = SUM(( sum(12) ) + ( \din[12]~input_o\ ) + ( \Add0~46\ ))
--- \Add0~50\ = CARRY(( sum(12) ) + ( \din[12]~input_o\ ) + ( \Add0~46\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(12),
-	dataf => \ALT_INV_din[12]~input_o\,
-	cin => \Add0~46\,
-	sumout => \Add0~49_sumout\,
-	cout => \Add0~50\);
-
-\sum[12]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~49_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(12));
-
-\Add0~53\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~53_sumout\ = SUM(( sum(13) ) + ( \din[13]~input_o\ ) + ( \Add0~50\ ))
--- \Add0~54\ = CARRY(( sum(13) ) + ( \din[13]~input_o\ ) + ( \Add0~50\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(13),
-	dataf => \ALT_INV_din[13]~input_o\,
-	cin => \Add0~50\,
-	sumout => \Add0~53_sumout\,
-	cout => \Add0~54\);
-
-\sum[13]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~53_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(13));
-
-\Add0~57\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~57_sumout\ = SUM(( sum(14) ) + ( \din[14]~input_o\ ) + ( \Add0~54\ ))
--- \Add0~58\ = CARRY(( sum(14) ) + ( \din[14]~input_o\ ) + ( \Add0~54\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(14),
-	dataf => \ALT_INV_din[14]~input_o\,
-	cin => \Add0~54\,
-	sumout => \Add0~57_sumout\,
-	cout => \Add0~58\);
-
-\sum[14]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~57_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(14));
-
-\Add0~61\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~61_sumout\ = SUM(( sum(15) ) + ( \din[15]~input_o\ ) + ( \Add0~58\ ))
--- \Add0~62\ = CARRY(( sum(15) ) + ( \din[15]~input_o\ ) + ( \Add0~58\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000000000000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(15),
-	dataf => \ALT_INV_din[15]~input_o\,
-	cin => \Add0~58\,
-	sumout => \Add0~61_sumout\,
-	cout => \Add0~62\);
-
-\sum[15]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~61_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(15));
-
-\Add0~65\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~65_sumout\ = SUM(( sum(16) ) + ( GND ) + ( \Add0~62\ ))
--- \Add0~66\ = CARRY(( sum(16) ) + ( GND ) + ( \Add0~62\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(16),
-	cin => \Add0~62\,
-	sumout => \Add0~65_sumout\,
-	cout => \Add0~66\);
-
-\sum[16]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~65_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(16));
-
-\Add0~69\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~69_sumout\ = SUM(( sum(17) ) + ( GND ) + ( \Add0~66\ ))
--- \Add0~70\ = CARRY(( sum(17) ) + ( GND ) + ( \Add0~66\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(17),
-	cin => \Add0~66\,
-	sumout => \Add0~69_sumout\,
-	cout => \Add0~70\);
-
-\sum[17]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~69_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(17));
-
-\Add0~73\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~73_sumout\ = SUM(( sum(18) ) + ( GND ) + ( \Add0~70\ ))
--- \Add0~74\ = CARRY(( sum(18) ) + ( GND ) + ( \Add0~70\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(18),
-	cin => \Add0~70\,
-	sumout => \Add0~73_sumout\,
-	cout => \Add0~74\);
-
-\sum[18]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~73_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(18));
-
-\Add0~77\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~77_sumout\ = SUM(( sum(19) ) + ( GND ) + ( \Add0~74\ ))
--- \Add0~78\ = CARRY(( sum(19) ) + ( GND ) + ( \Add0~74\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(19),
-	cin => \Add0~74\,
-	sumout => \Add0~77_sumout\,
-	cout => \Add0~78\);
-
-\sum[19]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~77_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(19));
-
-\Add0~97\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~97_sumout\ = SUM(( sum(20) ) + ( GND ) + ( \Add0~78\ ))
--- \Add0~98\ = CARRY(( sum(20) ) + ( GND ) + ( \Add0~78\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(20),
-	cin => \Add0~78\,
-	sumout => \Add0~97_sumout\,
-	cout => \Add0~98\);
-
-\sum[20]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~97_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(20));
-
-\Add0~101\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~101_sumout\ = SUM(( sum(21) ) + ( GND ) + ( \Add0~98\ ))
--- \Add0~102\ = CARRY(( sum(21) ) + ( GND ) + ( \Add0~98\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(21),
-	cin => \Add0~98\,
-	sumout => \Add0~101_sumout\,
-	cout => \Add0~102\);
-
-\sum[21]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~101_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(21));
-
-\Add0~105\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~105_sumout\ = SUM(( sum(22) ) + ( GND ) + ( \Add0~102\ ))
--- \Add0~106\ = CARRY(( sum(22) ) + ( GND ) + ( \Add0~102\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(22),
-	cin => \Add0~102\,
-	sumout => \Add0~105_sumout\,
-	cout => \Add0~106\);
-
-\sum[22]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~105_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(22));
-
-\Add0~109\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~109_sumout\ = SUM(( sum(23) ) + ( GND ) + ( \Add0~106\ ))
--- \Add0~110\ = CARRY(( sum(23) ) + ( GND ) + ( \Add0~106\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(23),
-	cin => \Add0~106\,
-	sumout => \Add0~109_sumout\,
-	cout => \Add0~110\);
-
-\sum[23]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~109_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(23));
-
-\Add0~121\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~121_sumout\ = SUM(( sum(24) ) + ( GND ) + ( \Add0~110\ ))
--- \Add0~122\ = CARRY(( sum(24) ) + ( GND ) + ( \Add0~110\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(24),
-	cin => \Add0~110\,
-	sumout => \Add0~121_sumout\,
-	cout => \Add0~122\);
-
-\sum[24]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~121_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(24));
-
-\Add0~113\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~113_sumout\ = SUM(( sum(25) ) + ( GND ) + ( \Add0~122\ ))
--- \Add0~114\ = CARRY(( sum(25) ) + ( GND ) + ( \Add0~122\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(25),
-	cin => \Add0~122\,
-	sumout => \Add0~113_sumout\,
-	cout => \Add0~114\);
-
-\sum[25]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~113_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(25));
-
-\Add0~89\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~89_sumout\ = SUM(( sum(26) ) + ( GND ) + ( \Add0~114\ ))
--- \Add0~90\ = CARRY(( sum(26) ) + ( GND ) + ( \Add0~114\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(26),
-	cin => \Add0~114\,
-	sumout => \Add0~89_sumout\,
-	cout => \Add0~90\);
-
-\sum[26]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~89_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(26));
-
-\Add0~81\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~81_sumout\ = SUM(( sum(27) ) + ( GND ) + ( \Add0~90\ ))
--- \Add0~82\ = CARRY(( sum(27) ) + ( GND ) + ( \Add0~90\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(27),
-	cin => \Add0~90\,
-	sumout => \Add0~81_sumout\,
-	cout => \Add0~82\);
-
-\sum[27]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~81_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(27));
-
-\Add0~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~13_sumout\ = SUM(( sum(28) ) + ( GND ) + ( \Add0~82\ ))
--- \Add0~14\ = CARRY(( sum(28) ) + ( GND ) + ( \Add0~82\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(28),
-	cin => \Add0~82\,
-	sumout => \Add0~13_sumout\,
-	cout => \Add0~14\);
-
-\sum[28]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~13_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(28));
-
-\Add0~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~9_sumout\ = SUM(( sum(29) ) + ( GND ) + ( \Add0~14\ ))
--- \Add0~10\ = CARRY(( sum(29) ) + ( GND ) + ( \Add0~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(29),
-	cin => \Add0~14\,
-	sumout => \Add0~9_sumout\,
-	cout => \Add0~10\);
-
-\sum[29]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~9_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(29));
-
-\Add0~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~5_sumout\ = SUM(( sum(30) ) + ( GND ) + ( \Add0~10\ ))
--- \Add0~6\ = CARRY(( sum(30) ) + ( GND ) + ( \Add0~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(30),
-	cin => \Add0~10\,
-	sumout => \Add0~5_sumout\,
-	cout => \Add0~6\);
-
-\sum[30]\ : dffeas
--- pragma translate_off
-GENERIC MAP (
-	is_wysiwyg => "true",
-	power_up => "low")
--- pragma translate_on
-PORT MAP (
-	clk => \clk~input_o\,
-	d => \Add0~5_sumout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal0~0_combout\,
-	devclrn => ww_devclrn,
-	devpor => ww_devpor,
-	q => sum(30));
-
-\Add0~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Add0~1_sumout\ = SUM(( sum(31) ) + ( GND ) + ( \Add0~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => ALT_INV_sum(31),
-	cin => \Add0~6\,
-	sumout => \Add0~1_sumout\);
-
-\ActiveCh[2]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_ActiveCh(2),
-	o => \ActiveCh[2]~input_o\);
-
-\ActiveCh[0]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_ActiveCh(0),
-	o => \ActiveCh[0]~input_o\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~93\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~93_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~125_sumout\) ) + ( \Add0~1_sumout\ ) + ( !VCC ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~94\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~125_sumout\) ) + ( \Add0~1_sumout\ ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000101010101010101000000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~125_sumout\,
-	cin => GND,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~93_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~94\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~89\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~117_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~94\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~90\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~117_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~94\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~117_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~94\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~90\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~69\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~93_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~90\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~70\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~93_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~90\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~93_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~90\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~70\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~65\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~85_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~70\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~66\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~85_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~70\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~85_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~70\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~66\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~17_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~66\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~2\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~17_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~66\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~17_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~66\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~2\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~21_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~2\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~6\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~21_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~2\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~21_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~2\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~6\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~25_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~6\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~10\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~25_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~25_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~6\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~10\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~29_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~10\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~14\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~29_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~29_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~10\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~14\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~33_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~14\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~18\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~33_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~33_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~14\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~18\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~37_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~18\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~22\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~37_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~37_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~18\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~22\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~41_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~22\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~26\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~41_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~41_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~22\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~26\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~29\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~45_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~26\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~30\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~45_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~45_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~26\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~30\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~33\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~49_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~30\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~34\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~49_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~30\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~49_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~30\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~34\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~37\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~53_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~34\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~38\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~53_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~34\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~53_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~34\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~38\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~41\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~57_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~38\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~42\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~57_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~38\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~57_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~38\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~42\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~45\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~61_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~42\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~46\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~61_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~42\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~61_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~42\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~46\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~49\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~65_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~46\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~50\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~65_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~46\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~65_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~46\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~50\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~53\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~69_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~50\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~54\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~69_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~50\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~69_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~50\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~54\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~57\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~73_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~54\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~58\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~73_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~54\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~73_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~54\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~58\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~61\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~77_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~58\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~62\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~77_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~58\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~77_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~58\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~62\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~73\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~97_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~62\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~74\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~97_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~62\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~97_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~62\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~74\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~77\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~101_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~74\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~78\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~101_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~74\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~101_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~74\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~78\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~81\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~105_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~78\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~82\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~105_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~78\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~105_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~78\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~82\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~85\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~109_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~82\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~86\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~109_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~82\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~109_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~82\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~86\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~97\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~121_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~86\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~98\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~121_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~86\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~121_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~86\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~98\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~101\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~113_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~98\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~102\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~113_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~98\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~113_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~98\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~102\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~105\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~89_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~102\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~106\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~89_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~102\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~89_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~102\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~106\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~109\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~81_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~106\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~110\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~81_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~106\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~81_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~106\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~110\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~113\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~13_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~110\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~114\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~13_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~110\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~13_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~110\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~114\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~117\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~9_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~114\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~118\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~9_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~114\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~9_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~114\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~118\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~121\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\ = SUM(( !\Add0~1_sumout\ $ (!\Add0~5_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~118\ ))
--- \Div0|auto_generated|divider|my_abs_num|op_1~122\ = CARRY(( !\Add0~1_sumout\ $ (!\Add0~5_sumout\) ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~118\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000101010110101010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datad => \ALT_INV_Add0~5_sumout\,
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~118\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\,
-	cout => \Div0|auto_generated|divider|my_abs_num|op_1~122\);
-
-\Div0|auto_generated|divider|my_abs_num|op_1~125\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\ = SUM(( GND ) + ( GND ) + ( \Div0|auto_generated|divider|my_abs_num|op_1~122\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000000000000",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|my_abs_num|op_1~122\,
-	sumout => \Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\);
-
-\Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\ = SUM(( !\ActiveCh[0]~input_o\ $ (!\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\) ) + ( !VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~2\ = CARRY(( !\ActiveCh[0]~input_o\ $ (!\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\) ) + ( !VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~3\ = SHARE((!\ActiveCh[0]~input_o\) # (\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111100001111111100000000000000000000111111110000",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	datac => \ALT_INV_ActiveCh[0]~input_o\,
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~125_sumout\,
-	cin => GND,
-	sharein => GND,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\,
-	cout => \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~2\,
-	shareout => \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~3\);
-
-\Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\ = SUM(( VCC ) + ( \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~3\ ) + ( \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~2\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~2\,
-	sharein => \Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~3\,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\);
-
-\ActiveCh[1]~input\ : cyclonev_io_ibuf
--- pragma translate_off
-GENERIC MAP (
-	bus_hold => "false",
-	simulate_z_as => "z")
--- pragma translate_on
-PORT MAP (
-	i => ww_ActiveCh(1),
-	o => \ActiveCh[1]~input_o\);
-
-\Div0|auto_generated|divider|divider|selnose[0]\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|selnose\(0) = ((\ActiveCh[1]~input_o\) # (\Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\)) # (\ActiveCh[2]~input_o\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0111111101111111011111110111111101111111011111110111111101111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[1]~5_sumout\,
-	datac => \ALT_INV_ActiveCh[1]~input_o\,
-	combout => \Div0|auto_generated|divider|divider|selnose\(0));
-
-\Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\ = SUM(( !\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\ $ (!\ActiveCh[0]~input_o\) ) + ( !VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~6\ = CARRY(( !\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\ $ (!\ActiveCh[0]~input_o\) ) + ( !VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~7\ = SHARE((!\ActiveCh[0]~input_o\) # (\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000111100000000000000000000111111110000",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~121_sumout\,
-	datad => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => GND,
-	sharein => GND,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~6\,
-	shareout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~7\);
-
-\Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\ = SUM(( !\ActiveCh[1]~input_o\ $ (((!\Div0|auto_generated|divider|divider|selnose\(0) & (\Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|selnose\(0) & ((\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\))))) ) + ( \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~7\ ) + ( \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~6\ 
--- ))
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~10\ = CARRY(( !\ActiveCh[1]~input_o\ $ (((!\Div0|auto_generated|divider|divider|selnose\(0) & (\Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|selnose\(0) & ((\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\))))) ) + ( \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~7\ ) + ( \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~6\ 
--- ))
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~11\ = SHARE((!\ActiveCh[1]~input_o\ & ((!\Div0|auto_generated|divider|divider|selnose\(0) & (\Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|selnose\(0) & ((\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\))))))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000010001110000000000000000000000001011100001000111",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[0]~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_selnose\(0),
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~125_sumout\,
-	datad => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~6\,
-	sharein => \Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~7\,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~10\,
-	shareout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~11\);
-
-\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ = SUM(( VCC ) + ( \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~11\ ) + ( \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~10\,
-	sharein => \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~11\,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[6]~140\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[6]~140_combout\ = (!\ActiveCh[2]~input_o\ & (!\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & \Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000100000001000000010000000100000001000000010000000100000001000",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[1]~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[6]~140_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[0]~141\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[0]~141_combout\ = ( \ActiveCh[1]~input_o\ & ( \Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\ ) ) # ( !\ActiveCh[1]~input_o\ & ( (!\ActiveCh[2]~input_o\ & 
--- ((!\Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\ & ((\Div0|auto_generated|divider|divider|add_sub_0_result_int[0]~1_sumout\))) # (\Div0|auto_generated|divider|divider|add_sub_0_result_int[1]~5_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\)))) # (\ActiveCh[2]~input_o\ & (\Div0|auto_generated|divider|my_abs_num|op_1~125_sumout\)) ) )
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101100110011001100110011001100011011001100110011001100110011",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~125_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[0]~1_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_0_result_int[1]~5_sumout\,
-	datae => \ALT_INV_ActiveCh[1]~input_o\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[0]~141_combout\);
-
-\Div0|auto_generated|divider|divider|selnose[33]\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|selnose\(33) = (\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\) # (\ActiveCh[2]~input_o\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0111011101110111011101110111011101110111011101110111011101110111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|selnose\(33));
-
-\Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\ = SUM(( !\Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\ $ (!\ActiveCh[0]~input_o\) ) + ( !VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~6\ = CARRY(( !\Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\ $ (!\ActiveCh[0]~input_o\) ) + ( !VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~7\ = SHARE((!\ActiveCh[0]~input_o\) # (\Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111110000111100000000000000000000111111110000",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~117_sumout\,
-	datad => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => GND,
-	sharein => GND,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~6\,
-	shareout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~7\);
-
-\Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\ = SUM(( !\ActiveCh[1]~input_o\ $ (((!\Div0|auto_generated|divider|divider|selnose\(33) & (\Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|selnose\(33) & ((\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\))))) ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~7\ ) + ( 
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~6\ ))
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~10\ = CARRY(( !\ActiveCh[1]~input_o\ $ (((!\Div0|auto_generated|divider|divider|selnose\(33) & (\Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|selnose\(33) & ((\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\))))) ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~7\ ) + ( 
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~6\ ))
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~11\ = SHARE((!\ActiveCh[1]~input_o\ & ((!\Div0|auto_generated|divider|divider|selnose\(33) & (\Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|selnose\(33) & ((\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\))))))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000010001110000000000000000000000001011100001000111",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[0]~5_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_selnose\(33),
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~121_sumout\,
-	datad => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~6\,
-	sharein => \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~7\,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~10\,
-	shareout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~11\);
-
-\Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\ = SUM(( (!\ActiveCh[2]~input_o\ & ((!\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & 
--- (!\Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\)) # (\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & ((!\Div0|auto_generated|divider|divider|StageOut[0]~141_combout\))))) # (\ActiveCh[2]~input_o\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[0]~141_combout\)))) ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~11\ ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~10\ ))
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~14\ = CARRY(( (!\ActiveCh[2]~input_o\ & ((!\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & (!\Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & ((!\Div0|auto_generated|divider|divider|StageOut[0]~141_combout\))))) # (\ActiveCh[2]~input_o\ & (((\Div0|auto_generated|divider|divider|StageOut[0]~141_combout\)))) ) + ( 
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~11\ ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~10\ ))
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~15\ = SHARE((!\ActiveCh[2]~input_o\ & ((!\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & (\Div0|auto_generated|divider|divider|add_sub_1_result_int[1]~9_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & ((\Div0|auto_generated|divider|divider|StageOut[0]~141_combout\))))))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000010001110000000000000000000000001011100000001111",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[1]~9_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[0]~141_combout\,
-	datad => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~10\,
-	sharein => \Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~11\,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~14\,
-	shareout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~15\);
-
-\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ = SUM(( VCC ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~15\ ) + ( \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "on")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~14\,
-	sharein => \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~15\,
-	sumout => \Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[6]~142\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[6]~142_combout\ = (\Div0|auto_generated|divider|divider|StageOut[0]~141_combout\ & ((\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\) # (\ActiveCh[2]~input_o\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000011100000111000001110000011100000111000001110000011100000111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[0]~141_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[6]~142_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[5]~136\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[5]~136_combout\ = (!\ActiveCh[2]~input_o\ & ((!\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & ((\Div0|auto_generated|divider|divider|add_sub_1_result_int[0]~5_sumout\))) # 
--- (\Div0|auto_generated|divider|divider|add_sub_1_result_int[2]~1_sumout\ & (\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\)))) # (\ActiveCh[2]~input_o\ & (\Div0|auto_generated|divider|my_abs_num|op_1~121_sumout\))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001001110110011000100111011001100010011101100110001001110110011",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~121_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[2]~1_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_1_result_int[0]~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[5]~136_combout\);
-
-\Div0|auto_generated|divider|divider|op_24~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_24~22_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_24~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_24~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_24~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_24~22_cout\ ))
--- \Div0|auto_generated|divider|divider|op_24~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_24~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~113_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_24~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_24~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_24~6\);
-
-\Div0|auto_generated|divider|divider|op_24~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_24~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & ((\Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\))) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (\Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_24~6\ ))
--- \Div0|auto_generated|divider|divider|op_24~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & ((\Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\))) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (\Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_24~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001000111011101",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~117_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[0]~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_24~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_24~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_24~10\);
-
-\Div0|auto_generated|divider|divider|op_24~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_24~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (\Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & ((\Div0|auto_generated|divider|divider|StageOut[5]~136_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_24~10\ ))
--- \Div0|auto_generated|divider|divider|op_24~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (\Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & ((\Div0|auto_generated|divider|divider|StageOut[5]~136_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_24~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000110000111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[1]~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[5]~136_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_24~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_24~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_24~14\);
-
-\Div0|auto_generated|divider|divider|op_24~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_24~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (((\Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\)))) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (((\Div0|auto_generated|divider|divider|StageOut[6]~142_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[6]~140_combout\))) ) + ( VCC ) + ( 
--- \Div0|auto_generated|divider|divider|op_24~14\ ))
--- \Div0|auto_generated|divider|divider|op_24~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (((\Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\)))) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (((\Div0|auto_generated|divider|divider|StageOut[6]~142_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[6]~140_combout\))) ) + ( VCC ) + ( 
--- \Div0|auto_generated|divider|divider|op_24~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001110100111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~140_combout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[2]~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~142_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_24~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_24~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_24~18\);
-
-\Div0|auto_generated|divider|divider|op_24~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_24~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_24~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_24~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_24~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[12]~139\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[12]~139_combout\ = (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & \Div0|auto_generated|divider|divider|add_sub_2_result_int[2]~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[2]~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[12]~139_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[12]~143\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[12]~143_combout\ = (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & ((\Div0|auto_generated|divider|divider|StageOut[6]~142_combout\) # 
--- (\Div0|auto_generated|divider|divider|StageOut[6]~140_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001001100010011000100110001001100010011000100110001001100010011",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~140_combout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[6]~142_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[12]~143_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[11]~137\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[11]~137_combout\ = (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & (\Div0|auto_generated|divider|divider|add_sub_2_result_int[1]~9_sumout\)) # 
--- (\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & ((\Div0|auto_generated|divider|divider|StageOut[5]~136_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010011100100111001001110010011100100111001001110010011100100111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[1]~9_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[5]~136_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[11]~137_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[10]~131\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[10]~131_combout\ = (!\Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\ & \Div0|auto_generated|divider|divider|add_sub_2_result_int[0]~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[0]~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[10]~131_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[10]~132\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[10]~132_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~117_sumout\ & \Div0|auto_generated|divider|divider|add_sub_2_result_int[3]~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~117_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_add_sub_2_result_int[3]~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[10]~132_combout\);
-
-\Div0|auto_generated|divider|divider|op_27~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~14_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_27~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_27~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_27~14_cout\ ))
--- \Div0|auto_generated|divider|divider|op_27~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_27~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~109_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_27~14_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_27~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_27~6\);
-
-\Div0|auto_generated|divider|divider|op_27~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_24~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_27~6\ ))
--- \Div0|auto_generated|divider|divider|op_27~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_24~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_27~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~113_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_24~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_27~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_27~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_27~18\);
-
-\Div0|auto_generated|divider|divider|op_27~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_24~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[10]~132_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[10]~131_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_27~18\ ))
--- \Div0|auto_generated|divider|divider|op_27~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_24~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[10]~132_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[10]~131_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_27~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~131_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_24~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~132_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_27~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_27~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_27~22\);
-
-\Div0|auto_generated|divider|divider|op_27~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_24~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[11]~137_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_27~22\ ))
--- \Div0|auto_generated|divider|divider|op_27~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_24~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[11]~137_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_27~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[11]~137_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_24~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_27~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_27~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_27~26\);
-
-\Div0|auto_generated|divider|divider|op_27~10\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~10_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_24~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[12]~143_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[12]~139_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_27~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[12]~139_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_24~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[12]~143_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_27~26\,
-	cout => \Div0|auto_generated|divider|divider|op_27~10_cout\);
-
-\Div0|auto_generated|divider|divider|op_27~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_27~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_27~10_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_27~10_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_27~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[17]~135\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[17]~135_combout\ = (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & \Div0|auto_generated|divider|divider|op_24~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_24~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[17]~135_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[17]~138\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[17]~138_combout\ = (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[11]~137_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[11]~137_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[17]~138_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[16]~133\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[16]~133_combout\ = (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_24~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_24~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[10]~132_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[10]~131_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~131_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_24~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[10]~132_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[16]~133_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[15]~126\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[15]~126_combout\ = (!\Div0|auto_generated|divider|divider|op_24~1_sumout\ & \Div0|auto_generated|divider|divider|op_24~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_24~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[15]~126_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[15]~127\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[15]~127_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~113_sumout\ & \Div0|auto_generated|divider|divider|op_24~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~113_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_24~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[15]~127_combout\);
-
-\Div0|auto_generated|divider|divider|op_28~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~18_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_28~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_28~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_28~18_cout\ ))
--- \Div0|auto_generated|divider|divider|op_28~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_28~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~105_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_28~18_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_28~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_28~6\);
-
-\Div0|auto_generated|divider|divider|op_28~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_27~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_28~6\ ))
--- \Div0|auto_generated|divider|divider|op_28~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_27~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_28~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~109_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_27~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_28~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_28~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_28~10\);
-
-\Div0|auto_generated|divider|divider|op_28~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_27~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[15]~127_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[15]~126_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_28~10\ ))
--- \Div0|auto_generated|divider|divider|op_28~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_27~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[15]~127_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[15]~126_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_28~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~126_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_27~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~127_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_28~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_28~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_28~22\);
-
-\Div0|auto_generated|divider|divider|op_28~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_27~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[16]~133_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_28~22\ ))
--- \Div0|auto_generated|divider|divider|op_28~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_27~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[16]~133_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_28~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[16]~133_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_27~21_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_28~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_28~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_28~26\);
-
-\Div0|auto_generated|divider|divider|op_28~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~14_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_27~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[17]~138_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[17]~135_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_28~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[17]~135_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_27~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[17]~138_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_28~26\,
-	cout => \Div0|auto_generated|divider|divider|op_28~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_28~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_28~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_28~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_28~14_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_28~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[22]~130\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[22]~130_combout\ = (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & \Div0|auto_generated|divider|divider|op_27~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_27~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[22]~130_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[22]~134\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[22]~134_combout\ = (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[16]~133_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[16]~133_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[22]~134_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[21]~128\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[21]~128_combout\ = (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_27~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_27~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[15]~127_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[15]~126_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~126_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_27~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[15]~127_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[21]~128_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[20]~121\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[20]~121_combout\ = (!\Div0|auto_generated|divider|divider|op_27~1_sumout\ & \Div0|auto_generated|divider|divider|op_27~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_27~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[20]~121_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[20]~122\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[20]~122_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~109_sumout\ & \Div0|auto_generated|divider|divider|op_27~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~109_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_27~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[20]~122_combout\);
-
-\Div0|auto_generated|divider|divider|op_29~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~22_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_29~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_29~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_29~22_cout\ ))
--- \Div0|auto_generated|divider|divider|op_29~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_29~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~101_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_29~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_29~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_29~6\);
-
-\Div0|auto_generated|divider|divider|op_29~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_28~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_29~6\ ))
--- \Div0|auto_generated|divider|divider|op_29~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_28~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_29~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~105_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_28~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_29~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_29~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_29~10\);
-
-\Div0|auto_generated|divider|divider|op_29~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_28~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[20]~122_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[20]~121_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_29~10\ ))
--- \Div0|auto_generated|divider|divider|op_29~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_28~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[20]~122_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[20]~121_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_29~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~121_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_28~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~122_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_29~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_29~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_29~14\);
-
-\Div0|auto_generated|divider|divider|op_29~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_28~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[21]~128_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_29~14\ ))
--- \Div0|auto_generated|divider|divider|op_29~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_28~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[21]~128_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_29~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[21]~128_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_28~21_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_29~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_29~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_29~26\);
-
-\Div0|auto_generated|divider|divider|op_29~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~18_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_28~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[22]~134_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[22]~130_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_29~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[22]~130_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_28~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[22]~134_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_29~26\,
-	cout => \Div0|auto_generated|divider|divider|op_29~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_29~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_29~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_29~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_29~18_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_29~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[27]~125\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[27]~125_combout\ = (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & \Div0|auto_generated|divider|divider|op_28~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_28~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[27]~125_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[27]~129\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[27]~129_combout\ = (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[21]~128_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[21]~128_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[27]~129_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[26]~123\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[26]~123_combout\ = (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_28~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_28~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[20]~122_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[20]~121_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~121_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_28~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[20]~122_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[26]~123_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[25]~116\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[25]~116_combout\ = (!\Div0|auto_generated|divider|divider|op_28~1_sumout\ & \Div0|auto_generated|divider|divider|op_28~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_28~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[25]~116_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[25]~117\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[25]~117_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~105_sumout\ & \Div0|auto_generated|divider|divider|op_28~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~105_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_28~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[25]~117_combout\);
-
-\Div0|auto_generated|divider|divider|op_30~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_30~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_30~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_30~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_30~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_30~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~97_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_30~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_30~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_30~6\);
-
-\Div0|auto_generated|divider|divider|op_30~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_29~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_30~6\ ))
--- \Div0|auto_generated|divider|divider|op_30~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_29~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_30~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~101_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_29~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_30~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_30~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_30~10\);
-
-\Div0|auto_generated|divider|divider|op_30~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_29~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[25]~117_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[25]~116_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_30~10\ ))
--- \Div0|auto_generated|divider|divider|op_30~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_29~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[25]~117_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[25]~116_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_30~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~116_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_29~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~117_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_30~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_30~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_30~14\);
-
-\Div0|auto_generated|divider|divider|op_30~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_29~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[26]~123_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_30~14\ ))
--- \Div0|auto_generated|divider|divider|op_30~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_29~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[26]~123_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_30~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[26]~123_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_29~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_30~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_30~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_30~18\);
-
-\Div0|auto_generated|divider|divider|op_30~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~22_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_29~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[27]~129_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[27]~125_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_30~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[27]~125_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_29~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[27]~129_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_30~18\,
-	cout => \Div0|auto_generated|divider|divider|op_30~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_30~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_30~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_30~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_30~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_30~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[32]~120\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[32]~120_combout\ = (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & \Div0|auto_generated|divider|divider|op_29~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_29~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[32]~120_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[32]~124\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[32]~124_combout\ = (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[26]~123_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[26]~123_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[32]~124_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[31]~118\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[31]~118_combout\ = (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_29~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_29~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[25]~117_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[25]~116_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~116_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_29~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[25]~117_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[31]~118_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[30]~111\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[30]~111_combout\ = (!\Div0|auto_generated|divider|divider|op_29~1_sumout\ & \Div0|auto_generated|divider|divider|op_29~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_29~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[30]~111_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[30]~112\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[30]~112_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~101_sumout\ & \Div0|auto_generated|divider|divider|op_29~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~101_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_29~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[30]~112_combout\);
-
-\Div0|auto_generated|divider|divider|op_31~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~14_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_31~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_31~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_31~14_cout\ ))
--- \Div0|auto_generated|divider|divider|op_31~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_31~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~85_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_31~14_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_31~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_31~6\);
-
-\Div0|auto_generated|divider|divider|op_31~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_30~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_31~6\ ))
--- \Div0|auto_generated|divider|divider|op_31~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_30~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_31~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~97_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_30~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_31~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_31~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_31~18\);
-
-\Div0|auto_generated|divider|divider|op_31~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_30~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[30]~112_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[30]~111_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_31~18\ ))
--- \Div0|auto_generated|divider|divider|op_31~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_30~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[30]~112_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[30]~111_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_31~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~111_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_30~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~112_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_31~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_31~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_31~22\);
-
-\Div0|auto_generated|divider|divider|op_31~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_30~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[31]~118_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_31~22\ ))
--- \Div0|auto_generated|divider|divider|op_31~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_30~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[31]~118_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_31~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[31]~118_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_30~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_31~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_31~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_31~26\);
-
-\Div0|auto_generated|divider|divider|op_31~10\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~10_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_30~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[32]~124_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[32]~120_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_31~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[32]~120_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_30~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[32]~124_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_31~26\,
-	cout => \Div0|auto_generated|divider|divider|op_31~10_cout\);
-
-\Div0|auto_generated|divider|divider|op_31~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_31~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_31~10_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_31~10_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_31~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[37]~115\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[37]~115_combout\ = (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & \Div0|auto_generated|divider|divider|op_30~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_30~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[37]~115_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[37]~119\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[37]~119_combout\ = (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[31]~118_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[31]~118_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[37]~119_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[36]~113\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[36]~113_combout\ = (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_30~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_30~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[30]~112_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[30]~111_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~111_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_30~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[30]~112_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[36]~113_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[35]~106\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[35]~106_combout\ = (!\Div0|auto_generated|divider|divider|op_30~1_sumout\ & \Div0|auto_generated|divider|divider|op_30~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_30~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[35]~106_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[35]~107\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[35]~107_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~97_sumout\ & \Div0|auto_generated|divider|divider|op_30~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~97_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_30~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[35]~107_combout\);
-
-\Div0|auto_generated|divider|divider|op_32~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~18_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_32~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_32~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_32~18_cout\ ))
--- \Div0|auto_generated|divider|divider|op_32~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_32~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~81_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_32~18_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_32~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_32~6\);
-
-\Div0|auto_generated|divider|divider|op_32~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_31~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_32~6\ ))
--- \Div0|auto_generated|divider|divider|op_32~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_31~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_32~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~85_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_31~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_32~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_32~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_32~10\);
-
-\Div0|auto_generated|divider|divider|op_32~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_31~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[35]~107_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[35]~106_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_32~10\ ))
--- \Div0|auto_generated|divider|divider|op_32~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_31~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[35]~107_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[35]~106_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_32~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~106_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_31~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~107_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_32~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_32~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_32~22\);
-
-\Div0|auto_generated|divider|divider|op_32~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_31~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[36]~113_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_32~22\ ))
--- \Div0|auto_generated|divider|divider|op_32~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_31~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[36]~113_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_32~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[36]~113_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_31~21_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_32~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_32~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_32~26\);
-
-\Div0|auto_generated|divider|divider|op_32~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~14_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_31~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[37]~119_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[37]~115_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_32~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[37]~115_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_31~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[37]~119_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_32~26\,
-	cout => \Div0|auto_generated|divider|divider|op_32~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_32~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_32~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_32~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_32~14_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_32~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[42]~110\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[42]~110_combout\ = (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & \Div0|auto_generated|divider|divider|op_31~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_31~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[42]~110_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[42]~114\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[42]~114_combout\ = (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[36]~113_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[36]~113_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[42]~114_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[41]~108\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[41]~108_combout\ = (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_31~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_31~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[35]~107_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[35]~106_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~106_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_31~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[35]~107_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[41]~108_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[40]~101\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[40]~101_combout\ = (!\Div0|auto_generated|divider|divider|op_31~1_sumout\ & \Div0|auto_generated|divider|divider|op_31~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_31~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[40]~101_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[40]~102\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[40]~102_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~85_sumout\ & \Div0|auto_generated|divider|divider|op_31~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~85_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_31~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[40]~102_combout\);
-
-\Div0|auto_generated|divider|divider|op_3~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~22_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_3~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_3~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_3~22_cout\ ))
--- \Div0|auto_generated|divider|divider|op_3~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_3~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~77_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_3~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_3~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_3~6\);
-
-\Div0|auto_generated|divider|divider|op_3~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_32~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_3~6\ ))
--- \Div0|auto_generated|divider|divider|op_3~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_32~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_3~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~81_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_32~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_3~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_3~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_3~10\);
-
-\Div0|auto_generated|divider|divider|op_3~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_32~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[40]~102_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[40]~101_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_3~10\ ))
--- \Div0|auto_generated|divider|divider|op_3~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_32~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[40]~102_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[40]~101_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_3~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~101_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_32~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~102_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_3~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_3~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_3~14\);
-
-\Div0|auto_generated|divider|divider|op_3~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_32~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[41]~108_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_3~14\ ))
--- \Div0|auto_generated|divider|divider|op_3~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_32~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[41]~108_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_3~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[41]~108_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_32~21_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_3~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_3~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_3~26\);
-
-\Div0|auto_generated|divider|divider|op_3~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~18_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_32~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[42]~114_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[42]~110_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_3~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[42]~110_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_32~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[42]~114_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_3~26\,
-	cout => \Div0|auto_generated|divider|divider|op_3~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_3~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_3~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_3~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_3~18_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_3~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[47]~105\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[47]~105_combout\ = (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & \Div0|auto_generated|divider|divider|op_32~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_32~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[47]~105_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[47]~109\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[47]~109_combout\ = (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[41]~108_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[41]~108_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[47]~109_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[46]~103\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[46]~103_combout\ = (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_32~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_32~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[40]~102_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[40]~101_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~101_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_32~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[40]~102_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[46]~103_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[45]~96\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[45]~96_combout\ = (!\Div0|auto_generated|divider|divider|op_32~1_sumout\ & \Div0|auto_generated|divider|divider|op_32~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_32~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[45]~96_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[45]~97\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[45]~97_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~81_sumout\ & \Div0|auto_generated|divider|divider|op_32~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~81_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_32~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[45]~97_combout\);
-
-\Div0|auto_generated|divider|divider|op_4~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_4~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_4~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_4~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_4~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_4~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~73_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_4~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_4~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_4~6\);
-
-\Div0|auto_generated|divider|divider|op_4~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_3~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_4~6\ ))
--- \Div0|auto_generated|divider|divider|op_4~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_3~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_4~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~77_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_3~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_4~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_4~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_4~10\);
-
-\Div0|auto_generated|divider|divider|op_4~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_3~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[45]~97_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[45]~96_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_4~10\ ))
--- \Div0|auto_generated|divider|divider|op_4~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_3~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[45]~97_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[45]~96_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_4~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~96_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_3~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~97_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_4~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_4~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_4~14\);
-
-\Div0|auto_generated|divider|divider|op_4~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_3~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[46]~103_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_4~14\ ))
--- \Div0|auto_generated|divider|divider|op_4~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_3~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[46]~103_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_4~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[46]~103_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_3~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_4~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_4~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_4~18\);
-
-\Div0|auto_generated|divider|divider|op_4~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~22_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_3~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[47]~109_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[47]~105_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_4~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[47]~105_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_3~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[47]~109_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_4~18\,
-	cout => \Div0|auto_generated|divider|divider|op_4~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_4~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_4~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_4~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_4~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_4~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[52]~100\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[52]~100_combout\ = (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & \Div0|auto_generated|divider|divider|op_3~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_3~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[52]~100_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[52]~104\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[52]~104_combout\ = (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[46]~103_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[46]~103_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[52]~104_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[51]~98\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[51]~98_combout\ = (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_3~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_3~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[45]~97_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[45]~96_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~96_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_3~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[45]~97_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[51]~98_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[50]~91\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[50]~91_combout\ = (!\Div0|auto_generated|divider|divider|op_3~1_sumout\ & \Div0|auto_generated|divider|divider|op_3~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_3~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[50]~91_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[50]~92\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[50]~92_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~77_sumout\ & \Div0|auto_generated|divider|divider|op_3~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~77_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_3~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[50]~92_combout\);
-
-\Div0|auto_generated|divider|divider|op_5~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~14_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_5~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_5~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_5~14_cout\ ))
--- \Div0|auto_generated|divider|divider|op_5~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_5~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~61_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_5~14_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_5~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_5~6\);
-
-\Div0|auto_generated|divider|divider|op_5~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_4~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_5~6\ ))
--- \Div0|auto_generated|divider|divider|op_5~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_4~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_5~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~73_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_4~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_5~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_5~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_5~18\);
-
-\Div0|auto_generated|divider|divider|op_5~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_4~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[50]~92_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[50]~91_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_5~18\ ))
--- \Div0|auto_generated|divider|divider|op_5~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_4~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[50]~92_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[50]~91_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_5~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~91_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_4~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~92_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_5~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_5~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_5~22\);
-
-\Div0|auto_generated|divider|divider|op_5~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_4~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[51]~98_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_5~22\ ))
--- \Div0|auto_generated|divider|divider|op_5~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_4~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[51]~98_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_5~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[51]~98_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_4~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_5~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_5~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_5~26\);
-
-\Div0|auto_generated|divider|divider|op_5~10\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~10_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_4~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[52]~104_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[52]~100_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_5~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[52]~100_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_4~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[52]~104_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_5~26\,
-	cout => \Div0|auto_generated|divider|divider|op_5~10_cout\);
-
-\Div0|auto_generated|divider|divider|op_5~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_5~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_5~10_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_5~10_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_5~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[57]~95\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[57]~95_combout\ = (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & \Div0|auto_generated|divider|divider|op_4~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_4~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[57]~95_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[57]~99\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[57]~99_combout\ = (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[51]~98_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[51]~98_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[57]~99_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[56]~93\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[56]~93_combout\ = (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_4~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_4~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[50]~92_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[50]~91_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~91_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_4~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[50]~92_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[56]~93_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[55]~86\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[55]~86_combout\ = (!\Div0|auto_generated|divider|divider|op_4~1_sumout\ & \Div0|auto_generated|divider|divider|op_4~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_4~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[55]~86_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[55]~87\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[55]~87_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~73_sumout\ & \Div0|auto_generated|divider|divider|op_4~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~73_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_4~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[55]~87_combout\);
-
-\Div0|auto_generated|divider|divider|op_6~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~18_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_6~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_6~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_6~18_cout\ ))
--- \Div0|auto_generated|divider|divider|op_6~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_6~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~57_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_6~18_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_6~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_6~6\);
-
-\Div0|auto_generated|divider|divider|op_6~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_5~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_6~6\ ))
--- \Div0|auto_generated|divider|divider|op_6~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_5~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_6~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~61_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_5~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_6~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_6~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_6~10\);
-
-\Div0|auto_generated|divider|divider|op_6~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_5~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[55]~87_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[55]~86_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_6~10\ ))
--- \Div0|auto_generated|divider|divider|op_6~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_5~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[55]~87_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[55]~86_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_6~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~86_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_5~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~87_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_6~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_6~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_6~22\);
-
-\Div0|auto_generated|divider|divider|op_6~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_5~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[56]~93_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_6~22\ ))
--- \Div0|auto_generated|divider|divider|op_6~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_5~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[56]~93_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_6~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[56]~93_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_5~21_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_6~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_6~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_6~26\);
-
-\Div0|auto_generated|divider|divider|op_6~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~14_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_5~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[57]~99_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[57]~95_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_6~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[57]~95_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_5~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[57]~99_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_6~26\,
-	cout => \Div0|auto_generated|divider|divider|op_6~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_6~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_6~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_6~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_6~14_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_6~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[62]~90\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[62]~90_combout\ = (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & \Div0|auto_generated|divider|divider|op_5~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_5~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[62]~90_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[62]~94\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[62]~94_combout\ = (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[56]~93_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[56]~93_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[62]~94_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[61]~88\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[61]~88_combout\ = (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_5~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_5~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[55]~87_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[55]~86_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~86_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_5~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[55]~87_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[61]~88_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[60]~76\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[60]~76_combout\ = (!\Div0|auto_generated|divider|divider|op_5~1_sumout\ & \Div0|auto_generated|divider|divider|op_5~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_5~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[60]~76_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[60]~77\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[60]~77_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~61_sumout\ & \Div0|auto_generated|divider|divider|op_5~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~61_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_5~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[60]~77_combout\);
-
-\Div0|auto_generated|divider|divider|op_7~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~22_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_7~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_7~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_7~22_cout\ ))
--- \Div0|auto_generated|divider|divider|op_7~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_7~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~53_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_7~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_7~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_7~6\);
-
-\Div0|auto_generated|divider|divider|op_7~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_6~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_7~6\ ))
--- \Div0|auto_generated|divider|divider|op_7~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_6~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_7~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~57_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_6~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_7~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_7~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_7~10\);
-
-\Div0|auto_generated|divider|divider|op_7~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_6~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[60]~77_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[60]~76_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_7~10\ ))
--- \Div0|auto_generated|divider|divider|op_7~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_6~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[60]~77_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[60]~76_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_7~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~76_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_6~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~77_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_7~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_7~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_7~14\);
-
-\Div0|auto_generated|divider|divider|op_7~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~25_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_6~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[61]~88_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_7~14\ ))
--- \Div0|auto_generated|divider|divider|op_7~26\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_6~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[61]~88_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_7~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[61]~88_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_6~21_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_7~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_7~25_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_7~26\);
-
-\Div0|auto_generated|divider|divider|op_7~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~18_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_6~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[62]~94_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[62]~90_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_7~26\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[62]~90_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_6~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[62]~94_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_7~26\,
-	cout => \Div0|auto_generated|divider|divider|op_7~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_7~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_7~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_7~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_7~18_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_7~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[67]~85\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[67]~85_combout\ = (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & \Div0|auto_generated|divider|divider|op_6~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_6~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[67]~85_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[67]~89\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[67]~89_combout\ = (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[61]~88_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[61]~88_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[67]~89_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[66]~78\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[66]~78_combout\ = (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_6~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_6~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[60]~77_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[60]~76_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~76_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_6~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[60]~77_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[66]~78_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[65]~71\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[65]~71_combout\ = (!\Div0|auto_generated|divider|divider|op_6~1_sumout\ & \Div0|auto_generated|divider|divider|op_6~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_6~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[65]~71_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[65]~72\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[65]~72_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~57_sumout\ & \Div0|auto_generated|divider|divider|op_6~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~57_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_6~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[65]~72_combout\);
-
-\Div0|auto_generated|divider|divider|op_8~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_8~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_8~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~5_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_8~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_8~6\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_8~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~49_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_8~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_8~5_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_8~6\);
-
-\Div0|auto_generated|divider|divider|op_8~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_7~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_8~6\ ))
--- \Div0|auto_generated|divider|divider|op_8~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_7~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_8~6\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~53_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_7~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_8~6\,
-	sumout => \Div0|auto_generated|divider|divider|op_8~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_8~10\);
-
-\Div0|auto_generated|divider|divider|op_8~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_7~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[65]~72_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[65]~71_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_8~10\ ))
--- \Div0|auto_generated|divider|divider|op_8~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_7~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[65]~72_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[65]~71_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_8~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~71_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_7~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~72_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_8~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_8~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_8~14\);
-
-\Div0|auto_generated|divider|divider|op_8~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_7~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[66]~78_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_8~14\ ))
--- \Div0|auto_generated|divider|divider|op_8~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_7~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[66]~78_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_8~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[66]~78_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_7~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_8~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_8~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_8~18\);
-
-\Div0|auto_generated|divider|divider|op_8~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~22_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_7~25_sumout\)))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[67]~89_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[67]~85_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_8~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[67]~85_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_7~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[67]~89_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_8~18\,
-	cout => \Div0|auto_generated|divider|divider|op_8~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_8~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_8~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_8~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_8~22_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_8~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[72]~75\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[72]~75_combout\ = (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & \Div0|auto_generated|divider|divider|op_7~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_7~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[72]~75_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[72]~79\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[72]~79_combout\ = (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[66]~78_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[66]~78_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[72]~79_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[71]~73\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[71]~73_combout\ = (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_7~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_7~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[65]~72_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[65]~71_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~71_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_7~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[65]~72_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[71]~73_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[70]~66\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[70]~66_combout\ = (!\Div0|auto_generated|divider|divider|op_7~1_sumout\ & \Div0|auto_generated|divider|divider|op_7~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_7~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[70]~66_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[70]~67\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[70]~67_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~53_sumout\ & \Div0|auto_generated|divider|divider|op_7~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~53_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_7~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[70]~67_combout\);
-
-\Div0|auto_generated|divider|divider|op_9~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_9~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_9~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_9~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_9~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_9~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~45_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_9~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_9~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_9~10\);
-
-\Div0|auto_generated|divider|divider|op_9~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_8~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_9~10\ ))
--- \Div0|auto_generated|divider|divider|op_9~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_8~5_sumout\))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_9~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~49_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_8~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_9~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_9~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_9~14\);
-
-\Div0|auto_generated|divider|divider|op_9~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_8~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[70]~67_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[70]~66_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_9~14\ ))
--- \Div0|auto_generated|divider|divider|op_9~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_8~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[70]~67_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[70]~66_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_9~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~66_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_8~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~67_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_9~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_9~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_9~18\);
-
-\Div0|auto_generated|divider|divider|op_9~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_8~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[71]~73_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_9~18\ ))
--- \Div0|auto_generated|divider|divider|op_9~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_8~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[71]~73_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_9~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[71]~73_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_8~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_9~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_9~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_9~22\);
-
-\Div0|auto_generated|divider|divider|op_9~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_8~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[72]~79_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[72]~75_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_9~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[72]~75_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_8~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[72]~79_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_9~22\,
-	cout => \Div0|auto_generated|divider|divider|op_9~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_9~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_9~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_9~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_9~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_9~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[77]~70\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[77]~70_combout\ = (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & \Div0|auto_generated|divider|divider|op_8~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_8~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[77]~70_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[77]~74\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[77]~74_combout\ = (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[71]~73_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[71]~73_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[77]~74_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[76]~68\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[76]~68_combout\ = (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_8~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_8~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[70]~67_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[70]~66_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~66_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_8~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[70]~67_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[76]~68_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[75]~61\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[75]~61_combout\ = (!\Div0|auto_generated|divider|divider|op_8~1_sumout\ & \Div0|auto_generated|divider|divider|op_8~5_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_8~5_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[75]~61_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[75]~62\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[75]~62_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~49_sumout\ & \Div0|auto_generated|divider|divider|op_8~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~49_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_8~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[75]~62_combout\);
-
-\Div0|auto_generated|divider|divider|op_10~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_10~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_10~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_10~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_10~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_10~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~41_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_10~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_10~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_10~10\);
-
-\Div0|auto_generated|divider|divider|op_10~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_9~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_10~10\ ))
--- \Div0|auto_generated|divider|divider|op_10~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_9~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_10~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~45_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_9~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_10~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_10~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_10~14\);
-
-\Div0|auto_generated|divider|divider|op_10~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_9~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[75]~62_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[75]~61_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_10~14\ ))
--- \Div0|auto_generated|divider|divider|op_10~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_9~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[75]~62_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[75]~61_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_10~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~61_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_9~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~62_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_10~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_10~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_10~18\);
-
-\Div0|auto_generated|divider|divider|op_10~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_9~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[76]~68_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_10~18\ ))
--- \Div0|auto_generated|divider|divider|op_10~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_9~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[76]~68_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_10~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[76]~68_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_9~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_10~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_10~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_10~22\);
-
-\Div0|auto_generated|divider|divider|op_10~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_9~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[77]~74_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[77]~70_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_10~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[77]~70_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_9~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[77]~74_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_10~22\,
-	cout => \Div0|auto_generated|divider|divider|op_10~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_10~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_10~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_10~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_10~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_10~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[82]~65\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[82]~65_combout\ = (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & \Div0|auto_generated|divider|divider|op_9~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_9~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[82]~65_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[82]~69\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[82]~69_combout\ = (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[76]~68_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[76]~68_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[82]~69_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[81]~63\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[81]~63_combout\ = (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_9~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_9~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[75]~62_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[75]~61_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~61_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_9~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[75]~62_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[81]~63_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[80]~56\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[80]~56_combout\ = (!\Div0|auto_generated|divider|divider|op_9~1_sumout\ & \Div0|auto_generated|divider|divider|op_9~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_9~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[80]~56_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[80]~57\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[80]~57_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~45_sumout\ & \Div0|auto_generated|divider|divider|op_9~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~45_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[80]~57_combout\);
-
-\Div0|auto_generated|divider|divider|op_11~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_11~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_11~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_11~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_11~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_11~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~37_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_11~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_11~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_11~10\);
-
-\Div0|auto_generated|divider|divider|op_11~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_10~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_11~10\ ))
--- \Div0|auto_generated|divider|divider|op_11~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_10~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_11~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~41_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_10~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_11~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_11~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_11~14\);
-
-\Div0|auto_generated|divider|divider|op_11~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_10~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[80]~57_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[80]~56_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_11~14\ ))
--- \Div0|auto_generated|divider|divider|op_11~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_10~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[80]~57_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[80]~56_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_11~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~56_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_10~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~57_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_11~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_11~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_11~18\);
-
-\Div0|auto_generated|divider|divider|op_11~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_10~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[81]~63_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_11~18\ ))
--- \Div0|auto_generated|divider|divider|op_11~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_10~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[81]~63_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_11~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[81]~63_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_10~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_11~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_11~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_11~22\);
-
-\Div0|auto_generated|divider|divider|op_11~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_10~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[82]~69_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[82]~65_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_11~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[82]~65_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_10~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[82]~69_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_11~22\,
-	cout => \Div0|auto_generated|divider|divider|op_11~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_11~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_11~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_11~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_11~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_11~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[87]~60\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[87]~60_combout\ = (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & \Div0|auto_generated|divider|divider|op_10~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_10~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[87]~60_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[87]~64\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[87]~64_combout\ = (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[81]~63_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[81]~63_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[87]~64_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[86]~58\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[86]~58_combout\ = (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_10~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_10~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[80]~57_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[80]~56_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~56_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_10~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[80]~57_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[86]~58_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[85]~51\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[85]~51_combout\ = (!\Div0|auto_generated|divider|divider|op_10~1_sumout\ & \Div0|auto_generated|divider|divider|op_10~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_10~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[85]~51_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[85]~52\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[85]~52_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~41_sumout\ & \Div0|auto_generated|divider|divider|op_10~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~41_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[85]~52_combout\);
-
-\Div0|auto_generated|divider|divider|op_12~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_12~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_12~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_12~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_12~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_12~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~33_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_12~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_12~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_12~10\);
-
-\Div0|auto_generated|divider|divider|op_12~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_11~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_12~10\ ))
--- \Div0|auto_generated|divider|divider|op_12~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_11~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_12~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~37_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_11~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_12~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_12~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_12~14\);
-
-\Div0|auto_generated|divider|divider|op_12~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_11~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[85]~52_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[85]~51_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_12~14\ ))
--- \Div0|auto_generated|divider|divider|op_12~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_11~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[85]~52_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[85]~51_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_12~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~51_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_11~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~52_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_12~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_12~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_12~18\);
-
-\Div0|auto_generated|divider|divider|op_12~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_11~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[86]~58_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_12~18\ ))
--- \Div0|auto_generated|divider|divider|op_12~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_11~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[86]~58_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_12~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[86]~58_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_11~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_12~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_12~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_12~22\);
-
-\Div0|auto_generated|divider|divider|op_12~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_11~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[87]~64_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[87]~60_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_12~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[87]~60_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_11~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[87]~64_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_12~22\,
-	cout => \Div0|auto_generated|divider|divider|op_12~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_12~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_12~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_12~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_12~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_12~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[92]~55\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[92]~55_combout\ = (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & \Div0|auto_generated|divider|divider|op_11~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_11~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[92]~55_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[92]~59\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[92]~59_combout\ = (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[86]~58_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[86]~58_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[92]~59_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[91]~53\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[91]~53_combout\ = (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_11~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_11~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[85]~52_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[85]~51_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~51_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_11~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[85]~52_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[91]~53_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[90]~46\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[90]~46_combout\ = (!\Div0|auto_generated|divider|divider|op_11~1_sumout\ & \Div0|auto_generated|divider|divider|op_11~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_11~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[90]~46_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[90]~47\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[90]~47_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~37_sumout\ & \Div0|auto_generated|divider|divider|op_11~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~37_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[90]~47_combout\);
-
-\Div0|auto_generated|divider|divider|op_14~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_14~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_14~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_14~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_14~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_14~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~29_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_14~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_14~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_14~10\);
-
-\Div0|auto_generated|divider|divider|op_14~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_12~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_14~10\ ))
--- \Div0|auto_generated|divider|divider|op_14~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_12~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_14~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~33_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_12~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_14~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_14~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_14~14\);
-
-\Div0|auto_generated|divider|divider|op_14~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_12~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[90]~47_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[90]~46_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_14~14\ ))
--- \Div0|auto_generated|divider|divider|op_14~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_12~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[90]~47_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[90]~46_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_14~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~46_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_12~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~47_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_14~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_14~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_14~18\);
-
-\Div0|auto_generated|divider|divider|op_14~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_12~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[91]~53_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_14~18\ ))
--- \Div0|auto_generated|divider|divider|op_14~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_12~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[91]~53_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_14~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[91]~53_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_12~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_14~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_14~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_14~22\);
-
-\Div0|auto_generated|divider|divider|op_14~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_12~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[92]~59_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[92]~55_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_14~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[92]~55_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_12~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[92]~59_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_14~22\,
-	cout => \Div0|auto_generated|divider|divider|op_14~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_14~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_14~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_14~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_14~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_14~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[97]~50\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[97]~50_combout\ = (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & \Div0|auto_generated|divider|divider|op_12~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_12~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[97]~50_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[97]~54\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[97]~54_combout\ = (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[91]~53_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[91]~53_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[97]~54_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[96]~48\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[96]~48_combout\ = (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_12~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_12~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[90]~47_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[90]~46_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~46_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_12~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[90]~47_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[96]~48_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[95]~41\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[95]~41_combout\ = (!\Div0|auto_generated|divider|divider|op_12~1_sumout\ & \Div0|auto_generated|divider|divider|op_12~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_12~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[95]~41_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[95]~42\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[95]~42_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~33_sumout\ & \Div0|auto_generated|divider|divider|op_12~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~33_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[95]~42_combout\);
-
-\Div0|auto_generated|divider|divider|op_15~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_15~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_15~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_15~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_15~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_15~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~25_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_15~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_15~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_15~10\);
-
-\Div0|auto_generated|divider|divider|op_15~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_14~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_15~10\ ))
--- \Div0|auto_generated|divider|divider|op_15~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_14~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_15~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~29_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_14~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_15~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_15~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_15~14\);
-
-\Div0|auto_generated|divider|divider|op_15~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_14~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[95]~42_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[95]~41_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_15~14\ ))
--- \Div0|auto_generated|divider|divider|op_15~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_14~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[95]~42_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[95]~41_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_15~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~41_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_14~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~42_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_15~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_15~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_15~18\);
-
-\Div0|auto_generated|divider|divider|op_15~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_14~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[96]~48_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_15~18\ ))
--- \Div0|auto_generated|divider|divider|op_15~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_14~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[96]~48_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_15~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[96]~48_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_14~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_15~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_15~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_15~22\);
-
-\Div0|auto_generated|divider|divider|op_15~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_14~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[97]~54_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[97]~50_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_15~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[97]~50_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_14~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[97]~54_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_15~22\,
-	cout => \Div0|auto_generated|divider|divider|op_15~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_15~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_15~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_15~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_15~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_15~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[102]~45\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[102]~45_combout\ = (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & \Div0|auto_generated|divider|divider|op_14~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_14~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[102]~45_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[102]~49\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[102]~49_combout\ = (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[96]~48_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[96]~48_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[102]~49_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[101]~43\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[101]~43_combout\ = (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_14~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_14~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[95]~42_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[95]~41_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~41_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_14~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[95]~42_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[101]~43_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[100]~36\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[100]~36_combout\ = (!\Div0|auto_generated|divider|divider|op_14~1_sumout\ & \Div0|auto_generated|divider|divider|op_14~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_14~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[100]~36_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[100]~37\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[100]~37_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~29_sumout\ & \Div0|auto_generated|divider|divider|op_14~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~29_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[100]~37_combout\);
-
-\Div0|auto_generated|divider|divider|op_16~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_16~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_16~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_16~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_16~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_16~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~21_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_16~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_16~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_16~10\);
-
-\Div0|auto_generated|divider|divider|op_16~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_15~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_16~10\ ))
--- \Div0|auto_generated|divider|divider|op_16~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_15~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_16~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~25_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_15~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_16~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_16~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_16~14\);
-
-\Div0|auto_generated|divider|divider|op_16~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_15~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[100]~37_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[100]~36_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_16~14\ ))
--- \Div0|auto_generated|divider|divider|op_16~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_15~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[100]~37_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[100]~36_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_16~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~36_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_15~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~37_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_16~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_16~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_16~18\);
-
-\Div0|auto_generated|divider|divider|op_16~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_15~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[101]~43_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_16~18\ ))
--- \Div0|auto_generated|divider|divider|op_16~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_15~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[101]~43_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_16~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[101]~43_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_15~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_16~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_16~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_16~22\);
-
-\Div0|auto_generated|divider|divider|op_16~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_15~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[102]~49_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[102]~45_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_16~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[102]~45_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_15~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[102]~49_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_16~22\,
-	cout => \Div0|auto_generated|divider|divider|op_16~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_16~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_16~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_16~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_16~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_16~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[107]~40\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[107]~40_combout\ = (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & \Div0|auto_generated|divider|divider|op_15~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_15~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[107]~40_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[107]~44\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[107]~44_combout\ = (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[101]~43_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[101]~43_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[107]~44_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[106]~38\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[106]~38_combout\ = (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_15~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_15~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[100]~37_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[100]~36_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~36_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_15~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[100]~37_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[106]~38_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[105]~31\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[105]~31_combout\ = (!\Div0|auto_generated|divider|divider|op_15~1_sumout\ & \Div0|auto_generated|divider|divider|op_15~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_15~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[105]~31_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[105]~32\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[105]~32_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~25_sumout\ & \Div0|auto_generated|divider|divider|op_15~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~25_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[105]~32_combout\);
-
-\Div0|auto_generated|divider|divider|op_17~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_17~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_17~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_17~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_17~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_17~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~17_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_17~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_17~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_17~10\);
-
-\Div0|auto_generated|divider|divider|op_17~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_16~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_17~10\ ))
--- \Div0|auto_generated|divider|divider|op_17~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_16~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_17~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_16~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_17~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_17~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_17~14\);
-
-\Div0|auto_generated|divider|divider|op_17~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_16~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[105]~32_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[105]~31_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_17~14\ ))
--- \Div0|auto_generated|divider|divider|op_17~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_16~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[105]~32_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[105]~31_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_17~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~31_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_16~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~32_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_17~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_17~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_17~18\);
-
-\Div0|auto_generated|divider|divider|op_17~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_16~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[106]~38_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_17~18\ ))
--- \Div0|auto_generated|divider|divider|op_17~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_16~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[106]~38_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_17~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[106]~38_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_16~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_17~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_17~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_17~22\);
-
-\Div0|auto_generated|divider|divider|op_17~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_16~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[107]~44_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[107]~40_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_17~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[107]~40_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_16~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[107]~44_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_17~22\,
-	cout => \Div0|auto_generated|divider|divider|op_17~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_17~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_17~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_17~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_17~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_17~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[112]~35\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[112]~35_combout\ = (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & \Div0|auto_generated|divider|divider|op_16~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_16~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[112]~35_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[112]~39\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[112]~39_combout\ = (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[106]~38_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[106]~38_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[112]~39_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[111]~33\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[111]~33_combout\ = (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_16~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_16~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[105]~32_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[105]~31_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~31_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_16~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[105]~32_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[111]~33_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[110]~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[110]~26_combout\ = (!\Div0|auto_generated|divider|divider|op_16~1_sumout\ & \Div0|auto_generated|divider|divider|op_16~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_16~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[110]~26_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[110]~27\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[110]~27_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~21_sumout\ & \Div0|auto_generated|divider|divider|op_16~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~21_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[110]~27_combout\);
-
-\Div0|auto_generated|divider|divider|op_18~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_18~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_18~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_18~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_18~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_18~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~13_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_18~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_18~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_18~10\);
-
-\Div0|auto_generated|divider|divider|op_18~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_17~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_18~10\ ))
--- \Div0|auto_generated|divider|divider|op_18~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_17~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_18~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_17~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_18~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_18~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_18~14\);
-
-\Div0|auto_generated|divider|divider|op_18~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_17~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[110]~27_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[110]~26_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_18~14\ ))
--- \Div0|auto_generated|divider|divider|op_18~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_17~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[110]~27_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[110]~26_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_18~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~26_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_17~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~27_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_18~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_18~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_18~18\);
-
-\Div0|auto_generated|divider|divider|op_18~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_17~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[111]~33_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_18~18\ ))
--- \Div0|auto_generated|divider|divider|op_18~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_17~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[111]~33_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_18~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[111]~33_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_17~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_18~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_18~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_18~22\);
-
-\Div0|auto_generated|divider|divider|op_18~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_17~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[112]~39_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[112]~35_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_18~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[112]~35_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_17~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[112]~39_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_18~22\,
-	cout => \Div0|auto_generated|divider|divider|op_18~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_18~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_18~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_18~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_18~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_18~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[117]~30\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[117]~30_combout\ = (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & \Div0|auto_generated|divider|divider|op_17~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_17~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[117]~30_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[117]~34\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[117]~34_combout\ = (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[111]~33_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[111]~33_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[117]~34_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[116]~28\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[116]~28_combout\ = (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_17~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_17~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[110]~27_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[110]~26_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~26_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_17~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[110]~27_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[116]~28_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[115]~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[115]~21_combout\ = (!\Div0|auto_generated|divider|divider|op_17~1_sumout\ & \Div0|auto_generated|divider|divider|op_17~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_17~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[115]~21_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[115]~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[115]~22_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~17_sumout\ & \Div0|auto_generated|divider|divider|op_17~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~17_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[115]~22_combout\);
-
-\Div0|auto_generated|divider|divider|op_19~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_19~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_19~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_19~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_19~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_19~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_19~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_19~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_19~10\);
-
-\Div0|auto_generated|divider|divider|op_19~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_18~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_19~10\ ))
--- \Div0|auto_generated|divider|divider|op_19~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_18~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_19~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_18~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_19~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_19~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_19~14\);
-
-\Div0|auto_generated|divider|divider|op_19~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_18~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[115]~22_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[115]~21_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_19~14\ ))
--- \Div0|auto_generated|divider|divider|op_19~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_18~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[115]~22_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[115]~21_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_19~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~21_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_18~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~22_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_19~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_19~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_19~18\);
-
-\Div0|auto_generated|divider|divider|op_19~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_18~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[116]~28_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_19~18\ ))
--- \Div0|auto_generated|divider|divider|op_19~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_18~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[116]~28_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_19~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[116]~28_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_18~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_19~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_19~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_19~22\);
-
-\Div0|auto_generated|divider|divider|op_19~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_18~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[117]~34_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[117]~30_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_19~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[117]~30_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_18~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[117]~34_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_19~22\,
-	cout => \Div0|auto_generated|divider|divider|op_19~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_19~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_19~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_19~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_19~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_19~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[122]~25\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[122]~25_combout\ = (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & \Div0|auto_generated|divider|divider|op_18~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_18~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[122]~25_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[122]~29\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[122]~29_combout\ = (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[116]~28_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[116]~28_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[122]~29_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[121]~23\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[121]~23_combout\ = (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_18~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_18~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[115]~22_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[115]~21_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~21_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_18~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[115]~22_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[121]~23_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[120]~16\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[120]~16_combout\ = (!\Div0|auto_generated|divider|divider|op_18~1_sumout\ & \Div0|auto_generated|divider|divider|op_18~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_18~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[120]~16_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[120]~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[120]~17_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~13_sumout\ & \Div0|auto_generated|divider|divider|op_18~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~13_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[120]~17_combout\);
-
-\Div0|auto_generated|divider|divider|op_20~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_20~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_20~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_20~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_20~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_20~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~5_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_20~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_20~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_20~10\);
-
-\Div0|auto_generated|divider|divider|op_20~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_19~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_20~10\ ))
--- \Div0|auto_generated|divider|divider|op_20~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_19~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_20~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_19~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_20~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_20~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_20~14\);
-
-\Div0|auto_generated|divider|divider|op_20~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_19~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[120]~17_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[120]~16_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_20~14\ ))
--- \Div0|auto_generated|divider|divider|op_20~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_19~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[120]~17_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[120]~16_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_20~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~16_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_19~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~17_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_20~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_20~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_20~18\);
-
-\Div0|auto_generated|divider|divider|op_20~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_19~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[121]~23_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_20~18\ ))
--- \Div0|auto_generated|divider|divider|op_20~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_19~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[121]~23_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_20~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[121]~23_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_19~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_20~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_20~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_20~22\);
-
-\Div0|auto_generated|divider|divider|op_20~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_19~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[122]~29_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[122]~25_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_20~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[122]~25_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_19~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[122]~29_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_20~22\,
-	cout => \Div0|auto_generated|divider|divider|op_20~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_20~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_20~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_20~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_20~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_20~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[127]~20\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[127]~20_combout\ = (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & \Div0|auto_generated|divider|divider|op_19~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_19~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[127]~20_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[127]~24\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[127]~24_combout\ = (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[121]~23_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[121]~23_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[127]~24_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[126]~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[126]~18_combout\ = (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_19~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_19~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[120]~17_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[120]~16_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~16_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_19~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[120]~17_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[126]~18_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[125]~11\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[125]~11_combout\ = (!\Div0|auto_generated|divider|divider|op_19~1_sumout\ & \Div0|auto_generated|divider|divider|op_19~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_19~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[125]~11_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[125]~12\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[125]~12_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~9_sumout\ & \Div0|auto_generated|divider|divider|op_19~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~9_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[125]~12_combout\);
-
-\Div0|auto_generated|divider|divider|op_21~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_21~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_21~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~9_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_21~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_21~10\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_21~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~1_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_21~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_21~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_21~10\);
-
-\Div0|auto_generated|divider|divider|op_21~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_20~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_21~10\ ))
--- \Div0|auto_generated|divider|divider|op_21~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_20~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_21~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~5_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_20~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_21~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_21~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_21~14\);
-
-\Div0|auto_generated|divider|divider|op_21~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_20~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[125]~12_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[125]~11_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_21~14\ ))
--- \Div0|auto_generated|divider|divider|op_21~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_20~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[125]~12_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[125]~11_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_21~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~11_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_20~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~12_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_21~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_21~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_21~18\);
-
-\Div0|auto_generated|divider|divider|op_21~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~21_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_20~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[126]~18_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_21~18\ ))
--- \Div0|auto_generated|divider|divider|op_21~22\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_20~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[126]~18_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_21~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[126]~18_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_20~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_21~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_21~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_21~22\);
-
-\Div0|auto_generated|divider|divider|op_21~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_20~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[127]~24_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[127]~20_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_21~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[127]~20_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_20~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[127]~24_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_21~22\,
-	cout => \Div0|auto_generated|divider|divider|op_21~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_21~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_21~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_21~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_21~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_21~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[132]~15\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[132]~15_combout\ = (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & \Div0|auto_generated|divider|divider|op_20~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_20~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[132]~15_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[132]~19\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[132]~19_combout\ = (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[126]~18_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[126]~18_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[132]~19_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[131]~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[131]~13_combout\ = (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_20~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_20~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[125]~12_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[125]~11_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~11_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_20~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[125]~12_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[131]~13_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[130]~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[130]~6_combout\ = (!\Div0|auto_generated|divider|divider|op_20~1_sumout\ & \Div0|auto_generated|divider|divider|op_20~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_20~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[130]~6_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[130]~7\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[130]~7_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~5_sumout\ & \Div0|auto_generated|divider|divider|op_20~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~5_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[130]~7_combout\);
-
-\Div0|auto_generated|divider|divider|op_22~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_22~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_22~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~21_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_22~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_22~22\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_22~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~65_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_22~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_22~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_22~22\);
-
-\Div0|auto_generated|divider|divider|op_22~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_21~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_22~22\ ))
--- \Div0|auto_generated|divider|divider|op_22~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_21~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_22~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~1_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_21~9_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_22~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_22~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_22~10\);
-
-\Div0|auto_generated|divider|divider|op_22~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_21~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[130]~7_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[130]~6_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_22~10\ ))
--- \Div0|auto_generated|divider|divider|op_22~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_21~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[130]~7_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[130]~6_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_22~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~6_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_21~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~7_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_22~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_22~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_22~14\);
-
-\Div0|auto_generated|divider|divider|op_22~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_21~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[131]~13_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_22~14\ ))
--- \Div0|auto_generated|divider|divider|op_22~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_21~17_sumout\))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[131]~13_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_22~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[131]~13_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_21~17_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_22~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_22~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_22~18\);
-
-\Div0|auto_generated|divider|divider|op_22~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_21~21_sumout\)))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[132]~19_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[132]~15_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_22~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[132]~15_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_21~21_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[132]~19_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_22~18\,
-	cout => \Div0|auto_generated|divider|divider|op_22~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_22~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_22~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_22~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_22~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_22~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[137]~10\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[137]~10_combout\ = (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & \Div0|auto_generated|divider|divider|op_21~17_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_21~17_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[137]~10_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[137]~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[137]~14_combout\ = (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[131]~13_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[131]~13_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[137]~14_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[136]~8\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[136]~8_combout\ = (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_21~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_21~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[130]~7_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[130]~6_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~6_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_21~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[130]~7_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[136]~8_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[135]~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[135]~1_combout\ = (!\Div0|auto_generated|divider|divider|op_21~1_sumout\ & \Div0|auto_generated|divider|divider|op_21~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_21~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[135]~1_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[135]~2\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[135]~2_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~1_sumout\ & \Div0|auto_generated|divider|divider|op_21~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[135]~2_combout\);
-
-\Div0|auto_generated|divider|divider|op_23~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_23~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_23~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~21_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_23~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_23~22\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_23~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~69_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_23~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_23~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_23~22\);
-
-\Div0|auto_generated|divider|divider|op_23~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_22~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_23~22\ ))
--- \Div0|auto_generated|divider|divider|op_23~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_22~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_23~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~65_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_22~21_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_23~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_23~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_23~18\);
-
-\Div0|auto_generated|divider|divider|op_23~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_22~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[135]~2_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[135]~1_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_23~18\ ))
--- \Div0|auto_generated|divider|divider|op_23~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_22~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[135]~2_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[135]~1_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_23~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~1_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_22~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~2_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_23~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_23~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_23~10\);
-
-\Div0|auto_generated|divider|divider|op_23~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_22~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[136]~8_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_23~10\ ))
--- \Div0|auto_generated|divider|divider|op_23~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_22~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[136]~8_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_23~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[136]~8_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_22~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_23~10\,
-	sumout => \Div0|auto_generated|divider|divider|op_23~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_23~14\);
-
-\Div0|auto_generated|divider|divider|op_23~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_22~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[137]~14_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[137]~10_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_23~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[137]~10_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_22~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[137]~14_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_23~14\,
-	cout => \Div0|auto_generated|divider|divider|op_23~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_23~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_23~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_23~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_23~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_23~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[142]~5\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[142]~5_combout\ = (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & \Div0|auto_generated|divider|divider|op_22~13_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_22~13_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[142]~5_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[142]~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[142]~9_combout\ = (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[136]~8_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[136]~8_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[142]~9_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[141]~3\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[141]~3_combout\ = (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_22~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_22~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[135]~2_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[135]~1_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~1_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_22~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[135]~2_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[141]~3_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[140]~80\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[140]~80_combout\ = (!\Div0|auto_generated|divider|divider|op_22~1_sumout\ & \Div0|auto_generated|divider|divider|op_22~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_22~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[140]~80_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[140]~81\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[140]~81_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~65_sumout\ & \Div0|auto_generated|divider|divider|op_22~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~65_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[140]~81_combout\);
-
-\Div0|auto_generated|divider|divider|op_25~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_25~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_25~21\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~21_sumout\ = SUM(( \Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_25~26_cout\ ))
--- \Div0|auto_generated|divider|divider|op_25~22\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_25~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~89_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_25~26_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_25~21_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_25~22\);
-
-\Div0|auto_generated|divider|divider|op_25~17\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~17_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_23~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_25~22\ ))
--- \Div0|auto_generated|divider|divider|op_25~18\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_23~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_25~22\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~69_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_23~21_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_25~22\,
-	sumout => \Div0|auto_generated|divider|divider|op_25~17_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_25~18\);
-
-\Div0|auto_generated|divider|divider|op_25~13\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~13_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_23~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[140]~81_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[140]~80_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_25~18\ ))
--- \Div0|auto_generated|divider|divider|op_25~14\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_23~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[140]~81_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[140]~80_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_25~18\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~80_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_23~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~81_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_25~18\,
-	sumout => \Div0|auto_generated|divider|divider|op_25~13_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_25~14\);
-
-\Div0|auto_generated|divider|divider|op_25~9\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~9_sumout\ = SUM(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_23~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[141]~3_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_25~14\ ))
--- \Div0|auto_generated|divider|divider|op_25~10\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_23~9_sumout\))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[141]~3_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_25~14\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[141]~3_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_23~9_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_25~14\,
-	sumout => \Div0|auto_generated|divider|divider|op_25~9_sumout\,
-	cout => \Div0|auto_generated|divider|divider|op_25~10\);
-
-\Div0|auto_generated|divider|divider|op_25~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_23~13_sumout\)))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[142]~9_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[142]~5_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_25~10\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[142]~5_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_23~13_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[142]~9_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_25~10\,
-	cout => \Div0|auto_generated|divider|divider|op_25~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_25~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_25~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_25~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_25~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_25~1_sumout\);
-
-\Div0|auto_generated|divider|divider|StageOut[147]~0\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[147]~0_combout\ = (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & \Div0|auto_generated|divider|divider|op_23~9_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_23~9_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[147]~0_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[147]~4\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[147]~4_combout\ = (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & \Div0|auto_generated|divider|divider|StageOut[141]~3_combout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[141]~3_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[147]~4_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[146]~82\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[146]~82_combout\ = (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_23~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_23~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[140]~81_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[140]~80_combout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001101101011111000110110101111100011011010111110001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~80_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_23~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[140]~81_combout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[146]~82_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[145]~83\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[145]~83_combout\ = (!\Div0|auto_generated|divider|divider|op_23~1_sumout\ & \Div0|auto_generated|divider|divider|op_23~21_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_23~21_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[145]~83_combout\);
-
-\Div0|auto_generated|divider|divider|StageOut[145]~84\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|StageOut[145]~84_combout\ = (\Div0|auto_generated|divider|my_abs_num|op_1~69_sumout\ & \Div0|auto_generated|divider|divider|op_23~1_sumout\)
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~69_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	combout => \Div0|auto_generated|divider|divider|StageOut[145]~84_combout\);
-
-\Div0|auto_generated|divider|divider|op_26~26\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~26_cout\ = CARRY(( VCC ) + ( VCC ) + ( !VCC ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => GND,
-	cout => \Div0|auto_generated|divider|divider|op_26~26_cout\);
-
-\Div0|auto_generated|divider|divider|op_26~22\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~22_cout\ = CARRY(( \Div0|auto_generated|divider|my_abs_num|op_1~93_sumout\ ) + ( !\ActiveCh[0]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_26~26_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000000011111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	datad => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~93_sumout\,
-	dataf => \ALT_INV_ActiveCh[0]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_26~26_cout\,
-	cout => \Div0|auto_generated|divider|divider|op_26~22_cout\);
-
-\Div0|auto_generated|divider|divider|op_26~18\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~18_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_25~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_25~21_sumout\))) # (\Div0|auto_generated|divider|divider|op_25~1_sumout\ & 
--- (\Div0|auto_generated|divider|my_abs_num|op_1~89_sumout\)) ) + ( !\ActiveCh[1]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_26~22_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\,
-	datac => \Div0|auto_generated|divider|my_abs_num|ALT_INV_op_1~89_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_25~21_sumout\,
-	dataf => \ALT_INV_ActiveCh[1]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_26~22_cout\,
-	cout => \Div0|auto_generated|divider|divider|op_26~18_cout\);
-
-\Div0|auto_generated|divider|divider|op_26~14\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~14_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_25~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_25~17_sumout\)))) # (\Div0|auto_generated|divider|divider|op_25~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[145]~84_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[145]~83_combout\))) ) + ( !\ActiveCh[2]~input_o\ ) + ( \Div0|auto_generated|divider|divider|op_26~18_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000001111111100000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[145]~83_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_25~17_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[145]~84_combout\,
-	dataf => \ALT_INV_ActiveCh[2]~input_o\,
-	cin => \Div0|auto_generated|divider|divider|op_26~18_cout\,
-	cout => \Div0|auto_generated|divider|divider|op_26~14_cout\);
-
-\Div0|auto_generated|divider|divider|op_26~10\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~10_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_25~1_sumout\ & ((\Div0|auto_generated|divider|divider|op_25~13_sumout\))) # (\Div0|auto_generated|divider|divider|op_25~1_sumout\ & 
--- (\Div0|auto_generated|divider|divider|StageOut[146]~82_combout\)) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_26~14_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000000010110101111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[146]~82_combout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_25~13_sumout\,
-	cin => \Div0|auto_generated|divider|divider|op_26~14_cout\,
-	cout => \Div0|auto_generated|divider|divider|op_26~10_cout\);
-
-\Div0|auto_generated|divider|divider|op_26~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~6_cout\ = CARRY(( (!\Div0|auto_generated|divider|divider|op_25~1_sumout\ & (((\Div0|auto_generated|divider|divider|op_25~9_sumout\)))) # (\Div0|auto_generated|divider|divider|op_25~1_sumout\ & 
--- (((\Div0|auto_generated|divider|divider|StageOut[147]~4_combout\)) # (\Div0|auto_generated|divider|divider|StageOut[147]~0_combout\))) ) + ( VCC ) + ( \Div0|auto_generated|divider|divider|op_26~10_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000000000000000000000000000000000000001101101011111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[147]~0_combout\,
-	datac => \Div0|auto_generated|divider|divider|ALT_INV_op_25~9_sumout\,
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_StageOut[147]~4_combout\,
-	cin => \Div0|auto_generated|divider|divider|op_26~10_cout\,
-	cout => \Div0|auto_generated|divider|divider|op_26~6_cout\);
-
-\Div0|auto_generated|divider|divider|op_26~1\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|divider|op_26~1_sumout\ = SUM(( VCC ) + ( GND ) + ( \Div0|auto_generated|divider|divider|op_26~6_cout\ ))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000001111111111111111",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	cin => \Div0|auto_generated|divider|divider|op_26~6_cout\,
-	sumout => \Div0|auto_generated|divider|divider|op_26~1_sumout\);
-
-\Div0|auto_generated|divider|op_1~1\ : cyclonev_lcell_comb
+\Add3~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~1_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_26~1_sumout\ ) + ( VCC ) + ( !VCC ))
--- \Div0|auto_generated|divider|op_1~2\ = CARRY(( \Div0|auto_generated|divider|divider|op_26~1_sumout\ ) + ( VCC ) + ( !VCC ))
+-- \Add3~1_sumout\ = SUM(( currMemAddress(0) ) + ( VCC ) + ( !VCC ))
+-- \Add3~2\ = CARRY(( currMemAddress(0) ) + ( VCC ) + ( !VCC ))
 
 -- pragma translate_off
 GENERIC MAP (
@@ -9958,30 +1660,769 @@ GENERIC MAP (
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_26~1_sumout\,
+	datad => ALT_INV_currMemAddress(0),
 	cin => GND,
-	sumout => \Div0|auto_generated|divider|op_1~1_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~2\);
+	sumout => \Add3~1_sumout\,
+	cout => \Add3~2\);
 
-\Div0|auto_generated|divider|quotient[0]~0\ : cyclonev_lcell_comb
+\ResetN~input\ : cyclonev_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_ResetN,
+	o => \ResetN~input_o\);
+
+\currMemAddress[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~1_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(0));
+
+\Add3~5\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[0]~0_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_26~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~1_sumout\)))
+-- \Add3~5_sumout\ = SUM(( currMemAddress(1) ) + ( GND ) + ( \Add3~2\ ))
+-- \Add3~6\ = CARRY(( currMemAddress(1) ) + ( GND ) + ( \Add3~2\ ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_26~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~1_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[0]~0_combout\);
+	datad => ALT_INV_currMemAddress(1),
+	cin => \Add3~2\,
+	sumout => \Add3~5_sumout\,
+	cout => \Add3~6\);
 
-\Equal1~0\ : cyclonev_lcell_comb
+\currMemAddress[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~5_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(1));
+
+\Add3~9\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Equal1~0_combout\ = (!\ActiveCh[2]~input_o\ & (!\ActiveCh[0]~input_o\ & !\ActiveCh[1]~input_o\))
+-- \Add3~9_sumout\ = SUM(( currMemAddress(2) ) + ( GND ) + ( \Add3~6\ ))
+-- \Add3~10\ = CARRY(( currMemAddress(2) ) + ( GND ) + ( \Add3~6\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(2),
+	cin => \Add3~6\,
+	sumout => \Add3~9_sumout\,
+	cout => \Add3~10\);
+
+\currMemAddress[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~9_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(2));
+
+\Add3~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~13_sumout\ = SUM(( currMemAddress(3) ) + ( GND ) + ( \Add3~10\ ))
+-- \Add3~14\ = CARRY(( currMemAddress(3) ) + ( GND ) + ( \Add3~10\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(3),
+	cin => \Add3~10\,
+	sumout => \Add3~13_sumout\,
+	cout => \Add3~14\);
+
+\currMemAddress[3]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~13_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(3));
+
+\Add3~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~17_sumout\ = SUM(( currMemAddress(4) ) + ( GND ) + ( \Add3~14\ ))
+-- \Add3~18\ = CARRY(( currMemAddress(4) ) + ( GND ) + ( \Add3~14\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(4),
+	cin => \Add3~14\,
+	sumout => \Add3~17_sumout\,
+	cout => \Add3~18\);
+
+\currMemAddress[4]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~17_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(4));
+
+\Add3~21\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~21_sumout\ = SUM(( currMemAddress(5) ) + ( GND ) + ( \Add3~18\ ))
+-- \Add3~22\ = CARRY(( currMemAddress(5) ) + ( GND ) + ( \Add3~18\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(5),
+	cin => \Add3~18\,
+	sumout => \Add3~21_sumout\,
+	cout => \Add3~22\);
+
+\currMemAddress[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~21_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(5));
+
+\Add3~25\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~25_sumout\ = SUM(( currMemAddress(6) ) + ( GND ) + ( \Add3~22\ ))
+-- \Add3~26\ = CARRY(( currMemAddress(6) ) + ( GND ) + ( \Add3~22\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(6),
+	cin => \Add3~22\,
+	sumout => \Add3~25_sumout\,
+	cout => \Add3~26\);
+
+\currMemAddress[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~25_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(6));
+
+\Add3~29\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~29_sumout\ = SUM(( currMemAddress(7) ) + ( GND ) + ( \Add3~26\ ))
+-- \Add3~30\ = CARRY(( currMemAddress(7) ) + ( GND ) + ( \Add3~26\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(7),
+	cin => \Add3~26\,
+	sumout => \Add3~29_sumout\,
+	cout => \Add3~30\);
+
+\currMemAddress[7]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~29_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(7));
+
+\Add3~33\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~33_sumout\ = SUM(( currMemAddress(8) ) + ( GND ) + ( \Add3~30\ ))
+-- \Add3~34\ = CARRY(( currMemAddress(8) ) + ( GND ) + ( \Add3~30\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(8),
+	cin => \Add3~30\,
+	sumout => \Add3~33_sumout\,
+	cout => \Add3~34\);
+
+\currMemAddress[8]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~33_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(8));
+
+\Add3~37\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~37_sumout\ = SUM(( currMemAddress(9) ) + ( GND ) + ( \Add3~34\ ))
+-- \Add3~38\ = CARRY(( currMemAddress(9) ) + ( GND ) + ( \Add3~34\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(9),
+	cin => \Add3~34\,
+	sumout => \Add3~37_sumout\,
+	cout => \Add3~38\);
+
+\currMemAddress[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~37_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(9));
+
+\Add3~41\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~41_sumout\ = SUM(( currMemAddress(10) ) + ( GND ) + ( \Add3~38\ ))
+-- \Add3~42\ = CARRY(( currMemAddress(10) ) + ( GND ) + ( \Add3~38\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(10),
+	cin => \Add3~38\,
+	sumout => \Add3~41_sumout\,
+	cout => \Add3~42\);
+
+\currMemAddress[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~41_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(10));
+
+\Add3~45\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~45_sumout\ = SUM(( currMemAddress(11) ) + ( GND ) + ( \Add3~42\ ))
+-- \Add3~46\ = CARRY(( currMemAddress(11) ) + ( GND ) + ( \Add3~42\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(11),
+	cin => \Add3~42\,
+	sumout => \Add3~45_sumout\,
+	cout => \Add3~46\);
+
+\currMemAddress[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~45_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(11));
+
+\Add3~49\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~49_sumout\ = SUM(( currMemAddress(12) ) + ( GND ) + ( \Add3~46\ ))
+-- \Add3~50\ = CARRY(( currMemAddress(12) ) + ( GND ) + ( \Add3~46\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(12),
+	cin => \Add3~46\,
+	sumout => \Add3~49_sumout\,
+	cout => \Add3~50\);
+
+\currMemAddress[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~49_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(12));
+
+\Add3~53\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~53_sumout\ = SUM(( currMemAddress(13) ) + ( GND ) + ( \Add3~50\ ))
+-- \Add3~54\ = CARRY(( currMemAddress(13) ) + ( GND ) + ( \Add3~50\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(13),
+	cin => \Add3~50\,
+	sumout => \Add3~53_sumout\,
+	cout => \Add3~54\);
+
+\currMemAddress[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~53_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(13));
+
+\Add3~57\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~57_sumout\ = SUM(( currMemAddress(14) ) + ( GND ) + ( \Add3~54\ ))
+-- \Add3~58\ = CARRY(( currMemAddress(14) ) + ( GND ) + ( \Add3~54\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(14),
+	cin => \Add3~54\,
+	sumout => \Add3~57_sumout\,
+	cout => \Add3~58\);
+
+\currMemAddress[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~57_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(14));
+
+\Add3~61\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~61_sumout\ = SUM(( currMemAddress(15) ) + ( GND ) + ( \Add3~58\ ))
+-- \Add3~62\ = CARRY(( currMemAddress(15) ) + ( GND ) + ( \Add3~58\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(15),
+	cin => \Add3~58\,
+	sumout => \Add3~61_sumout\,
+	cout => \Add3~62\);
+
+\currMemAddress[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~61_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(15));
+
+\Add3~65\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~65_sumout\ = SUM(( currMemAddress(16) ) + ( GND ) + ( \Add3~62\ ))
+-- \Add3~66\ = CARRY(( currMemAddress(16) ) + ( GND ) + ( \Add3~62\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(16),
+	cin => \Add3~62\,
+	sumout => \Add3~65_sumout\,
+	cout => \Add3~66\);
+
+\currMemAddress[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~65_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(16));
+
+\Add3~69\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add3~69_sumout\ = SUM(( currMemAddress(17) ) + ( GND ) + ( \Add3~66\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(17),
+	cin => \Add3~66\,
+	sumout => \Add3~69_sumout\);
+
+\currMemAddress[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Add3~69_sumout\,
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_arch_loop_start~q\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => currMemAddress(17));
+
+\Equal0~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal0~0_combout\ = ( !currMemAddress(16) & ( !currMemAddress(17) & ( (!currMemAddress(11) & (!currMemAddress(12) & (!currMemAddress(13) & !currMemAddress(15)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_currMemAddress(12),
+	datac => ALT_INV_currMemAddress(13),
+	datad => ALT_INV_currMemAddress(15),
+	datae => ALT_INV_currMemAddress(16),
+	dataf => ALT_INV_currMemAddress(17),
+	combout => \Equal0~0_combout\);
+
+\Equal0~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal0~1_combout\ = ( !currMemAddress(9) & ( !currMemAddress(10) & ( (currMemAddress(5) & (currMemAddress(6) & (!currMemAddress(7) & !currMemAddress(8)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0001000000000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => ALT_INV_currMemAddress(6),
+	datac => ALT_INV_currMemAddress(7),
+	datad => ALT_INV_currMemAddress(8),
+	datae => ALT_INV_currMemAddress(9),
+	dataf => ALT_INV_currMemAddress(10),
+	combout => \Equal0~1_combout\);
+
+\Equal0~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal0~2_combout\ = ( !currMemAddress(4) & ( !currMemAddress(14) & ( (!currMemAddress(0) & (!currMemAddress(1) & (currMemAddress(2) & !currMemAddress(3)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100000000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(0),
+	datab => ALT_INV_currMemAddress(1),
+	datac => ALT_INV_currMemAddress(2),
+	datad => ALT_INV_currMemAddress(3),
+	datae => ALT_INV_currMemAddress(4),
+	dataf => ALT_INV_currMemAddress(14),
+	combout => \Equal0~2_combout\);
+
+\process_0~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~0_combout\ = ( \Equal0~2_combout\ & ( (!\KB_PLAY~input_o\ & (!\KB_ALLPLAY~input_o\ & ((!\Equal0~0_combout\) # (!\Equal0~1_combout\)))) ) ) # ( !\Equal0~2_combout\ & ( (!\KB_PLAY~input_o\ & !\KB_ALLPLAY~input_o\) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000100010001000100010001000000010001000100010001000100010000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_PLAY~input_o\,
+	datab => \ALT_INV_KB_ALLPLAY~input_o\,
+	datac => \ALT_INV_Equal0~0_combout\,
+	datad => \ALT_INV_Equal0~1_combout\,
+	datae => \ALT_INV_Equal0~2_combout\,
+	combout => \process_0~0_combout\);
+
+\Selector3~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector3~2_combout\ = (\KB_REC~input_o\ & !\state.EMPTY~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100010001000100010001000100010001000100010001000100010001000100",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.EMPTY~q\,
+	combout => \Selector3~2_combout\);
+
+\KB_ClearCH~input\ : cyclonev_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_KB_ClearCH,
+	o => \KB_ClearCH~input_o\);
+
+\KB_STOP~input\ : cyclonev_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_KB_STOP,
+	o => \KB_STOP~input_o\);
+
+\recCounter~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \recCounter~0_combout\ = (!\KB_PLAY~input_o\ & (\KB_ClearCH~input_o\ & !\KB_STOP~input_o\))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0010000000100000001000000010000000100000001000000010000000100000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_PLAY~input_o\,
+	datab => \ALT_INV_KB_ClearCH~input_o\,
+	datac => \ALT_INV_KB_STOP~input_o\,
+	combout => \recCounter~0_combout\);
+
+\KB_Selchannel[1]~input\ : cyclonev_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_KB_Selchannel(1),
+	o => \KB_Selchannel[1]~input_o\);
+
+\ch0HT~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \ch0HT~0_combout\ = ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (!\KB_Selchannel[1]~input_o\ & !\KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000100000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \ch0HT~0_combout\);
+
+\Selector165~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector165~0_combout\ = ( \state.PRE_REC~q\ & ( (!\arch_loop_start~q\) # ((!\KB_PLAY~input_o\ & (!\KB_ALLPLAY~input_o\ & \state.REC_OTHER~q\))) ) ) # ( !\state.PRE_REC~q\ & ( (\arch_loop_start~q\ & (!\KB_PLAY~input_o\ & (!\KB_ALLPLAY~input_o\ & 
+-- \state.REC_OTHER~q\))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001000000101010101110101000000000010000001010101011101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ALLPLAY~input_o\,
+	datad => \ALT_INV_state.REC_OTHER~q\,
+	datae => \ALT_INV_state.PRE_REC~q\,
+	combout => \Selector165~0_combout\);
+
+\state.REC_OTHER\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector165~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \state.REC_OTHER~q\);
+
+\Selector136~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector136~0_combout\ = (!\state.REC_OTHER~q\ & (!\state.PRE_REC~q\ & !\state.REC_FIRST~q\))
 
 -- pragma translate_off
 GENERIC MAP (
@@ -9990,12 +2431,44 @@ GENERIC MAP (
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_ActiveCh[2]~input_o\,
-	datab => \ALT_INV_ActiveCh[0]~input_o\,
-	datac => \ALT_INV_ActiveCh[1]~input_o\,
-	combout => \Equal1~0_combout\);
+	dataa => \ALT_INV_state.REC_OTHER~q\,
+	datab => \ALT_INV_state.PRE_REC~q\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	combout => \Selector136~0_combout\);
 
-\proc_out[0]\ : dffeas
+\Selector1~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector1~0_combout\ = (\KB_Selchannel[1]~input_o\ & ((\state.EMPTY~q\) # (\KB_REC~input_o\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000011100000111000001110000011100000111000001110000011100000111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	combout => \Selector1~0_combout\);
+
+\arch_recSel[0]~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_recSel[0]~0_combout\ = (!\state.CH_CONTROL~q\ & ((!\state.EMPTY~q\))) # (\state.CH_CONTROL~q\ & (\KB_REC~input_o\))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1100010111000101110001011100010111000101110001011100010111000101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_state.CH_CONTROL~q\,
+	combout => \arch_recSel[0]~0_combout\);
+
+\arch_recSel[1]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10003,48 +2476,86 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[0]~0_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector1~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_recSel[0]~0_combout\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(0));
+	q => arch_recSel(1));
 
-\Div0|auto_generated|divider|op_1~5\ : cyclonev_lcell_comb
+\Mux32~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~5_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_25~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~2\ ))
--- \Div0|auto_generated|divider|op_1~6\ = CARRY(( \Div0|auto_generated|divider|divider|op_25~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~2\ ))
+-- \Mux32~0_combout\ = (!arch_recSel(0) & !arch_recSel(1))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "1000100010001000100010001000100010001000100010001000100010001000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~2\,
-	sumout => \Div0|auto_generated|divider|op_1~5_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~6\);
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	combout => \Mux32~0_combout\);
 
-\Div0|auto_generated|divider|quotient[1]~1\ : cyclonev_lcell_comb
+\Equal0~3\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[1]~1_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_25~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~5_sumout\)))
+-- \Equal0~3_combout\ = (\Equal0~0_combout\ & (\Equal0~1_combout\ & \Equal0~2_combout\))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000100000001000000010000000100000001000000010000000100000001",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_25~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~5_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[1]~1_combout\);
+	dataa => \ALT_INV_Equal0~0_combout\,
+	datab => \ALT_INV_Equal0~1_combout\,
+	datac => \ALT_INV_Equal0~2_combout\,
+	combout => \Equal0~3_combout\);
 
-\proc_out[1]\ : dffeas
+\Selector137~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector137~0_combout\ = ( !\Equal0~3_combout\ & ( \state.REC_FIRST~q\ & ( (!\KB_PLAY~input_o\ & (!\KB_ALLPLAY~input_o\ & ((!\state.REC_OTHER~q\) # (\arch_loop_start~q\)))) ) ) ) # ( \Equal0~3_combout\ & ( !\state.REC_FIRST~q\ & ( (!\state.REC_OTHER~q\) 
+-- # ((\arch_loop_start~q\ & (!\KB_PLAY~input_o\ & !\KB_ALLPLAY~input_o\))) ) ) ) # ( !\Equal0~3_combout\ & ( !\state.REC_FIRST~q\ & ( (!\state.REC_OTHER~q\) # ((\arch_loop_start~q\ & (!\KB_PLAY~input_o\ & !\KB_ALLPLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111101000000111111110100000011000000010000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ALLPLAY~input_o\,
+	datad => \ALT_INV_state.REC_OTHER~q\,
+	datae => \ALT_INV_Equal0~3_combout\,
+	dataf => \ALT_INV_state.REC_FIRST~q\,
+	combout => \Selector137~0_combout\);
+
+\Selector136~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector136~1_combout\ = ( \Mux32~0_combout\ & ( \Selector137~0_combout\ & ( (\ch0HT~q\ & ((!\Selector136~0_combout\) # ((\state.CH_CONTROL~q\ & !\ch0HT~0_combout\)))) ) ) ) # ( !\Mux32~0_combout\ & ( \Selector137~0_combout\ & ( (\ch0HT~q\ & 
+-- ((!\Selector136~0_combout\) # ((\state.CH_CONTROL~q\ & !\ch0HT~0_combout\)))) ) ) ) # ( \Mux32~0_combout\ & ( !\Selector137~0_combout\ ) ) # ( !\Mux32~0_combout\ & ( !\Selector137~0_combout\ & ( (\ch0HT~q\ & ((!\Selector136~0_combout\) # 
+-- ((\state.CH_CONTROL~q\ & !\ch0HT~0_combout\)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011001100010000111111111111111100110011000100000011001100010000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_ch0HT~q\,
+	datac => \ALT_INV_ch0HT~0_combout\,
+	datad => \ALT_INV_Selector136~0_combout\,
+	datae => \ALT_INV_Mux32~0_combout\,
+	dataf => \ALT_INV_Selector137~0_combout\,
+	combout => \Selector136~1_combout\);
+
+ch0HT : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10052,48 +2563,68 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[1]~1_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector136~1_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(1));
+	q => \ch0HT~q\);
 
-\Div0|auto_generated|divider|op_1~9\ : cyclonev_lcell_comb
+\ch2HT~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~9_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_23~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~6\ ))
--- \Div0|auto_generated|divider|op_1~10\ = CARRY(( \Div0|auto_generated|divider|divider|op_23~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~6\ ))
+-- \ch2HT~0_combout\ = ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (\KB_Selchannel[1]~input_o\ & !\KB_PLAY~input_o\))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000000000000000000010000000000000000000000000000000000000000000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~6\,
-	sumout => \Div0|auto_generated|divider|op_1~9_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~10\);
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \ch2HT~0_combout\);
 
-\Div0|auto_generated|divider|quotient[2]~2\ : cyclonev_lcell_comb
+\Mux51~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[2]~2_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_23~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~9_sumout\)))
+-- \Mux51~0_combout\ = (!arch_recSel(0) & arch_recSel(1))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_23~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~9_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[2]~2_combout\);
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	combout => \Mux51~0_combout\);
 
-\proc_out[2]\ : dffeas
+\Selector138~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector138~0_combout\ = ( \ch2HT~0_combout\ & ( \Mux51~0_combout\ & ( (!\Selector137~0_combout\) # ((\ch2HT~q\ & !\Selector136~0_combout\)) ) ) ) # ( !\ch2HT~0_combout\ & ( \Mux51~0_combout\ & ( (!\Selector137~0_combout\) # ((\ch2HT~q\ & 
+-- ((!\Selector136~0_combout\) # (\state.CH_CONTROL~q\)))) ) ) ) # ( \ch2HT~0_combout\ & ( !\Mux51~0_combout\ & ( (\ch2HT~q\ & !\Selector136~0_combout\) ) ) ) # ( !\ch2HT~0_combout\ & ( !\Mux51~0_combout\ & ( (\ch2HT~q\ & ((!\Selector136~0_combout\) # 
+-- (\state.CH_CONTROL~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000100110001001100000011000011111111001100011111111100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_ch2HT~q\,
+	datac => \ALT_INV_Selector136~0_combout\,
+	datad => \ALT_INV_Selector137~0_combout\,
+	datae => \ALT_INV_ch2HT~0_combout\,
+	dataf => \ALT_INV_Mux51~0_combout\,
+	combout => \Selector138~0_combout\);
+
+ch2HT : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10101,48 +2632,68 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[2]~2_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector138~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(2));
+	q => \ch2HT~q\);
 
-\Div0|auto_generated|divider|op_1~13\ : cyclonev_lcell_comb
+\ch1HT~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~13_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_22~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~10\ ))
--- \Div0|auto_generated|divider|op_1~14\ = CARRY(( \Div0|auto_generated|divider|divider|op_22~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~10\ ))
+-- \ch1HT~0_combout\ = ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (!\KB_Selchannel[1]~input_o\ & !\KB_PLAY~input_o\))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000000000000000010000000000000000000000000000000000000000000000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~10\,
-	sumout => \Div0|auto_generated|divider|op_1~13_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~14\);
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \ch1HT~0_combout\);
 
-\Div0|auto_generated|divider|quotient[3]~3\ : cyclonev_lcell_comb
+\Mux51~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[3]~3_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_22~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~13_sumout\)))
+-- \Mux51~1_combout\ = (arch_recSel(0) & !arch_recSel(1))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0100010001000100010001000100010001000100010001000100010001000100",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_22~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~13_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[3]~3_combout\);
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	combout => \Mux51~1_combout\);
 
-\proc_out[3]\ : dffeas
+\Selector137~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector137~1_combout\ = ( \ch1HT~0_combout\ & ( \Mux51~1_combout\ & ( (!\Selector137~0_combout\) # ((\ch1HT~q\ & !\Selector136~0_combout\)) ) ) ) # ( !\ch1HT~0_combout\ & ( \Mux51~1_combout\ & ( (!\Selector137~0_combout\) # ((\ch1HT~q\ & 
+-- ((!\Selector136~0_combout\) # (\state.CH_CONTROL~q\)))) ) ) ) # ( \ch1HT~0_combout\ & ( !\Mux51~1_combout\ & ( (\ch1HT~q\ & !\Selector136~0_combout\) ) ) ) # ( !\ch1HT~0_combout\ & ( !\Mux51~1_combout\ & ( (\ch1HT~q\ & ((!\Selector136~0_combout\) # 
+-- (\state.CH_CONTROL~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000100110001001100000011000011111111001100011111111100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_ch1HT~q\,
+	datac => \ALT_INV_Selector136~0_combout\,
+	datad => \ALT_INV_Selector137~0_combout\,
+	datae => \ALT_INV_ch1HT~0_combout\,
+	dataf => \ALT_INV_Mux51~1_combout\,
+	combout => \Selector137~1_combout\);
+
+ch1HT : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10150,48 +2701,68 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[3]~3_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector137~1_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(3));
+	q => \ch1HT~q\);
 
-\Div0|auto_generated|divider|op_1~17\ : cyclonev_lcell_comb
+\ch3HT~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~17_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_21~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~14\ ))
--- \Div0|auto_generated|divider|op_1~18\ = CARRY(( \Div0|auto_generated|divider|divider|op_21~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~14\ ))
+-- \ch3HT~0_combout\ = ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (\KB_Selchannel[1]~input_o\ & !\KB_PLAY~input_o\))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000000000000000000001000000000000000000000000000000000000000000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~14\,
-	sumout => \Div0|auto_generated|divider|op_1~17_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~18\);
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \ch3HT~0_combout\);
 
-\Div0|auto_generated|divider|quotient[4]~4\ : cyclonev_lcell_comb
+\Mux51~2\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[4]~4_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_21~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~17_sumout\)))
+-- \Mux51~2_combout\ = (arch_recSel(0) & arch_recSel(1))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_21~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~17_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[4]~4_combout\);
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	combout => \Mux51~2_combout\);
 
-\proc_out[4]\ : dffeas
+\Selector139~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector139~0_combout\ = ( \ch3HT~0_combout\ & ( \Mux51~2_combout\ & ( (!\Selector137~0_combout\) # ((\ch3HT~q\ & !\Selector136~0_combout\)) ) ) ) # ( !\ch3HT~0_combout\ & ( \Mux51~2_combout\ & ( (!\Selector137~0_combout\) # ((\ch3HT~q\ & 
+-- ((!\Selector136~0_combout\) # (\state.CH_CONTROL~q\)))) ) ) ) # ( \ch3HT~0_combout\ & ( !\Mux51~2_combout\ & ( (\ch3HT~q\ & !\Selector136~0_combout\) ) ) ) # ( !\ch3HT~0_combout\ & ( !\Mux51~2_combout\ & ( (\ch3HT~q\ & ((!\Selector136~0_combout\) # 
+-- (\state.CH_CONTROL~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000100110001001100000011000011111111001100011111111100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_ch3HT~q\,
+	datac => \ALT_INV_Selector136~0_combout\,
+	datad => \ALT_INV_Selector137~0_combout\,
+	datae => \ALT_INV_ch3HT~0_combout\,
+	dataf => \ALT_INV_Mux51~2_combout\,
+	combout => \Selector139~0_combout\);
+
+ch3HT : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10199,48 +2770,133 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[4]~4_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector139~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(4));
+	q => \ch3HT~q\);
 
-\Div0|auto_generated|divider|op_1~21\ : cyclonev_lcell_comb
+\process_0~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~21_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_20~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~18\ ))
--- \Div0|auto_generated|divider|op_1~22\ = CARRY(( \Div0|auto_generated|divider|divider|op_20~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~18\ ))
+-- \process_0~1_combout\ = ( \ch1HT~q\ & ( \ch3HT~q\ & ( ((!\KB_Selchannel[1]~input_o\ & (\ch0HT~q\)) # (\KB_Selchannel[1]~input_o\ & ((\ch2HT~q\)))) # (\KB_Selchannel[0]~input_o\) ) ) ) # ( !\ch1HT~q\ & ( \ch3HT~q\ & ( (!\KB_Selchannel[0]~input_o\ & 
+-- ((!\KB_Selchannel[1]~input_o\ & (\ch0HT~q\)) # (\KB_Selchannel[1]~input_o\ & ((\ch2HT~q\))))) # (\KB_Selchannel[0]~input_o\ & (\KB_Selchannel[1]~input_o\)) ) ) ) # ( \ch1HT~q\ & ( !\ch3HT~q\ & ( (!\KB_Selchannel[0]~input_o\ & ((!\KB_Selchannel[1]~input_o\ 
+-- & (\ch0HT~q\)) # (\KB_Selchannel[1]~input_o\ & ((\ch2HT~q\))))) # (\KB_Selchannel[0]~input_o\ & (!\KB_Selchannel[1]~input_o\)) ) ) ) # ( !\ch1HT~q\ & ( !\ch3HT~q\ & ( (!\KB_Selchannel[0]~input_o\ & ((!\KB_Selchannel[1]~input_o\ & (\ch0HT~q\)) # 
+-- (\KB_Selchannel[1]~input_o\ & ((\ch2HT~q\))))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000100000101010010011000110111000011001001110110101110101111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~18\,
-	sumout => \Div0|auto_generated|divider|op_1~21_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~22\);
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datac => \ALT_INV_ch0HT~q\,
+	datad => \ALT_INV_ch2HT~q\,
+	datae => \ALT_INV_ch1HT~q\,
+	dataf => \ALT_INV_ch3HT~q\,
+	combout => \process_0~1_combout\);
 
-\Div0|auto_generated|divider|quotient[5]~5\ : cyclonev_lcell_comb
+\recCounter~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[5]~5_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_20~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~21_sumout\)))
+-- \recCounter~1_combout\ = (!\KB_REC~input_o\ & (!\KB_PLAY~input_o\ & (\KB_ClearCH~input_o\ & !\KB_STOP~input_o\)))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000100000000000000010000000000000001000000000000000100000000000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_20~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~21_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[5]~5_combout\);
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ClearCH~input_o\,
+	datad => \ALT_INV_KB_STOP~input_o\,
+	combout => \recCounter~1_combout\);
 
-\proc_out[5]\ : dffeas
+\recCounter~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \recCounter~2_combout\ = ( \ch1HT~q\ & ( \ch3HT~q\ & ( (!\KB_Selchannel[0]~input_o\ & ((!\KB_Selchannel[1]~input_o\ & (!\ch0HT~q\)) # (\KB_Selchannel[1]~input_o\ & ((!\ch2HT~q\))))) ) ) ) # ( !\ch1HT~q\ & ( \ch3HT~q\ & ( (!\KB_Selchannel[0]~input_o\ & 
+-- ((!\KB_Selchannel[1]~input_o\ & (!\ch0HT~q\)) # (\KB_Selchannel[1]~input_o\ & ((!\ch2HT~q\))))) # (\KB_Selchannel[0]~input_o\ & (!\KB_Selchannel[1]~input_o\)) ) ) ) # ( \ch1HT~q\ & ( !\ch3HT~q\ & ( (!\KB_Selchannel[0]~input_o\ & 
+-- ((!\KB_Selchannel[1]~input_o\ & (!\ch0HT~q\)) # (\KB_Selchannel[1]~input_o\ & ((!\ch2HT~q\))))) # (\KB_Selchannel[0]~input_o\ & (\KB_Selchannel[1]~input_o\)) ) ) ) # ( !\ch1HT~q\ & ( !\ch3HT~q\ & ( ((!\KB_Selchannel[1]~input_o\ & (!\ch0HT~q\)) # 
+-- (\KB_Selchannel[1]~input_o\ & ((!\ch2HT~q\)))) # (\KB_Selchannel[0]~input_o\) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111011111010101101100111001000111100110110001001010001010000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datac => \ALT_INV_ch0HT~q\,
+	datad => \ALT_INV_ch2HT~q\,
+	datae => \ALT_INV_ch1HT~q\,
+	dataf => \ALT_INV_ch3HT~q\,
+	combout => \recCounter~2_combout\);
+
+\Selector142~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector142~0_combout\ = (\state.CH_CONTROL~q\ & (((\KB_REC~input_o\ & \recCounter~2_combout\)) # (\recCounter~1_combout\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000001100010011000000110001001100000011000100110000001100010011",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.CH_CONTROL~q\,
+	datac => \ALT_INV_recCounter~1_combout\,
+	datad => \ALT_INV_recCounter~2_combout\,
+	combout => \Selector142~0_combout\);
+
+\Selector141~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector141~0_combout\ = ( \recCounter~1_combout\ & ( \recCounter~2_combout\ & ( (!\state.REC_OTHER~q\ & !\state.PRE_REC~q\) ) ) ) # ( !\recCounter~1_combout\ & ( \recCounter~2_combout\ & ( (!\state.REC_OTHER~q\ & (!\state.PRE_REC~q\ & 
+-- ((!\state.CH_CONTROL~q\) # (\KB_REC~input_o\)))) ) ) ) # ( \recCounter~1_combout\ & ( !\recCounter~2_combout\ & ( (!\state.REC_OTHER~q\ & !\state.PRE_REC~q\) ) ) ) # ( !\recCounter~1_combout\ & ( !\recCounter~2_combout\ & ( (!\state.CH_CONTROL~q\ & 
+-- (!\state.REC_OTHER~q\ & !\state.PRE_REC~q\)) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1100000000000000111100000000000011010000000000001111000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.CH_CONTROL~q\,
+	datac => \ALT_INV_state.REC_OTHER~q\,
+	datad => \ALT_INV_state.PRE_REC~q\,
+	datae => \ALT_INV_recCounter~1_combout\,
+	dataf => \ALT_INV_recCounter~2_combout\,
+	combout => \Selector141~0_combout\);
+
+\Selector142~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector142~1_combout\ = ( \Selector142~0_combout\ & ( \Selector141~0_combout\ & ( (!recCounter(0) $ (((!\KB_REC~input_o\ & !\process_0~1_combout\)))) # (\state.REC_FIRST~q\) ) ) ) # ( !\Selector142~0_combout\ & ( \Selector141~0_combout\ & ( 
+-- \state.REC_FIRST~q\ ) ) ) # ( \Selector142~0_combout\ & ( !\Selector141~0_combout\ & ( (((\process_0~1_combout\) # (recCounter(0))) # (\state.REC_FIRST~q\)) # (\KB_REC~input_o\) ) ) ) # ( !\Selector142~0_combout\ & ( !\Selector141~0_combout\ & ( 
+-- (recCounter(0)) # (\state.REC_FIRST~q\) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011111100111111011111111111111100110011001100110111101111110011",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	datac => ALT_INV_recCounter(0),
+	datad => \ALT_INV_process_0~1_combout\,
+	datae => \ALT_INV_Selector142~0_combout\,
+	dataf => \ALT_INV_Selector141~0_combout\,
+	combout => \Selector142~1_combout\);
+
+\recCounter[0]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10248,48 +2904,33 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[5]~5_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector142~1_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(5));
+	q => recCounter(0));
 
-\Div0|auto_generated|divider|op_1~25\ : cyclonev_lcell_comb
+\Selector141~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~25_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_19~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~22\ ))
--- \Div0|auto_generated|divider|op_1~26\ = CARRY(( \Div0|auto_generated|divider|divider|op_19~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~22\ ))
+-- \Selector141~1_combout\ = ( \Selector142~0_combout\ & ( \Selector141~0_combout\ & ( !recCounter(1) $ (((!\KB_REC~input_o\ & ((!\process_0~1_combout\) # (recCounter(0)))) # (\KB_REC~input_o\ & (!recCounter(0))))) ) ) ) # ( \Selector142~0_combout\ & ( 
+-- !\Selector141~0_combout\ & ( ((!\KB_REC~input_o\ & (!recCounter(0) & \process_0~1_combout\)) # (\KB_REC~input_o\ & (recCounter(0)))) # (recCounter(1)) ) ) ) # ( !\Selector142~0_combout\ & ( !\Selector141~0_combout\ & ( recCounter(1) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000000011111111000110011111111100000000000000000001100111100110",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~22\,
-	sumout => \Div0|auto_generated|divider|op_1~25_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~26\);
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => ALT_INV_recCounter(0),
+	datac => \ALT_INV_process_0~1_combout\,
+	datad => ALT_INV_recCounter(1),
+	datae => \ALT_INV_Selector142~0_combout\,
+	dataf => \ALT_INV_Selector141~0_combout\,
+	combout => \Selector141~1_combout\);
 
-\Div0|auto_generated|divider|quotient[6]~6\ : cyclonev_lcell_comb
--- Equation(s):
--- \Div0|auto_generated|divider|quotient[6]~6_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_19~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~25_sumout\)))
-
--- pragma translate_off
-GENERIC MAP (
-	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
-	shared_arith => "off")
--- pragma translate_on
-PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_19~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~25_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[6]~6_combout\);
-
-\proc_out[6]\ : dffeas
+\recCounter[1]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10297,48 +2938,48 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[6]~6_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector141~1_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(6));
+	q => recCounter(1));
 
-\Div0|auto_generated|divider|op_1~29\ : cyclonev_lcell_comb
+\Selector140~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~29_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_18~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~26\ ))
--- \Div0|auto_generated|divider|op_1~30\ = CARRY(( \Div0|auto_generated|divider|divider|op_18~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~26\ ))
+-- \Selector140~0_combout\ = ( recCounter(1) & ( !recCounter(2) $ (((!\KB_REC~input_o\) # (!recCounter(0)))) ) ) # ( !recCounter(1) & ( !recCounter(2) $ ((((!\process_0~1_combout\) # (recCounter(0))) # (\KB_REC~input_o\))) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000100011110111000100011110111000001000111101110001000111101110",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~26\,
-	sumout => \Div0|auto_generated|divider|op_1~29_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~30\);
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => ALT_INV_recCounter(0),
+	datac => \ALT_INV_process_0~1_combout\,
+	datad => ALT_INV_recCounter(2),
+	datae => ALT_INV_recCounter(1),
+	combout => \Selector140~0_combout\);
 
-\Div0|auto_generated|divider|quotient[7]~7\ : cyclonev_lcell_comb
+\Selector140~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[7]~7_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_18~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~29_sumout\)))
+-- \Selector140~1_combout\ = (!recCounter(2) & (\Selector142~0_combout\ & ((\Selector140~0_combout\)))) # (recCounter(2) & ((!\Selector141~0_combout\) # ((\Selector142~0_combout\ & \Selector140~0_combout\))))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0101000001110011010100000111001101010000011100110101000001110011",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_18~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~29_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[7]~7_combout\);
+	dataa => ALT_INV_recCounter(2),
+	datab => \ALT_INV_Selector142~0_combout\,
+	datac => \ALT_INV_Selector141~0_combout\,
+	datad => \ALT_INV_Selector140~0_combout\,
+	combout => \Selector140~1_combout\);
 
-\proc_out[7]\ : dffeas
+\recCounter[2]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10346,48 +2987,75 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[7]~7_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector140~1_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(7));
+	q => recCounter(2));
 
-\Div0|auto_generated|divider|op_1~33\ : cyclonev_lcell_comb
+\Selector164~3\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~33_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_17~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~30\ ))
--- \Div0|auto_generated|divider|op_1~34\ = CARRY(( \Div0|auto_generated|divider|divider|op_17~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~30\ ))
+-- \Selector164~3_combout\ = ( recCounter(2) & ( recCounter(1) & ( !\KB_REC~input_o\ ) ) ) # ( !recCounter(2) & ( recCounter(1) & ( !\KB_REC~input_o\ ) ) ) # ( recCounter(2) & ( !recCounter(1) & ( !\KB_REC~input_o\ ) ) ) # ( !recCounter(2) & ( !recCounter(1) 
+-- & ( (!\KB_REC~input_o\ & ((!\recCounter~0_combout\) # (!recCounter(0) $ (!\process_0~1_combout\)))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "1000101010101000101010101010101010101010101010101010101010101010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~30\,
-	sumout => \Div0|auto_generated|divider|op_1~33_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~34\);
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_recCounter~0_combout\,
+	datac => ALT_INV_recCounter(0),
+	datad => \ALT_INV_process_0~1_combout\,
+	datae => ALT_INV_recCounter(2),
+	dataf => ALT_INV_recCounter(1),
+	combout => \Selector164~3_combout\);
 
-\Div0|auto_generated|divider|quotient[8]~8\ : cyclonev_lcell_comb
+\Selector164~7\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[8]~8_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_17~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~33_sumout\)))
+-- \Selector164~7_combout\ = ( \Equal0~3_combout\ & ( \state.REC_FIRST~q\ & ( (\arch_loop_start~q\ & (!\KB_PLAY~input_o\ & (!\KB_ALLPLAY~input_o\ & \state.REC_OTHER~q\))) ) ) ) # ( !\Equal0~3_combout\ & ( \state.REC_FIRST~q\ & ( (!\KB_PLAY~input_o\ & 
+-- (!\KB_ALLPLAY~input_o\ & ((!\state.REC_OTHER~q\) # (\arch_loop_start~q\)))) ) ) ) # ( \Equal0~3_combout\ & ( !\state.REC_FIRST~q\ & ( (!\state.REC_OTHER~q\) # ((\arch_loop_start~q\ & (!\KB_PLAY~input_o\ & !\KB_ALLPLAY~input_o\))) ) ) ) # ( 
+-- !\Equal0~3_combout\ & ( !\state.REC_FIRST~q\ & ( (!\state.REC_OTHER~q\) # ((\arch_loop_start~q\ & (!\KB_PLAY~input_o\ & !\KB_ALLPLAY~input_o\))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "1111111101000000111111110100000011000000010000000000000001000000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_17~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~33_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[8]~8_combout\);
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ALLPLAY~input_o\,
+	datad => \ALT_INV_state.REC_OTHER~q\,
+	datae => \ALT_INV_Equal0~3_combout\,
+	dataf => \ALT_INV_state.REC_FIRST~q\,
+	combout => \Selector164~7_combout\);
 
-\proc_out[8]\ : dffeas
+\state.PRE_REC~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \state.PRE_REC~0_combout\ = ( \Selector164~3_combout\ & ( \Selector164~7_combout\ & ( (!\Selector163~0_combout\ & (((\state.PRE_REC~q\)))) # (\Selector163~0_combout\ & (\KB_REC~input_o\ & (\state.CH_CONTROL~q\))) ) ) ) # ( !\Selector164~3_combout\ & ( 
+-- \Selector164~7_combout\ & ( (!\state.CH_CONTROL~q\ & (((\state.PRE_REC~q\ & !\Selector163~0_combout\)))) # (\state.CH_CONTROL~q\ & (\KB_REC~input_o\)) ) ) ) # ( \Selector164~3_combout\ & ( !\Selector164~7_combout\ & ( (\KB_REC~input_o\ & 
+-- \state.CH_CONTROL~q\) ) ) ) # ( !\Selector164~3_combout\ & ( !\Selector164~7_combout\ & ( (\KB_REC~input_o\ & \state.CH_CONTROL~q\) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0001000100010001000100010001000100011101000100010000111100010001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.CH_CONTROL~q\,
+	datac => \ALT_INV_state.PRE_REC~q\,
+	datad => \ALT_INV_Selector163~0_combout\,
+	datae => \ALT_INV_Selector164~3_combout\,
+	dataf => \ALT_INV_Selector164~7_combout\,
+	combout => \state.PRE_REC~0_combout\);
+
+\state.PRE_REC\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10395,48 +3063,48 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[8]~8_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \state.PRE_REC~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(8));
+	q => \state.PRE_REC~q\);
 
-\Div0|auto_generated|divider|op_1~37\ : cyclonev_lcell_comb
+\Selector164~2\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~37_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_16~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~34\ ))
--- \Div0|auto_generated|divider|op_1~38\ = CARRY(( \Div0|auto_generated|divider|divider|op_16~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~34\ ))
+-- \Selector164~2_combout\ = (!\arch_loop_start~q\ & \state.PRE_REC~q\)
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~34\,
-	sumout => \Div0|auto_generated|divider|op_1~37_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~38\);
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_state.PRE_REC~q\,
+	combout => \Selector164~2_combout\);
 
-\Div0|auto_generated|divider|quotient[9]~9\ : cyclonev_lcell_comb
+\Selector162~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[9]~9_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_16~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~37_sumout\)))
+-- \Selector162~0_combout\ = ( !\Selector164~2_combout\ & ( \Selector164~3_combout\ & ( ((\process_0~0_combout\ & \state.REC_FIRST~q\)) # (\Selector3~2_combout\) ) ) ) # ( !\Selector164~2_combout\ & ( !\Selector164~3_combout\ & ( (!\state.CH_CONTROL~q\ & 
+-- (((\process_0~0_combout\ & \state.REC_FIRST~q\)) # (\Selector3~2_combout\))) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000001010101010000000000000000000000011111111110000000000000000",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_16~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~37_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[9]~9_combout\);
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Selector3~2_combout\,
+	datae => \ALT_INV_Selector164~2_combout\,
+	dataf => \ALT_INV_Selector164~3_combout\,
+	combout => \Selector162~0_combout\);
 
-\proc_out[9]\ : dffeas
+\state.REC_FIRST\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10444,48 +3112,69 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[9]~9_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector162~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(9));
+	q => \state.REC_FIRST~q\);
 
-\Div0|auto_generated|divider|op_1~41\ : cyclonev_lcell_comb
+\Selector154~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~41_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_15~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~38\ ))
--- \Div0|auto_generated|divider|op_1~42\ = CARRY(( \Div0|auto_generated|divider|divider|op_15~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~38\ ))
+-- \Selector154~0_combout\ = ( \Equal0~2_combout\ & ( \state.REC_FIRST~q\ & ( (((\Equal0~0_combout\ & \Equal0~1_combout\)) # (\KB_ALLPLAY~input_o\)) # (\KB_PLAY~input_o\) ) ) ) # ( !\Equal0~2_combout\ & ( \state.REC_FIRST~q\ & ( (\KB_ALLPLAY~input_o\) # 
+-- (\KB_PLAY~input_o\) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0000000000000000000000000000000001110111011101110111011101111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~38\,
-	sumout => \Div0|auto_generated|divider|op_1~41_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~42\);
+	dataa => \ALT_INV_KB_PLAY~input_o\,
+	datab => \ALT_INV_KB_ALLPLAY~input_o\,
+	datac => \ALT_INV_Equal0~0_combout\,
+	datad => \ALT_INV_Equal0~1_combout\,
+	datae => \ALT_INV_Equal0~2_combout\,
+	dataf => \ALT_INV_state.REC_FIRST~q\,
+	combout => \Selector154~0_combout\);
 
-\Div0|auto_generated|divider|quotient[10]~10\ : cyclonev_lcell_comb
+\Add0~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[10]~10_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_15~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~41_sumout\)))
+-- \Add0~1_sumout\ = SUM(( currMemAddress(0) ) + ( VCC ) + ( !VCC ))
+-- \Add0~2\ = CARRY(( currMemAddress(0) ) + ( VCC ) + ( !VCC ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_15~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~41_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[10]~10_combout\);
+	datad => ALT_INV_currMemAddress(0),
+	cin => GND,
+	sumout => \Add0~1_sumout\,
+	cout => \Add0~2\);
 
-\proc_out[10]\ : dffeas
+\Selector160~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector160~0_combout\ = ( \Add0~1_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(0))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(0))))) ) ) # ( !\Add0~1_sumout\ & ( (memEndAddr(0) & ((!\state.REC_FIRST~q\ & 
+-- (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(0),
+	datae => \ALT_INV_Add0~1_sumout\,
+	combout => \Selector160~0_combout\);
+
+\memEndAddr[0]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10493,48 +3182,69 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[10]~10_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector160~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(10));
+	q => memEndAddr(0));
 
-\Div0|auto_generated|divider|op_1~45\ : cyclonev_lcell_comb
+\Equal6~0\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~45_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_14~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~42\ ))
--- \Div0|auto_generated|divider|op_1~46\ = CARRY(( \Div0|auto_generated|divider|divider|op_14~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~42\ ))
+-- \Equal6~0_combout\ = ( memEndAddr(0) & ( \Add0~1_sumout\ & ( !currMemAddress(0) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(0) & ( \Add0~1_sumout\ & ( !currMemAddress(0) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) 
+-- ) # ( memEndAddr(0) & ( !\Add0~1_sumout\ & ( !currMemAddress(0) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(0) & ( !\Add0~1_sumout\ & ( currMemAddress(0) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~42\,
-	sumout => \Div0|auto_generated|divider|op_1~45_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~46\);
+	dataa => ALT_INV_currMemAddress(0),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(0),
+	dataf => \ALT_INV_Add0~1_sumout\,
+	combout => \Equal6~0_combout\);
 
-\Div0|auto_generated|divider|quotient[11]~11\ : cyclonev_lcell_comb
+\Add0~5\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[11]~11_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_14~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~45_sumout\)))
+-- \Add0~5_sumout\ = SUM(( currMemAddress(1) ) + ( VCC ) + ( \Add0~2\ ))
+-- \Add0~6\ = CARRY(( currMemAddress(1) ) + ( VCC ) + ( \Add0~2\ ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_14~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~45_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[11]~11_combout\);
+	datad => ALT_INV_currMemAddress(1),
+	cin => \Add0~2\,
+	sumout => \Add0~5_sumout\,
+	cout => \Add0~6\);
 
-\proc_out[11]\ : dffeas
+\Selector159~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector159~0_combout\ = ( \Add0~5_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(1))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(1))))) ) ) # ( !\Add0~5_sumout\ & ( (memEndAddr(1) & ((!\state.REC_FIRST~q\ & 
+-- (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(1),
+	datae => \ALT_INV_Add0~5_sumout\,
+	combout => \Selector159~0_combout\);
+
+\memEndAddr[1]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10542,48 +3252,86 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[11]~11_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector159~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(11));
+	q => memEndAddr(1));
 
-\Div0|auto_generated|divider|op_1~49\ : cyclonev_lcell_comb
+\Equal6~1\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~49_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_12~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~46\ ))
--- \Div0|auto_generated|divider|op_1~50\ = CARRY(( \Div0|auto_generated|divider|divider|op_12~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~46\ ))
+-- \Equal6~1_combout\ = ( memEndAddr(1) & ( \Add0~5_sumout\ & ( !currMemAddress(1) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(1) & ( \Add0~5_sumout\ & ( !currMemAddress(1) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) 
+-- ) # ( memEndAddr(1) & ( !\Add0~5_sumout\ & ( !currMemAddress(1) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(1) & ( !\Add0~5_sumout\ & ( currMemAddress(1) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~46\,
-	sumout => \Div0|auto_generated|divider|op_1~49_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~50\);
+	dataa => ALT_INV_currMemAddress(1),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(1),
+	dataf => \ALT_INV_Add0~5_sumout\,
+	combout => \Equal6~1_combout\);
 
-\Div0|auto_generated|divider|quotient[12]~12\ : cyclonev_lcell_comb
+\Add0~25\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[12]~12_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_12~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~49_sumout\)))
+-- \Add0~25_sumout\ = SUM(( currMemAddress(2) ) + ( VCC ) + ( \Add0~6\ ))
+-- \Add0~26\ = CARRY(( currMemAddress(2) ) + ( VCC ) + ( \Add0~6\ ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_12~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~49_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[12]~12_combout\);
+	datad => ALT_INV_currMemAddress(2),
+	cin => \Add0~6\,
+	sumout => \Add0~25_sumout\,
+	cout => \Add0~26\);
 
-\proc_out[12]\ : dffeas
+\Add0~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~9_sumout\ = SUM(( currMemAddress(3) ) + ( VCC ) + ( \Add0~26\ ))
+-- \Add0~10\ = CARRY(( currMemAddress(3) ) + ( VCC ) + ( \Add0~26\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(3),
+	cin => \Add0~26\,
+	sumout => \Add0~9_sumout\,
+	cout => \Add0~10\);
+
+\Selector157~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector157~0_combout\ = ( \Add0~9_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(3))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(3))))) ) ) # ( !\Add0~9_sumout\ & ( (memEndAddr(3) & ((!\state.REC_FIRST~q\ & 
+-- (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(3),
+	datae => \ALT_INV_Add0~9_sumout\,
+	combout => \Selector157~0_combout\);
+
+\memEndAddr[3]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10591,48 +3339,69 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[12]~12_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector157~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(12));
+	q => memEndAddr(3));
 
-\Div0|auto_generated|divider|op_1~53\ : cyclonev_lcell_comb
+\Equal6~2\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~53_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_11~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~50\ ))
--- \Div0|auto_generated|divider|op_1~54\ = CARRY(( \Div0|auto_generated|divider|divider|op_11~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~50\ ))
+-- \Equal6~2_combout\ = ( memEndAddr(3) & ( \Add0~9_sumout\ & ( !currMemAddress(3) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(3) & ( \Add0~9_sumout\ & ( !currMemAddress(3) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) 
+-- ) # ( memEndAddr(3) & ( !\Add0~9_sumout\ & ( !currMemAddress(3) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(3) & ( !\Add0~9_sumout\ & ( currMemAddress(3) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~50\,
-	sumout => \Div0|auto_generated|divider|op_1~53_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~54\);
+	dataa => ALT_INV_currMemAddress(3),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(3),
+	dataf => \ALT_INV_Add0~9_sumout\,
+	combout => \Equal6~2_combout\);
 
-\Div0|auto_generated|divider|quotient[13]~13\ : cyclonev_lcell_comb
+\Add0~13\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[13]~13_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_11~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~53_sumout\)))
+-- \Add0~13_sumout\ = SUM(( currMemAddress(4) ) + ( VCC ) + ( \Add0~10\ ))
+-- \Add0~14\ = CARRY(( currMemAddress(4) ) + ( VCC ) + ( \Add0~10\ ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_11~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~53_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[13]~13_combout\);
+	datad => ALT_INV_currMemAddress(4),
+	cin => \Add0~10\,
+	sumout => \Add0~13_sumout\,
+	cout => \Add0~14\);
 
-\proc_out[13]\ : dffeas
+\Selector156~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector156~0_combout\ = ( \Add0~13_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(4))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(4))))) ) ) # ( !\Add0~13_sumout\ & ( (memEndAddr(4) & ((!\state.REC_FIRST~q\ 
+-- & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(4),
+	datae => \ALT_INV_Add0~13_sumout\,
+	combout => \Selector156~0_combout\);
+
+\memEndAddr[4]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10640,48 +3409,103 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[13]~13_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector156~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(13));
+	q => memEndAddr(4));
 
-\Div0|auto_generated|divider|op_1~57\ : cyclonev_lcell_comb
+\Equal6~3\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~57_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_10~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~54\ ))
--- \Div0|auto_generated|divider|op_1~58\ = CARRY(( \Div0|auto_generated|divider|divider|op_10~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~54\ ))
+-- \Equal6~3_combout\ = ( memEndAddr(4) & ( \Add0~13_sumout\ & ( !currMemAddress(4) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(4) & ( \Add0~13_sumout\ & ( !currMemAddress(4) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) 
+-- ) ) # ( memEndAddr(4) & ( !\Add0~13_sumout\ & ( !currMemAddress(4) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(4) & ( !\Add0~13_sumout\ & ( currMemAddress(4) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~54\,
-	sumout => \Div0|auto_generated|divider|op_1~57_sumout\,
-	cout => \Div0|auto_generated|divider|op_1~58\);
+	dataa => ALT_INV_currMemAddress(4),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(4),
+	dataf => \ALT_INV_Add0~13_sumout\,
+	combout => \Equal6~3_combout\);
 
-\Div0|auto_generated|divider|quotient[14]~14\ : cyclonev_lcell_comb
+\Add0~29\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[14]~14_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_10~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~57_sumout\)))
+-- \Add0~29_sumout\ = SUM(( currMemAddress(5) ) + ( VCC ) + ( \Add0~14\ ))
+-- \Add0~30\ = CARRY(( currMemAddress(5) ) + ( VCC ) + ( \Add0~14\ ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_10~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~57_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[14]~14_combout\);
+	datad => ALT_INV_currMemAddress(5),
+	cin => \Add0~14\,
+	sumout => \Add0~29_sumout\,
+	cout => \Add0~30\);
 
-\proc_out[14]\ : dffeas
+\Add0~33\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~33_sumout\ = SUM(( currMemAddress(6) ) + ( VCC ) + ( \Add0~30\ ))
+-- \Add0~34\ = CARRY(( currMemAddress(6) ) + ( VCC ) + ( \Add0~30\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(6),
+	cin => \Add0~30\,
+	sumout => \Add0~33_sumout\,
+	cout => \Add0~34\);
+
+\Add0~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~17_sumout\ = SUM(( currMemAddress(7) ) + ( VCC ) + ( \Add0~34\ ))
+-- \Add0~18\ = CARRY(( currMemAddress(7) ) + ( VCC ) + ( \Add0~34\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(7),
+	cin => \Add0~34\,
+	sumout => \Add0~17_sumout\,
+	cout => \Add0~18\);
+
+\Selector153~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector153~0_combout\ = ( \Add0~17_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(7))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(7))))) ) ) # ( !\Add0~17_sumout\ & ( (memEndAddr(7) & ((!\state.REC_FIRST~q\ 
+-- & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(7),
+	datae => \ALT_INV_Add0~17_sumout\,
+	combout => \Selector153~0_combout\);
+
+\memEndAddr[7]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10689,46 +3513,69 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[14]~14_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector153~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(14));
+	q => memEndAddr(7));
 
-\Div0|auto_generated|divider|op_1~61\ : cyclonev_lcell_comb
+\Equal6~4\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|op_1~61_sumout\ = SUM(( \Div0|auto_generated|divider|divider|op_9~1_sumout\ ) + ( GND ) + ( \Div0|auto_generated|divider|op_1~58\ ))
+-- \Equal6~4_combout\ = ( memEndAddr(7) & ( \Add0~17_sumout\ & ( !currMemAddress(7) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(7) & ( \Add0~17_sumout\ & ( !currMemAddress(7) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) 
+-- ) ) # ( memEndAddr(7) & ( !\Add0~17_sumout\ & ( !currMemAddress(7) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(7) & ( !\Add0~17_sumout\ & ( currMemAddress(7) ) ) )
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "0000000000000000111111111111111100000000000000000000000011111111",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	datad => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	cin => \Div0|auto_generated|divider|op_1~58\,
-	sumout => \Div0|auto_generated|divider|op_1~61_sumout\);
+	dataa => ALT_INV_currMemAddress(7),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(7),
+	dataf => \ALT_INV_Add0~17_sumout\,
+	combout => \Equal6~4_combout\);
 
-\Div0|auto_generated|divider|quotient[15]~15\ : cyclonev_lcell_comb
+\Add0~21\ : cyclonev_lcell_comb
 -- Equation(s):
--- \Div0|auto_generated|divider|quotient[15]~15_combout\ = (!\Add0~1_sumout\ & (!\Div0|auto_generated|divider|divider|op_9~1_sumout\)) # (\Add0~1_sumout\ & ((\Div0|auto_generated|divider|op_1~61_sumout\)))
+-- \Add0~21_sumout\ = SUM(( currMemAddress(8) ) + ( VCC ) + ( \Add0~18\ ))
+-- \Add0~22\ = CARRY(( currMemAddress(8) ) + ( VCC ) + ( \Add0~18\ ))
 
 -- pragma translate_off
 GENERIC MAP (
 	extended_lut => "off",
-	lut_mask => "1000110110001101100011011000110110001101100011011000110110001101",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
 	shared_arith => "off")
 -- pragma translate_on
 PORT MAP (
-	dataa => \ALT_INV_Add0~1_sumout\,
-	datab => \Div0|auto_generated|divider|divider|ALT_INV_op_9~1_sumout\,
-	datac => \Div0|auto_generated|divider|ALT_INV_op_1~61_sumout\,
-	combout => \Div0|auto_generated|divider|quotient[15]~15_combout\);
+	datad => ALT_INV_currMemAddress(8),
+	cin => \Add0~18\,
+	sumout => \Add0~21_sumout\,
+	cout => \Add0~22\);
 
-\proc_out[15]\ : dffeas
+\Selector152~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector152~0_combout\ = ( \Add0~21_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(8))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(8))))) ) ) # ( !\Add0~21_sumout\ & ( (memEndAddr(8) & ((!\state.REC_FIRST~q\ 
+-- & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(8),
+	datae => \ALT_INV_Add0~21_sumout\,
+	combout => \Selector152~0_combout\);
+
+\memEndAddr[8]\ : dffeas
 -- pragma translate_off
 GENERIC MAP (
 	is_wysiwyg => "true",
@@ -10736,47 +3583,5119 @@ GENERIC MAP (
 -- pragma translate_on
 PORT MAP (
 	clk => \clk~input_o\,
-	d => \Div0|auto_generated|divider|quotient[15]~15_combout\,
-	clrn => \resetN~input_o\,
-	sclr => \Equal1~0_combout\,
-	ena => \Equal0~0_combout\,
+	d => \Selector152~0_combout\,
+	clrn => \ResetN~input_o\,
 	devclrn => ww_devclrn,
 	devpor => ww_devpor,
-	q => proc_out(15));
+	q => memEndAddr(8));
 
-ww_dout_new <= \dout_new~output_o\;
+\Equal6~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~5_combout\ = ( memEndAddr(8) & ( \Add0~21_sumout\ & ( !currMemAddress(8) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(8) & ( \Add0~21_sumout\ & ( !currMemAddress(8) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) 
+-- ) ) # ( memEndAddr(8) & ( !\Add0~21_sumout\ & ( !currMemAddress(8) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(8) & ( !\Add0~21_sumout\ & ( currMemAddress(8) ) ) )
 
-ww_dout(0) <= \dout[0]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(8),
+	dataf => \ALT_INV_Add0~21_sumout\,
+	combout => \Equal6~5_combout\);
 
-ww_dout(1) <= \dout[1]~output_o\;
+\Equal6~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~6_combout\ = ( !\Equal6~4_combout\ & ( !\Equal6~5_combout\ & ( (!\Equal6~0_combout\ & (!\Equal6~1_combout\ & (!\Equal6~2_combout\ & !\Equal6~3_combout\))) ) ) )
 
-ww_dout(2) <= \dout[2]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Equal6~0_combout\,
+	datab => \ALT_INV_Equal6~1_combout\,
+	datac => \ALT_INV_Equal6~2_combout\,
+	datad => \ALT_INV_Equal6~3_combout\,
+	datae => \ALT_INV_Equal6~4_combout\,
+	dataf => \ALT_INV_Equal6~5_combout\,
+	combout => \Equal6~6_combout\);
 
-ww_dout(3) <= \dout[3]~output_o\;
+\Selector158~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector158~0_combout\ = (!\state.EMPTY~q\) # ((!\Selector154~0_combout\ & ((!memEndAddr(2)))) # (\Selector154~0_combout\ & (\Add0~25_sumout\)))
 
-ww_dout(4) <= \dout[4]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1110111110101011111011111010101111101111101010111110111110101011",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_Selector154~0_combout\,
+	datac => \ALT_INV_Add0~25_sumout\,
+	datad => ALT_INV_memEndAddr(2),
+	combout => \Selector158~0_combout\);
 
-ww_dout(5) <= \dout[5]~output_o\;
+\memEndAddr[2]~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \memEndAddr[2]~0_combout\ = !\Selector158~0_combout\
 
-ww_dout(6) <= \dout[6]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010101010101010101010101010101010101010101010101010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector158~0_combout\,
+	combout => \memEndAddr[2]~0_combout\);
 
-ww_dout(7) <= \dout[7]~output_o\;
+\memEndAddr[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \memEndAddr[2]~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(2));
 
-ww_dout(8) <= \dout[8]~output_o\;
+\Equal6~7\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~7_combout\ = ( \Add0~25_sumout\ & ( memEndAddr(2) & ( !currMemAddress(2) $ (((\state.EMPTY~q\ & ((!\state.REC_FIRST~q\) # (\process_0~0_combout\))))) ) ) ) # ( !\Add0~25_sumout\ & ( memEndAddr(2) & ( !currMemAddress(2) $ (\state.EMPTY~q\) ) ) ) # 
+-- ( \Add0~25_sumout\ & ( !memEndAddr(2) & ( !currMemAddress(2) ) ) ) # ( !\Add0~25_sumout\ & ( !memEndAddr(2) & ( !currMemAddress(2) $ (((\state.EMPTY~q\ & (!\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) )
 
-ww_dout(9) <= \dout[9]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010011010101010101010101010011001100110011001100110101001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~25_sumout\,
+	dataf => ALT_INV_memEndAddr(2),
+	combout => \Equal6~7_combout\);
 
-ww_dout(10) <= \dout[10]~output_o\;
+\Selector155~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector155~0_combout\ = (!\state.EMPTY~q\) # ((!\Selector154~0_combout\ & ((!memEndAddr(5)))) # (\Selector154~0_combout\ & (\Add0~29_sumout\)))
 
-ww_dout(11) <= \dout[11]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1110111110101011111011111010101111101111101010111110111110101011",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_Selector154~0_combout\,
+	datac => \ALT_INV_Add0~29_sumout\,
+	datad => ALT_INV_memEndAddr(5),
+	combout => \Selector155~0_combout\);
 
-ww_dout(12) <= \dout[12]~output_o\;
+\memEndAddr[5]~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \memEndAddr[5]~1_combout\ = !\Selector155~0_combout\
 
-ww_dout(13) <= \dout[13]~output_o\;
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010101010101010101010101010101010101010101010101010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector155~0_combout\,
+	combout => \memEndAddr[5]~1_combout\);
 
-ww_dout(14) <= \dout[14]~output_o\;
+\memEndAddr[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \memEndAddr[5]~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(5));
 
-ww_dout(15) <= \dout[15]~output_o\;
+\Equal6~8\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~8_combout\ = ( \Add0~29_sumout\ & ( memEndAddr(5) & ( !currMemAddress(5) $ (((\state.EMPTY~q\ & ((!\state.REC_FIRST~q\) # (\process_0~0_combout\))))) ) ) ) # ( !\Add0~29_sumout\ & ( memEndAddr(5) & ( !currMemAddress(5) $ (\state.EMPTY~q\) ) ) ) # 
+-- ( \Add0~29_sumout\ & ( !memEndAddr(5) & ( !currMemAddress(5) ) ) ) # ( !\Add0~29_sumout\ & ( !memEndAddr(5) & ( !currMemAddress(5) $ (((\state.EMPTY~q\ & (!\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010011010101010101010101010011001100110011001100110101001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~29_sumout\,
+	dataf => ALT_INV_memEndAddr(5),
+	combout => \Equal6~8_combout\);
+
+\Selector154~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector154~1_combout\ = (!\state.EMPTY~q\) # ((!\Selector154~0_combout\ & ((!memEndAddr(6)))) # (\Selector154~0_combout\ & (\Add0~33_sumout\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1110111110101011111011111010101111101111101010111110111110101011",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_Selector154~0_combout\,
+	datac => \ALT_INV_Add0~33_sumout\,
+	datad => ALT_INV_memEndAddr(6),
+	combout => \Selector154~1_combout\);
+
+\memEndAddr[6]~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \memEndAddr[6]~2_combout\ = !\Selector154~1_combout\
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010101010101010101010101010101010101010101010101010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector154~1_combout\,
+	combout => \memEndAddr[6]~2_combout\);
+
+\memEndAddr[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \memEndAddr[6]~2_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(6));
+
+\Equal6~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~9_combout\ = ( \Add0~33_sumout\ & ( memEndAddr(6) & ( !currMemAddress(6) $ (((\state.EMPTY~q\ & ((!\state.REC_FIRST~q\) # (\process_0~0_combout\))))) ) ) ) # ( !\Add0~33_sumout\ & ( memEndAddr(6) & ( !currMemAddress(6) $ (\state.EMPTY~q\) ) ) ) # 
+-- ( \Add0~33_sumout\ & ( !memEndAddr(6) & ( !currMemAddress(6) ) ) ) # ( !\Add0~33_sumout\ & ( !memEndAddr(6) & ( !currMemAddress(6) $ (((\state.EMPTY~q\ & (!\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010011010101010101010101010011001100110011001100110101001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~33_sumout\,
+	dataf => ALT_INV_memEndAddr(6),
+	combout => \Equal6~9_combout\);
+
+\Add0~37\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~37_sumout\ = SUM(( currMemAddress(9) ) + ( VCC ) + ( \Add0~22\ ))
+-- \Add0~38\ = CARRY(( currMemAddress(9) ) + ( VCC ) + ( \Add0~22\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(9),
+	cin => \Add0~22\,
+	sumout => \Add0~37_sumout\,
+	cout => \Add0~38\);
+
+\Selector151~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector151~0_combout\ = ( \Add0~37_sumout\ & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\ & ((memEndAddr(9))))) # (\state.REC_FIRST~q\ & (((!\process_0~0_combout\) # (memEndAddr(9))))) ) ) # ( !\Add0~37_sumout\ & ( (memEndAddr(9) & ((!\state.REC_FIRST~q\ 
+-- & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((\process_0~0_combout\))))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010011000011000101111100000000010100110000110001011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => ALT_INV_memEndAddr(9),
+	datae => \ALT_INV_Add0~37_sumout\,
+	combout => \Selector151~0_combout\);
+
+\memEndAddr[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector151~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(9));
+
+\Equal6~10\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~10_combout\ = ( memEndAddr(9) & ( \Add0~37_sumout\ & ( !currMemAddress(9) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !memEndAddr(9) & ( \Add0~37_sumout\ & ( !currMemAddress(9) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) 
+-- ) ) # ( memEndAddr(9) & ( !\Add0~37_sumout\ & ( !currMemAddress(9) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( !memEndAddr(9) & ( !\Add0~37_sumout\ & ( currMemAddress(9) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101011001100101101001010101101001010110011010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(9),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => ALT_INV_memEndAddr(9),
+	dataf => \ALT_INV_Add0~37_sumout\,
+	combout => \Equal6~10_combout\);
+
+\Add0~41\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~41_sumout\ = SUM(( currMemAddress(10) ) + ( VCC ) + ( \Add0~38\ ))
+-- \Add0~42\ = CARRY(( currMemAddress(10) ) + ( VCC ) + ( \Add0~38\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(10),
+	cin => \Add0~38\,
+	sumout => \Add0~41_sumout\,
+	cout => \Add0~42\);
+
+\memEndAddr[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector150~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(10));
+
+\Selector150~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector150~0_combout\ = ( memEndAddr(10) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~41_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(10) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~41_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~41_sumout\,
+	datae => ALT_INV_memEndAddr(10),
+	combout => \Selector150~0_combout\);
+
+\Equal6~11\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~11_combout\ = ( !\Equal6~10_combout\ & ( \Selector150~0_combout\ & ( (currMemAddress(10) & (!\Equal6~7_combout\ & (!\Equal6~8_combout\ & !\Equal6~9_combout\))) ) ) ) # ( !\Equal6~10_combout\ & ( !\Selector150~0_combout\ & ( (!currMemAddress(10) & 
+-- (!\Equal6~7_combout\ & (!\Equal6~8_combout\ & !\Equal6~9_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000000000000000000000000001000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => \ALT_INV_Equal6~7_combout\,
+	datac => \ALT_INV_Equal6~8_combout\,
+	datad => \ALT_INV_Equal6~9_combout\,
+	datae => \ALT_INV_Equal6~10_combout\,
+	dataf => \ALT_INV_Selector150~0_combout\,
+	combout => \Equal6~11_combout\);
+
+\Add0~57\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~57_sumout\ = SUM(( currMemAddress(11) ) + ( VCC ) + ( \Add0~42\ ))
+-- \Add0~58\ = CARRY(( currMemAddress(11) ) + ( VCC ) + ( \Add0~42\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(11),
+	cin => \Add0~42\,
+	sumout => \Add0~57_sumout\,
+	cout => \Add0~58\);
+
+\Add0~61\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~61_sumout\ = SUM(( currMemAddress(12) ) + ( VCC ) + ( \Add0~58\ ))
+-- \Add0~62\ = CARRY(( currMemAddress(12) ) + ( VCC ) + ( \Add0~58\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(12),
+	cin => \Add0~58\,
+	sumout => \Add0~61_sumout\,
+	cout => \Add0~62\);
+
+\Add0~45\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~45_sumout\ = SUM(( currMemAddress(13) ) + ( VCC ) + ( \Add0~62\ ))
+-- \Add0~46\ = CARRY(( currMemAddress(13) ) + ( VCC ) + ( \Add0~62\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(13),
+	cin => \Add0~62\,
+	sumout => \Add0~45_sumout\,
+	cout => \Add0~46\);
+
+\Selector147~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector147~0_combout\ = ( memEndAddr(13) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~45_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(13) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~45_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~45_sumout\,
+	datae => ALT_INV_memEndAddr(13),
+	combout => \Selector147~0_combout\);
+
+\memEndAddr[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector147~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(13));
+
+\Equal6~12\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~12_combout\ = ( \Add0~45_sumout\ & ( memEndAddr(13) & ( !currMemAddress(13) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !\Add0~45_sumout\ & ( memEndAddr(13) & ( !currMemAddress(13) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # 
+-- (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( \Add0~45_sumout\ & ( !memEndAddr(13) & ( !currMemAddress(13) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) ) # ( !\Add0~45_sumout\ & ( !memEndAddr(13) & ( currMemAddress(13) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010101011010010101100110010110100110011010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(13),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~45_sumout\,
+	dataf => ALT_INV_memEndAddr(13),
+	combout => \Equal6~12_combout\);
+
+\Add0~49\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~49_sumout\ = SUM(( currMemAddress(14) ) + ( VCC ) + ( \Add0~46\ ))
+-- \Add0~50\ = CARRY(( currMemAddress(14) ) + ( VCC ) + ( \Add0~46\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(14),
+	cin => \Add0~46\,
+	sumout => \Add0~49_sumout\,
+	cout => \Add0~50\);
+
+\Selector146~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector146~0_combout\ = ( memEndAddr(14) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~49_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(14) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~49_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~49_sumout\,
+	datae => ALT_INV_memEndAddr(14),
+	combout => \Selector146~0_combout\);
+
+\memEndAddr[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector146~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(14));
+
+\Equal6~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~13_combout\ = ( \Add0~49_sumout\ & ( memEndAddr(14) & ( !currMemAddress(14) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !\Add0~49_sumout\ & ( memEndAddr(14) & ( !currMemAddress(14) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # 
+-- (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( \Add0~49_sumout\ & ( !memEndAddr(14) & ( !currMemAddress(14) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) ) # ( !\Add0~49_sumout\ & ( !memEndAddr(14) & ( currMemAddress(14) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010101011010010101100110010110100110011010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(14),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~49_sumout\,
+	dataf => ALT_INV_memEndAddr(14),
+	combout => \Equal6~13_combout\);
+
+\Add0~65\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~65_sumout\ = SUM(( currMemAddress(15) ) + ( VCC ) + ( \Add0~50\ ))
+-- \Add0~66\ = CARRY(( currMemAddress(15) ) + ( VCC ) + ( \Add0~50\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(15),
+	cin => \Add0~50\,
+	sumout => \Add0~65_sumout\,
+	cout => \Add0~66\);
+
+\Add0~69\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~69_sumout\ = SUM(( currMemAddress(16) ) + ( VCC ) + ( \Add0~66\ ))
+-- \Add0~70\ = CARRY(( currMemAddress(16) ) + ( VCC ) + ( \Add0~66\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(16),
+	cin => \Add0~66\,
+	sumout => \Add0~69_sumout\,
+	cout => \Add0~70\);
+
+\Add0~53\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Add0~53_sumout\ = SUM(( currMemAddress(17) ) + ( VCC ) + ( \Add0~70\ ))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000000000000000000000000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	datad => ALT_INV_currMemAddress(17),
+	cin => \Add0~70\,
+	sumout => \Add0~53_sumout\);
+
+\Selector143~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector143~1_combout\ = ( memEndAddr(17) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~53_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(17) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~53_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~53_sumout\,
+	datae => ALT_INV_memEndAddr(17),
+	combout => \Selector143~1_combout\);
+
+\memEndAddr[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector143~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(17));
+
+\Selector143~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector143~0_combout\ = ( \state.REC_FIRST~q\ & ( memEndAddr(17) & ( (!\KB_PLAY~input_o\ & (!\KB_ALLPLAY~input_o\ & !\Equal0~3_combout\)) ) ) ) # ( !\state.REC_FIRST~q\ & ( memEndAddr(17) & ( \state.EMPTY~q\ ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000001010101010101011100000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ALLPLAY~input_o\,
+	datad => \ALT_INV_Equal0~3_combout\,
+	datae => \ALT_INV_state.REC_FIRST~q\,
+	dataf => ALT_INV_memEndAddr(17),
+	combout => \Selector143~0_combout\);
+
+\Equal6~14\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~14_combout\ = ( \Add0~53_sumout\ & ( \Selector143~0_combout\ & ( (currMemAddress(17) & (!\Equal6~12_combout\ & !\Equal6~13_combout\)) ) ) ) # ( !\Add0~53_sumout\ & ( \Selector143~0_combout\ & ( (currMemAddress(17) & (!\Equal6~12_combout\ & 
+-- !\Equal6~13_combout\)) ) ) ) # ( \Add0~53_sumout\ & ( !\Selector143~0_combout\ & ( (!\Equal6~12_combout\ & (!\Equal6~13_combout\ & (!currMemAddress(17) $ (\Selector154~0_combout\)))) ) ) ) # ( !\Add0~53_sumout\ & ( !\Selector143~0_combout\ & ( 
+-- (!currMemAddress(17) & (!\Equal6~12_combout\ & !\Equal6~13_combout\)) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010000000000000100100000000000001010000000000000101000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(17),
+	datab => \ALT_INV_Selector154~0_combout\,
+	datac => \ALT_INV_Equal6~12_combout\,
+	datad => \ALT_INV_Equal6~13_combout\,
+	datae => \ALT_INV_Add0~53_sumout\,
+	dataf => \ALT_INV_Selector143~0_combout\,
+	combout => \Equal6~14_combout\);
+
+\Selector149~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector149~0_combout\ = ( memEndAddr(11) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~57_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(11) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~57_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~57_sumout\,
+	datae => ALT_INV_memEndAddr(11),
+	combout => \Selector149~0_combout\);
+
+\memEndAddr[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector149~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(11));
+
+\Equal6~15\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~15_combout\ = ( \Add0~57_sumout\ & ( memEndAddr(11) & ( !currMemAddress(11) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !\Add0~57_sumout\ & ( memEndAddr(11) & ( !currMemAddress(11) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # 
+-- (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( \Add0~57_sumout\ & ( !memEndAddr(11) & ( !currMemAddress(11) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) ) # ( !\Add0~57_sumout\ & ( !memEndAddr(11) & ( currMemAddress(11) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010101011010010101100110010110100110011010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~57_sumout\,
+	dataf => ALT_INV_memEndAddr(11),
+	combout => \Equal6~15_combout\);
+
+\Selector148~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector148~0_combout\ = ( memEndAddr(12) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~61_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(12) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~61_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~61_sumout\,
+	datae => ALT_INV_memEndAddr(12),
+	combout => \Selector148~0_combout\);
+
+\memEndAddr[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector148~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(12));
+
+\Equal6~16\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~16_combout\ = ( \Add0~61_sumout\ & ( memEndAddr(12) & ( !currMemAddress(12) $ (((!\state.EMPTY~q\ & !\state.REC_FIRST~q\))) ) ) ) # ( !\Add0~61_sumout\ & ( memEndAddr(12) & ( !currMemAddress(12) $ (((!\state.REC_FIRST~q\ & (!\state.EMPTY~q\)) # 
+-- (\state.REC_FIRST~q\ & ((!\process_0~0_combout\))))) ) ) ) # ( \Add0~61_sumout\ & ( !memEndAddr(12) & ( !currMemAddress(12) $ (((!\state.REC_FIRST~q\) # (\process_0~0_combout\))) ) ) ) # ( !\Add0~61_sumout\ & ( !memEndAddr(12) & ( currMemAddress(12) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010101011010010101100110010110100110011010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_process_0~0_combout\,
+	datad => \ALT_INV_state.REC_FIRST~q\,
+	datae => \ALT_INV_Add0~61_sumout\,
+	dataf => ALT_INV_memEndAddr(12),
+	combout => \Equal6~16_combout\);
+
+\memEndAddr[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector145~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(15));
+
+\Selector145~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector145~0_combout\ = ( memEndAddr(15) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~65_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(15) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~65_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~65_sumout\,
+	datae => ALT_INV_memEndAddr(15),
+	combout => \Selector145~0_combout\);
+
+\memEndAddr[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector144~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => memEndAddr(16));
+
+\Selector144~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector144~0_combout\ = ( memEndAddr(16) & ( (!\state.REC_FIRST~q\ & (\state.EMPTY~q\)) # (\state.REC_FIRST~q\ & (((\Add0~69_sumout\) # (\process_0~0_combout\)))) ) ) # ( !memEndAddr(16) & ( (!\process_0~0_combout\ & (\state.REC_FIRST~q\ & 
+-- \Add0~69_sumout\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001100010100110101111100000000000011000101001101011111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Add0~69_sumout\,
+	datae => ALT_INV_memEndAddr(16),
+	combout => \Selector144~0_combout\);
+
+\Equal6~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Equal6~17_combout\ = ( \Selector145~0_combout\ & ( \Selector144~0_combout\ & ( (currMemAddress(15) & (currMemAddress(16) & (!\Equal6~15_combout\ & !\Equal6~16_combout\))) ) ) ) # ( !\Selector145~0_combout\ & ( \Selector144~0_combout\ & ( 
+-- (!currMemAddress(15) & (currMemAddress(16) & (!\Equal6~15_combout\ & !\Equal6~16_combout\))) ) ) ) # ( \Selector145~0_combout\ & ( !\Selector144~0_combout\ & ( (currMemAddress(15) & (!currMemAddress(16) & (!\Equal6~15_combout\ & !\Equal6~16_combout\))) ) 
+-- ) ) # ( !\Selector145~0_combout\ & ( !\Selector144~0_combout\ & ( (!currMemAddress(15) & (!currMemAddress(16) & (!\Equal6~15_combout\ & !\Equal6~16_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000000000010000000000000000100000000000000001000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => \ALT_INV_Equal6~15_combout\,
+	datad => \ALT_INV_Equal6~16_combout\,
+	datae => \ALT_INV_Selector145~0_combout\,
+	dataf => \ALT_INV_Selector144~0_combout\,
+	combout => \Equal6~17_combout\);
+
+\Selector0~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector0~0_combout\ = ( !\KB_STOP~input_o\ & ( (!\KB_REC~input_o\ & (\state.CH_CONTROL~q\ & (!\KB_PLAY~input_o\ & \KB_ClearCH~input_o\))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000100000000000000000000000000000001000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.CH_CONTROL~q\,
+	datac => \ALT_INV_KB_PLAY~input_o\,
+	datad => \ALT_INV_KB_ClearCH~input_o\,
+	datae => \ALT_INV_KB_STOP~input_o\,
+	combout => \Selector0~0_combout\);
+
+\arch_loop_start~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_loop_start~0_combout\ = ( recCounter(1) & ( \Selector0~0_combout\ & ( \state.EMPTY~q\ ) ) ) # ( !recCounter(1) & ( \Selector0~0_combout\ & ( (\state.EMPTY~q\ & ((!recCounter(0) $ (!\process_0~1_combout\)) # (recCounter(2)))) ) ) ) # ( recCounter(1) 
+-- & ( !\Selector0~0_combout\ & ( \state.EMPTY~q\ ) ) ) # ( !recCounter(1) & ( !\Selector0~0_combout\ & ( \state.EMPTY~q\ ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010101010101010100010100010101010101010101010101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.EMPTY~q\,
+	datab => ALT_INV_recCounter(0),
+	datac => \ALT_INV_process_0~1_combout\,
+	datad => ALT_INV_recCounter(2),
+	datae => ALT_INV_recCounter(1),
+	dataf => \ALT_INV_Selector0~0_combout\,
+	combout => \arch_loop_start~0_combout\);
+
+\arch_loop_start~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_loop_start~1_combout\ = ( \Equal6~17_combout\ & ( \arch_loop_start~0_combout\ & ( (!\Selector154~0_combout\ & ((!\Equal6~6_combout\) # ((!\Equal6~11_combout\) # (!\Equal6~14_combout\)))) ) ) ) # ( !\Equal6~17_combout\ & ( \arch_loop_start~0_combout\ 
+-- & ( !\Selector154~0_combout\ ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000010101010101010101010101010101000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector154~0_combout\,
+	datab => \ALT_INV_Equal6~6_combout\,
+	datac => \ALT_INV_Equal6~11_combout\,
+	datad => \ALT_INV_Equal6~14_combout\,
+	datae => \ALT_INV_Equal6~17_combout\,
+	dataf => \ALT_INV_arch_loop_start~0_combout\,
+	combout => \arch_loop_start~1_combout\);
+
+arch_loop_start : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \arch_loop_start~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_loop_start~q\);
+
+\Selector163~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector163~0_combout\ = (!\arch_loop_start~q\ & (((\KB_REC~input_o\ & !\state.EMPTY~q\)) # (\state.PRE_REC~q\))) # (\arch_loop_start~q\ & (\KB_REC~input_o\ & (!\state.EMPTY~q\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000010111010001100001011101000110000101110100011000010111010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_state.EMPTY~q\,
+	datad => \ALT_INV_state.PRE_REC~q\,
+	combout => \Selector163~0_combout\);
+
+\Selector164~4\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector164~4_combout\ = (\state.REC_OTHER~q\ & ((!\arch_loop_start~q\) # ((\KB_ALLPLAY~input_o\) # (\KB_PLAY~input_o\))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000010111111000000001011111100000000101111110000000010111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ALLPLAY~input_o\,
+	datad => \ALT_INV_state.REC_OTHER~q\,
+	combout => \Selector164~4_combout\);
+
+\Selector164~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector164~5_combout\ = ( \Equal0~1_combout\ & ( \Equal0~2_combout\ & ( (!\state.REC_OTHER~q\ & (((\Equal0~0_combout\) # (\KB_ALLPLAY~input_o\)) # (\KB_PLAY~input_o\))) ) ) ) # ( !\Equal0~1_combout\ & ( \Equal0~2_combout\ & ( (!\state.REC_OTHER~q\ & 
+-- ((\KB_ALLPLAY~input_o\) # (\KB_PLAY~input_o\))) ) ) ) # ( \Equal0~1_combout\ & ( !\Equal0~2_combout\ & ( (!\state.REC_OTHER~q\ & ((\KB_ALLPLAY~input_o\) # (\KB_PLAY~input_o\))) ) ) ) # ( !\Equal0~1_combout\ & ( !\Equal0~2_combout\ & ( 
+-- (!\state.REC_OTHER~q\ & ((\KB_ALLPLAY~input_o\) # (\KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000001110000011100000111000001110000011100000111000011110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_PLAY~input_o\,
+	datab => \ALT_INV_KB_ALLPLAY~input_o\,
+	datac => \ALT_INV_state.REC_OTHER~q\,
+	datad => \ALT_INV_Equal0~0_combout\,
+	datae => \ALT_INV_Equal0~1_combout\,
+	dataf => \ALT_INV_Equal0~2_combout\,
+	combout => \Selector164~5_combout\);
+
+\Selector164~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector164~6_combout\ = (!\state.REC_OTHER~q\ & !\state.REC_FIRST~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000100010001000100010001000100010001000100010001000100010001000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.REC_OTHER~q\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	combout => \Selector164~6_combout\);
+
+\Selector163~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector163~1_combout\ = ( \Selector164~5_combout\ & ( \Selector164~6_combout\ & ( (\state.CH_CONTROL~q\ & (!\Selector163~0_combout\ & \Selector164~3_combout\)) ) ) ) # ( !\Selector164~5_combout\ & ( \Selector164~6_combout\ & ( (\state.CH_CONTROL~q\ & 
+-- (!\Selector163~0_combout\ & \Selector164~3_combout\)) ) ) ) # ( \Selector164~5_combout\ & ( !\Selector164~6_combout\ & ( (!\Selector163~0_combout\ & ((!\state.CH_CONTROL~q\) # (\Selector164~3_combout\))) ) ) ) # ( !\Selector164~5_combout\ & ( 
+-- !\Selector164~6_combout\ & ( (!\Selector163~0_combout\ & ((!\state.CH_CONTROL~q\ & ((\Selector164~4_combout\))) # (\state.CH_CONTROL~q\ & (\Selector164~3_combout\)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000010010001100100011001000110000000100000001000000010000000100",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_Selector163~0_combout\,
+	datac => \ALT_INV_Selector164~3_combout\,
+	datad => \ALT_INV_Selector164~4_combout\,
+	datae => \ALT_INV_Selector164~5_combout\,
+	dataf => \ALT_INV_Selector164~6_combout\,
+	combout => \Selector163~1_combout\);
+
+\state.CH_CONTROL\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector163~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \state.CH_CONTROL~q\);
+
+\Selector161~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector161~0_combout\ = ( \Selector164~3_combout\ & ( ((\Selector164~2_combout\) # (\state.EMPTY~q\)) # (\KB_REC~input_o\) ) ) # ( !\Selector164~3_combout\ & ( (((\state.EMPTY~q\ & !\state.CH_CONTROL~q\)) # (\Selector164~2_combout\)) # 
+-- (\KB_REC~input_o\) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111010111111111011101111111111101110101111111110111011111111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_REC~input_o\,
+	datab => \ALT_INV_state.EMPTY~q\,
+	datac => \ALT_INV_state.CH_CONTROL~q\,
+	datad => \ALT_INV_Selector164~2_combout\,
+	datae => \ALT_INV_Selector164~3_combout\,
+	combout => \Selector161~0_combout\);
+
+\state.EMPTY\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector161~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \state.EMPTY~q\);
+
+\Selector2~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector2~0_combout\ = (\KB_Selchannel[0]~input_o\ & ((\state.EMPTY~q\) # (\KB_REC~input_o\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0001010100010101000101010001010100010101000101010001010100010101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_state.EMPTY~q\,
+	combout => \Selector2~0_combout\);
+
+\arch_recSel[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector2~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_recSel[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_recSel(0));
+
+\Selector3~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector3~0_combout\ = ( !\state.PRE_REC~q\ & ( (!\arch_loop_start~q\) # (((!\state.REC_OTHER~q\) # (\KB_ALLPLAY~input_o\)) # (\KB_PLAY~input_o\)) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111110111111000000000000000011111111101111110000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_arch_loop_start~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_ALLPLAY~input_o\,
+	datad => \ALT_INV_state.REC_OTHER~q\,
+	datae => \ALT_INV_state.PRE_REC~q\,
+	combout => \Selector3~0_combout\);
+
+\Selector3~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector3~1_combout\ = ( \Selector163~0_combout\ ) # ( !\Selector163~0_combout\ & ( (\arch_recording~q\ & ((!\Selector3~0_combout\) # ((\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010100000001111111111111111101010101000000011111111111111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_arch_recording~q\,
+	datab => \ALT_INV_process_0~0_combout\,
+	datac => \ALT_INV_state.REC_FIRST~q\,
+	datad => \ALT_INV_Selector3~0_combout\,
+	datae => \ALT_INV_Selector163~0_combout\,
+	combout => \Selector3~1_combout\);
+
+arch_recording : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector3~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_recording~q\);
+
+\stateNum~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \stateNum~0_combout\ = (!\state.PRE_REC~q\ & !\state.REC_FIRST~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000100010001000100010001000100010001000100010001000100010001000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.PRE_REC~q\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	combout => \stateNum~0_combout\);
+
+\stateNum[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \stateNum~0_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => stateNum(0));
+
+\stateNum~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \stateNum~1_combout\ = (!\state.CH_CONTROL~q\ & !\state.PRE_REC~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000100010001000100010001000100010001000100010001000100010001000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_state.PRE_REC~q\,
+	combout => \stateNum~1_combout\);
+
+\stateNum[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \stateNum~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => stateNum(1));
+
+\stateNum[2]~3\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \stateNum[2]~3_combout\ = !\state.REC_OTHER~q\
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1010101010101010101010101010101010101010101010101010101010101010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.REC_OTHER~q\,
+	combout => \stateNum[2]~3_combout\);
+
+\stateNum[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \stateNum[2]~3_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => stateNum(2));
+
+\endAddr[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector160~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(0));
+
+\endAddr[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector159~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(1));
+
+\endAddr[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector158~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(2));
+
+\endAddr[3]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector157~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(3));
+
+\endAddr[4]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector156~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(4));
+
+\endAddr[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector155~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(5));
+
+\endAddr[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector154~1_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(6));
+
+\endAddr[7]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector153~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(7));
+
+\endAddr[8]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector152~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(8));
+
+\endAddr[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector151~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(9));
+
+\endAddr[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector150~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(10));
+
+\endAddr[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector149~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(11));
+
+\endAddr[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector148~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(12));
+
+\endAddr[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector147~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(13));
+
+\endAddr[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector146~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(14));
+
+\endAddr[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector145~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(15));
+
+\endAddr[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector144~0_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(16));
+
+\endAddr[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector143~1_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => endAddr(17));
+
+\arch_Ch0END[0]~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch0END[0]~0_combout\ = ( \Mux32~0_combout\ & ( (\stateNum~1_combout\ & (((\Selector164~6_combout\) # (\Selector164~5_combout\)) # (\Selector164~4_combout\))) ) ) # ( !\Mux32~0_combout\ & ( (\stateNum~1_combout\ & \Selector164~6_combout\) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010101000101010101010100000000010101010001010101010101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_stateNum~1_combout\,
+	datab => \ALT_INV_Selector164~4_combout\,
+	datac => \ALT_INV_Selector164~5_combout\,
+	datad => \ALT_INV_Selector164~6_combout\,
+	datae => \ALT_INV_Mux32~0_combout\,
+	combout => \arch_Ch0END[0]~0_combout\);
+
+\arch_Ch0END[7]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(7),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(7));
+
+\Selector29~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector29~0_combout\ = (!currMemAddress(6) & \state.EMPTY~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => \ALT_INV_state.EMPTY~q\,
+	combout => \Selector29~0_combout\);
+
+\arch_Ch0END[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector29~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(6));
+
+\LessThan0~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~0_combout\ = (!currMemAddress(6) & (arch_Ch0END(6) & (!currMemAddress(7) $ (arch_Ch0END(7))))) # (currMemAddress(6) & (!arch_Ch0END(6) & (!currMemAddress(7) $ (arch_Ch0END(7)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch0END(7),
+	datad => ALT_INV_arch_Ch0END(6),
+	combout => \LessThan0~0_combout\);
+
+\Selector30~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector30~0_combout\ = (!currMemAddress(5) & \state.EMPTY~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => \ALT_INV_state.EMPTY~q\,
+	combout => \Selector30~0_combout\);
+
+\arch_Ch0END[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector30~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(5));
+
+\LessThan0~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~1_combout\ = !currMemAddress(5) $ (!arch_Ch0END(5))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => ALT_INV_arch_Ch0END(5),
+	combout => \LessThan0~1_combout\);
+
+\arch_Ch0END[4]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(4),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(4));
+
+\LessThan0~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~2_combout\ = !currMemAddress(4) $ (!arch_Ch0END(4))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_arch_Ch0END(4),
+	combout => \LessThan0~2_combout\);
+
+\arch_Ch0END[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(1),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(1));
+
+\Selector35~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector35~0_combout\ = (currMemAddress(0) & \state.EMPTY~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0001000100010001000100010001000100010001000100010001000100010001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(0),
+	datab => \ALT_INV_state.EMPTY~q\,
+	combout => \Selector35~0_combout\);
+
+\arch_Ch0END[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector35~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(0));
+
+\LessThan0~3\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~3_combout\ = (!currMemAddress(1) & (currMemAddress(0) & (!arch_Ch0END(1) & !arch_Ch0END(0)))) # (currMemAddress(1) & ((!arch_Ch0END(1)) # ((currMemAddress(0) & !arch_Ch0END(0)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000100110000011100010011000001110001001100000111000100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(0),
+	datab => ALT_INV_currMemAddress(1),
+	datac => ALT_INV_arch_Ch0END(1),
+	datad => ALT_INV_arch_Ch0END(0),
+	combout => \LessThan0~3_combout\);
+
+\arch_Ch0END[3]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(3),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(3));
+
+\Selector33~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector33~0_combout\ = (!currMemAddress(2) & \state.EMPTY~q\)
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0010001000100010001000100010001000100010001000100010001000100010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => \ALT_INV_state.EMPTY~q\,
+	combout => \Selector33~0_combout\);
+
+\arch_Ch0END[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector33~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(2));
+
+\LessThan0~4\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~4_combout\ = (!currMemAddress(2) & (arch_Ch0END(2) & (!currMemAddress(3) $ (arch_Ch0END(3))))) # (currMemAddress(2) & (!arch_Ch0END(2) & (!currMemAddress(3) $ (arch_Ch0END(3)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch0END(3),
+	datad => ALT_INV_arch_Ch0END(2),
+	combout => \LessThan0~4_combout\);
+
+\LessThan0~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~5_combout\ = (!currMemAddress(3) & (currMemAddress(2) & (!arch_Ch0END(3) & arch_Ch0END(2)))) # (currMemAddress(3) & ((!arch_Ch0END(3)) # ((currMemAddress(2) & arch_Ch0END(2)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch0END(3),
+	datad => ALT_INV_arch_Ch0END(2),
+	combout => \LessThan0~5_combout\);
+
+\LessThan0~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~6_combout\ = ( \LessThan0~4_combout\ & ( \LessThan0~5_combout\ & ( (\LessThan0~0_combout\ & (\LessThan0~1_combout\ & !\LessThan0~2_combout\)) ) ) ) # ( !\LessThan0~4_combout\ & ( \LessThan0~5_combout\ & ( (\LessThan0~0_combout\ & 
+-- (\LessThan0~1_combout\ & !\LessThan0~2_combout\)) ) ) ) # ( \LessThan0~4_combout\ & ( !\LessThan0~5_combout\ & ( (\LessThan0~0_combout\ & (\LessThan0~1_combout\ & (!\LessThan0~2_combout\ & \LessThan0~3_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000001000000010000000100000001000000010000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan0~0_combout\,
+	datab => \ALT_INV_LessThan0~1_combout\,
+	datac => \ALT_INV_LessThan0~2_combout\,
+	datad => \ALT_INV_LessThan0~3_combout\,
+	datae => \ALT_INV_LessThan0~4_combout\,
+	dataf => \ALT_INV_LessThan0~5_combout\,
+	combout => \LessThan0~6_combout\);
+
+\LessThan0~7\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~7_combout\ = (!currMemAddress(7) & (currMemAddress(6) & (!arch_Ch0END(7) & arch_Ch0END(6)))) # (currMemAddress(7) & ((!arch_Ch0END(7)) # ((currMemAddress(6) & arch_Ch0END(6)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch0END(7),
+	datad => ALT_INV_arch_Ch0END(6),
+	combout => \LessThan0~7_combout\);
+
+\LessThan0~8\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~8_combout\ = ( arch_Ch0END(4) & ( !\LessThan0~7_combout\ & ( (!currMemAddress(5)) # ((!arch_Ch0END(5)) # (!\LessThan0~0_combout\)) ) ) ) # ( !arch_Ch0END(4) & ( !\LessThan0~7_combout\ & ( (!\LessThan0~0_combout\) # ((!currMemAddress(4) & 
+-- ((!currMemAddress(5)) # (!arch_Ch0END(5)))) # (currMemAddress(4) & (!currMemAddress(5) & !arch_Ch0END(5)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111111101000111111111111110000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_currMemAddress(5),
+	datac => ALT_INV_arch_Ch0END(5),
+	datad => \ALT_INV_LessThan0~0_combout\,
+	datae => ALT_INV_arch_Ch0END(4),
+	dataf => \ALT_INV_LessThan0~7_combout\,
+	combout => \LessThan0~8_combout\);
+
+\arch_Ch0END[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(11),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(11));
+
+\arch_Ch0END[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(14),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(14));
+
+\arch_Ch0END[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(13),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(13));
+
+\arch_Ch0END[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(12),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(12));
+
+\LessThan0~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~9_combout\ = ( arch_Ch0END(13) & ( arch_Ch0END(12) & ( (currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch0END(14))))) ) ) ) # ( !arch_Ch0END(13) & ( arch_Ch0END(12) & ( (currMemAddress(12) & (!currMemAddress(13) & 
+-- (!currMemAddress(14) $ (arch_Ch0END(14))))) ) ) ) # ( arch_Ch0END(13) & ( !arch_Ch0END(12) & ( (!currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch0END(14))))) ) ) ) # ( !arch_Ch0END(13) & ( !arch_Ch0END(12) & ( 
+-- (!currMemAddress(12) & (!currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch0END(14))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch0END(14),
+	datae => ALT_INV_arch_Ch0END(13),
+	dataf => ALT_INV_arch_Ch0END(12),
+	combout => \LessThan0~9_combout\);
+
+\arch_Ch0END[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(10),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(10));
+
+\LessThan0~10\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~10_combout\ = !currMemAddress(10) $ (!arch_Ch0END(10))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_arch_Ch0END(10),
+	combout => \LessThan0~10_combout\);
+
+\arch_Ch0END[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(9),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(9));
+
+\LessThan0~11\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~11_combout\ = !currMemAddress(9) $ (!arch_Ch0END(9))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(9),
+	datab => ALT_INV_arch_Ch0END(9),
+	combout => \LessThan0~11_combout\);
+
+\arch_Ch0END[8]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(8),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(8));
+
+\LessThan0~12\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~12_combout\ = !currMemAddress(8) $ (!arch_Ch0END(8))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_arch_Ch0END(8),
+	combout => \LessThan0~12_combout\);
+
+\LessThan0~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~13_combout\ = ( !\LessThan0~11_combout\ & ( !\LessThan0~12_combout\ & ( (\LessThan0~9_combout\ & (!\LessThan0~10_combout\ & (!currMemAddress(11) $ (arch_Ch0END(11))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch0END(11),
+	datac => \ALT_INV_LessThan0~9_combout\,
+	datad => \ALT_INV_LessThan0~10_combout\,
+	datae => \ALT_INV_LessThan0~11_combout\,
+	dataf => \ALT_INV_LessThan0~12_combout\,
+	combout => \LessThan0~13_combout\);
+
+\LessThan0~14\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~14_combout\ = (\LessThan0~9_combout\ & (!\LessThan0~10_combout\ & (!currMemAddress(11) $ (arch_Ch0END(11)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000010010000000000001001000000000000100100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch0END(11),
+	datac => \ALT_INV_LessThan0~9_combout\,
+	datad => \ALT_INV_LessThan0~10_combout\,
+	combout => \LessThan0~14_combout\);
+
+\LessThan0~15\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~15_combout\ = ( arch_Ch0END(13) & ( arch_Ch0END(12) & ( (currMemAddress(14) & !arch_Ch0END(14)) ) ) ) # ( !arch_Ch0END(13) & ( arch_Ch0END(12) & ( (!currMemAddress(13) & (currMemAddress(14) & !arch_Ch0END(14))) # (currMemAddress(13) & 
+-- ((!arch_Ch0END(14)) # (currMemAddress(14)))) ) ) ) # ( arch_Ch0END(13) & ( !arch_Ch0END(12) & ( (!currMemAddress(14) & (currMemAddress(12) & (currMemAddress(13) & !arch_Ch0END(14)))) # (currMemAddress(14) & ((!arch_Ch0END(14)) # ((currMemAddress(12) & 
+-- currMemAddress(13))))) ) ) ) # ( !arch_Ch0END(13) & ( !arch_Ch0END(12) & ( (!currMemAddress(14) & (!arch_Ch0END(14) & ((currMemAddress(13)) # (currMemAddress(12))))) # (currMemAddress(14) & (((!arch_Ch0END(14)) # (currMemAddress(13))) # 
+-- (currMemAddress(12)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111111100000111000111110000000100111111000000110000111100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch0END(14),
+	datae => ALT_INV_arch_Ch0END(13),
+	dataf => ALT_INV_arch_Ch0END(12),
+	combout => \LessThan0~15_combout\);
+
+\LessThan0~16\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~16_combout\ = ( arch_Ch0END(10) & ( !\LessThan0~15_combout\ & ( (!currMemAddress(11)) # ((!\LessThan0~9_combout\) # (arch_Ch0END(11))) ) ) ) # ( !arch_Ch0END(10) & ( !\LessThan0~15_combout\ & ( (!\LessThan0~9_combout\) # ((!currMemAddress(10) & 
+-- ((!currMemAddress(11)) # (arch_Ch0END(11)))) # (currMemAddress(10) & (!currMemAddress(11) & arch_Ch0END(11)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111110001110111111111100111100000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_currMemAddress(11),
+	datac => ALT_INV_arch_Ch0END(11),
+	datad => \ALT_INV_LessThan0~9_combout\,
+	datae => ALT_INV_arch_Ch0END(10),
+	dataf => \ALT_INV_LessThan0~15_combout\,
+	combout => \LessThan0~16_combout\);
+
+\LessThan0~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~17_combout\ = ( arch_Ch0END(8) & ( \LessThan0~16_combout\ & ( (!currMemAddress(9)) # ((!\LessThan0~14_combout\) # (arch_Ch0END(9))) ) ) ) # ( !arch_Ch0END(8) & ( \LessThan0~16_combout\ & ( (!\LessThan0~14_combout\) # ((!currMemAddress(8) & 
+-- ((!currMemAddress(9)) # (arch_Ch0END(9)))) # (currMemAddress(8) & (!currMemAddress(9) & arch_Ch0END(9)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111100011101111111111001111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_currMemAddress(9),
+	datac => ALT_INV_arch_Ch0END(9),
+	datad => \ALT_INV_LessThan0~14_combout\,
+	datae => ALT_INV_arch_Ch0END(8),
+	dataf => \ALT_INV_LessThan0~16_combout\,
+	combout => \LessThan0~17_combout\);
+
+\arch_Ch0END[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(17),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(17));
+
+\arch_Ch0END[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(16),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(16));
+
+\arch_Ch0END[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(15),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch0END[0]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(15));
+
+\LessThan0~18\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan0~18_combout\ = ( arch_Ch0END(16) & ( arch_Ch0END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch0END(17))))) ) ) ) # ( !arch_Ch0END(16) & ( arch_Ch0END(15) & ( (currMemAddress(15) & (!currMemAddress(16) & 
+-- (!currMemAddress(17) $ (arch_Ch0END(17))))) ) ) ) # ( arch_Ch0END(16) & ( !arch_Ch0END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch0END(17))))) ) ) ) # ( !arch_Ch0END(16) & ( !arch_Ch0END(15) & ( 
+-- (!currMemAddress(15) & (!currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch0END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch0END(17),
+	datae => ALT_INV_arch_Ch0END(16),
+	dataf => ALT_INV_arch_Ch0END(15),
+	combout => \LessThan0~18_combout\);
+
+\Selector4~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector4~0_combout\ = ( \KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (arch_recSel(1)) # (arch_recSel(0)) ) ) ) # ( !\KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (((\arch_loop_start~q\ & !\KB_PLAY~input_o\)) # (arch_recSel(1))) # (arch_recSel(0)) 
+-- ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000001111111011101110111011101110111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	datac => \ALT_INV_arch_loop_start~q\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ALLPLAY~input_o\,
+	dataf => \ALT_INV_state.REC_OTHER~q\,
+	combout => \Selector4~0_combout\);
+
+\Selector4~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector4~1_combout\ = ( \Mux32~0_combout\ & ( \Selector4~0_combout\ & ( arch_Ch0END(31) ) ) ) # ( !\Mux32~0_combout\ & ( \Selector4~0_combout\ & ( arch_Ch0END(31) ) ) ) # ( \Mux32~0_combout\ & ( !\Selector4~0_combout\ & ( (arch_Ch0END(31) & 
+-- ((!\stateNum~1_combout\) # ((\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) ) # ( !\Mux32~0_combout\ & ( !\Selector4~0_combout\ & ( (arch_Ch0END(31) & ((!\stateNum~1_combout\) # (\state.REC_FIRST~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000011110011000000001111000100000000111111110000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_process_0~0_combout\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	datac => \ALT_INV_stateNum~1_combout\,
+	datad => ALT_INV_arch_Ch0END(31),
+	datae => \ALT_INV_Mux32~0_combout\,
+	dataf => \ALT_INV_Selector4~0_combout\,
+	combout => \Selector4~1_combout\);
+
+\arch_Ch0END[31]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector4~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch0END(31));
+
+\arch_Ch0ACT~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch0ACT~0_combout\ = ( \KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & !\KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & 
+-- (!\KB_REC~input_o\ & !\KB_Selchannel[1]~input_o\)) ) ) ) # ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & !\KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( 
+-- (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (!\KB_Selchannel[1]~input_o\ & \KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000010000000100000001000000010000000100000001000000010000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \arch_Ch0ACT~0_combout\);
+
+\Selector132~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector132~0_combout\ = ( \arch_Ch0ACT~0_combout\ & ( (\state.CH_CONTROL~q\ & (((!\KB_STOP~input_o\ & !\ch0HT~q\)) # (\KB_PLAY~input_o\))) ) ) # ( !\arch_Ch0ACT~0_combout\ & ( \state.CH_CONTROL~q\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010100010001000101010101010101010101000100010001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_STOP~input_o\,
+	datad => \ALT_INV_ch0HT~q\,
+	datae => \ALT_INV_arch_Ch0ACT~0_combout\,
+	combout => \Selector132~0_combout\);
+
+\Selector132~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector132~1_combout\ = (\state.CH_CONTROL~q\ & (\KB_PLAY~input_o\ & (\ch0HT~q\ & \arch_Ch0ACT~0_combout\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000001000000000000000100000000000000010000000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_ch0HT~q\,
+	datad => \ALT_INV_arch_Ch0ACT~0_combout\,
+	combout => \Selector132~1_combout\);
+
+\Selector132~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector132~2_combout\ = ( \Selector136~0_combout\ & ( \Selector132~1_combout\ ) ) # ( !\Selector136~0_combout\ & ( \Selector132~1_combout\ ) ) # ( \Selector136~0_combout\ & ( !\Selector132~1_combout\ & ( (!\Selector163~0_combout\ & (\arch_Ch0ACT~q\ & 
+-- ((\Selector132~0_combout\)))) # (\Selector163~0_combout\ & (((\arch_Ch0ACT~q\ & \Selector132~0_combout\)) # (\Mux32~0_combout\))) ) ) ) # ( !\Selector136~0_combout\ & ( !\Selector132~1_combout\ & ( ((\Selector163~0_combout\ & \Mux32~0_combout\)) # 
+-- (\arch_Ch0ACT~q\) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011011100110111000001010011011111111111111111111111111111111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector163~0_combout\,
+	datab => \ALT_INV_arch_Ch0ACT~q\,
+	datac => \ALT_INV_Mux32~0_combout\,
+	datad => \ALT_INV_Selector132~0_combout\,
+	datae => \ALT_INV_Selector136~0_combout\,
+	dataf => \ALT_INV_Selector132~1_combout\,
+	combout => \Selector132~2_combout\);
+
+arch_Ch0ACT : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector132~2_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch0ACT~q\);
+
+\process_0~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~2_combout\ = ( !arch_Ch0END(16) & ( arch_Ch0END(15) & ( (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch0END(17)))) ) ) ) # ( arch_Ch0END(16) & ( !arch_Ch0END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ 
+-- (arch_Ch0END(17))))) ) ) ) # ( !arch_Ch0END(16) & ( !arch_Ch0END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch0END(17))))) # (currMemAddress(15) & ((!currMemAddress(17) $ (arch_Ch0END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000000000111000100000000000100110000000000110000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch0END(17),
+	datae => ALT_INV_arch_Ch0END(16),
+	dataf => ALT_INV_arch_Ch0END(15),
+	combout => \process_0~2_combout\);
+
+\process_0~3\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~3_combout\ = ( arch_Ch0END(17) & ( !\process_0~2_combout\ & ( (\ch0HT~q\ & (!arch_Ch0END(31) & \arch_Ch0ACT~q\)) ) ) ) # ( !arch_Ch0END(17) & ( !\process_0~2_combout\ & ( (!currMemAddress(17) & (\ch0HT~q\ & (!arch_Ch0END(31) & 
+-- \arch_Ch0ACT~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000100000000000000011000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(17),
+	datab => \ALT_INV_ch0HT~q\,
+	datac => ALT_INV_arch_Ch0END(31),
+	datad => \ALT_INV_arch_Ch0ACT~q\,
+	datae => ALT_INV_arch_Ch0END(17),
+	dataf => \ALT_INV_process_0~2_combout\,
+	combout => \process_0~3_combout\);
+
+\process_0~4\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~4_combout\ = ( \LessThan0~18_combout\ & ( \process_0~3_combout\ & ( (\LessThan0~17_combout\ & ((!\LessThan0~13_combout\) # ((!\LessThan0~6_combout\ & \LessThan0~8_combout\)))) ) ) ) # ( !\LessThan0~18_combout\ & ( \process_0~3_combout\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111111111110000000011110010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan0~6_combout\,
+	datab => \ALT_INV_LessThan0~8_combout\,
+	datac => \ALT_INV_LessThan0~13_combout\,
+	datad => \ALT_INV_LessThan0~17_combout\,
+	datae => \ALT_INV_LessThan0~18_combout\,
+	dataf => \ALT_INV_process_0~3_combout\,
+	combout => \process_0~4_combout\);
+
+arch_Ch0DEC : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \process_0~4_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch0DEC~q\);
+
+\arch_Ch1END[5]~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch1END[5]~0_combout\ = ( \Mux51~1_combout\ & ( (\stateNum~1_combout\ & (((\Selector164~6_combout\) # (\Selector164~5_combout\)) # (\Selector164~4_combout\))) ) ) # ( !\Mux51~1_combout\ & ( (\stateNum~1_combout\ & \Selector164~6_combout\) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010101000101010101010100000000010101010001010101010101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_stateNum~1_combout\,
+	datab => \ALT_INV_Selector164~4_combout\,
+	datac => \ALT_INV_Selector164~5_combout\,
+	datad => \ALT_INV_Selector164~6_combout\,
+	datae => \ALT_INV_Mux51~1_combout\,
+	combout => \arch_Ch1END[5]~0_combout\);
+
+\arch_Ch1END[7]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(7),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(7));
+
+\arch_Ch1END[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector29~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(6));
+
+\LessThan1~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~0_combout\ = (!currMemAddress(6) & (arch_Ch1END(6) & (!currMemAddress(7) $ (arch_Ch1END(7))))) # (currMemAddress(6) & (!arch_Ch1END(6) & (!currMemAddress(7) $ (arch_Ch1END(7)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch1END(7),
+	datad => ALT_INV_arch_Ch1END(6),
+	combout => \LessThan1~0_combout\);
+
+\arch_Ch1END[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector30~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(5));
+
+\LessThan1~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~1_combout\ = !currMemAddress(5) $ (!arch_Ch1END(5))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => ALT_INV_arch_Ch1END(5),
+	combout => \LessThan1~1_combout\);
+
+\arch_Ch1END[4]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(4),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(4));
+
+\LessThan1~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~2_combout\ = !currMemAddress(4) $ (!arch_Ch1END(4))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_arch_Ch1END(4),
+	combout => \LessThan1~2_combout\);
+
+\arch_Ch1END[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(1),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(1));
+
+\arch_Ch1END[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector35~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(0));
+
+\LessThan1~3\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~3_combout\ = (!currMemAddress(1) & (currMemAddress(0) & (!arch_Ch1END(1) & !arch_Ch1END(0)))) # (currMemAddress(1) & ((!arch_Ch1END(1)) # ((currMemAddress(0) & !arch_Ch1END(0)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000100110000011100010011000001110001001100000111000100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(0),
+	datab => ALT_INV_currMemAddress(1),
+	datac => ALT_INV_arch_Ch1END(1),
+	datad => ALT_INV_arch_Ch1END(0),
+	combout => \LessThan1~3_combout\);
+
+\arch_Ch1END[3]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(3),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(3));
+
+\arch_Ch1END[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector33~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(2));
+
+\LessThan1~4\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~4_combout\ = (!currMemAddress(2) & (arch_Ch1END(2) & (!currMemAddress(3) $ (arch_Ch1END(3))))) # (currMemAddress(2) & (!arch_Ch1END(2) & (!currMemAddress(3) $ (arch_Ch1END(3)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch1END(3),
+	datad => ALT_INV_arch_Ch1END(2),
+	combout => \LessThan1~4_combout\);
+
+\LessThan1~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~5_combout\ = (!currMemAddress(3) & (currMemAddress(2) & (!arch_Ch1END(3) & arch_Ch1END(2)))) # (currMemAddress(3) & ((!arch_Ch1END(3)) # ((currMemAddress(2) & arch_Ch1END(2)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch1END(3),
+	datad => ALT_INV_arch_Ch1END(2),
+	combout => \LessThan1~5_combout\);
+
+\LessThan1~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~6_combout\ = ( \LessThan1~4_combout\ & ( \LessThan1~5_combout\ & ( (\LessThan1~0_combout\ & (\LessThan1~1_combout\ & !\LessThan1~2_combout\)) ) ) ) # ( !\LessThan1~4_combout\ & ( \LessThan1~5_combout\ & ( (\LessThan1~0_combout\ & 
+-- (\LessThan1~1_combout\ & !\LessThan1~2_combout\)) ) ) ) # ( \LessThan1~4_combout\ & ( !\LessThan1~5_combout\ & ( (\LessThan1~0_combout\ & (\LessThan1~1_combout\ & (!\LessThan1~2_combout\ & \LessThan1~3_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000001000000010000000100000001000000010000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan1~0_combout\,
+	datab => \ALT_INV_LessThan1~1_combout\,
+	datac => \ALT_INV_LessThan1~2_combout\,
+	datad => \ALT_INV_LessThan1~3_combout\,
+	datae => \ALT_INV_LessThan1~4_combout\,
+	dataf => \ALT_INV_LessThan1~5_combout\,
+	combout => \LessThan1~6_combout\);
+
+\LessThan1~7\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~7_combout\ = (!currMemAddress(7) & (currMemAddress(6) & (!arch_Ch1END(7) & arch_Ch1END(6)))) # (currMemAddress(7) & ((!arch_Ch1END(7)) # ((currMemAddress(6) & arch_Ch1END(6)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch1END(7),
+	datad => ALT_INV_arch_Ch1END(6),
+	combout => \LessThan1~7_combout\);
+
+\LessThan1~8\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~8_combout\ = ( arch_Ch1END(4) & ( !\LessThan1~7_combout\ & ( (!currMemAddress(5)) # ((!arch_Ch1END(5)) # (!\LessThan1~0_combout\)) ) ) ) # ( !arch_Ch1END(4) & ( !\LessThan1~7_combout\ & ( (!\LessThan1~0_combout\) # ((!currMemAddress(4) & 
+-- ((!currMemAddress(5)) # (!arch_Ch1END(5)))) # (currMemAddress(4) & (!currMemAddress(5) & !arch_Ch1END(5)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111111101000111111111111110000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_currMemAddress(5),
+	datac => ALT_INV_arch_Ch1END(5),
+	datad => \ALT_INV_LessThan1~0_combout\,
+	datae => ALT_INV_arch_Ch1END(4),
+	dataf => \ALT_INV_LessThan1~7_combout\,
+	combout => \LessThan1~8_combout\);
+
+\arch_Ch1END[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(11),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(11));
+
+\arch_Ch1END[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(14),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(14));
+
+\arch_Ch1END[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(13),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(13));
+
+\arch_Ch1END[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(12),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(12));
+
+\LessThan1~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~9_combout\ = ( arch_Ch1END(13) & ( arch_Ch1END(12) & ( (currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch1END(14))))) ) ) ) # ( !arch_Ch1END(13) & ( arch_Ch1END(12) & ( (currMemAddress(12) & (!currMemAddress(13) & 
+-- (!currMemAddress(14) $ (arch_Ch1END(14))))) ) ) ) # ( arch_Ch1END(13) & ( !arch_Ch1END(12) & ( (!currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch1END(14))))) ) ) ) # ( !arch_Ch1END(13) & ( !arch_Ch1END(12) & ( 
+-- (!currMemAddress(12) & (!currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch1END(14))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch1END(14),
+	datae => ALT_INV_arch_Ch1END(13),
+	dataf => ALT_INV_arch_Ch1END(12),
+	combout => \LessThan1~9_combout\);
+
+\arch_Ch1END[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(10),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(10));
+
+\LessThan1~10\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~10_combout\ = !currMemAddress(10) $ (!arch_Ch1END(10))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_arch_Ch1END(10),
+	combout => \LessThan1~10_combout\);
+
+\arch_Ch1END[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(9),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(9));
+
+\LessThan1~11\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~11_combout\ = !currMemAddress(9) $ (!arch_Ch1END(9))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(9),
+	datab => ALT_INV_arch_Ch1END(9),
+	combout => \LessThan1~11_combout\);
+
+\arch_Ch1END[8]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(8),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(8));
+
+\LessThan1~12\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~12_combout\ = !currMemAddress(8) $ (!arch_Ch1END(8))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_arch_Ch1END(8),
+	combout => \LessThan1~12_combout\);
+
+\LessThan1~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~13_combout\ = ( !\LessThan1~11_combout\ & ( !\LessThan1~12_combout\ & ( (\LessThan1~9_combout\ & (!\LessThan1~10_combout\ & (!currMemAddress(11) $ (arch_Ch1END(11))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch1END(11),
+	datac => \ALT_INV_LessThan1~9_combout\,
+	datad => \ALT_INV_LessThan1~10_combout\,
+	datae => \ALT_INV_LessThan1~11_combout\,
+	dataf => \ALT_INV_LessThan1~12_combout\,
+	combout => \LessThan1~13_combout\);
+
+\LessThan1~14\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~14_combout\ = (\LessThan1~9_combout\ & (!\LessThan1~10_combout\ & (!currMemAddress(11) $ (arch_Ch1END(11)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000010010000000000001001000000000000100100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch1END(11),
+	datac => \ALT_INV_LessThan1~9_combout\,
+	datad => \ALT_INV_LessThan1~10_combout\,
+	combout => \LessThan1~14_combout\);
+
+\LessThan1~15\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~15_combout\ = ( arch_Ch1END(13) & ( arch_Ch1END(12) & ( (currMemAddress(14) & !arch_Ch1END(14)) ) ) ) # ( !arch_Ch1END(13) & ( arch_Ch1END(12) & ( (!currMemAddress(13) & (currMemAddress(14) & !arch_Ch1END(14))) # (currMemAddress(13) & 
+-- ((!arch_Ch1END(14)) # (currMemAddress(14)))) ) ) ) # ( arch_Ch1END(13) & ( !arch_Ch1END(12) & ( (!currMemAddress(14) & (currMemAddress(12) & (currMemAddress(13) & !arch_Ch1END(14)))) # (currMemAddress(14) & ((!arch_Ch1END(14)) # ((currMemAddress(12) & 
+-- currMemAddress(13))))) ) ) ) # ( !arch_Ch1END(13) & ( !arch_Ch1END(12) & ( (!currMemAddress(14) & (!arch_Ch1END(14) & ((currMemAddress(13)) # (currMemAddress(12))))) # (currMemAddress(14) & (((!arch_Ch1END(14)) # (currMemAddress(13))) # 
+-- (currMemAddress(12)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111111100000111000111110000000100111111000000110000111100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch1END(14),
+	datae => ALT_INV_arch_Ch1END(13),
+	dataf => ALT_INV_arch_Ch1END(12),
+	combout => \LessThan1~15_combout\);
+
+\LessThan1~16\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~16_combout\ = ( arch_Ch1END(10) & ( !\LessThan1~15_combout\ & ( (!currMemAddress(11)) # ((!\LessThan1~9_combout\) # (arch_Ch1END(11))) ) ) ) # ( !arch_Ch1END(10) & ( !\LessThan1~15_combout\ & ( (!\LessThan1~9_combout\) # ((!currMemAddress(10) & 
+-- ((!currMemAddress(11)) # (arch_Ch1END(11)))) # (currMemAddress(10) & (!currMemAddress(11) & arch_Ch1END(11)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111110001110111111111100111100000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_currMemAddress(11),
+	datac => ALT_INV_arch_Ch1END(11),
+	datad => \ALT_INV_LessThan1~9_combout\,
+	datae => ALT_INV_arch_Ch1END(10),
+	dataf => \ALT_INV_LessThan1~15_combout\,
+	combout => \LessThan1~16_combout\);
+
+\LessThan1~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~17_combout\ = ( arch_Ch1END(8) & ( \LessThan1~16_combout\ & ( (!currMemAddress(9)) # ((!\LessThan1~14_combout\) # (arch_Ch1END(9))) ) ) ) # ( !arch_Ch1END(8) & ( \LessThan1~16_combout\ & ( (!\LessThan1~14_combout\) # ((!currMemAddress(8) & 
+-- ((!currMemAddress(9)) # (arch_Ch1END(9)))) # (currMemAddress(8) & (!currMemAddress(9) & arch_Ch1END(9)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111100011101111111111001111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_currMemAddress(9),
+	datac => ALT_INV_arch_Ch1END(9),
+	datad => \ALT_INV_LessThan1~14_combout\,
+	datae => ALT_INV_arch_Ch1END(8),
+	dataf => \ALT_INV_LessThan1~16_combout\,
+	combout => \LessThan1~17_combout\);
+
+\arch_Ch1END[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(17),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(17));
+
+\arch_Ch1END[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(16),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(16));
+
+\arch_Ch1END[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(15),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch1END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(15));
+
+\LessThan1~18\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan1~18_combout\ = ( arch_Ch1END(16) & ( arch_Ch1END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch1END(17))))) ) ) ) # ( !arch_Ch1END(16) & ( arch_Ch1END(15) & ( (currMemAddress(15) & (!currMemAddress(16) & 
+-- (!currMemAddress(17) $ (arch_Ch1END(17))))) ) ) ) # ( arch_Ch1END(16) & ( !arch_Ch1END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch1END(17))))) ) ) ) # ( !arch_Ch1END(16) & ( !arch_Ch1END(15) & ( 
+-- (!currMemAddress(15) & (!currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch1END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch1END(17),
+	datae => ALT_INV_arch_Ch1END(16),
+	dataf => ALT_INV_arch_Ch1END(15),
+	combout => \LessThan1~18_combout\);
+
+\Selector36~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector36~0_combout\ = ( \KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (!arch_recSel(0)) # (arch_recSel(1)) ) ) ) # ( !\KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (!arch_recSel(0)) # (((\arch_loop_start~q\ & !\KB_PLAY~input_o\)) # 
+-- (arch_recSel(1))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000010111111101110111011101110111011",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	datac => \ALT_INV_arch_loop_start~q\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ALLPLAY~input_o\,
+	dataf => \ALT_INV_state.REC_OTHER~q\,
+	combout => \Selector36~0_combout\);
+
+\Selector36~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector36~1_combout\ = ( \Mux51~1_combout\ & ( \Selector36~0_combout\ & ( arch_Ch1END(31) ) ) ) # ( !\Mux51~1_combout\ & ( \Selector36~0_combout\ & ( arch_Ch1END(31) ) ) ) # ( \Mux51~1_combout\ & ( !\Selector36~0_combout\ & ( (arch_Ch1END(31) & 
+-- ((!\stateNum~1_combout\) # ((\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) ) # ( !\Mux51~1_combout\ & ( !\Selector36~0_combout\ & ( (arch_Ch1END(31) & ((!\stateNum~1_combout\) # (\state.REC_FIRST~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000011110011000000001111000100000000111111110000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_process_0~0_combout\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	datac => \ALT_INV_stateNum~1_combout\,
+	datad => ALT_INV_arch_Ch1END(31),
+	datae => \ALT_INV_Mux51~1_combout\,
+	dataf => \ALT_INV_Selector36~0_combout\,
+	combout => \Selector36~1_combout\);
+
+\arch_Ch1END[31]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector36~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch1END(31));
+
+\arch_Ch1ACT~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch1ACT~0_combout\ = ( \KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & !\KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & 
+-- (!\KB_REC~input_o\ & !\KB_Selchannel[1]~input_o\)) ) ) ) # ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & !\KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( 
+-- (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (!\KB_Selchannel[1]~input_o\ & \KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001000000010000000100000001000000010000000100000001000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \arch_Ch1ACT~0_combout\);
+
+\Selector133~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector133~0_combout\ = ( \arch_Ch1ACT~0_combout\ & ( (\state.CH_CONTROL~q\ & (((!\KB_STOP~input_o\ & !\ch1HT~q\)) # (\KB_PLAY~input_o\))) ) ) # ( !\arch_Ch1ACT~0_combout\ & ( \state.CH_CONTROL~q\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010100010001000101010101010101010101000100010001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_STOP~input_o\,
+	datad => \ALT_INV_ch1HT~q\,
+	datae => \ALT_INV_arch_Ch1ACT~0_combout\,
+	combout => \Selector133~0_combout\);
+
+\Selector133~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector133~1_combout\ = (\state.CH_CONTROL~q\ & (\KB_PLAY~input_o\ & (\ch1HT~q\ & \arch_Ch1ACT~0_combout\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000001000000000000000100000000000000010000000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_ch1HT~q\,
+	datad => \ALT_INV_arch_Ch1ACT~0_combout\,
+	combout => \Selector133~1_combout\);
+
+\Selector133~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector133~2_combout\ = ( \Selector133~0_combout\ & ( \Selector133~1_combout\ ) ) # ( !\Selector133~0_combout\ & ( \Selector133~1_combout\ ) ) # ( \Selector133~0_combout\ & ( !\Selector133~1_combout\ & ( ((\Selector163~0_combout\ & \Mux51~1_combout\)) # 
+-- (\arch_Ch1ACT~q\) ) ) ) # ( !\Selector133~0_combout\ & ( !\Selector133~1_combout\ & ( (!\Selector163~0_combout\ & (\arch_Ch1ACT~q\ & ((!\Selector136~0_combout\)))) # (\Selector163~0_combout\ & (((\arch_Ch1ACT~q\ & !\Selector136~0_combout\)) # 
+-- (\Mux51~1_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011011100000101001101110011011111111111111111111111111111111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector163~0_combout\,
+	datab => \ALT_INV_arch_Ch1ACT~q\,
+	datac => \ALT_INV_Mux51~1_combout\,
+	datad => \ALT_INV_Selector136~0_combout\,
+	datae => \ALT_INV_Selector133~0_combout\,
+	dataf => \ALT_INV_Selector133~1_combout\,
+	combout => \Selector133~2_combout\);
+
+arch_Ch1ACT : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector133~2_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch1ACT~q\);
+
+\process_0~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~5_combout\ = ( !arch_Ch1END(16) & ( arch_Ch1END(15) & ( (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch1END(17)))) ) ) ) # ( arch_Ch1END(16) & ( !arch_Ch1END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ 
+-- (arch_Ch1END(17))))) ) ) ) # ( !arch_Ch1END(16) & ( !arch_Ch1END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch1END(17))))) # (currMemAddress(15) & ((!currMemAddress(17) $ (arch_Ch1END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000000000111000100000000000100110000000000110000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch1END(17),
+	datae => ALT_INV_arch_Ch1END(16),
+	dataf => ALT_INV_arch_Ch1END(15),
+	combout => \process_0~5_combout\);
+
+\process_0~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~6_combout\ = ( arch_Ch1END(17) & ( !\process_0~5_combout\ & ( (\ch1HT~q\ & (!arch_Ch1END(31) & \arch_Ch1ACT~q\)) ) ) ) # ( !arch_Ch1END(17) & ( !\process_0~5_combout\ & ( (!currMemAddress(17) & (\ch1HT~q\ & (!arch_Ch1END(31) & 
+-- \arch_Ch1ACT~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000100000000000000011000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(17),
+	datab => \ALT_INV_ch1HT~q\,
+	datac => ALT_INV_arch_Ch1END(31),
+	datad => \ALT_INV_arch_Ch1ACT~q\,
+	datae => ALT_INV_arch_Ch1END(17),
+	dataf => \ALT_INV_process_0~5_combout\,
+	combout => \process_0~6_combout\);
+
+\process_0~7\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~7_combout\ = ( \LessThan1~18_combout\ & ( \process_0~6_combout\ & ( (\LessThan1~17_combout\ & ((!\LessThan1~13_combout\) # ((!\LessThan1~6_combout\ & \LessThan1~8_combout\)))) ) ) ) # ( !\LessThan1~18_combout\ & ( \process_0~6_combout\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111111111110000000011110010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan1~6_combout\,
+	datab => \ALT_INV_LessThan1~8_combout\,
+	datac => \ALT_INV_LessThan1~13_combout\,
+	datad => \ALT_INV_LessThan1~17_combout\,
+	datae => \ALT_INV_LessThan1~18_combout\,
+	dataf => \ALT_INV_process_0~6_combout\,
+	combout => \process_0~7_combout\);
+
+arch_Ch1DEC : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \process_0~7_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch1DEC~q\);
+
+\arch_Ch2END[6]~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch2END[6]~0_combout\ = ( \Mux51~0_combout\ & ( (\stateNum~1_combout\ & (((\Selector164~6_combout\) # (\Selector164~5_combout\)) # (\Selector164~4_combout\))) ) ) # ( !\Mux51~0_combout\ & ( (\stateNum~1_combout\ & \Selector164~6_combout\) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010101000101010101010100000000010101010001010101010101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_stateNum~1_combout\,
+	datab => \ALT_INV_Selector164~4_combout\,
+	datac => \ALT_INV_Selector164~5_combout\,
+	datad => \ALT_INV_Selector164~6_combout\,
+	datae => \ALT_INV_Mux51~0_combout\,
+	combout => \arch_Ch2END[6]~0_combout\);
+
+\arch_Ch2END[7]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(7),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(7));
+
+\arch_Ch2END[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector29~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(6));
+
+\LessThan2~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~0_combout\ = (!currMemAddress(6) & (arch_Ch2END(6) & (!currMemAddress(7) $ (arch_Ch2END(7))))) # (currMemAddress(6) & (!arch_Ch2END(6) & (!currMemAddress(7) $ (arch_Ch2END(7)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch2END(7),
+	datad => ALT_INV_arch_Ch2END(6),
+	combout => \LessThan2~0_combout\);
+
+\arch_Ch2END[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector30~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(5));
+
+\LessThan2~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~1_combout\ = !currMemAddress(5) $ (!arch_Ch2END(5))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => ALT_INV_arch_Ch2END(5),
+	combout => \LessThan2~1_combout\);
+
+\arch_Ch2END[4]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(4),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(4));
+
+\LessThan2~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~2_combout\ = !currMemAddress(4) $ (!arch_Ch2END(4))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_arch_Ch2END(4),
+	combout => \LessThan2~2_combout\);
+
+\arch_Ch2END[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(1),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(1));
+
+\arch_Ch2END[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector35~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(0));
+
+\LessThan2~3\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~3_combout\ = (!currMemAddress(1) & (currMemAddress(0) & (!arch_Ch2END(1) & !arch_Ch2END(0)))) # (currMemAddress(1) & ((!arch_Ch2END(1)) # ((currMemAddress(0) & !arch_Ch2END(0)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000100110000011100010011000001110001001100000111000100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(0),
+	datab => ALT_INV_currMemAddress(1),
+	datac => ALT_INV_arch_Ch2END(1),
+	datad => ALT_INV_arch_Ch2END(0),
+	combout => \LessThan2~3_combout\);
+
+\arch_Ch2END[3]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(3),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(3));
+
+\arch_Ch2END[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector33~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(2));
+
+\LessThan2~4\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~4_combout\ = (!currMemAddress(2) & (arch_Ch2END(2) & (!currMemAddress(3) $ (arch_Ch2END(3))))) # (currMemAddress(2) & (!arch_Ch2END(2) & (!currMemAddress(3) $ (arch_Ch2END(3)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch2END(3),
+	datad => ALT_INV_arch_Ch2END(2),
+	combout => \LessThan2~4_combout\);
+
+\LessThan2~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~5_combout\ = (!currMemAddress(3) & (currMemAddress(2) & (!arch_Ch2END(3) & arch_Ch2END(2)))) # (currMemAddress(3) & ((!arch_Ch2END(3)) # ((currMemAddress(2) & arch_Ch2END(2)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch2END(3),
+	datad => ALT_INV_arch_Ch2END(2),
+	combout => \LessThan2~5_combout\);
+
+\LessThan2~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~6_combout\ = ( \LessThan2~4_combout\ & ( \LessThan2~5_combout\ & ( (\LessThan2~0_combout\ & (\LessThan2~1_combout\ & !\LessThan2~2_combout\)) ) ) ) # ( !\LessThan2~4_combout\ & ( \LessThan2~5_combout\ & ( (\LessThan2~0_combout\ & 
+-- (\LessThan2~1_combout\ & !\LessThan2~2_combout\)) ) ) ) # ( \LessThan2~4_combout\ & ( !\LessThan2~5_combout\ & ( (\LessThan2~0_combout\ & (\LessThan2~1_combout\ & (!\LessThan2~2_combout\ & \LessThan2~3_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000001000000010000000100000001000000010000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan2~0_combout\,
+	datab => \ALT_INV_LessThan2~1_combout\,
+	datac => \ALT_INV_LessThan2~2_combout\,
+	datad => \ALT_INV_LessThan2~3_combout\,
+	datae => \ALT_INV_LessThan2~4_combout\,
+	dataf => \ALT_INV_LessThan2~5_combout\,
+	combout => \LessThan2~6_combout\);
+
+\LessThan2~7\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~7_combout\ = (!currMemAddress(7) & (currMemAddress(6) & (!arch_Ch2END(7) & arch_Ch2END(6)))) # (currMemAddress(7) & ((!arch_Ch2END(7)) # ((currMemAddress(6) & arch_Ch2END(6)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch2END(7),
+	datad => ALT_INV_arch_Ch2END(6),
+	combout => \LessThan2~7_combout\);
+
+\LessThan2~8\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~8_combout\ = ( arch_Ch2END(4) & ( !\LessThan2~7_combout\ & ( (!currMemAddress(5)) # ((!arch_Ch2END(5)) # (!\LessThan2~0_combout\)) ) ) ) # ( !arch_Ch2END(4) & ( !\LessThan2~7_combout\ & ( (!\LessThan2~0_combout\) # ((!currMemAddress(4) & 
+-- ((!currMemAddress(5)) # (!arch_Ch2END(5)))) # (currMemAddress(4) & (!currMemAddress(5) & !arch_Ch2END(5)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111111101000111111111111110000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_currMemAddress(5),
+	datac => ALT_INV_arch_Ch2END(5),
+	datad => \ALT_INV_LessThan2~0_combout\,
+	datae => ALT_INV_arch_Ch2END(4),
+	dataf => \ALT_INV_LessThan2~7_combout\,
+	combout => \LessThan2~8_combout\);
+
+\arch_Ch2END[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(11),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(11));
+
+\arch_Ch2END[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(14),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(14));
+
+\arch_Ch2END[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(13),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(13));
+
+\arch_Ch2END[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(12),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(12));
+
+\LessThan2~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~9_combout\ = ( arch_Ch2END(13) & ( arch_Ch2END(12) & ( (currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch2END(14))))) ) ) ) # ( !arch_Ch2END(13) & ( arch_Ch2END(12) & ( (currMemAddress(12) & (!currMemAddress(13) & 
+-- (!currMemAddress(14) $ (arch_Ch2END(14))))) ) ) ) # ( arch_Ch2END(13) & ( !arch_Ch2END(12) & ( (!currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch2END(14))))) ) ) ) # ( !arch_Ch2END(13) & ( !arch_Ch2END(12) & ( 
+-- (!currMemAddress(12) & (!currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch2END(14))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch2END(14),
+	datae => ALT_INV_arch_Ch2END(13),
+	dataf => ALT_INV_arch_Ch2END(12),
+	combout => \LessThan2~9_combout\);
+
+\arch_Ch2END[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(10),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(10));
+
+\LessThan2~10\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~10_combout\ = !currMemAddress(10) $ (!arch_Ch2END(10))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_arch_Ch2END(10),
+	combout => \LessThan2~10_combout\);
+
+\arch_Ch2END[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(9),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(9));
+
+\LessThan2~11\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~11_combout\ = !currMemAddress(9) $ (!arch_Ch2END(9))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(9),
+	datab => ALT_INV_arch_Ch2END(9),
+	combout => \LessThan2~11_combout\);
+
+\arch_Ch2END[8]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(8),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(8));
+
+\LessThan2~12\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~12_combout\ = !currMemAddress(8) $ (!arch_Ch2END(8))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_arch_Ch2END(8),
+	combout => \LessThan2~12_combout\);
+
+\LessThan2~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~13_combout\ = ( !\LessThan2~11_combout\ & ( !\LessThan2~12_combout\ & ( (\LessThan2~9_combout\ & (!\LessThan2~10_combout\ & (!currMemAddress(11) $ (arch_Ch2END(11))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch2END(11),
+	datac => \ALT_INV_LessThan2~9_combout\,
+	datad => \ALT_INV_LessThan2~10_combout\,
+	datae => \ALT_INV_LessThan2~11_combout\,
+	dataf => \ALT_INV_LessThan2~12_combout\,
+	combout => \LessThan2~13_combout\);
+
+\LessThan2~14\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~14_combout\ = (\LessThan2~9_combout\ & (!\LessThan2~10_combout\ & (!currMemAddress(11) $ (arch_Ch2END(11)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000010010000000000001001000000000000100100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch2END(11),
+	datac => \ALT_INV_LessThan2~9_combout\,
+	datad => \ALT_INV_LessThan2~10_combout\,
+	combout => \LessThan2~14_combout\);
+
+\LessThan2~15\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~15_combout\ = ( arch_Ch2END(13) & ( arch_Ch2END(12) & ( (currMemAddress(14) & !arch_Ch2END(14)) ) ) ) # ( !arch_Ch2END(13) & ( arch_Ch2END(12) & ( (!currMemAddress(13) & (currMemAddress(14) & !arch_Ch2END(14))) # (currMemAddress(13) & 
+-- ((!arch_Ch2END(14)) # (currMemAddress(14)))) ) ) ) # ( arch_Ch2END(13) & ( !arch_Ch2END(12) & ( (!currMemAddress(14) & (currMemAddress(12) & (currMemAddress(13) & !arch_Ch2END(14)))) # (currMemAddress(14) & ((!arch_Ch2END(14)) # ((currMemAddress(12) & 
+-- currMemAddress(13))))) ) ) ) # ( !arch_Ch2END(13) & ( !arch_Ch2END(12) & ( (!currMemAddress(14) & (!arch_Ch2END(14) & ((currMemAddress(13)) # (currMemAddress(12))))) # (currMemAddress(14) & (((!arch_Ch2END(14)) # (currMemAddress(13))) # 
+-- (currMemAddress(12)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111111100000111000111110000000100111111000000110000111100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch2END(14),
+	datae => ALT_INV_arch_Ch2END(13),
+	dataf => ALT_INV_arch_Ch2END(12),
+	combout => \LessThan2~15_combout\);
+
+\LessThan2~16\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~16_combout\ = ( arch_Ch2END(10) & ( !\LessThan2~15_combout\ & ( (!currMemAddress(11)) # ((!\LessThan2~9_combout\) # (arch_Ch2END(11))) ) ) ) # ( !arch_Ch2END(10) & ( !\LessThan2~15_combout\ & ( (!\LessThan2~9_combout\) # ((!currMemAddress(10) & 
+-- ((!currMemAddress(11)) # (arch_Ch2END(11)))) # (currMemAddress(10) & (!currMemAddress(11) & arch_Ch2END(11)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111110001110111111111100111100000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_currMemAddress(11),
+	datac => ALT_INV_arch_Ch2END(11),
+	datad => \ALT_INV_LessThan2~9_combout\,
+	datae => ALT_INV_arch_Ch2END(10),
+	dataf => \ALT_INV_LessThan2~15_combout\,
+	combout => \LessThan2~16_combout\);
+
+\LessThan2~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~17_combout\ = ( arch_Ch2END(8) & ( \LessThan2~16_combout\ & ( (!currMemAddress(9)) # ((!\LessThan2~14_combout\) # (arch_Ch2END(9))) ) ) ) # ( !arch_Ch2END(8) & ( \LessThan2~16_combout\ & ( (!\LessThan2~14_combout\) # ((!currMemAddress(8) & 
+-- ((!currMemAddress(9)) # (arch_Ch2END(9)))) # (currMemAddress(8) & (!currMemAddress(9) & arch_Ch2END(9)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111100011101111111111001111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_currMemAddress(9),
+	datac => ALT_INV_arch_Ch2END(9),
+	datad => \ALT_INV_LessThan2~14_combout\,
+	datae => ALT_INV_arch_Ch2END(8),
+	dataf => \ALT_INV_LessThan2~16_combout\,
+	combout => \LessThan2~17_combout\);
+
+\arch_Ch2END[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(17),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(17));
+
+\arch_Ch2END[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(16),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(16));
+
+\arch_Ch2END[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(15),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch2END[6]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(15));
+
+\LessThan2~18\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan2~18_combout\ = ( arch_Ch2END(16) & ( arch_Ch2END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch2END(17))))) ) ) ) # ( !arch_Ch2END(16) & ( arch_Ch2END(15) & ( (currMemAddress(15) & (!currMemAddress(16) & 
+-- (!currMemAddress(17) $ (arch_Ch2END(17))))) ) ) ) # ( arch_Ch2END(16) & ( !arch_Ch2END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch2END(17))))) ) ) ) # ( !arch_Ch2END(16) & ( !arch_Ch2END(15) & ( 
+-- (!currMemAddress(15) & (!currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch2END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch2END(17),
+	datae => ALT_INV_arch_Ch2END(16),
+	dataf => ALT_INV_arch_Ch2END(15),
+	combout => \LessThan2~18_combout\);
+
+\Selector68~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector68~0_combout\ = ( \KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (!arch_recSel(1)) # (arch_recSel(0)) ) ) ) # ( !\KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( ((!arch_recSel(1)) # ((\arch_loop_start~q\ & !\KB_PLAY~input_o\))) # 
+-- (arch_recSel(0)) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011011111110111011101110111011101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	datac => \ALT_INV_arch_loop_start~q\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ALLPLAY~input_o\,
+	dataf => \ALT_INV_state.REC_OTHER~q\,
+	combout => \Selector68~0_combout\);
+
+\Selector68~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector68~1_combout\ = ( \Mux51~0_combout\ & ( \Selector68~0_combout\ & ( arch_Ch2END(31) ) ) ) # ( !\Mux51~0_combout\ & ( \Selector68~0_combout\ & ( arch_Ch2END(31) ) ) ) # ( \Mux51~0_combout\ & ( !\Selector68~0_combout\ & ( (arch_Ch2END(31) & 
+-- ((!\stateNum~1_combout\) # ((\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) ) # ( !\Mux51~0_combout\ & ( !\Selector68~0_combout\ & ( (arch_Ch2END(31) & ((!\stateNum~1_combout\) # (\state.REC_FIRST~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000011110011000000001111000100000000111111110000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_process_0~0_combout\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	datac => \ALT_INV_stateNum~1_combout\,
+	datad => ALT_INV_arch_Ch2END(31),
+	datae => \ALT_INV_Mux51~0_combout\,
+	dataf => \ALT_INV_Selector68~0_combout\,
+	combout => \Selector68~1_combout\);
+
+\arch_Ch2END[31]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector68~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch2END(31));
+
+\arch_Ch2ACT~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch2ACT~0_combout\ = ( \KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & \KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & 
+-- (!\KB_REC~input_o\ & \KB_Selchannel[1]~input_o\)) ) ) ) # ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & \KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( 
+-- (!\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (\KB_Selchannel[1]~input_o\ & \KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000001000000010000000100000001000000010000000100000001000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \arch_Ch2ACT~0_combout\);
+
+\Selector134~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector134~0_combout\ = ( \arch_Ch2ACT~0_combout\ & ( (\state.CH_CONTROL~q\ & (((!\KB_STOP~input_o\ & !\ch2HT~q\)) # (\KB_PLAY~input_o\))) ) ) # ( !\arch_Ch2ACT~0_combout\ & ( \state.CH_CONTROL~q\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010100010001000101010101010101010101000100010001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_STOP~input_o\,
+	datad => \ALT_INV_ch2HT~q\,
+	datae => \ALT_INV_arch_Ch2ACT~0_combout\,
+	combout => \Selector134~0_combout\);
+
+\Selector134~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector134~1_combout\ = (\state.CH_CONTROL~q\ & (\KB_PLAY~input_o\ & (\ch2HT~q\ & \arch_Ch2ACT~0_combout\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000001000000000000000100000000000000010000000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_ch2HT~q\,
+	datad => \ALT_INV_arch_Ch2ACT~0_combout\,
+	combout => \Selector134~1_combout\);
+
+\Selector134~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector134~2_combout\ = ( \Selector134~0_combout\ & ( \Selector134~1_combout\ ) ) # ( !\Selector134~0_combout\ & ( \Selector134~1_combout\ ) ) # ( \Selector134~0_combout\ & ( !\Selector134~1_combout\ & ( ((\Selector163~0_combout\ & \Mux51~0_combout\)) # 
+-- (\arch_Ch2ACT~q\) ) ) ) # ( !\Selector134~0_combout\ & ( !\Selector134~1_combout\ & ( (!\Selector163~0_combout\ & (\arch_Ch2ACT~q\ & ((!\Selector136~0_combout\)))) # (\Selector163~0_combout\ & (((\arch_Ch2ACT~q\ & !\Selector136~0_combout\)) # 
+-- (\Mux51~0_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011011100000101001101110011011111111111111111111111111111111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector163~0_combout\,
+	datab => \ALT_INV_arch_Ch2ACT~q\,
+	datac => \ALT_INV_Mux51~0_combout\,
+	datad => \ALT_INV_Selector136~0_combout\,
+	datae => \ALT_INV_Selector134~0_combout\,
+	dataf => \ALT_INV_Selector134~1_combout\,
+	combout => \Selector134~2_combout\);
+
+arch_Ch2ACT : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector134~2_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch2ACT~q\);
+
+\process_0~8\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~8_combout\ = ( !arch_Ch2END(16) & ( arch_Ch2END(15) & ( (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch2END(17)))) ) ) ) # ( arch_Ch2END(16) & ( !arch_Ch2END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ 
+-- (arch_Ch2END(17))))) ) ) ) # ( !arch_Ch2END(16) & ( !arch_Ch2END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch2END(17))))) # (currMemAddress(15) & ((!currMemAddress(17) $ (arch_Ch2END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000000000111000100000000000100110000000000110000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch2END(17),
+	datae => ALT_INV_arch_Ch2END(16),
+	dataf => ALT_INV_arch_Ch2END(15),
+	combout => \process_0~8_combout\);
+
+\process_0~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~9_combout\ = ( arch_Ch2END(17) & ( !\process_0~8_combout\ & ( (\ch2HT~q\ & (!arch_Ch2END(31) & \arch_Ch2ACT~q\)) ) ) ) # ( !arch_Ch2END(17) & ( !\process_0~8_combout\ & ( (!currMemAddress(17) & (\ch2HT~q\ & (!arch_Ch2END(31) & 
+-- \arch_Ch2ACT~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000100000000000000011000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(17),
+	datab => \ALT_INV_ch2HT~q\,
+	datac => ALT_INV_arch_Ch2END(31),
+	datad => \ALT_INV_arch_Ch2ACT~q\,
+	datae => ALT_INV_arch_Ch2END(17),
+	dataf => \ALT_INV_process_0~8_combout\,
+	combout => \process_0~9_combout\);
+
+\process_0~10\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~10_combout\ = ( \LessThan2~18_combout\ & ( \process_0~9_combout\ & ( (\LessThan2~17_combout\ & ((!\LessThan2~13_combout\) # ((!\LessThan2~6_combout\ & \LessThan2~8_combout\)))) ) ) ) # ( !\LessThan2~18_combout\ & ( \process_0~9_combout\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111111111110000000011110010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan2~6_combout\,
+	datab => \ALT_INV_LessThan2~8_combout\,
+	datac => \ALT_INV_LessThan2~13_combout\,
+	datad => \ALT_INV_LessThan2~17_combout\,
+	datae => \ALT_INV_LessThan2~18_combout\,
+	dataf => \ALT_INV_process_0~9_combout\,
+	combout => \process_0~10_combout\);
+
+arch_Ch2DEC : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \process_0~10_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch2DEC~q\);
+
+\arch_Ch3END[5]~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch3END[5]~0_combout\ = ( \Mux51~2_combout\ & ( (\stateNum~1_combout\ & (((\Selector164~6_combout\) # (\Selector164~5_combout\)) # (\Selector164~4_combout\))) ) ) # ( !\Mux51~2_combout\ & ( (\stateNum~1_combout\ & \Selector164~6_combout\) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000001010101000101010101010100000000010101010001010101010101",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_stateNum~1_combout\,
+	datab => \ALT_INV_Selector164~4_combout\,
+	datac => \ALT_INV_Selector164~5_combout\,
+	datad => \ALT_INV_Selector164~6_combout\,
+	datae => \ALT_INV_Mux51~2_combout\,
+	combout => \arch_Ch3END[5]~0_combout\);
+
+\arch_Ch3END[7]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(7),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(7));
+
+\arch_Ch3END[6]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector29~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(6));
+
+\LessThan3~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~0_combout\ = (!currMemAddress(6) & (arch_Ch3END(6) & (!currMemAddress(7) $ (arch_Ch3END(7))))) # (currMemAddress(6) & (!arch_Ch3END(6) & (!currMemAddress(7) $ (arch_Ch3END(7)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch3END(7),
+	datad => ALT_INV_arch_Ch3END(6),
+	combout => \LessThan3~0_combout\);
+
+\arch_Ch3END[5]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector30~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(5));
+
+\LessThan3~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~1_combout\ = !currMemAddress(5) $ (!arch_Ch3END(5))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(5),
+	datab => ALT_INV_arch_Ch3END(5),
+	combout => \LessThan3~1_combout\);
+
+\arch_Ch3END[4]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(4),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(4));
+
+\LessThan3~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~2_combout\ = !currMemAddress(4) $ (!arch_Ch3END(4))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_arch_Ch3END(4),
+	combout => \LessThan3~2_combout\);
+
+\arch_Ch3END[1]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(1),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(1));
+
+\arch_Ch3END[0]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector35~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(0));
+
+\LessThan3~3\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~3_combout\ = (!currMemAddress(1) & (currMemAddress(0) & (!arch_Ch3END(1) & !arch_Ch3END(0)))) # (currMemAddress(1) & ((!arch_Ch3END(1)) # ((currMemAddress(0) & !arch_Ch3END(0)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000100110000011100010011000001110001001100000111000100110000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(0),
+	datab => ALT_INV_currMemAddress(1),
+	datac => ALT_INV_arch_Ch3END(1),
+	datad => ALT_INV_arch_Ch3END(0),
+	combout => \LessThan3~3_combout\);
+
+\arch_Ch3END[3]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(3),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(3));
+
+\arch_Ch3END[2]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector33~0_combout\,
+	clrn => \ResetN~input_o\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(2));
+
+\LessThan3~4\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~4_combout\ = (!currMemAddress(2) & (arch_Ch3END(2) & (!currMemAddress(3) $ (arch_Ch3END(3))))) # (currMemAddress(2) & (!arch_Ch3END(2) & (!currMemAddress(3) $ (arch_Ch3END(3)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0100000110000010010000011000001001000001100000100100000110000010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch3END(3),
+	datad => ALT_INV_arch_Ch3END(2),
+	combout => \LessThan3~4_combout\);
+
+\LessThan3~5\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~5_combout\ = (!currMemAddress(3) & (currMemAddress(2) & (!arch_Ch3END(3) & arch_Ch3END(2)))) # (currMemAddress(3) & ((!arch_Ch3END(3)) # ((currMemAddress(2) & arch_Ch3END(2)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(2),
+	datab => ALT_INV_currMemAddress(3),
+	datac => ALT_INV_arch_Ch3END(3),
+	datad => ALT_INV_arch_Ch3END(2),
+	combout => \LessThan3~5_combout\);
+
+\LessThan3~6\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~6_combout\ = ( \LessThan3~4_combout\ & ( \LessThan3~5_combout\ & ( (\LessThan3~0_combout\ & (\LessThan3~1_combout\ & !\LessThan3~2_combout\)) ) ) ) # ( !\LessThan3~4_combout\ & ( \LessThan3~5_combout\ & ( (\LessThan3~0_combout\ & 
+-- (\LessThan3~1_combout\ & !\LessThan3~2_combout\)) ) ) ) # ( \LessThan3~4_combout\ & ( !\LessThan3~5_combout\ & ( (\LessThan3~0_combout\ & (\LessThan3~1_combout\ & (!\LessThan3~2_combout\ & \LessThan3~3_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000001000000010000000100000001000000010000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan3~0_combout\,
+	datab => \ALT_INV_LessThan3~1_combout\,
+	datac => \ALT_INV_LessThan3~2_combout\,
+	datad => \ALT_INV_LessThan3~3_combout\,
+	datae => \ALT_INV_LessThan3~4_combout\,
+	dataf => \ALT_INV_LessThan3~5_combout\,
+	combout => \LessThan3~6_combout\);
+
+\LessThan3~7\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~7_combout\ = (!currMemAddress(7) & (currMemAddress(6) & (!arch_Ch3END(7) & arch_Ch3END(6)))) # (currMemAddress(7) & ((!arch_Ch3END(7)) # ((currMemAddress(6) & arch_Ch3END(6)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011000001110001001100000111000100110000011100010011000001110001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(6),
+	datab => ALT_INV_currMemAddress(7),
+	datac => ALT_INV_arch_Ch3END(7),
+	datad => ALT_INV_arch_Ch3END(6),
+	combout => \LessThan3~7_combout\);
+
+\LessThan3~8\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~8_combout\ = ( arch_Ch3END(4) & ( !\LessThan3~7_combout\ & ( (!currMemAddress(5)) # ((!arch_Ch3END(5)) # (!\LessThan3~0_combout\)) ) ) ) # ( !arch_Ch3END(4) & ( !\LessThan3~7_combout\ & ( (!\LessThan3~0_combout\) # ((!currMemAddress(4) & 
+-- ((!currMemAddress(5)) # (!arch_Ch3END(5)))) # (currMemAddress(4) & (!currMemAddress(5) & !arch_Ch3END(5)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111111101000111111111111110000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(4),
+	datab => ALT_INV_currMemAddress(5),
+	datac => ALT_INV_arch_Ch3END(5),
+	datad => \ALT_INV_LessThan3~0_combout\,
+	datae => ALT_INV_arch_Ch3END(4),
+	dataf => \ALT_INV_LessThan3~7_combout\,
+	combout => \LessThan3~8_combout\);
+
+\arch_Ch3END[11]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(11),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(11));
+
+\arch_Ch3END[14]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(14),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(14));
+
+\arch_Ch3END[13]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(13),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(13));
+
+\arch_Ch3END[12]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(12),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(12));
+
+\LessThan3~9\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~9_combout\ = ( arch_Ch3END(13) & ( arch_Ch3END(12) & ( (currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch3END(14))))) ) ) ) # ( !arch_Ch3END(13) & ( arch_Ch3END(12) & ( (currMemAddress(12) & (!currMemAddress(13) & 
+-- (!currMemAddress(14) $ (arch_Ch3END(14))))) ) ) ) # ( arch_Ch3END(13) & ( !arch_Ch3END(12) & ( (!currMemAddress(12) & (currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch3END(14))))) ) ) ) # ( !arch_Ch3END(13) & ( !arch_Ch3END(12) & ( 
+-- (!currMemAddress(12) & (!currMemAddress(13) & (!currMemAddress(14) $ (arch_Ch3END(14))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch3END(14),
+	datae => ALT_INV_arch_Ch3END(13),
+	dataf => ALT_INV_arch_Ch3END(12),
+	combout => \LessThan3~9_combout\);
+
+\arch_Ch3END[10]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(10),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(10));
+
+\LessThan3~10\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~10_combout\ = !currMemAddress(10) $ (!arch_Ch3END(10))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_arch_Ch3END(10),
+	combout => \LessThan3~10_combout\);
+
+\arch_Ch3END[9]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(9),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(9));
+
+\LessThan3~11\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~11_combout\ = !currMemAddress(9) $ (!arch_Ch3END(9))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(9),
+	datab => ALT_INV_arch_Ch3END(9),
+	combout => \LessThan3~11_combout\);
+
+\arch_Ch3END[8]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(8),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(8));
+
+\LessThan3~12\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~12_combout\ = !currMemAddress(8) $ (!arch_Ch3END(8))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0110011001100110011001100110011001100110011001100110011001100110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_arch_Ch3END(8),
+	combout => \LessThan3~12_combout\);
+
+\LessThan3~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~13_combout\ = ( !\LessThan3~11_combout\ & ( !\LessThan3~12_combout\ & ( (\LessThan3~9_combout\ & (!\LessThan3~10_combout\ & (!currMemAddress(11) $ (arch_Ch3END(11))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000000000000000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch3END(11),
+	datac => \ALT_INV_LessThan3~9_combout\,
+	datad => \ALT_INV_LessThan3~10_combout\,
+	datae => \ALT_INV_LessThan3~11_combout\,
+	dataf => \ALT_INV_LessThan3~12_combout\,
+	combout => \LessThan3~13_combout\);
+
+\LessThan3~14\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~14_combout\ = (\LessThan3~9_combout\ & (!\LessThan3~10_combout\ & (!currMemAddress(11) $ (arch_Ch3END(11)))))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000100100000000000010010000000000001001000000000000100100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(11),
+	datab => ALT_INV_arch_Ch3END(11),
+	datac => \ALT_INV_LessThan3~9_combout\,
+	datad => \ALT_INV_LessThan3~10_combout\,
+	combout => \LessThan3~14_combout\);
+
+\LessThan3~15\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~15_combout\ = ( arch_Ch3END(13) & ( arch_Ch3END(12) & ( (currMemAddress(14) & !arch_Ch3END(14)) ) ) ) # ( !arch_Ch3END(13) & ( arch_Ch3END(12) & ( (!currMemAddress(13) & (currMemAddress(14) & !arch_Ch3END(14))) # (currMemAddress(13) & 
+-- ((!arch_Ch3END(14)) # (currMemAddress(14)))) ) ) ) # ( arch_Ch3END(13) & ( !arch_Ch3END(12) & ( (!currMemAddress(14) & (currMemAddress(12) & (currMemAddress(13) & !arch_Ch3END(14)))) # (currMemAddress(14) & ((!arch_Ch3END(14)) # ((currMemAddress(12) & 
+-- currMemAddress(13))))) ) ) ) # ( !arch_Ch3END(13) & ( !arch_Ch3END(12) & ( (!currMemAddress(14) & (!arch_Ch3END(14) & ((currMemAddress(13)) # (currMemAddress(12))))) # (currMemAddress(14) & (((!arch_Ch3END(14)) # (currMemAddress(13))) # 
+-- (currMemAddress(12)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111111100000111000111110000000100111111000000110000111100000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(12),
+	datab => ALT_INV_currMemAddress(13),
+	datac => ALT_INV_currMemAddress(14),
+	datad => ALT_INV_arch_Ch3END(14),
+	datae => ALT_INV_arch_Ch3END(13),
+	dataf => ALT_INV_arch_Ch3END(12),
+	combout => \LessThan3~15_combout\);
+
+\LessThan3~16\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~16_combout\ = ( arch_Ch3END(10) & ( !\LessThan3~15_combout\ & ( (!currMemAddress(11)) # ((!\LessThan3~9_combout\) # (arch_Ch3END(11))) ) ) ) # ( !arch_Ch3END(10) & ( !\LessThan3~15_combout\ & ( (!\LessThan3~9_combout\) # ((!currMemAddress(10) & 
+-- ((!currMemAddress(11)) # (arch_Ch3END(11)))) # (currMemAddress(10) & (!currMemAddress(11) & arch_Ch3END(11)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1111111110001110111111111100111100000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(10),
+	datab => ALT_INV_currMemAddress(11),
+	datac => ALT_INV_arch_Ch3END(11),
+	datad => \ALT_INV_LessThan3~9_combout\,
+	datae => ALT_INV_arch_Ch3END(10),
+	dataf => \ALT_INV_LessThan3~15_combout\,
+	combout => \LessThan3~16_combout\);
+
+\LessThan3~17\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~17_combout\ = ( arch_Ch3END(8) & ( \LessThan3~16_combout\ & ( (!currMemAddress(9)) # ((!\LessThan3~14_combout\) # (arch_Ch3END(9))) ) ) ) # ( !arch_Ch3END(8) & ( \LessThan3~16_combout\ & ( (!\LessThan3~14_combout\) # ((!currMemAddress(8) & 
+-- ((!currMemAddress(9)) # (arch_Ch3END(9)))) # (currMemAddress(8) & (!currMemAddress(9) & arch_Ch3END(9)))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111100011101111111111001111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(8),
+	datab => ALT_INV_currMemAddress(9),
+	datac => ALT_INV_arch_Ch3END(9),
+	datad => \ALT_INV_LessThan3~14_combout\,
+	datae => ALT_INV_arch_Ch3END(8),
+	dataf => \ALT_INV_LessThan3~16_combout\,
+	combout => \LessThan3~17_combout\);
+
+\arch_Ch3END[17]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(17),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(17));
+
+\arch_Ch3END[16]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(16),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(16));
+
+\arch_Ch3END[15]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => currMemAddress(15),
+	clrn => \ResetN~input_o\,
+	sclr => \ALT_INV_state.EMPTY~q\,
+	ena => \arch_Ch3END[5]~0_combout\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(15));
+
+\LessThan3~18\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \LessThan3~18_combout\ = ( arch_Ch3END(16) & ( arch_Ch3END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch3END(17))))) ) ) ) # ( !arch_Ch3END(16) & ( arch_Ch3END(15) & ( (currMemAddress(15) & (!currMemAddress(16) & 
+-- (!currMemAddress(17) $ (arch_Ch3END(17))))) ) ) ) # ( arch_Ch3END(16) & ( !arch_Ch3END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch3END(17))))) ) ) ) # ( !arch_Ch3END(16) & ( !arch_Ch3END(15) & ( 
+-- (!currMemAddress(15) & (!currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch3END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "1000000000001000001000000000001001000000000001000001000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch3END(17),
+	datae => ALT_INV_arch_Ch3END(16),
+	dataf => ALT_INV_arch_Ch3END(15),
+	combout => \LessThan3~18_combout\);
+
+\Selector100~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector100~0_combout\ = ( \KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (!arch_recSel(0)) # (!arch_recSel(1)) ) ) ) # ( !\KB_ALLPLAY~input_o\ & ( \state.REC_OTHER~q\ & ( (!arch_recSel(0)) # ((!arch_recSel(1)) # ((\arch_loop_start~q\ & 
+-- !\KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011101111111011101110111011101110",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_arch_recSel(0),
+	datab => ALT_INV_arch_recSel(1),
+	datac => \ALT_INV_arch_loop_start~q\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ALLPLAY~input_o\,
+	dataf => \ALT_INV_state.REC_OTHER~q\,
+	combout => \Selector100~0_combout\);
+
+\Selector100~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector100~1_combout\ = ( \Mux51~2_combout\ & ( \Selector100~0_combout\ & ( arch_Ch3END(31) ) ) ) # ( !\Mux51~2_combout\ & ( \Selector100~0_combout\ & ( arch_Ch3END(31) ) ) ) # ( \Mux51~2_combout\ & ( !\Selector100~0_combout\ & ( (arch_Ch3END(31) & 
+-- ((!\stateNum~1_combout\) # ((\process_0~0_combout\ & \state.REC_FIRST~q\)))) ) ) ) # ( !\Mux51~2_combout\ & ( !\Selector100~0_combout\ & ( (arch_Ch3END(31) & ((!\stateNum~1_combout\) # (\state.REC_FIRST~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000011110011000000001111000100000000111111110000000011111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_process_0~0_combout\,
+	datab => \ALT_INV_state.REC_FIRST~q\,
+	datac => \ALT_INV_stateNum~1_combout\,
+	datad => ALT_INV_arch_Ch3END(31),
+	datae => \ALT_INV_Mux51~2_combout\,
+	dataf => \ALT_INV_Selector100~0_combout\,
+	combout => \Selector100~1_combout\);
+
+\arch_Ch3END[31]\ : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector100~1_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => arch_Ch3END(31));
+
+\arch_Ch3ACT~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \arch_Ch3ACT~0_combout\ = ( \KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & \KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( \KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & 
+-- (!\KB_REC~input_o\ & \KB_Selchannel[1]~input_o\)) ) ) ) # ( \KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & \KB_Selchannel[1]~input_o\)) ) ) ) # ( !\KB_ClearCH~input_o\ & ( !\KB_STOP~input_o\ & ( 
+-- (\KB_Selchannel[0]~input_o\ & (!\KB_REC~input_o\ & (\KB_Selchannel[1]~input_o\ & \KB_PLAY~input_o\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000100000001000000010000000100000001000000010000000100",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_KB_Selchannel[0]~input_o\,
+	datab => \ALT_INV_KB_REC~input_o\,
+	datac => \ALT_INV_KB_Selchannel[1]~input_o\,
+	datad => \ALT_INV_KB_PLAY~input_o\,
+	datae => \ALT_INV_KB_ClearCH~input_o\,
+	dataf => \ALT_INV_KB_STOP~input_o\,
+	combout => \arch_Ch3ACT~0_combout\);
+
+\Selector135~0\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector135~0_combout\ = ( \arch_Ch3ACT~0_combout\ & ( (\state.CH_CONTROL~q\ & (((!\KB_STOP~input_o\ & !\ch3HT~q\)) # (\KB_PLAY~input_o\))) ) ) # ( !\arch_Ch3ACT~0_combout\ & ( \state.CH_CONTROL~q\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0101010101010101010100010001000101010101010101010101000100010001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_KB_STOP~input_o\,
+	datad => \ALT_INV_ch3HT~q\,
+	datae => \ALT_INV_arch_Ch3ACT~0_combout\,
+	combout => \Selector135~0_combout\);
+
+\Selector135~1\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector135~1_combout\ = (\state.CH_CONTROL~q\ & (\KB_PLAY~input_o\ & (\ch3HT~q\ & \arch_Ch3ACT~0_combout\)))
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000001000000000000000100000000000000010000000000000001",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_state.CH_CONTROL~q\,
+	datab => \ALT_INV_KB_PLAY~input_o\,
+	datac => \ALT_INV_ch3HT~q\,
+	datad => \ALT_INV_arch_Ch3ACT~0_combout\,
+	combout => \Selector135~1_combout\);
+
+\Selector135~2\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \Selector135~2_combout\ = ( \Selector135~0_combout\ & ( \Selector135~1_combout\ ) ) # ( !\Selector135~0_combout\ & ( \Selector135~1_combout\ ) ) # ( \Selector135~0_combout\ & ( !\Selector135~1_combout\ & ( ((\Selector163~0_combout\ & \Mux51~2_combout\)) # 
+-- (\arch_Ch3ACT~q\) ) ) ) # ( !\Selector135~0_combout\ & ( !\Selector135~1_combout\ & ( (!\Selector163~0_combout\ & (\arch_Ch3ACT~q\ & ((!\Selector136~0_combout\)))) # (\Selector163~0_combout\ & (((\arch_Ch3ACT~q\ & !\Selector136~0_combout\)) # 
+-- (\Mux51~2_combout\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0011011100000101001101110011011111111111111111111111111111111111",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_Selector163~0_combout\,
+	datab => \ALT_INV_arch_Ch3ACT~q\,
+	datac => \ALT_INV_Mux51~2_combout\,
+	datad => \ALT_INV_Selector136~0_combout\,
+	datae => \ALT_INV_Selector135~0_combout\,
+	dataf => \ALT_INV_Selector135~1_combout\,
+	combout => \Selector135~2_combout\);
+
+arch_Ch3ACT : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \Selector135~2_combout\,
+	clrn => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch3ACT~q\);
+
+\process_0~11\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~11_combout\ = ( !arch_Ch3END(16) & ( arch_Ch3END(15) & ( (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch3END(17)))) ) ) ) # ( arch_Ch3END(16) & ( !arch_Ch3END(15) & ( (currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ 
+-- (arch_Ch3END(17))))) ) ) ) # ( !arch_Ch3END(16) & ( !arch_Ch3END(15) & ( (!currMemAddress(15) & (currMemAddress(16) & (!currMemAddress(17) $ (arch_Ch3END(17))))) # (currMemAddress(15) & ((!currMemAddress(17) $ (arch_Ch3END(17))))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0111000000000111000100000000000100110000000000110000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(15),
+	datab => ALT_INV_currMemAddress(16),
+	datac => ALT_INV_currMemAddress(17),
+	datad => ALT_INV_arch_Ch3END(17),
+	datae => ALT_INV_arch_Ch3END(16),
+	dataf => ALT_INV_arch_Ch3END(15),
+	combout => \process_0~11_combout\);
+
+\process_0~12\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~12_combout\ = ( arch_Ch3END(17) & ( !\process_0~11_combout\ & ( (\ch3HT~q\ & (!arch_Ch3END(31) & \arch_Ch3ACT~q\)) ) ) ) # ( !arch_Ch3END(17) & ( !\process_0~11_combout\ & ( (!currMemAddress(17) & (\ch3HT~q\ & (!arch_Ch3END(31) & 
+-- \arch_Ch3ACT~q\))) ) ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000100000000000000011000000000000000000000000000000000000",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => ALT_INV_currMemAddress(17),
+	datab => \ALT_INV_ch3HT~q\,
+	datac => ALT_INV_arch_Ch3END(31),
+	datad => \ALT_INV_arch_Ch3ACT~q\,
+	datae => ALT_INV_arch_Ch3END(17),
+	dataf => \ALT_INV_process_0~11_combout\,
+	combout => \process_0~12_combout\);
+
+\process_0~13\ : cyclonev_lcell_comb
+-- Equation(s):
+-- \process_0~13_combout\ = ( \LessThan3~18_combout\ & ( \process_0~12_combout\ & ( (\LessThan3~17_combout\ & ((!\LessThan3~13_combout\) # ((!\LessThan3~6_combout\ & \LessThan3~8_combout\)))) ) ) ) # ( !\LessThan3~18_combout\ & ( \process_0~12_combout\ ) )
+
+-- pragma translate_off
+GENERIC MAP (
+	extended_lut => "off",
+	lut_mask => "0000000000000000000000000000000011111111111111110000000011110010",
+	shared_arith => "off")
+-- pragma translate_on
+PORT MAP (
+	dataa => \ALT_INV_LessThan3~6_combout\,
+	datab => \ALT_INV_LessThan3~8_combout\,
+	datac => \ALT_INV_LessThan3~13_combout\,
+	datad => \ALT_INV_LessThan3~17_combout\,
+	datae => \ALT_INV_LessThan3~18_combout\,
+	dataf => \ALT_INV_process_0~12_combout\,
+	combout => \process_0~13_combout\);
+
+arch_Ch3DEC : dffeas
+-- pragma translate_off
+GENERIC MAP (
+	is_wysiwyg => "true",
+	power_up => "low")
+-- pragma translate_on
+PORT MAP (
+	clk => \clk~input_o\,
+	d => \process_0~13_combout\,
+	ena => \ResetN~input_o\,
+	devclrn => ww_devclrn,
+	devpor => ww_devpor,
+	q => \arch_Ch3DEC~q\);
+
+\KB_RecOnMet~input\ : cyclonev_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_KB_RecOnMet,
+	o => \KB_RecOnMet~input_o\);
+
+\KB_IMMstart~input\ : cyclonev_io_ibuf
+-- pragma translate_off
+GENERIC MAP (
+	bus_hold => "false",
+	simulate_z_as => "z")
+-- pragma translate_on
+PORT MAP (
+	i => ww_KB_IMMstart,
+	o => \KB_IMMstart~input_o\);
+
+ww_recSel(0) <= \recSel[0]~output_o\;
+
+ww_recSel(1) <= \recSel[1]~output_o\;
+
+ww_recording <= \recording~output_o\;
+
+ww_loop_start <= \loop_start~output_o\;
+
+ww_Imm_start <= \Imm_start~output_o\;
+
+ww_CurrState(0) <= \CurrState[0]~output_o\;
+
+ww_CurrState(1) <= \CurrState[1]~output_o\;
+
+ww_CurrState(2) <= \CurrState[2]~output_o\;
+
+ww_ENDMemAddress(0) <= \ENDMemAddress[0]~output_o\;
+
+ww_ENDMemAddress(1) <= \ENDMemAddress[1]~output_o\;
+
+ww_ENDMemAddress(2) <= \ENDMemAddress[2]~output_o\;
+
+ww_ENDMemAddress(3) <= \ENDMemAddress[3]~output_o\;
+
+ww_ENDMemAddress(4) <= \ENDMemAddress[4]~output_o\;
+
+ww_ENDMemAddress(5) <= \ENDMemAddress[5]~output_o\;
+
+ww_ENDMemAddress(6) <= \ENDMemAddress[6]~output_o\;
+
+ww_ENDMemAddress(7) <= \ENDMemAddress[7]~output_o\;
+
+ww_ENDMemAddress(8) <= \ENDMemAddress[8]~output_o\;
+
+ww_ENDMemAddress(9) <= \ENDMemAddress[9]~output_o\;
+
+ww_ENDMemAddress(10) <= \ENDMemAddress[10]~output_o\;
+
+ww_ENDMemAddress(11) <= \ENDMemAddress[11]~output_o\;
+
+ww_ENDMemAddress(12) <= \ENDMemAddress[12]~output_o\;
+
+ww_ENDMemAddress(13) <= \ENDMemAddress[13]~output_o\;
+
+ww_ENDMemAddress(14) <= \ENDMemAddress[14]~output_o\;
+
+ww_ENDMemAddress(15) <= \ENDMemAddress[15]~output_o\;
+
+ww_ENDMemAddress(16) <= \ENDMemAddress[16]~output_o\;
+
+ww_ENDMemAddress(17) <= \ENDMemAddress[17]~output_o\;
+
+ww_currentMemAddress(0) <= \currentMemAddress[0]~output_o\;
+
+ww_currentMemAddress(1) <= \currentMemAddress[1]~output_o\;
+
+ww_currentMemAddress(2) <= \currentMemAddress[2]~output_o\;
+
+ww_currentMemAddress(3) <= \currentMemAddress[3]~output_o\;
+
+ww_currentMemAddress(4) <= \currentMemAddress[4]~output_o\;
+
+ww_currentMemAddress(5) <= \currentMemAddress[5]~output_o\;
+
+ww_currentMemAddress(6) <= \currentMemAddress[6]~output_o\;
+
+ww_currentMemAddress(7) <= \currentMemAddress[7]~output_o\;
+
+ww_currentMemAddress(8) <= \currentMemAddress[8]~output_o\;
+
+ww_currentMemAddress(9) <= \currentMemAddress[9]~output_o\;
+
+ww_currentMemAddress(10) <= \currentMemAddress[10]~output_o\;
+
+ww_currentMemAddress(11) <= \currentMemAddress[11]~output_o\;
+
+ww_currentMemAddress(12) <= \currentMemAddress[12]~output_o\;
+
+ww_currentMemAddress(13) <= \currentMemAddress[13]~output_o\;
+
+ww_currentMemAddress(14) <= \currentMemAddress[14]~output_o\;
+
+ww_currentMemAddress(15) <= \currentMemAddress[15]~output_o\;
+
+ww_currentMemAddress(16) <= \currentMemAddress[16]~output_o\;
+
+ww_currentMemAddress(17) <= \currentMemAddress[17]~output_o\;
+
+ww_Ch0Activate <= \Ch0Activate~output_o\;
+
+ww_Ch1Activate <= \Ch1Activate~output_o\;
+
+ww_Ch2Activate <= \Ch2Activate~output_o\;
+
+ww_Ch3Activate <= \Ch3Activate~output_o\;
 END structure;
 
 

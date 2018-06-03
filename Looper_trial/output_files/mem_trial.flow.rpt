@@ -1,5 +1,5 @@
 Flow report for mem_trial
-Sat Jun 02 10:47:48 2018
+Sun Jun 03 20:55:23 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -41,16 +41,16 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Sat Jun 02 10:47:08 2018       ;
+; Flow Status                     ; Successful - Sun Jun 03 20:54:42 2018       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; mem_trial                                   ;
 ; Top-level Entity Name           ; experiment_digital_recorder                 ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSXFC6D6F31C6                              ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 710 / 41,910 ( 2 % )                        ;
-; Total registers                 ; 607                                         ;
-; Total pins                      ; 18 / 499 ( 4 % )                            ;
+; Logic utilization (in ALMs)     ; 840 / 41,910 ( 2 % )                        ;
+; Total registers                 ; 736                                         ;
+; Total pins                      ; 21 / 499 ( 4 % )                            ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 4,195,360 / 5,662,720 ( 74 % )              ;
 ; Total DSP Blocks                ; 0 / 112 ( 0 % )                             ;
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 06/02/2018 10:41:27 ;
+; Start date & time ; 06/03/2018 20:49:50 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; mem_trial           ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-----------------------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name                 ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+-----------------------------+------------+
-; COMPILER_SIGNATURE_ID               ; 105927193361063.152792528615888        ; --            ; --                          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 105927193361063.152804818913112        ; --            ; --                          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --                          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --                          ; --         ;
 ; MISC_FILE                           ; dpram.bsf                              ; --            ; --                          ; --         ;
@@ -99,11 +99,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:20     ; 1.0                     ; 4963 MB             ; 00:00:41                           ;
-; Fitter                    ; 00:04:57     ; 1.1                     ; 6338 MB             ; 00:08:54                           ;
-; Assembler                 ; 00:00:19     ; 1.0                     ; 4922 MB             ; 00:00:18                           ;
-; TimeQuest Timing Analyzer ; 00:00:39     ; 1.6                     ; 5269 MB             ; 00:00:49                           ;
-; Total                     ; 00:06:15     ; --                      ; --                  ; 00:10:42                           ;
+; Analysis & Synthesis      ; 00:00:23     ; 1.0                     ; 4963 MB             ; 00:00:47                           ;
+; Fitter                    ; 00:04:04     ; 1.1                     ; 6351 MB             ; 00:07:42                           ;
+; Assembler                 ; 00:00:21     ; 1.0                     ; 4921 MB             ; 00:00:19                           ;
+; TimeQuest Timing Analyzer ; 00:00:40     ; 1.6                     ; 5274 MB             ; 00:00:52                           ;
+; Total                     ; 00:05:28     ; --                      ; --                  ; 00:09:40                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

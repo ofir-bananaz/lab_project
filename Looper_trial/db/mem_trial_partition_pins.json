@@ -52,27 +52,39 @@
 					"strict" : false
 				},
 				{
-					"name" : "Active[2]",
+					"name" : "IntergratorDIV[2]",
 					"strict" : false
 				},
 				{
-					"name" : "Active[0]",
+					"name" : "IntergratorDIV[0]",
 					"strict" : false
 				},
 				{
-					"name" : "Active[1]",
+					"name" : "IntergratorDIV[1]",
 					"strict" : false
 				},
 				{
-					"name" : "recording",
+					"name" : "SelCh4Cmd[0]",
 					"strict" : false
 				},
 				{
-					"name" : "sel[0]",
+					"name" : "recB",
 					"strict" : false
 				},
 				{
-					"name" : "sel[1]",
+					"name" : "SelCh4Cmd[1]",
+					"strict" : false
+				},
+				{
+					"name" : "playB",
+					"strict" : false
+				},
+				{
+					"name" : "clearB",
+					"strict" : false
+				},
+				{
+					"name" : "stopB",
 					"strict" : false
 				}
 			]

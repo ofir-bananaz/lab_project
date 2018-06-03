@@ -6,48 +6,59 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 
-entity LooperSM is
+entity ChannelSM is
 	port (
 
 		--keyboard inputs
-		ResetN : in std_logic;
-		clk : in std_logic;
-		make, break : in std_logic;
-		KBdata     : in std_logic_vector(8 downto 0);
-		
+		ResetN        : in std_logic;
+		clk           : in std_logic;
+	
 
 		-- Outputs
-		sel_channel: out std_logic_vector(1 downto 0); --4 channels
-		RecOnMet : out std_logic;
-		ch_play : out std_logic;
-		STOP : out std_logic;
-		ClearCH : out std_logic
+		Selchannel    : out std_logic_vector(1 downto 0); --4 channels
+		RecOnMet      : out std_logic;
+		PLAY          : out std_logic;
+		ALLPLAY       : out std_logic;
+		REC           : out std_logic;
+		STOP          : out std_logic;
+		ClearCH       : out std_logic;
 		
+		IMMstart : out std_logic;
 
 		
 	);
-end LooperSM;
+end ChannelSM;
 
 
 
 architecture arc_LooperSM of LooperSM is
-		signal arch_KBdata : std_logic_vector(7 downto 0);  -ignoring extended
-		signal arch_sel_channel:  std_logic_vector(1 downto 0); --4 channels
-		signal arch_RecOnMet :  std_logic;
-		signal arch_Rec_PLAY :  std_logic;
-		signal arch_STOP :  std_logic;
-		signal clearCH :  std_logic;
-		
+
+		signal arch_KBdata        : std_logic_vector(7 downto 0);  -ignoring extended
+		signal arch_Selchannel    :  std_logic_vector(1 downto 0); --4 channels
+		signal arch_RecOnMet      :  std_logic;
+		signal arch_PLAY          :  std_logic;
+		signal arch_ALLPLAY       :  std_logic;
+		signal arch_REC           :  std_logic;		
+		signal arch_STOP          :  std_logic;
+		signal arch_ClearCH       :  std_logic;
+
+
 
 begin
 -- Synchronous Part
 	process(ResetN,clk)
 	begin
-		if ResetN='0' then
-					arch_sel_channel<= "00";
-					arch_RecOnMet<='0';
-					arch_Rec_PLAY <= '0';
-					arch_STOP <='0';
+		if ResetN = '0' then
+			arch_KBdata      <= "00000000";
+			arch_Selchannel  <= "00";
+			arch_RecOnMet    <= '0';
+			arch_PLAY        <= '0';
+			arch_ALLPLAY     <= '0'; 
+			arch_REC         <= '0';
+			arch_STOP        <= '0';
+			arch_ClearCH     <= '0';
+
+					
 			
 		elsif (rising_edge(clk))  then
 			--default values:
@@ -74,7 +85,7 @@ begin
 					arch_RecOnMet <='1';
 					
 				when x"29"=> --"SPACE" on Keyboard
-					Rec_PLAY<='1'; --for one cycle;
+					arch_ALLPLAY <= '1'; --for one cycle;
 					
 				when x"7A"=> --"?" on Keyboard
 					if make ='1' then

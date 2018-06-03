@@ -20,23 +20,23 @@ set_location_assignment PIN_AF14 -to CLOCK_50
 #============================================================
 # KEY
 #============================================================
-set_location_assignment PIN_AJ4 -to resetN  ; # KEY[0]
-#set_location_assignment PIN_AK4 -to KEY[1]
-#set_location_assignment PIN_AA14 -to KEY[2]
-#set_location_assignment PIN_AA15 -to KEY[3]
+set_location_assignment PIN_AJ4 -to playB  ; # KEY[0]
+set_location_assignment PIN_AK4 -to recB
+set_location_assignment PIN_AA14 -to stopB
+set_location_assignment PIN_AA15 -to clearB
 
 #============================================================
 # SW
 #============================================================
-set_location_assignment PIN_AB30 -to recording ; #SW[0]
-set_location_assignment PIN_Y27 -to sel[0] ; #SW[1]
-set_location_assignment PIN_AB28 -to sel[1] ; #SW[2]
-set_location_assignment PIN_AC30 -to Active[0] ; #SW[3]
-set_location_assignment PIN_W25 -to Active[1] ; #SW[4]
-set_location_assignment PIN_V25 -to Active[2] ; #SW[5]
+set_location_assignment PIN_AB30 -to SelCh4Cmd[0] ; #SW[0]
+set_location_assignment PIN_Y27 -to SelCh4Cmd[1] ; #SW[1]
+#set_location_assignment PIN_AB28 -to SW[2] ; #SW[2]
+#set_location_assignment PIN_AC30 -to IntergratorDIV[0] ; #SW[3]
+#set_location_assignment PIN_W25 -to IntergratorDIV[1] ; #SW[4]
+#set_location_assignment PIN_V25 -to IntergratorDIV[2] ; #SW[5]
 #set_location_assignment PIN_AC28 -to SW[6]
-#set_location_assignment PIN_AD30 -to SW[7]
-#set_location_assignment PIN_AC29 -to SW[8]
+set_location_assignment PIN_AD30 -to resetN
+set_location_assignment PIN_AC29 -to IntergratorDIV[0]
 set_location_assignment PIN_AA30 -to MICROPHON_ON ; #SW[9]
 
 #============================================================
