@@ -1,12 +1,12 @@
-Fitter Status : Successful - Sun Jun 03 20:54:18 2018
+Fitter Status : Successful - Mon Jun 04 09:41:41 2018
 Quartus Prime Version : 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 Revision Name : mem_trial
-Top-level Entity Name : experiment_digital_recorder
+Top-level Entity Name : mem_trial
 Family : Cyclone V
 Device : 5CSXFC6D6F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 840 / 41,910 ( 2 % )
-Total registers : 736
+Logic utilization (in ALMs) : 872 / 41,910 ( 2 % )
+Total registers : 727
 Total pins : 21 / 499 ( 4 % )
 Total virtual pins : 0
 Total block memory bits : 4,195,360 / 5,662,720 ( 74 % )

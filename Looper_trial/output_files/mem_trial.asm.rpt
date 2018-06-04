@@ -1,5 +1,5 @@
 Assembler report for mem_trial
-Sun Jun 03 20:54:42 2018
+Mon Jun 04 09:42:01 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -38,9 +38,9 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Sun Jun 03 20:54:42 2018 ;
+; Assembler Status      ; Successful - Mon Jun 04 09:42:01 2018 ;
 ; Revision Name         ; mem_trial                             ;
-; Top-level Entity Name ; experiment_digital_recorder           ;
+; Top-level Entity Name ; mem_trial                             ;
 ; Family                ; Cyclone V                             ;
 ; Device                ; 5CSXFC6D6F31C6                        ;
 +-----------------------+---------------------------------------+
@@ -67,8 +67,8 @@ agreement for further details.
 +----------------+--------------------------------------------------------------------------------+
 ; Option         ; Setting                                                                        ;
 +----------------+--------------------------------------------------------------------------------+
-; JTAG usercode  ; 0x0B00D137                                                                     ;
-; Checksum       ; 0x0B00D137                                                                     ;
+; JTAG usercode  ; 0x0B01D10C                                                                     ;
+; Checksum       ; 0x0B01D10C                                                                     ;
 +----------------+--------------------------------------------------------------------------------+
 
 
@@ -78,14 +78,14 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Sun Jun 03 20:54:21 2018
-Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off mem_trial -c mem_trial
+    Info: Processing started: Mon Jun 04 09:41:44 2018
+Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c mem_trial
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4921 megabytes
-    Info: Processing ended: Sun Jun 03 20:54:42 2018
-    Info: Elapsed time: 00:00:21
-    Info: Total CPU time (on all processors): 00:00:19
+    Info: Peak virtual memory: 4927 megabytes
+    Info: Processing ended: Mon Jun 04 09:42:01 2018
+    Info: Elapsed time: 00:00:17
+    Info: Total CPU time (on all processors): 00:00:16
 
 

@@ -41,10 +41,6 @@ entity LooperSM is
 		
 		
 		Ch0Activate, Ch1Activate, Ch2Activate, Ch3Activate :  out std_logic
-		
-		
-
-		
 
 		
 	);
@@ -54,7 +50,7 @@ end LooperSM;
 
 architecture arc_LooperSM of LooperSM is
 	--STATE MACHINE--
-	type state_type is (EMPTY, REC_FIRST, CH_CONTROL, PRE_REC, REC_OTHER); --state machine states;
+	type state_type is (EMPTY, PRE_REC_FIRST, REC_FIRST, CH_CONTROL, PRE_REC, REC_OTHER); --state machine states;
 	signal state: state_type;
 	
 	--ARCHITRECTURE TO OUTPUT--
@@ -82,8 +78,9 @@ begin
 	process(clk,ResetN)
 		
 		variable recCounter : integer range 0 to 4; -- Count how many channels have record on them
+		variable stpCounter : integer range 0 to 4; -- Count how many channels have been stopped
 		variable memEndAddr: integer range 0 to 262143; -- MAX_ADDRESS must be plus always plus 1 - see addr counter to get the point -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		constant MAX_ADDR: integer range 0 to 262143 := 262143;--modify
+		constant MAX_ADDR: integer := 262143;--modify
 
 	begin
 		if ResetN='0' then
@@ -96,10 +93,10 @@ begin
 			arch_recSel <="00";
 			arch_recording <='0';
 			
-			arch_Ch0END <= MAX_ADDR;
-			arch_Ch1END <= MAX_ADDR;
-			arch_Ch2END <= MAX_ADDR;
-			arch_Ch3END <= MAX_ADDR;
+			arch_Ch0END <= 0;
+			arch_Ch1END <= 0;
+			arch_Ch2END <= 0;
+			arch_Ch3END <= 0;
 			
 			
 			arch_Ch0ACT <= '0';
@@ -114,6 +111,7 @@ begin
 			
 			--ARCH VARIABLES-- 
 			recCounter := 0;
+			stpCounter := 0;
 			memEndAddr := MAX_ADDR; -- MAX_ADDRESS
 			
 			
@@ -122,8 +120,8 @@ begin
 
 			
 		elsif (rising_edge(clk))  then
-			-- default value
-			arch_loop_start <='0';
+			
+			arch_loop_start <='0';		
 		
 			--Flip IMMEDIATE START MODE;
 			--if KB_IMMstart = '1' and arch_Imm_start = '0' then
@@ -136,10 +134,10 @@ begin
 				when EMPTY=> --stateNum <= 0 ;-- debug
 				------------------------------
 				
-					arch_loop_start <='1'; -- also to zero in memory
-					arch_Imm_start <= '0'; --mode for immediate start
-					arch_recSel <="00";
-					arch_recording <='0';
+					arch_loop_start  <= '1'  ; -- also to zero in memory
+					arch_Imm_start   <= '0'  ; --mode for immediate start
+					arch_recSel      <= "00" ;
+					arch_recording   <= '0'  ;
 					
 					arch_Ch0END <= 0 ;
 					arch_Ch1END <= 0 ;
@@ -147,7 +145,7 @@ begin
 					arch_Ch3END <= 0 ;
 					
 					
-					arch_Ch0ACT <= '0' ; --changed from END_ADDR because we don't wanna play when EMPTY
+					arch_Ch0ACT <= '0' ;
 					arch_Ch1ACT <= '0' ;
 					arch_Ch2ACT <= '0' ;
 					arch_Ch3ACT <= '0' ;
@@ -160,28 +158,36 @@ begin
 					
 					--ARCH VARIABLES-- 
 					recCounter := 0;
+					stpCounter := 0;
 					memEndAddr := MAX_ADDR; -- MAX_ADDRESS
 					
 
 					if KB_REC = '1' then
-						arch_recording <='1';
 						arch_recSel <= KB_Selchannel;
-						arch_loop_start <='1';
-						case arch_recSel is
-							when "00" => arch_Ch0ACT <='1' ;
-							when "01" => arch_Ch1ACT <='1' ;
-							when "10" => arch_Ch2ACT <='1' ;
-							when "11" => arch_Ch3ACT <='1' ;
-						end case;
-						state<=REC_FIRST;
+						state<=PRE_REC_FIRST;
 					end if;
 					
+				------------------------------				
+				when PRE_REC_FIRST=> --stateNum <= 1 ;-- debug
+				------------------------------
+				
+					arch_recording <='1';
+					arch_loop_start <='1';
+					case arch_recSel is
+						when "00" => arch_Ch0ACT <='1' ;
+						when "01" => arch_Ch1ACT <='1' ;
+						when "10" => arch_Ch2ACT <='1' ;
+						when "11" => arch_Ch3ACT <='1' ;
+					end case;
+					state<=REC_FIRST;
+				
 				------------------------------				
 				when REC_FIRST=> --stateNum <= 1 ;-- debug
 				------------------------------
 					recCounter:= 1;
+					arch_recording <='1';
 					
-					if (MAX_ADDR = conv_integer(CurrMemAddress) or KB_PLAY ='1' or KB_ALLPLAY = '1') then -- end of recording
+					if (MAX_ADDR = conv_integer(CurrMemAddress)-1 or KB_PLAY ='1' or KB_ALLPLAY = '1') then -- end of recording
 						arch_recording <='0';
 						memEndAddr  :=  conv_integer(CurrMemAddress);
 						arch_loop_start <='1';
@@ -198,15 +204,23 @@ begin
 				------------------------------
 				when CH_CONTROL=> --stateNum <= 2 ;-- debug
 				------------------------------
-					arch_recording <='0';
+					-- default values
+					arch_recording <='0'; -- dont start
+
 					-----
-					if KB_REC = '1' then -- can be more complicated - yes -> if the same as first track as first one need to reset time -> go to first rec;
+					if KB_REC = '1' then
 					-----
-						arch_recSel <= KB_Selchannel;
-						if (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
-							recCounter:= recCounter+1;
-						end if;
 						state<=PRE_REC;
+						arch_recSel <= KB_Selchannel;
+						if (recCounter = 1) and ((KB_Selchannel = "00" and ch0HT='1') or (KB_Selchannel = "01" and ch1HT='1') or (KB_Selchannel = "10" and ch2HT='1') or (KB_Selchannel = "11" and ch3HT='1')) then -- if we choose to record on a lonely track -> that's a first rec
+							state<=PRE_REC_FIRST;
+							
+						elsif (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
+							recCounter:= recCounter+1;
+						
+						end if;
+						
+						
 					-----
 					elsif KB_PLAY = '1' then -- CHANGE TO IF HAS TRACK --> PLAY
 					-----
@@ -246,32 +260,43 @@ begin
 							state<=EMPTY;
 						end if;
 					end if;
-					
+
 				------------------------------
 				when PRE_REC=> --stateNum <= 3 ;-- debug
 				------------------------------
 					if arch_loop_start = '1' then -- can improve by allowing stopping before record start
 						arch_recording <='1';
 						case arch_recSel is
-							when "00" => arch_Ch0ACT <='1';
+							when "00" => arch_Ch0ACT <='1'; 
 							when "01" => arch_Ch1ACT <='1';
 							when "10" => arch_Ch2ACT <='1';
 							when "11" => arch_Ch3ACT <='1';
 						end case;
 						state<=REC_OTHER;
 					end if;
-					
+
 				------------------------------
 				when REC_OTHER=> --stateNum <= 4 ;-- debug
 					------------------------------
-					if (arch_loop_start = '1' or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
+					arch_recording <='1';
+					if (memEndAddr = conv_integer(CurrMemAddress)-1 or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
 						arch_recording <='0';
 						state<=CH_CONTROL;
 						case arch_recSel is
-							when "00" => ch0HT <= '1'; arch_Ch0END <= conv_integer(CurrMemAddress);
-							when "01" => ch1HT <= '1'; arch_Ch1END <= conv_integer(CurrMemAddress)+1;
-							when "10" => ch2HT <= '1'; arch_Ch2END <= conv_integer(CurrMemAddress)+2;
-							when "11" => ch3HT <= '1'; arch_Ch3END <= conv_integer(CurrMemAddress)+3;
+							when "00" => ch0HT <= '1'; arch_Ch0END <= conv_integer(CurrMemAddress)-0; --want to end at the adress of 4
+							when "01" => ch1HT <= '1'; arch_Ch1END <= conv_integer(CurrMemAddress)-1;
+							when "10" => ch2HT <= '1'; arch_Ch2END <= conv_integer(CurrMemAddress)-2;
+							when "11" => ch3HT <= '1'; arch_Ch3END <= conv_integer(CurrMemAddress)-3;
+						end case;
+						
+					elsif (KB_STOP ='1') then
+						arch_recording <='0';
+						state<=CH_CONTROL;
+						case arch_recSel is
+							when "00" => ch0HT <= '1'; arch_Ch0ACT <='1'; arch_Ch0END <= conv_integer(CurrMemAddress)-0;  --want to end at the address of 0,
+							when "01" => ch1HT <= '1'; arch_Ch1ACT <='1'; arch_Ch1END <= conv_integer(CurrMemAddress)-1;  
+							when "10" => ch2HT <= '1'; arch_Ch2ACT <='1'; arch_Ch2END <= conv_integer(CurrMemAddress)-2;  
+							when "11" => ch3HT <= '1'; arch_Ch3ACT <='1'; arch_Ch3END <= conv_integer(CurrMemAddress)-3;  
 						end case;
 					end if;
 			end case;
@@ -307,7 +332,7 @@ begin
 			end if;
 			
 			
-			if conv_integer(CurrMemAddress) = memEndAddr-1 then --changed because 0 zero address will be set only just in the round
+			if conv_integer(CurrMemAddress) = memEndAddr-1 then -- zero address will be set only the round after
 				arch_loop_start <='1';
 			end if;
 			

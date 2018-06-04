@@ -1,5 +1,5 @@
 Flow report for mem_trial
-Sun Jun 03 20:55:23 2018
+Mon Jun 04 09:42:50 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -41,15 +41,15 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Sun Jun 03 20:54:42 2018       ;
+; Flow Status                     ; Successful - Mon Jun 04 09:42:01 2018       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; mem_trial                                   ;
-; Top-level Entity Name           ; experiment_digital_recorder                 ;
+; Top-level Entity Name           ; mem_trial                                   ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSXFC6D6F31C6                              ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 840 / 41,910 ( 2 % )                        ;
-; Total registers                 ; 736                                         ;
+; Logic utilization (in ALMs)     ; 872 / 41,910 ( 2 % )                        ;
+; Total registers                 ; 727                                         ;
 ; Total pins                      ; 21 / 499 ( 4 % )                            ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 4,195,360 / 5,662,720 ( 74 % )              ;
@@ -68,30 +68,31 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 06/03/2018 20:49:50 ;
+; Start date & time ; 06/04/2018 09:37:14 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; mem_trial           ;
 +-------------------+---------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                        ;
-+-------------------------------------+----------------------------------------+---------------+-----------------------------+------------+
-; Assignment Name                     ; Value                                  ; Default Value ; Entity Name                 ; Section Id ;
-+-------------------------------------+----------------------------------------+---------------+-----------------------------+------------+
-; COMPILER_SIGNATURE_ID               ; 105927193361063.152804818913112        ; --            ; --                          ; --         ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --                          ; --         ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --                          ; --         ;
-; MISC_FILE                           ; dpram.bsf                              ; --            ; --                          ; --         ;
-; MISC_FILE                           ; dpram.cmp                              ; --            ; --                          ; --         ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; experiment_digital_recorder ; Top        ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; experiment_digital_recorder ; Top        ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; experiment_digital_recorder ; Top        ;
-; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                    ; --            ; --                          ; --         ;
-; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --                          ; --         ;
-; PROJECT_OUTPUT_DIRECTORY            ; output_files                           ; --            ; --                          ; --         ;
-; TOP_LEVEL_ENTITY                    ; experiment_digital_recorder            ; mem_trial     ; --                          ; --         ;
-+-------------------------------------+----------------------------------------+---------------+-----------------------------+------------+
++-------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                        ;
++-------------------------------------+----------------------------------------+---------------+-------------+------------+
+; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id ;
++-------------------------------------+----------------------------------------+---------------+-------------+------------+
+; COMPILER_SIGNATURE_ID               ; 105927193361063.152809423307048        ; --            ; --          ; --         ;
+; ENABLE_SIGNALTAP                    ; On                                     ; --            ; --          ; --         ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --         ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --         ;
+; MISC_FILE                           ; dpram.bsf                              ; --            ; --          ; --         ;
+; MISC_FILE                           ; dpram.cmp                              ; --            ; --          ; --         ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                    ; --            ; --          ; --         ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --         ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                           ; --            ; --          ; --         ;
+; USE_SIGNALTAP_FILE                  ; output_files/stp1.stp                  ; --            ; --          ; --         ;
++-------------------------------------+----------------------------------------+---------------+-------------+------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
@@ -99,11 +100,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:23     ; 1.0                     ; 4963 MB             ; 00:00:47                           ;
-; Fitter                    ; 00:04:04     ; 1.1                     ; 6351 MB             ; 00:07:42                           ;
-; Assembler                 ; 00:00:21     ; 1.0                     ; 4921 MB             ; 00:00:19                           ;
-; TimeQuest Timing Analyzer ; 00:00:40     ; 1.6                     ; 5274 MB             ; 00:00:52                           ;
-; Total                     ; 00:05:28     ; --                      ; --                  ; 00:09:40                           ;
+; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 4952 MB             ; 00:00:47                           ;
+; Fitter                    ; 00:04:02     ; 1.1                     ; 6348 MB             ; 00:07:47                           ;
+; Assembler                 ; 00:00:17     ; 1.0                     ; 4927 MB             ; 00:00:16                           ;
+; TimeQuest Timing Analyzer ; 00:00:48     ; 1.6                     ; 5277 MB             ; 00:00:59                           ;
+; Total                     ; 00:05:31     ; --                      ; --                  ; 00:09:49                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -122,10 +123,10 @@ agreement for further details.
 ------------
 ; Flow Log ;
 ------------
-quartus_map --read_settings_files=on --write_settings_files=off mem_trial -c mem_trial
-quartus_fit --read_settings_files=off --write_settings_files=off mem_trial -c mem_trial
-quartus_asm --read_settings_files=off --write_settings_files=off mem_trial -c mem_trial
-quartus_sta mem_trial -c mem_trial
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c mem_trial
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c mem_trial
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c mem_trial
+quartus_sta experiement_digital_recorder -c mem_trial
 
 
 

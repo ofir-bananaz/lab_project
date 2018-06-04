@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSXFC6D6F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY experiment_digital_recorder
+set_global_assignment -name TOP_LEVEL_ENTITY mem_trial
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "12:56:03  JUNE 01, 2018"
 set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Lite Edition"
@@ -164,32 +164,41 @@ set_location_assignment PIN_V23 -to ADC_DOUT
 set_location_assignment PIN_W24 -to ADC_SCLK
 set_location_assignment PIN_Y24 -to AUD_I2C_SCLK
 set_location_assignment PIN_Y23 -to AUD_I2C_SDAT
-set_global_assignment -name VHDL_FILE prescaler.vhd
-set_global_assignment -name QXP_FILE audio_codec_controller.qxp
-set_global_assignment -name VHDL_FILE addr_counter.vhd
-set_global_assignment -name QIP_FILE dpram.qip
-set_global_assignment -name BDF_FILE recorder_module_looper.bdf
-set_global_assignment -name BDF_FILE experiment_digital_recorder.bdf
-set_global_assignment -name BSF_FILE ../Vhds/Recorder_module/dpram.bsf
-set_global_assignment -name TCL_SCRIPT_FILE pin.tcl
-set_global_assignment -name VHDL_FILE Looper_integrator.vhd
 set_location_assignment PIN_Y27 -to SW[1]
 set_location_assignment PIN_Y27 -to sel[0]
 set_location_assignment PIN_AB28 -to sel[1]
 set_location_assignment PIN_AC30 -to Active[0]
 set_location_assignment PIN_W25 -to Active[1]
 set_location_assignment PIN_V25 -to Active[2]
-set_global_assignment -name VECTOR_WAVEFORM_FILE output_files/Waveform.vwf
-set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
-set_global_assignment -name VHDL_FILE prescaler_new.vhd
-set_global_assignment -name VHDL_FILE addr_counter_new.vhd
 set_location_assignment PIN_AK4 -to Zero
 set_location_assignment PIN_AK4 -to SetAddrZero
 set_location_assignment PIN_AC29 -to IntergratorDIV[0]
 set_location_assignment PIN_W25 -to IntergratorDIV[1]
 set_location_assignment PIN_V25 -to IntergratorDIV[2]
+set_location_assignment PIN_AJ4 -to playB
+set_location_assignment PIN_AK4 -to recB
+set_location_assignment PIN_AA14 -to stopB
+set_location_assignment PIN_AA15 -to clearB
+set_location_assignment PIN_AB30 -to SelCh4Cmd[0]
+set_location_assignment PIN_Y27 -to SelCh4Cmd[1]
+set_global_assignment -name ENABLE_SIGNALTAP ON
+set_global_assignment -name USE_SIGNALTAP_FILE output_files/stp1.stp
+set_global_assignment -name BDF_FILE mem_trial.bdf
+set_global_assignment -name VHDL_FILE prescaler.vhd
+set_global_assignment -name QXP_FILE audio_codec_controller.qxp
+set_global_assignment -name VHDL_FILE addr_counter.vhd
+set_global_assignment -name QIP_FILE dpram.qip
+set_global_assignment -name BDF_FILE recorder_module_looper.bdf
+set_global_assignment -name BSF_FILE ../Vhds/Recorder_module/dpram.bsf
+set_global_assignment -name TCL_SCRIPT_FILE pin.tcl
+set_global_assignment -name VHDL_FILE Looper_integrator.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE output_files/Waveform.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
+set_global_assignment -name VHDL_FILE prescaler_new.vhd
+set_global_assignment -name VHDL_FILE addr_counter_new.vhd
 set_global_assignment -name VHDL_FILE SM/LooperSM.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform1.vwf
+set_global_assignment -name SIGNALTAP_FILE output_files/stp1.stp
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
@@ -212,12 +221,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[2]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Zero
-set_location_assignment PIN_AJ4 -to playB
-set_location_assignment PIN_AK4 -to recB
-set_location_assignment PIN_AA14 -to stopB
-set_location_assignment PIN_AA15 -to clearB
-set_location_assignment PIN_AB30 -to SelCh4Cmd[0]
-set_location_assignment PIN_Y27 -to SelCh4Cmd[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch0Activate
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch1Activate
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch2Activate

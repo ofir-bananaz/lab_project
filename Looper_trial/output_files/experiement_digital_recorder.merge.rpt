@@ -1,0 +1,467 @@
+Partition Merge report for experiement_digital_recorder
+Mon Jun 04 10:53:34 2018
+Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Partition Merge Summary
+  3. Partition Merge Netlist Types Used
+  4. Partition Merge Partition Statistics
+  5. Partition Merge Partition Pin Processing
+  6. Partition Merge Resource Usage Summary
+  7. Partition Merge RAM Summary
+  8. Partition Merge Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2017  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-------------------------------------------------------------------------------+
+; Partition Merge Summary                                                       ;
++---------------------------------+---------------------------------------------+
+; Partition Merge Status          ; Successful - Mon Jun 04 10:53:34 2018       ;
+; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
+; Revision Name                   ; experiement_digital_recorder                ;
+; Top-level Entity Name           ; experiement_digital_recorder                ;
+; Family                          ; Cyclone V                                   ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 677                                         ;
+; Total pins                      ; 21                                          ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 4,195,360                                   ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0                                           ;
+; Total DLLs                      ; 0                                           ;
++---------------------------------+---------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition Merge Netlist Types Used                                                                                                                                    ;
++----------------------------------------------------+----------------+-------------------+------------------------+----------------------------------------------------+
+; Partition Name                                     ; Partition Type ; Netlist Type Used ; Netlist Type Requested ; Partition Contents                                 ;
++----------------------------------------------------+----------------+-------------------+------------------------+----------------------------------------------------+
+; Top                                                ; User-created   ; Source File       ; Source File            ;                                                    ;
+; audio_codec_controller:audio_codec_controller_inst ; User-created   ; Source File       ; Source File            ; audio_codec_controller:audio_codec_controller_inst ;
+; hard_block:auto_generated_inst                     ; Auto-generated ; Source File       ; Source File            ; hard_block:auto_generated_inst                     ;
++----------------------------------------------------+----------------+-------------------+------------------------+----------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition Merge Partition Statistics                                                                                                                      ;
++-----------------------------------------------------------+---------+----------------------------------------------------+--------------------------------+
+; Statistic                                                 ; Top     ; audio_codec_controller:audio_codec_controller_inst ; hard_block:auto_generated_inst ;
++-----------------------------------------------------------+---------+----------------------------------------------------+--------------------------------+
+; Estimate of Logic utilization (ALMs needed)               ; 816     ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Combinational ALUT usage for logic                        ; 1444    ; 0                                                  ; 0                              ;
+;     -- 7 input functions                                  ; 4       ; 0                                                  ; 0                              ;
+;     -- 6 input functions                                  ; 295     ; 0                                                  ; 0                              ;
+;     -- 5 input functions                                  ; 181     ; 0                                                  ; 0                              ;
+;     -- 4 input functions                                  ; 182     ; 0                                                  ; 0                              ;
+;     -- <=3 input functions                                ; 782     ; 0                                                  ; 0                              ;
+; Memory ALUT usage                                         ; 0       ; 0                                                  ; 0                              ;
+;     -- 64-address deep                                    ; 0       ; 0                                                  ; 0                              ;
+;     -- 32-address deep                                    ; 0       ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Dedicated logic registers                                 ; 677     ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+;                                                           ;         ;                                                    ;                                ;
+; I/O pins                                                  ; 21      ; 0                                                  ; 0                              ;
+; I/O registers                                             ; 0       ; 0                                                  ; 0                              ;
+; Total block memory bits                                   ; 4195360 ; 0                                                  ; 0                              ;
+; Total block memory implementation bits                    ; 0       ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Connections                                               ;         ;                                                    ;                                ;
+;     -- Input Connections                                  ; 1       ; 0                                                  ; 0                              ;
+;     -- Registered Input Connections                       ; 0       ; 0                                                  ; 0                              ;
+;     -- Output Connections                                 ; 1       ; 0                                                  ; 0                              ;
+;     -- Registered Output Connections                      ; 0       ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Internal Connections                                      ;         ;                                                    ;                                ;
+;     -- Total Connections                                  ; 24119   ; 0                                                  ; 0                              ;
+;     -- Registered Connections                             ; 17184   ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; External Connections                                      ;         ;                                                    ;                                ;
+;     -- Top                                                ; 2       ; 0                                                  ; 0                              ;
+;     -- audio_codec_controller:audio_codec_controller_inst ; 0       ; 0                                                  ; 0                              ;
+;     -- hard_block:auto_generated_inst                     ; 0       ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Partition Interface                                       ;         ;                                                    ;                                ;
+;     -- Input Ports                                        ; 16      ; 0                                                  ; 0                              ;
+;     -- Output Ports                                       ; 4       ; 0                                                  ; 0                              ;
+;     -- Bidir Ports                                        ; 1       ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Registered Ports                                          ;         ;                                                    ;                                ;
+;     -- Registered Input Ports                             ; 0       ; 0                                                  ; 0                              ;
+;     -- Registered Output Ports                            ; 0       ; 0                                                  ; 0                              ;
+;                                                           ;         ;                                                    ;                                ;
+; Port Connectivity                                         ;         ;                                                    ;                                ;
+;     -- Input Ports driven by GND                          ; 0       ; 0                                                  ; 0                              ;
+;     -- Output Ports driven by GND                         ; 0       ; 0                                                  ; 0                              ;
+;     -- Input Ports driven by VCC                          ; 0       ; 0                                                  ; 0                              ;
+;     -- Output Ports driven by VCC                         ; 0       ; 0                                                  ; 0                              ;
+;     -- Input Ports with no Source                         ; 0       ; 0                                                  ; 0                              ;
+;     -- Output Ports with no Source                        ; 0       ; 0                                                  ; 0                              ;
+;     -- Input Ports with no Fanout                         ; 0       ; 0                                                  ; 0                              ;
+;     -- Output Ports with no Fanout                        ; 0       ; 0                                                  ; 0                              ;
++-----------------------------------------------------------+---------+----------------------------------------------------+--------------------------------+
+Note: Resource usage numbers presented for Partitions containing post-synthesis logic are estimates.  For Partitions containing post-fit logic, resource usage numbers are accurate based on previous placement information.  Actual Fitter results may vary depending on current Fitter Preservation Level assignments.
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition Merge Partition Pin Processing                                                                                                                           ;
++--------------------------------------------------------------------------------+-----------+---------------+----------+--------------------------------------------+
+; Name                                                                           ; Partition ; Type          ; Location ; Status                                     ;
++--------------------------------------------------------------------------------+-----------+---------------+----------+--------------------------------------------+
+; AUD_ADCDAT                                                                     ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- AUD_ADCDAT                                                              ; Top       ; Input Pad     ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_ADCDAT~input     ; Top       ; Input Buffer  ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_ADCLRCK                                                                    ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- AUD_ADCLRCK                                                             ; Top       ; Input Pad     ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_ADCLRCK~input    ; Top       ; Input Buffer  ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_BCLK                                                                       ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- AUD_BCLK                                                                ; Top       ; Input Pad     ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_BCLK~input       ; Top       ; Input Buffer  ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_DACDAT                                                                     ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- AUD_DACDAT                                                              ; Top       ; Output Pad    ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_DACDAT~output    ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_DACLRCK                                                                    ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- AUD_DACLRCK                                                             ; Top       ; Input Pad     ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_DACLRCK~input    ; Top       ; Input Buffer  ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_I2C_SCLK                                                                   ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- AUD_I2C_SCLK                                                            ; Top       ; Output Pad    ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_I2C_SCLK~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_I2C_SDAT                                                                   ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- AUD_I2C_SDAT                                                            ; Top       ; Bidir Pad     ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_I2C_SDAT~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; AUD_XCK                                                                        ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- AUD_XCK                                                                 ; Top       ; Output Pad    ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|AUD_XCK~output       ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; CLOCK_50                                                                       ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- CLOCK_50                                                                ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- CLOCK_50~input                                                          ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; IntergratorDIV[0]                                                              ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- IntergratorDIV[0]                                                       ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- IntergratorDIV[0]~input                                                 ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; IntergratorDIV[1]                                                              ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- IntergratorDIV[1]                                                       ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- IntergratorDIV[1]~input                                                 ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; IntergratorDIV[2]                                                              ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- IntergratorDIV[2]                                                       ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- IntergratorDIV[2]~input                                                 ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; MICROPHON_LED                                                                  ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- MICROPHON_LED                                                           ; Top       ; Output Pad    ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|MICROPHON_LED~output ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; MICROPHON_ON                                                                   ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- MICROPHON_ON                                                            ; Top       ; Input Pad     ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;     -- audio_codec_controller:audio_codec_controller_inst|MICROPHON_ON~input   ; Top       ; Input Buffer  ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                                                                                ;           ;               ;          ;                                            ;
+; SelCh4Cmd[0]                                                                   ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- SelCh4Cmd[0]                                                            ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- SelCh4Cmd[0]~input                                                      ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; SelCh4Cmd[1]                                                                   ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- SelCh4Cmd[1]                                                            ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- SelCh4Cmd[1]~input                                                      ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; clearB                                                                         ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- clearB                                                                  ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- clearB~input                                                            ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; playB                                                                          ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- playB                                                                   ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- playB~input                                                             ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; recB                                                                           ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- recB                                                                    ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- recB~input                                                              ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; resetN                                                                         ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- resetN                                                                  ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- resetN~input                                                            ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; stopB                                                                          ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- stopB                                                                   ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- stopB~input                                                             ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
++--------------------------------------------------------------------------------+-----------+---------------+----------+--------------------------------------------+
+
+
++--------------------------------------------------------------+
+; Partition Merge Resource Usage Summary                       ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimate of Logic utilization (ALMs needed) ; 885            ;
+;                                             ;                ;
+; Combinational ALUT usage for logic          ; 1444           ;
+;     -- 7 input functions                    ; 4              ;
+;     -- 6 input functions                    ; 295            ;
+;     -- 5 input functions                    ; 181            ;
+;     -- 4 input functions                    ; 182            ;
+;     -- <=3 input functions                  ; 782            ;
+;                                             ;                ;
+; Dedicated logic registers                   ; 677            ;
+;                                             ;                ;
+; I/O pins                                    ; 21             ;
+; Total MLAB memory bits                      ; 0              ;
+; Total block memory bits                     ; 4195360        ;
+;                                             ;                ;
+; Total DSP Blocks                            ; 0              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 950            ;
+; Total fan-out                               ; 16428          ;
+; Average fan-out                             ; 6.13           ;
++---------------------------------------------+----------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition Merge RAM Summary                                                                                                                                                                                                                                                                                                                        ;
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+---------+------+
+; Name                                                                                                                                                                                                                                        ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size    ; MIF  ;
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+---------+------+
+; audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_left_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|altsyncram_k2d1:fifo_ram|ALTSYNCRAM                            ; AUTO ; Simple Dual Port ; 32           ; 1            ; 32           ; 1            ; 32      ; None ;
+; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|altsyncram_0571:fifo_ram|ALTSYNCRAM  ; AUTO ; Simple Dual Port ; 32           ; 16           ; 512          ; 1            ; 512     ; None ;
+; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|altsyncram_0571:fifo_ram|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 32           ; 16           ; 512          ; 1            ; 512     ; None ;
+; recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|ALTSYNCRAM                                                                                                                           ; AUTO ; Simple Dual Port ; 262144       ; 16           ; 262144       ; 16           ; 4194304 ; None ;
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+---------+------+
+
+
++--------------------------+
+; Partition Merge Messages ;
++--------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Partition Merge
+    Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+    Info: Processing started: Mon Jun 04 10:53:32 2018
+Info: Command: quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (35007): Using synthesis netlist for partition "Top"
+Info (35007): Using synthesis netlist for partition "audio_codec_controller:audio_codec_controller_inst"
+Info (35002): Resolved and merged 2 partition(s)
+Info (35026): Attempting to remove 132 I/O cell(s) that do not connect to top-level pins or have illegal connectivity
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[0]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[0]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[1]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[1]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[2]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[2]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[3]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[3]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[4]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[4]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[5]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[5]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[6]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[6]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[7]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[7]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[8]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[8]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[9]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[9]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[10]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[10]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[11]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[11]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[12]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[12]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[13]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[13]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[14]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[14]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[15]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[15]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[0]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[0]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[1]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[1]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[2]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[2]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[3]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[3]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[4]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[4]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[5]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[5]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[6]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[6]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[7]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[7]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[8]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[8]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[9]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[9]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[10]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[10]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[11]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[11]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[12]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[12]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[13]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[13]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[14]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[14]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[15]~output"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_right[15]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|CLOCK_50~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|CLOCK_50"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|resetN~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|resetN"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[0]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[0]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[0]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[0]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[15]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[15]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[14]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[14]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[13]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[13]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[12]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[12]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[11]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[11]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[10]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[10]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[9]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[9]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[8]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[8]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[7]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[7]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[6]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[6]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[5]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[5]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[4]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[4]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[3]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[3]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[2]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[2]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[1]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_left[1]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[15]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[15]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[14]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[14]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[13]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[13]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[12]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[12]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[11]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[11]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[10]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[10]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[9]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[9]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[8]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[8]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[7]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[7]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[6]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[6]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[5]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[5]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[4]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[4]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[3]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[3]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[2]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[2]"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[1]~input"
+    Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[1]"
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Critical Warning (138067): Current license file does not support incremental compilation. The Quartus Prime software removes all the user-specified design partitions in the design automatically.
+Info (35003): Optimize away 53 nodes that do not fanout to OUTPUT or BIDIR pins
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|altsyncram_k2d1:fifo_ram|ram_block9a0" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[0]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[1]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[2]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[3]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[5]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[6]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[7]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[8]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[9]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[10]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[11]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[12]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[13]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[14]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[15]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[0]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff3" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff2" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[1]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[2]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[3]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[5]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff1" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[6]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[7]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[8]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[9]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[10]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[11]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[12]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[13]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[14]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[15]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|ram_address_a[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+Info (21057): Implemented 2321 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 16 input pins
+    Info (21059): Implemented 4 output pins
+    Info (21060): Implemented 1 bidirectional pins
+    Info (21061): Implemented 1785 logic cells
+    Info (21064): Implemented 515 RAM segments
+Info: Quartus Prime Partition Merge was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 4791 megabytes
+    Info: Processing ended: Mon Jun 04 10:53:34 2018
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:02
+
+
