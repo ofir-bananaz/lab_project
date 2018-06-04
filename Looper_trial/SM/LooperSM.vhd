@@ -35,7 +35,7 @@ entity LooperSM is
 		Imm_start       : out std_logic; --mode for immediate start
 		
 		
-		--CurrState       : out std_logic_vector(2 downto 0); --debug
+		CurrState       : out std_logic_vector(2 downto 0); --debug
 		--ENDMemAddress   : out std_logic_vector(17 downto 0); --debug
 		--currentMemAddress   : out std_logic_vector(17 downto 0); --debug
 		
@@ -66,7 +66,7 @@ architecture arc_LooperSM of LooperSM is
 	--DEBUG--
 	--signal currMemAddress  : std_logic_vector(17 downto 0); --debug
 	--signal endAddr  : std_logic_vector(17 downto 0); --debug
-	--signal stateNum: integer; --used for debugging because states simulation does not work on quartos
+	signal stateNum: integer; --used for debugging because states simulation does not work on quartos
 	
 	
 	
@@ -131,7 +131,7 @@ begin
 			--end if; 
 			case state is
 				------------------------------
-				when EMPTY=> --stateNum <= 0 ;-- debug
+				when EMPTY=> stateNum <= 0 ;-- debug
 				------------------------------
 				
 					arch_loop_start  <= '1'  ; -- also to zero in memory
@@ -168,7 +168,7 @@ begin
 					end if;
 					
 				------------------------------				
-				when PRE_REC_FIRST=> --stateNum <= 1 ;-- debug
+				when PRE_REC_FIRST=> stateNum <= 1 ;-- debug
 				------------------------------
 				
 					arch_recording <='1';
@@ -182,7 +182,7 @@ begin
 					state<=REC_FIRST;
 				
 				------------------------------				
-				when REC_FIRST=> --stateNum <= 1 ;-- debug
+				when REC_FIRST=> stateNum <= 2 ;-- debug
 				------------------------------
 					recCounter:= 1;
 					arch_recording <='1';
@@ -202,7 +202,7 @@ begin
 					              
 					
 				------------------------------
-				when CH_CONTROL=> --stateNum <= 2 ;-- debug
+				when CH_CONTROL=> stateNum <= 3 ;-- debug
 				------------------------------
 					-- default values
 					arch_recording <='0'; -- dont start
@@ -262,7 +262,7 @@ begin
 					end if;
 
 				------------------------------
-				when PRE_REC=> --stateNum <= 3 ;-- debug
+				when PRE_REC=> stateNum <= 4 ;-- debug
 				------------------------------
 					if arch_loop_start = '1' then -- can improve by allowing stopping before record start
 						arch_recording <='1';
@@ -276,7 +276,7 @@ begin
 					end if;
 
 				------------------------------
-				when REC_OTHER=> --stateNum <= 4 ;-- debug
+				when REC_OTHER=> stateNum <= 5 ;-- debug
 					------------------------------
 					arch_recording <='1';
 					if (memEndAddr = conv_integer(CurrMemAddress)-1 or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
@@ -360,7 +360,7 @@ end process;
 	Ch2Activate <= arch_Ch2DEC;
 	Ch3Activate <= arch_Ch3DEC;
 	
-	--CurrState   <=  conv_std_logic_vector(stateNum,3); --debug
+	CurrState   <=  conv_std_logic_vector(stateNum,3); --debug
 	
 	--ENDMemAddress<=endAddr; --debug
 	--currentMemAddress <= currMemAddress; --debug

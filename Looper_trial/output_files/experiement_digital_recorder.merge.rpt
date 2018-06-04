@@ -1,6 +1,6 @@
 Partition Merge report for experiement_digital_recorder
-Mon Jun 04 10:53:34 2018
-Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+Mon Jun 04 17:31:22 2018
+Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 
 
 ---------------------
@@ -9,11 +9,12 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
   1. Legal Notice
   2. Partition Merge Summary
   3. Partition Merge Netlist Types Used
-  4. Partition Merge Partition Statistics
-  5. Partition Merge Partition Pin Processing
-  6. Partition Merge Resource Usage Summary
-  7. Partition Merge RAM Summary
-  8. Partition Merge Messages
+  4. Connections to In-System Debugging Instance "auto_signaltap_0"
+  5. Partition Merge Partition Statistics
+  6. Partition Merge Partition Pin Processing
+  7. Partition Merge Resource Usage Summary
+  8. Partition Merge RAM Summary
+  9. Partition Merge Messages
 
 
 
@@ -37,27 +38,27 @@ agreement for further details.
 
 
 
-+-------------------------------------------------------------------------------+
-; Partition Merge Summary                                                       ;
-+---------------------------------+---------------------------------------------+
-; Partition Merge Status          ; Successful - Mon Jun 04 10:53:34 2018       ;
-; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
-; Revision Name                   ; experiement_digital_recorder                ;
-; Top-level Entity Name           ; experiement_digital_recorder                ;
-; Family                          ; Cyclone V                                   ;
-; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 677                                         ;
-; Total pins                      ; 21                                          ;
-; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 4,195,360                                   ;
-; Total DSP Blocks                ; 0                                           ;
-; Total HSSI RX PCSs              ; 0                                           ;
-; Total HSSI PMA RX Deserializers ; 0                                           ;
-; Total HSSI TX PCSs              ; 0                                           ;
-; Total HSSI PMA TX Serializers   ; 0                                           ;
-; Total PLLs                      ; 0                                           ;
-; Total DLLs                      ; 0                                           ;
-+---------------------------------+---------------------------------------------+
++-----------------------------------------------------------------------------------+
+; Partition Merge Summary                                                           ;
++---------------------------------+-------------------------------------------------+
+; Partition Merge Status          ; Successful - Mon Jun 04 17:31:22 2018           ;
+; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Standard Edition ;
+; Revision Name                   ; experiement_digital_recorder                    ;
+; Top-level Entity Name           ; experiement_digital_recorder                    ;
+; Family                          ; Cyclone V                                       ;
+; Logic utilization (in ALMs)     ; N/A                                             ;
+; Total registers                 ; 2516                                            ;
+; Total pins                      ; 21                                              ;
+; Total virtual pins              ; 0                                               ;
+; Total block memory bits         ; 4,316,192                                       ;
+; Total DSP Blocks                ; 0                                               ;
+; Total HSSI RX PCSs              ; 0                                               ;
+; Total HSSI PMA RX Deserializers ; 0                                               ;
+; Total HSSI TX PCSs              ; 0                                               ;
+; Total HSSI PMA TX Serializers   ; 0                                               ;
+; Total PLLs                      ; 0                                               ;
+; Total DLLs                      ; 0                                               ;
++---------------------------------+-------------------------------------------------+
 
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -65,71 +66,353 @@ agreement for further details.
 +----------------------------------------------------+----------------+-------------------+------------------------+----------------------------------------------------+
 ; Partition Name                                     ; Partition Type ; Netlist Type Used ; Netlist Type Requested ; Partition Contents                                 ;
 +----------------------------------------------------+----------------+-------------------+------------------------+----------------------------------------------------+
-; Top                                                ; User-created   ; Source File       ; Source File            ;                                                    ;
+; Top                                                ; User-created   ; Source File       ; Post-Fit               ;                                                    ;
 ; audio_codec_controller:audio_codec_controller_inst ; User-created   ; Source File       ; Source File            ; audio_codec_controller:audio_codec_controller_inst ;
+; sld_hub:auto_hub                                   ; Auto-generated ; Post-Synthesis    ; Post-Synthesis         ; sld_hub:auto_hub                                   ;
+; sld_signaltap:auto_signaltap_0                     ; Auto-generated ; Post-Synthesis    ; Post-Synthesis         ; sld_signaltap:auto_signaltap_0                     ;
 ; hard_block:auto_generated_inst                     ; Auto-generated ; Source File       ; Source File            ; hard_block:auto_generated_inst                     ;
 +----------------------------------------------------+----------------+-------------------+------------------------+----------------------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Partition Merge Partition Statistics                                                                                                                      ;
-+-----------------------------------------------------------+---------+----------------------------------------------------+--------------------------------+
-; Statistic                                                 ; Top     ; audio_codec_controller:audio_codec_controller_inst ; hard_block:auto_generated_inst ;
-+-----------------------------------------------------------+---------+----------------------------------------------------+--------------------------------+
-; Estimate of Logic utilization (ALMs needed)               ; 816     ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Combinational ALUT usage for logic                        ; 1444    ; 0                                                  ; 0                              ;
-;     -- 7 input functions                                  ; 4       ; 0                                                  ; 0                              ;
-;     -- 6 input functions                                  ; 295     ; 0                                                  ; 0                              ;
-;     -- 5 input functions                                  ; 181     ; 0                                                  ; 0                              ;
-;     -- 4 input functions                                  ; 182     ; 0                                                  ; 0                              ;
-;     -- <=3 input functions                                ; 782     ; 0                                                  ; 0                              ;
-; Memory ALUT usage                                         ; 0       ; 0                                                  ; 0                              ;
-;     -- 64-address deep                                    ; 0       ; 0                                                  ; 0                              ;
-;     -- 32-address deep                                    ; 0       ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Dedicated logic registers                                 ; 677     ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-;                                                           ;         ;                                                    ;                                ;
-; I/O pins                                                  ; 21      ; 0                                                  ; 0                              ;
-; I/O registers                                             ; 0       ; 0                                                  ; 0                              ;
-; Total block memory bits                                   ; 4195360 ; 0                                                  ; 0                              ;
-; Total block memory implementation bits                    ; 0       ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Connections                                               ;         ;                                                    ;                                ;
-;     -- Input Connections                                  ; 1       ; 0                                                  ; 0                              ;
-;     -- Registered Input Connections                       ; 0       ; 0                                                  ; 0                              ;
-;     -- Output Connections                                 ; 1       ; 0                                                  ; 0                              ;
-;     -- Registered Output Connections                      ; 0       ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Internal Connections                                      ;         ;                                                    ;                                ;
-;     -- Total Connections                                  ; 24119   ; 0                                                  ; 0                              ;
-;     -- Registered Connections                             ; 17184   ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; External Connections                                      ;         ;                                                    ;                                ;
-;     -- Top                                                ; 2       ; 0                                                  ; 0                              ;
-;     -- audio_codec_controller:audio_codec_controller_inst ; 0       ; 0                                                  ; 0                              ;
-;     -- hard_block:auto_generated_inst                     ; 0       ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Partition Interface                                       ;         ;                                                    ;                                ;
-;     -- Input Ports                                        ; 16      ; 0                                                  ; 0                              ;
-;     -- Output Ports                                       ; 4       ; 0                                                  ; 0                              ;
-;     -- Bidir Ports                                        ; 1       ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Registered Ports                                          ;         ;                                                    ;                                ;
-;     -- Registered Input Ports                             ; 0       ; 0                                                  ; 0                              ;
-;     -- Registered Output Ports                            ; 0       ; 0                                                  ; 0                              ;
-;                                                           ;         ;                                                    ;                                ;
-; Port Connectivity                                         ;         ;                                                    ;                                ;
-;     -- Input Ports driven by GND                          ; 0       ; 0                                                  ; 0                              ;
-;     -- Output Ports driven by GND                         ; 0       ; 0                                                  ; 0                              ;
-;     -- Input Ports driven by VCC                          ; 0       ; 0                                                  ; 0                              ;
-;     -- Output Ports driven by VCC                         ; 0       ; 0                                                  ; 0                              ;
-;     -- Input Ports with no Source                         ; 0       ; 0                                                  ; 0                              ;
-;     -- Output Ports with no Source                        ; 0       ; 0                                                  ; 0                              ;
-;     -- Input Ports with no Fanout                         ; 0       ; 0                                                  ; 0                              ;
-;     -- Output Ports with no Fanout                        ; 0       ; 0                                                  ; 0                              ;
-+-----------------------------------------------------------+---------+----------------------------------------------------+--------------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Connections to In-System Debugging Instance "auto_signaltap_0"                                                                                                                                                    ;
++------------------------------------------------------------+--------------+-----------+--------------------------------+-------------------+------------------------------------------------------------+---------+
+; Name                                                       ; Type         ; Status    ; Partition Name                 ; Netlist Type Used ; Actual Connection                                          ; Details ;
++------------------------------------------------------------+--------------+-----------+--------------------------------+-------------------+------------------------------------------------------------+---------+
+; CLOCK_50                                                   ; post-fitting ; connected ; Top                            ; post-synthesis    ; CLOCK_50                                                   ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch0END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch0END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[18]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[18]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[18]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[18]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch1END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch1END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[18]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[18]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[18]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[18]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch2END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch2END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[0]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[0]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[10]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[10]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[11]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[11]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[12]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[12]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[13]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[13]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[14]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[14]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[15]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[15]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[16]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[16]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[17]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[17]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[18]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[18]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[18]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[18]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[1]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[1]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[2]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[2]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[31]                             ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[31]                             ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[3]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[3]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[4]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[4]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[5]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[5]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[6]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[6]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[7]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[7]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[8]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[8]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[9]                              ; N/A     ;
+; LooperSM:inst1|arch_Ch3END[9]                              ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|arch_Ch3END[9]                              ; N/A     ;
+; LooperSM:inst1|ch0HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch0HT                                       ; N/A     ;
+; LooperSM:inst1|ch0HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch0HT                                       ; N/A     ;
+; LooperSM:inst1|ch1HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch1HT                                       ; N/A     ;
+; LooperSM:inst1|ch1HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch1HT                                       ; N/A     ;
+; LooperSM:inst1|ch2HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch2HT                                       ; N/A     ;
+; LooperSM:inst1|ch2HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch2HT                                       ; N/A     ;
+; LooperSM:inst1|ch3HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch3HT                                       ; N/A     ;
+; LooperSM:inst1|ch3HT                                       ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|ch3HT                                       ; N/A     ;
+; LooperSM:inst1|recCounter[0]                               ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|recCounter[0]                               ; N/A     ;
+; LooperSM:inst1|recCounter[0]                               ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|recCounter[0]                               ; N/A     ;
+; LooperSM:inst1|recCounter[1]                               ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|recCounter[1]                               ; N/A     ;
+; LooperSM:inst1|recCounter[1]                               ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|recCounter[1]                               ; N/A     ;
+; LooperSM:inst1|recCounter[2]                               ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|recCounter[2]                               ; N/A     ;
+; LooperSM:inst1|recCounter[2]                               ; post-fitting ; connected ; Top                            ; post-synthesis    ; LooperSM:inst1|recCounter[2]                               ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|gnd                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~GND                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; auto_signaltap_0|vcc                                       ; post-fitting ; connected ; sld_signaltap:auto_signaltap_0 ; post-synthesis    ; sld_signaltap:auto_signaltap_0|~VCC                        ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[0]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[0]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[0]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[0]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[10] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[10] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[10] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[10] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[11] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[11] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[11] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[11] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[12] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[12] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[12] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[12] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[13] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[13] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[13] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[13] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[14] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[14] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[14] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[14] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[15] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[15] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[15] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[15] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[16] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[16] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[16] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[16] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[17] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[17] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[17] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[17] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[18] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[18] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[18] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[18] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[19] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[19] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[19] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[19] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[1]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[1]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[1]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[1]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[20] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[20] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[20] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[20] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[21] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[21] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[21] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[21] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[22] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[22] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[22] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[22] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[23] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[23] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[23] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[23] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[24] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[24] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[24] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[24] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[25] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[25] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[25] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[25] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[26] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[26] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[26] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[26] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[27] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[27] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[27] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[27] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[28] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[28] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[28] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[28] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[29] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[29] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[29] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[29] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[2]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[2]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[2]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[2]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[30] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[30] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[30] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[30] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[31] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[31] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[31] ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[31] ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[3]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[3]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[3]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[3]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[4]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[4]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[4]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[4]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[5]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[5]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[5]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[5]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[6]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[6]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[6]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[6]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[7]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[7]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[7]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[7]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[8]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[8]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[8]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[8]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[9]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[9]  ; N/A     ;
+; recorder_module_looper:inst|addr_counter:inst4|counter[9]  ; post-fitting ; connected ; Top                            ; post-synthesis    ; recorder_module_looper:inst|addr_counter:inst4|counter[9]  ; N/A     ;
++------------------------------------------------------------+--------------+-----------+--------------------------------+-------------------+------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition Merge Partition Statistics                                                                                                                                                                          ;
++-----------------------------------------------------------+---------+----------------------------------------------------+------------------+--------------------------------+--------------------------------+
+; Statistic                                                 ; Top     ; audio_codec_controller:audio_codec_controller_inst ; sld_hub:auto_hub ; sld_signaltap:auto_signaltap_0 ; hard_block:auto_generated_inst ;
++-----------------------------------------------------------+---------+----------------------------------------------------+------------------+--------------------------------+--------------------------------+
+; Estimate of Logic utilization (ALMs needed)               ; 759     ; 0                                                  ; 59               ; 799                            ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Combinational ALUT usage for logic                        ; 1445    ; 0                                                  ; 91               ; 372                            ; 0                              ;
+;     -- 7 input functions                                  ; 4       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;     -- 6 input functions                                  ; 299     ; 0                                                  ; 12               ; 85                             ; 0                              ;
+;     -- 5 input functions                                  ; 174     ; 0                                                  ; 25               ; 143                            ; 0                              ;
+;     -- 4 input functions                                  ; 179     ; 0                                                  ; 17               ; 22                             ; 0                              ;
+;     -- <=3 input functions                                ; 789     ; 0                                                  ; 37               ; 122                            ; 0                              ;
+; Memory ALUT usage                                         ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;     -- 64-address deep                                    ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;     -- 32-address deep                                    ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Dedicated logic registers                                 ; 677     ; 0                                                  ; 91               ; 1748                           ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; I/O pins                                                  ; 21      ; 0                                                  ; 0                ; 0                              ; 0                              ;
+; I/O registers                                             ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+; Total block memory bits                                   ; 4195360 ; 0                                                  ; 0                ; 120832                         ; 0                              ;
+; Total block memory implementation bits                    ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+; JTAG                                                      ; 0       ; 0                                                  ; 0                ; 0                              ; 1                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Connections                                               ;         ;                                                    ;                  ;                                ;                                ;
+;     -- Input Connections                                  ; 1       ; 0                                                  ; 134              ; 2596                           ; 1                              ;
+;     -- Registered Input Connections                       ; 0       ; 0                                                  ; 110              ; 2009                           ; 0                              ;
+;     -- Output Connections                                 ; 1432    ; 0                                                  ; 349              ; 34                             ; 917                            ;
+;     -- Registered Output Connections                      ; 236     ; 0                                                  ; 349              ; 0                              ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Internal Connections                                      ;         ;                                                    ;                  ;                                ;                                ;
+;     -- Total Connections                                  ; 25548   ; 0                                                  ; 997              ; 9877                           ; 926                            ;
+;     -- Registered Connections                             ; 17420   ; 0                                                  ; 820              ; 7726                           ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; External Connections                                      ;         ;                                                    ;                  ;                                ;                                ;
+;     -- Top                                                ; 2       ; 0                                                  ; 0                ; 1431                           ; 0                              ;
+;     -- audio_codec_controller:audio_codec_controller_inst ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;     -- sld_hub:auto_hub                                   ; 0       ; 0                                                  ; 20               ; 340                            ; 123                            ;
+;     -- sld_signaltap:auto_signaltap_0                     ; 1431    ; 0                                                  ; 340              ; 64                             ; 795                            ;
+;     -- hard_block:auto_generated_inst                     ; 0       ; 0                                                  ; 123              ; 795                            ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Partition Interface                                       ;         ;                                                    ;                  ;                                ;                                ;
+;     -- Input Ports                                        ; 19      ; 0                                                  ; 45               ; 423                            ; 4                              ;
+;     -- Output Ports                                       ; 5       ; 0                                                  ; 62               ; 251                            ; 9                              ;
+;     -- Bidir Ports                                        ; 1       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Registered Ports                                          ;         ;                                                    ;                  ;                                ;                                ;
+;     -- Registered Input Ports                             ; 0       ; 0                                                  ; 13               ; 241                            ; 0                              ;
+;     -- Registered Output Ports                            ; 0       ; 0                                                  ; 29               ; 237                            ; 0                              ;
+;                                                           ;         ;                                                    ;                  ;                                ;                                ;
+; Port Connectivity                                         ;         ;                                                    ;                  ;                                ;                                ;
+;     -- Input Ports driven by GND                          ; 0       ; 0                                                  ; 0                ; 10                             ; 0                              ;
+;     -- Output Ports driven by GND                         ; 0       ; 0                                                  ; 28               ; 2                              ; 0                              ;
+;     -- Input Ports driven by VCC                          ; 0       ; 0                                                  ; 0                ; 22                             ; 0                              ;
+;     -- Output Ports driven by VCC                         ; 0       ; 0                                                  ; 0                ; 1                              ; 0                              ;
+;     -- Input Ports with no Source                         ; 0       ; 0                                                  ; 25               ; 122                            ; 0                              ;
+;     -- Output Ports with no Source                        ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
+;     -- Input Ports with no Fanout                         ; 0       ; 0                                                  ; 30               ; 136                            ; 0                              ;
+;     -- Output Ports with no Fanout                        ; 0       ; 0                                                  ; 29               ; 239                            ; 0                              ;
++-----------------------------------------------------------+---------+----------------------------------------------------+------------------+--------------------------------+--------------------------------+
 Note: Resource usage numbers presented for Partitions containing post-synthesis logic are estimates.  For Partitions containing post-fit logic, resource usage numbers are accurate based on previous placement information.  Actual Fitter results may vary depending on current Fitter Preservation Level assignments.
 
 
@@ -202,6 +485,22 @@ Note: Resource usage numbers presented for Partitions containing post-synthesis 
 ;     -- SelCh4Cmd[1]                                                            ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
 ;     -- SelCh4Cmd[1]~input                                                      ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
 ;                                                                                ;           ;               ;          ;                                            ;
+; altera_reserved_tck                                                            ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- altera_reserved_tck                                                     ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- altera_reserved_tck~input                                               ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; altera_reserved_tdi                                                            ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- altera_reserved_tdi                                                     ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- altera_reserved_tdi~input                                               ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; altera_reserved_tdo                                                            ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- altera_reserved_tdo                                                     ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- altera_reserved_tdo~output                                              ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
+; altera_reserved_tms                                                            ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- altera_reserved_tms                                                     ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- altera_reserved_tms~input                                               ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                                                                                ;           ;               ;          ;                                            ;
 ; clearB                                                                         ; Top       ; Input Port    ; n/a      ;                                            ;
 ;     -- clearB                                                                  ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
 ;     -- clearB~input                                                            ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
@@ -230,27 +529,27 @@ Note: Resource usage numbers presented for Partitions containing post-synthesis 
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 885            ;
+; Estimate of Logic utilization (ALMs needed) ; 1617           ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 1444           ;
+; Combinational ALUT usage for logic          ; 1908           ;
 ;     -- 7 input functions                    ; 4              ;
-;     -- 6 input functions                    ; 295            ;
-;     -- 5 input functions                    ; 181            ;
-;     -- 4 input functions                    ; 182            ;
-;     -- <=3 input functions                  ; 782            ;
+;     -- 6 input functions                    ; 396            ;
+;     -- 5 input functions                    ; 342            ;
+;     -- 4 input functions                    ; 218            ;
+;     -- <=3 input functions                  ; 948            ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 677            ;
+; Dedicated logic registers                   ; 2516           ;
 ;                                             ;                ;
 ; I/O pins                                    ; 21             ;
 ; Total MLAB memory bits                      ; 0              ;
-; Total block memory bits                     ; 4195360        ;
+; Total block memory bits                     ; 4316192        ;
 ;                                             ;                ;
 ; Total DSP Blocks                            ; 0              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 950            ;
-; Total fan-out                               ; 16428          ;
-; Average fan-out                             ; 6.13           ;
+; Maximum fan-out                             ; 2145           ;
+; Total fan-out                               ; 26820          ;
+; Average fan-out                             ; 5.25           ;
 +---------------------------------------------+----------------+
 
 
@@ -263,6 +562,7 @@ Note: Resource usage numbers presented for Partitions containing post-synthesis 
 ; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_left_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|altsyncram_0571:fifo_ram|ALTSYNCRAM  ; AUTO ; Simple Dual Port ; 32           ; 16           ; 512          ; 1            ; 512     ; None ;
 ; audio_codec_controller:audio_codec_controller_inst|dac2serial:dac2serial_right_inst|dac_synchronizer:dac_synchronizer_inst|dcfifo_mixed_widths:dcfifo_mixed_widths_component|dcfifo_2hl1:auto_generated|altsyncram_0571:fifo_ram|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 32           ; 16           ; 512          ; 1            ; 512     ; None ;
 ; recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|ALTSYNCRAM                                                                                                                           ; AUTO ; Simple Dual Port ; 262144       ; 16           ; 262144       ; 16           ; 4194304 ; None ;
+; sld_signaltap:auto_signaltap_0|sld_signaltap_impl:sld_signaltap_body|sld_signaltap_implb:sld_signaltap_body|altsyncram:\stp_non_zero_ram_gen:stp_buffer_ram|altsyncram_7k84:auto_generated|ALTSYNCRAM                                       ; AUTO ; Simple Dual Port ; 1024         ; 118          ; 1024         ; 118          ; 120832  ; None ;
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+---------+------+
 
 
@@ -271,13 +571,18 @@ Note: Resource usage numbers presented for Partitions containing post-synthesis 
 +--------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Partition Merge
-    Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Mon Jun 04 10:53:32 2018
+    Info: Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
+    Info: Processing started: Mon Jun 04 17:31:19 2018
 Info: Command: quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Warning (35010): Previously generated Fitter netlist for partition "Top" is older than current Synthesis netlist -- using the current Synthesis netlist instead to ensure that the latest source changes are included
+    Info (35011): Set the option to Ignore source file changes to force the Quartus Prime software to always use a previously generated Fitter netlist
 Info (35007): Using synthesis netlist for partition "Top"
 Info (35007): Using synthesis netlist for partition "audio_codec_controller:audio_codec_controller_inst"
-Info (35002): Resolved and merged 2 partition(s)
+Info (35007): Using synthesis netlist for partition "sld_hub:auto_hub"
+Info (35007): Using synthesis netlist for partition "sld_signaltap:auto_signaltap_0"
+Info (35024): Successfully connected in-system debug instance "auto_signaltap_0" to all 269 required data inputs, trigger inputs, acquisition clocks, and dynamic pins
+Info (35002): Resolved and merged 4 partition(s)
 Info (35026): Attempting to remove 132 I/O cell(s) that do not connect to top-level pins or have illegal connectivity
     Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[0]~output"
     Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|adcdata_left[0]"
@@ -412,56 +717,55 @@ Info (35026): Attempting to remove 132 I/O cell(s) that do not connect to top-le
     Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[1]~input"
     Info (35027): Removed I/O cell "audio_codec_controller:audio_codec_controller_inst|dacdata_right[1]"
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
-    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Critical Warning (138067): Current license file does not support incremental compilation. The Quartus Prime software removes all the user-specified design partitions in the design automatically.
-Info (35003): Optimize away 53 nodes that do not fanout to OUTPUT or BIDIR pins
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|altsyncram_k2d1:fifo_ram|ram_block9a0" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[0]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[1]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[2]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[3]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[5]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[6]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[7]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[8]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[9]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[10]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[11]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[12]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[13]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[14]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[15]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[0]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff3" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff2" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[1]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[2]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[3]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[5]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff1" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[6]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[7]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[8]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[9]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[10]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[11]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[12]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[13]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[14]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[15]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|ram_address_a[4]" File: C:/intelFPGA_lite/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-Info (21057): Implemented 2321 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 16 input pins
-    Info (21059): Implemented 4 output pins
+    Info (16011): Adding 9 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (35003): Optimize away 55 nodes that do not fanout to OUTPUT or BIDIR pins
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|altsyncram_k2d1:fifo_ram|ram_block9a0" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[0]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[1]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[2]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[3]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[4]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[5]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[6]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[7]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[8]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[9]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[10]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[11]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[12]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[13]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[14]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|ADCDATA[15]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[0]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff3" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff2" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[1]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[2]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[3]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[4]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[5]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|serial_rdy_50_ff1" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[6]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[7]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[8]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[9]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[10]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[11]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[12]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[13]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[14]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[15]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|ram_address_a[4]" File: Z:/Lab_git/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
+Info (21057): Implemented 4457 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 19 input pins
+    Info (21059): Implemented 5 output pins
     Info (21060): Implemented 1 bidirectional pins
-    Info (21061): Implemented 1785 logic cells
-    Info (21064): Implemented 515 RAM segments
+    Info (21061): Implemented 3798 logic cells
+    Info (21064): Implemented 633 RAM segments
 Info: Quartus Prime Partition Merge was successful. 0 errors, 2 warnings
-    Info: Peak virtual memory: 4791 megabytes
-    Info: Processing ended: Mon Jun 04 10:53:34 2018
-    Info: Elapsed time: 00:00:02
+    Info: Peak virtual memory: 654 megabytes
+    Info: Processing ended: Mon Jun 04 17:31:22 2018
+    Info: Elapsed time: 00:00:03
     Info: Total CPU time (on all processors): 00:00:02
 
 
