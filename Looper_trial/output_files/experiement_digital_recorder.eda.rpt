@@ -1,0 +1,142 @@
+EDA Netlist Writer report for experiement_digital_recorder
+Mon Jun 04 22:22:56 2018
+Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. EDA Netlist Writer Summary
+  3. EDA Netlist Writer Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2017  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-------------------------------------------------------------------+
+; EDA Netlist Writer Summary                                        ;
++---------------------------+---------------------------------------+
+; EDA Netlist Writer Status ; Successful - Mon Jun 04 22:22:56 2018 ;
+; Revision Name             ; experiement_digital_recorder          ;
+; Top-level Entity Name     ; experiement_digital_recorder          ;
+; Family                    ; Cyclone V                             ;
++---------------------------+---------------------------------------+
+
+
++-----------------------------+
+; EDA Netlist Writer Messages ;
++-----------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
+    Info: Copyright (C) 2017  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel MegaCore Function License Agreement, or other 
+    Info: applicable license agreement, including, without limitation, 
+    Info: that your use is for the sole purpose of programming logic 
+    Info: devices manufactured by Intel and sold by Intel or its 
+    Info: authorized distributors.  Please refer to the applicable 
+    Info: agreement for further details.
+    Info: Processing started: Mon Jun 04 22:22:54 2018
+Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=Z:/Lab_git/lab_project/Looper_trial/Waveform1.vwf --testbench_file=Z:/Lab_git/lab_project/Looper_trial/simulation/modelsim/Waveform1.vwf.vht
+Warning (20013): Ignored 1 assignments for entity "altsyncram_2k84" -- entity does not exist in design
+    Warning (20014): Assignment for entity set_global_assignment -name OPTIMIZE_POWER_DURING_SYNTHESIS NORMAL_COMPILATION -entity altsyncram_2k84 -tag quartusii was ignored
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Warning (201007): Can't find port "clk" in design
+Warning (201007): Can't find port "ResetN" in design
+Warning (201005): Ignoring output pin "currentMemAddress" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[17]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[16]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[15]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[14]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[13]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[12]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[11]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[10]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[9]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[8]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[7]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[6]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[5]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[4]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[3]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[2]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[1]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "currentMemAddress[0]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[17]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[16]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[15]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[14]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[13]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[12]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[11]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[10]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[9]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[8]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[7]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[6]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[5]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[4]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[3]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[2]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[1]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "ENDMemAddress[0]" in vector source file when writing test bench files
+Warning (201007): Can't find port "KB_Selchannel" in design
+Warning (201007): Can't find port "KB_Selchannel[1]" in design
+Warning (201007): Can't find port "KB_Selchannel[0]" in design
+Warning (201007): Can't find port "KB_STOP" in design
+Warning (201007): Can't find port "KB_REC" in design
+Warning (201007): Can't find port "KB_PLAY" in design
+Warning (201007): Can't find port "KB_ClearCH" in design
+Warning (201007): Can't find port "KB_ALLPLAY" in design
+Warning (201007): Can't find port "recCounter" in design
+Warning (201007): Can't find port "recCounter[2]" in design
+Warning (201007): Can't find port "recCounter[1]" in design
+Warning (201007): Can't find port "recCounter[0]" in design
+Warning (201005): Ignoring output pin "recSel" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "recSel[1]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "recSel[0]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "recording" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "loop_start" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Ch3Activate" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Ch2Activate" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Ch1Activate" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Ch0Activate" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "CurrState" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "CurrState[2]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "CurrState[1]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "CurrState[0]" in vector source file when writing test bench files
+Info (201002): Generated VHDL Test Bench File Z:/Lab_git/lab_project/Looper_trial/simulation/modelsim/Waveform1.vwf.vht for simulation
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 68 warnings
+    Info: Peak virtual memory: 644 megabytes
+    Info: Processing ended: Mon Jun 04 22:22:57 2018
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:02
+
+

@@ -80,7 +80,7 @@ begin
 		variable recCounter : integer range 0 to 4; -- Count how many channels have record on them
 		variable stpCounter : integer range 0 to 4; -- Count how many channels have been stopped
 		variable memEndAddr: integer range 0 to 262143; -- MAX_ADDRESS must be plus always plus 1 - see addr counter to get the point -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		constant MAX_ADDR: integer := 262143;--modify
+		constant MAX_ADDR: integer := 262143; --constant MAX_ADDR didn't work using raw values
 
 	begin
 		if ResetN='0' then
@@ -112,7 +112,7 @@ begin
 			--ARCH VARIABLES-- 
 			recCounter := 0;
 			stpCounter := 0;
-			memEndAddr := MAX_ADDR; -- MAX_ADDRESS
+			memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
 			
 			
 			--currMemAddress <= "000000000000000000"; --debug
@@ -159,7 +159,7 @@ begin
 					--ARCH VARIABLES-- 
 					recCounter := 0;
 					stpCounter := 0;
-					memEndAddr := MAX_ADDR; -- MAX_ADDRESS
+					memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
 					
 
 					if KB_REC = '1' then
@@ -187,17 +187,22 @@ begin
 					recCounter:= 1;
 					arch_recording <='1';
 					
-					if (MAX_ADDR = conv_integer(CurrMemAddress)-1 or KB_PLAY ='1' or KB_ALLPLAY = '1') then -- end of recording
+					if (262143 = conv_integer(CurrMemAddress) or KB_PLAY ='1' or KB_ALLPLAY = '1') then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
 						arch_recording <='0';
 						memEndAddr  :=  conv_integer(CurrMemAddress);
 						arch_loop_start <='1';
 						state<=CH_CONTROL;
 						case arch_recSel is
-							when "00" => ch0HT <= '1'; arch_Ch0END <= conv_integer(CurrMemAddress);
-							when "01" => ch1HT <= '1'; arch_Ch1END <= conv_integer(CurrMemAddress);
-							when "10" => ch2HT <= '1'; arch_Ch2END <= conv_integer(CurrMemAddress);
-							when "11" => ch3HT <= '1'; arch_Ch3END <= conv_integer(CurrMemAddress); -- so we will be on
+							when "00" => ch0HT <= '1'; 
+							when "01" => ch1HT <= '1'; 
+							when "10" => ch2HT <= '1'; 
+							when "11" => ch3HT <= '1';  -- so we will be on
 						end case;
+						
+						arch_Ch0END <= memEndAddr;
+						arch_Ch1END <= memEndAddr;
+						arch_Ch2END <= memEndAddr;
+						arch_Ch3END <= memEndAddr;
 					end if;       
 					              
 					
@@ -214,8 +219,8 @@ begin
 						arch_recSel <= KB_Selchannel;
 						if (recCounter = 1) and ((KB_Selchannel = "00" and ch0HT='1') or (KB_Selchannel = "01" and ch1HT='1') or (KB_Selchannel = "10" and ch2HT='1') or (KB_Selchannel = "11" and ch3HT='1')) then -- if we choose to record on a lonely track -> that's a first rec
 							state<=PRE_REC_FIRST;
-							
-						elsif (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
+						end if;
+						if (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
 							recCounter:= recCounter+1;
 						
 						end if;
@@ -255,7 +260,7 @@ begin
 						end case;
 						
 						
-						if recCounter =0 then
+						if recCounter = 0 then
 							arch_loop_start <='1';
 							state<=EMPTY;
 						end if;
@@ -279,7 +284,7 @@ begin
 				when REC_OTHER=> stateNum <= 5 ;-- debug
 					------------------------------
 					arch_recording <='1';
-					if (memEndAddr = conv_integer(CurrMemAddress)-1 or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
+					if (conv_integer(CurrMemAddress) = memEndAddr -1 or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
 						arch_recording <='0';
 						state<=CH_CONTROL;
 						case arch_recSel is
