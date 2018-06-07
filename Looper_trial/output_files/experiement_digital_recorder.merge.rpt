@@ -1,5 +1,5 @@
 Partition Merge report for experiement_digital_recorder
-Thu Jun 07 11:47:39 2018
+Thu Jun 07 16:28:30 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 
 
@@ -14,7 +14,8 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
   6. Partition Merge Partition Pin Processing
   7. Partition Merge Resource Usage Summary
   8. Partition Merge RAM Summary
-  9. Partition Merge Messages
+  9. Partition Merge DSP Block Usage Summary
+ 10. Partition Merge Messages
 
 
 
@@ -41,17 +42,17 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Partition Merge Summary                                                           ;
 +---------------------------------+-------------------------------------------------+
-; Partition Merge Status          ; Successful - Thu Jun 07 11:47:39 2018           ;
+; Partition Merge Status          ; Successful - Thu Jun 07 16:28:30 2018           ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; experiement_digital_recorder                    ;
 ; Top-level Entity Name           ; experiement_digital_recorder                    ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 3159                                            ;
+; Total registers                 ; 3226                                            ;
 ; Total pins                      ; 21                                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 4,370,464                                       ;
-; Total DSP Blocks                ; 0                                               ;
+; Total DSP Blocks                ; 1                                               ;
 ; Total HSSI RX PCSs              ; 0                                               ;
 ; Total HSSI PMA RX Deserializers ; 0                                               ;
 ; Total HSSI TX PCSs              ; 0                                               ;
@@ -462,19 +463,19 @@ agreement for further details.
 +-----------------------------------------------------------+---------+----------------------------------------------------+------------------+--------------------------------+--------------------------------+
 ; Statistic                                                 ; Top     ; audio_codec_controller:audio_codec_controller_inst ; sld_hub:auto_hub ; sld_signaltap:auto_signaltap_0 ; hard_block:auto_generated_inst ;
 +-----------------------------------------------------------+---------+----------------------------------------------------+------------------+--------------------------------+--------------------------------+
-; Estimate of Logic utilization (ALMs needed)               ; 786     ; 0                                                  ; 61               ; 1107                           ; 0                              ;
+; Estimate of Logic utilization (ALMs needed)               ; 827     ; 0                                                  ; 61               ; 1107                           ; 0                              ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
-; Combinational ALUT usage for logic                        ; 1480    ; 0                                                  ; 93               ; 459                            ; 0                              ;
-;     -- 7 input functions                                  ; 2       ; 0                                                  ; 0                ; 2                              ; 0                              ;
-;     -- 6 input functions                                  ; 327     ; 0                                                  ; 12               ; 91                             ; 0                              ;
-;     -- 5 input functions                                  ; 149     ; 0                                                  ; 25               ; 207                            ; 0                              ;
-;     -- 4 input functions                                  ; 208     ; 0                                                  ; 17               ; 28                             ; 0                              ;
-;     -- <=3 input functions                                ; 794     ; 0                                                  ; 39               ; 131                            ; 0                              ;
+; Combinational ALUT usage for logic                        ; 1550    ; 0                                                  ; 93               ; 459                            ; 0                              ;
+;     -- 7 input functions                                  ; 3       ; 0                                                  ; 0                ; 2                              ; 0                              ;
+;     -- 6 input functions                                  ; 335     ; 0                                                  ; 12               ; 91                             ; 0                              ;
+;     -- 5 input functions                                  ; 158     ; 0                                                  ; 25               ; 207                            ; 0                              ;
+;     -- 4 input functions                                  ; 213     ; 0                                                  ; 17               ; 28                             ; 0                              ;
+;     -- <=3 input functions                                ; 841     ; 0                                                  ; 39               ; 131                            ; 0                              ;
 ; Memory ALUT usage                                         ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
 ;     -- 64-address deep                                    ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
 ;     -- 32-address deep                                    ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
-; Dedicated logic registers                                 ; 677     ; 0                                                  ; 91               ; 2391                           ; 0                              ;
+; Dedicated logic registers                                 ; 744     ; 0                                                  ; 91               ; 2391                           ; 0                              ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
 ; I/O pins                                                  ; 21      ; 0                                                  ; 0                ; 0                              ; 0                              ;
@@ -482,6 +483,7 @@ agreement for further details.
 ; Total block memory bits                                   ; 4195360 ; 0                                                  ; 0                ; 175104                         ; 0                              ;
 ; Total block memory implementation bits                    ; 0       ; 0                                                  ; 0                ; 0                              ; 0                              ;
 ; JTAG                                                      ; 0       ; 0                                                  ; 0                ; 0                              ; 1                              ;
+; DSP block                                                 ; 1       ; 0                                                  ; 0                ; 0                              ; 0                              ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
 ; Connections                                               ;         ;                                                    ;                  ;                                ;                                ;
 ;     -- Input Connections                                  ; 1       ; 0                                                  ; 134              ; 3516                           ; 1                              ;
@@ -490,8 +492,8 @@ agreement for further details.
 ;     -- Registered Output Connections                      ; 0       ; 0                                                  ; 414              ; 0                              ; 0                              ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
 ; Internal Connections                                      ;         ;                                                    ;                  ;                                ;                                ;
-;     -- Total Connections                                  ; 26333   ; 0                                                  ; 1067             ; 13441                          ; 1197                           ;
-;     -- Registered Connections                             ; 17267   ; 0                                                  ; 886              ; 10748                          ; 0                              ;
+;     -- Total Connections                                  ; 26759   ; 0                                                  ; 1067             ; 13441                          ; 1197                           ;
+;     -- Registered Connections                             ; 17350   ; 0                                                  ; 886              ; 10748                          ; 0                              ;
 ;                                                           ;         ;                                                    ;                  ;                                ;                                ;
 ; External Connections                                      ;         ;                                                    ;                  ;                                ;                                ;
 ;     -- Top                                                ; 2       ; 0                                                  ; 0                ; 2015                           ; 0                              ;
@@ -635,27 +637,27 @@ Note: Resource usage numbers presented for Partitions containing post-synthesis 
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 1953           ;
+; Estimate of Logic utilization (ALMs needed) ; 1994           ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 2032           ;
-;     -- 7 input functions                    ; 4              ;
-;     -- 6 input functions                    ; 430            ;
-;     -- 5 input functions                    ; 381            ;
-;     -- 4 input functions                    ; 253            ;
-;     -- <=3 input functions                  ; 964            ;
+; Combinational ALUT usage for logic          ; 2102           ;
+;     -- 7 input functions                    ; 5              ;
+;     -- 6 input functions                    ; 438            ;
+;     -- 5 input functions                    ; 390            ;
+;     -- 4 input functions                    ; 258            ;
+;     -- <=3 input functions                  ; 1011           ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 3159           ;
+; Dedicated logic registers                   ; 3226           ;
 ;                                             ;                ;
 ; I/O pins                                    ; 21             ;
 ; Total MLAB memory bits                      ; 0              ;
 ; Total block memory bits                     ; 4370464        ;
 ;                                             ;                ;
-; Total DSP Blocks                            ; 0              ;
+; Total DSP Blocks                            ; 1              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 2689           ;
-; Total fan-out                               ; 30538          ;
-; Average fan-out                             ; 5.15           ;
+; Maximum fan-out                             ; 2756           ;
+; Total fan-out                               ; 30964          ;
+; Average fan-out                             ; 5.10           ;
 +---------------------------------------------+----------------+
 
 
@@ -672,13 +674,25 @@ Note: Resource usage numbers presented for Partitions containing post-synthesis 
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+---------+------+
 
 
++-----------------------------------------------+
+; Partition Merge DSP Block Usage Summary       ;
++---------------------------------+-------------+
+; Statistic                       ; Number Used ;
++---------------------------------+-------------+
+; Independent 27x27               ; 1           ;
+; Total number of DSP blocks      ; 1           ;
+;                                 ;             ;
+; Fixed Point Unsigned Multiplier ; 1           ;
++---------------------------------+-------------+
+
+
 +--------------------------+
 ; Partition Merge Messages ;
 +--------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Partition Merge
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
-    Info: Processing started: Thu Jun 07 11:47:37 2018
+    Info: Processing started: Thu Jun 07 16:28:28 2018
 Info: Command: quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Warning (35010): Previously generated Fitter netlist for partition "Top" is older than current Synthesis netlist -- using the current Synthesis netlist instead to ensure that the latest source changes are included
@@ -862,16 +876,17 @@ Info (35003): Optimize away 55 nodes that do not fanout to OUTPUT or BIDIR pins
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[14]" File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adcdata_tmp[15]" File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
     Info (35004): Node: "audio_codec_controller:audio_codec_controller_inst|adc2parallel:adc2parallel_right_inst|adc_synch_fifo:adc_synch_fifo_inst|dcfifo:dcfifo_component|dcfifo_6hr1:auto_generated|ram_address_a[4]" File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/audio_codec_controller.qxp Line: -1
-Info (21057): Implemented 5204 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 5319 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 19 input pins
     Info (21059): Implemented 5 output pins
     Info (21060): Implemented 1 bidirectional pins
-    Info (21061): Implemented 4492 logic cells
+    Info (21061): Implemented 4606 logic cells
     Info (21064): Implemented 686 RAM segments
+    Info (21062): Implemented 1 DSP elements
 Info: Quartus Prime Partition Merge was successful. 0 errors, 3 warnings
-    Info: Peak virtual memory: 649 megabytes
-    Info: Processing ended: Thu Jun 07 11:47:40 2018
-    Info: Elapsed time: 00:00:03
+    Info: Peak virtual memory: 653 megabytes
+    Info: Processing ended: Thu Jun 07 16:28:30 2018
+    Info: Elapsed time: 00:00:02
     Info: Total CPU time (on all processors): 00:00:02
 
 

@@ -55,8 +55,8 @@ agreement for further details.
 	(port
 		(pt 0 96)
 		(input)
-		(text "BPMin[7..0]" (rect 0 0 46 12)(font "Arial" ))
-		(text "BPMin[7..0]" (rect 21 91 67 103)(font "Arial" ))
+		(text "inBPM[7..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "inBPM[7..0]" (rect 21 91 67 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
@@ -69,8 +69,8 @@ agreement for further details.
 	(port
 		(pt 184 48)
 		(output)
-		(text "bar" (rect 0 0 12 12)(font "Arial" ))
-		(text "bar" (rect 151 43 163 55)(font "Arial" ))
+		(text "barEND" (rect 0 0 34 12)(font "Arial" ))
+		(text "barEND" (rect 129 43 163 55)(font "Arial" ))
 		(line (pt 184 48)(pt 168 48)(line_width 1))
 	)
 	(port

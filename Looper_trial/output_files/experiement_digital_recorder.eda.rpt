@@ -1,5 +1,5 @@
 EDA Netlist Writer report for experiement_digital_recorder
-Mon Jun 04 22:22:56 2018
+Thu Jun 07 15:47:28 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 
 
@@ -8,7 +8,9 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 ---------------------
   1. Legal Notice
   2. EDA Netlist Writer Summary
-  3. EDA Netlist Writer Messages
+  3. Simulation Settings
+  4. Simulation Generated Files
+  5. EDA Netlist Writer Messages
 
 
 
@@ -35,11 +37,42 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Mon Jun 04 22:22:56 2018 ;
+; EDA Netlist Writer Status ; Successful - Thu Jun 07 15:47:28 2018 ;
 ; Revision Name             ; experiement_digital_recorder          ;
-; Top-level Entity Name     ; experiement_digital_recorder          ;
+; Top-level Entity Name     ; Met_block_exp                         ;
 ; Family                    ; Cyclone V                             ;
+; Simulation Files Creation ; Successful                            ;
 +---------------------------+---------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Simulation Settings                                                                                                           ;
++---------------------------------------------------------------------------------------------------+---------------------------+
+; Option                                                                                            ; Setting                   ;
++---------------------------------------------------------------------------------------------------+---------------------------+
+; Tool Name                                                                                         ; ModelSim-Altera (Verilog) ;
+; Generate functional simulation netlist                                                            ; On                        ;
+; Truncate long hierarchy paths                                                                     ; Off                       ;
+; Map illegal HDL characters                                                                        ; Off                       ;
+; Flatten buses into individual nodes                                                               ; Off                       ;
+; Maintain hierarchy                                                                                ; Off                       ;
+; Bring out device-wide set/reset signals as ports                                                  ; Off                       ;
+; Enable glitch filtering                                                                           ; Off                       ;
+; Do not write top level VHDL entity                                                                ; Off                       ;
+; Disable detection of setup and hold time violations in the input registers of bi-directional pins ; Off                       ;
+; Architecture name in VHDL output netlist                                                          ; structure                 ;
+; Generate third-party EDA tool command script for RTL functional simulation                        ; Off                       ;
+; Generate third-party EDA tool command script for gate-level simulation                            ; Off                       ;
++---------------------------------------------------------------------------------------------------+---------------------------+
+
+
++---------------------------------------------------------------------------------------------------------+
+; Simulation Generated Files                                                                              ;
++---------------------------------------------------------------------------------------------------------+
+; Generated Files                                                                                         ;
++---------------------------------------------------------------------------------------------------------+
+; C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim//experiement_digital_recorder.vo ;
++---------------------------------------------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -62,81 +95,15 @@ Info: Running Quartus Prime EDA Netlist Writer
     Info: devices manufactured by Intel and sold by Intel or its 
     Info: authorized distributors.  Please refer to the applicable 
     Info: agreement for further details.
-    Info: Processing started: Mon Jun 04 22:22:54 2018
-Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=Z:/Lab_git/lab_project/Looper_trial/Waveform1.vwf --testbench_file=Z:/Lab_git/lab_project/Looper_trial/simulation/modelsim/Waveform1.vwf.vht
-Warning (20013): Ignored 1 assignments for entity "altsyncram_2k84" -- entity does not exist in design
-    Warning (20014): Assignment for entity set_global_assignment -name OPTIMIZE_POWER_DURING_SYNTHESIS NORMAL_COMPILATION -entity altsyncram_2k84 -tag quartusii was ignored
+    Info: Processing started: Thu Jun 07 15:47:26 2018
+Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
+Info (119006): Selected device 5CSXFC6D6F31C6 for design "experiement_digital_recorder"
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Warning (201007): Can't find port "clk" in design
-Warning (201007): Can't find port "ResetN" in design
-Warning (201005): Ignoring output pin "currentMemAddress" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[17]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[16]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[15]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[14]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[13]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[12]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[11]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[10]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[9]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[8]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[7]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[6]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[5]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[4]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[3]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[2]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[1]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "currentMemAddress[0]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[17]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[16]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[15]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[14]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[13]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[12]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[11]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[10]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[9]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[8]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[7]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[6]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[5]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[4]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[3]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[2]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[1]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "ENDMemAddress[0]" in vector source file when writing test bench files
-Warning (201007): Can't find port "KB_Selchannel" in design
-Warning (201007): Can't find port "KB_Selchannel[1]" in design
-Warning (201007): Can't find port "KB_Selchannel[0]" in design
-Warning (201007): Can't find port "KB_STOP" in design
-Warning (201007): Can't find port "KB_REC" in design
-Warning (201007): Can't find port "KB_PLAY" in design
-Warning (201007): Can't find port "KB_ClearCH" in design
-Warning (201007): Can't find port "KB_ALLPLAY" in design
-Warning (201007): Can't find port "recCounter" in design
-Warning (201007): Can't find port "recCounter[2]" in design
-Warning (201007): Can't find port "recCounter[1]" in design
-Warning (201007): Can't find port "recCounter[0]" in design
-Warning (201005): Ignoring output pin "recSel" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "recSel[1]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "recSel[0]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "recording" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "loop_start" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "Ch3Activate" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "Ch2Activate" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "Ch1Activate" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "Ch0Activate" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "CurrState" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "CurrState[2]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "CurrState[1]" in vector source file when writing test bench files
-Warning (201005): Ignoring output pin "CurrState[0]" in vector source file when writing test bench files
-Info (201002): Generated VHDL Test Bench File Z:/Lab_git/lab_project/Looper_trial/simulation/modelsim/Waveform1.vwf.vht for simulation
-Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 68 warnings
-    Info: Peak virtual memory: 644 megabytes
-    Info: Processing ended: Mon Jun 04 22:22:57 2018
-    Info: Elapsed time: 00:00:03
+Info (204019): Generated file experiement_digital_recorder.vo in folder "C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim//" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 605 megabytes
+    Info: Processing ended: Thu Jun 07 15:47:28 2018
+    Info: Elapsed time: 00:00:02
     Info: Total CPU time (on all processors): 00:00:02
 
 

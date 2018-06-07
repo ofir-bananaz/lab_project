@@ -1,5 +1,5 @@
 Analysis & Synthesis report for experiement_digital_recorder
-Thu Jun 07 11:47:35 2018
+Thu Jun 07 16:28:25 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 
 
@@ -14,30 +14,33 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
   6. Analysis & Synthesis IP Cores Summary
   7. Source assignments for audio_codec_controller:audio_codec_controller_inst
   8. Partition Status Summary
-  9. Partition for Top-Level Resource Utilization by Entity
- 10. State Machine - |experiement_digital_recorder|LooperSM:inst7|state
- 11. Registers Removed During Synthesis
- 12. Multiplexer Restructuring Statistics (Restructuring Performed)
- 13. Source assignments for recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated
- 14. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst
- 15. Parameter Settings for User Entity Instance: recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
- 16. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_COMPARE:inst24
- 17. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst3
- 18. Parameter Settings for Inferred Entity Instance: Looper_integrator:inst6|lpm_divide:Div0
- 19. Partition Dependent Files
- 20. Post-Synthesis Netlist Statistics for Top Partition
- 21. Partition "sld_hub:auto_hub" Resource Utilization by Entity
- 22. Multiplexer Restructuring Statistics (Restructuring Performed)
- 23. Post-Synthesis Netlist Statistics for Partition sld_hub:auto_hub
- 24. Partition "sld_signaltap:auto_signaltap_0" Resource Utilization by Entity
- 25. Registers Removed During Synthesis
- 26. Multiplexer Restructuring Statistics (Restructuring Performed)
- 27. Source assignments for sld_signaltap:auto_signaltap_0
- 28. Parameter Settings for Inferred Entity Instance: sld_signaltap:auto_signaltap_0
- 29. Post-Synthesis Netlist Statistics for Partition sld_signaltap:auto_signaltap_0
- 30. SignalTap II Logic Analyzer Settings
- 31. Elapsed Time Per Partition
- 32. Analysis & Synthesis Messages
+  9. Dependent File Changes for Partition Top
+ 10. Partition for Top-Level Resource Utilization by Entity
+ 11. State Machine - |experiement_digital_recorder|LooperSM:inst13|state
+ 12. Registers Removed During Synthesis
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Source assignments for recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated
+ 15. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst
+ 16. Parameter Settings for User Entity Instance: recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
+ 17. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_COMPARE:inst24
+ 18. Parameter Settings for User Entity Instance: recorder_module_looper:inst|LPM_CONSTANT:inst3
+ 19. Parameter Settings for User Entity Instance: LPM_CONSTANT:inst14
+ 20. Parameter Settings for User Entity Instance: LPM_CONSTANT:inst15
+ 21. Parameter Settings for Inferred Entity Instance: Looper_integrator:inst6|lpm_divide:Div0
+ 22. Partition Dependent Files
+ 23. Post-Synthesis Netlist Statistics for Top Partition
+ 24. Partition "sld_hub:auto_hub" Resource Utilization by Entity
+ 25. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 26. Post-Synthesis Netlist Statistics for Partition sld_hub:auto_hub
+ 27. Partition "sld_signaltap:auto_signaltap_0" Resource Utilization by Entity
+ 28. Registers Removed During Synthesis
+ 29. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 30. Source assignments for sld_signaltap:auto_signaltap_0
+ 31. Parameter Settings for Inferred Entity Instance: sld_signaltap:auto_signaltap_0
+ 32. Post-Synthesis Netlist Statistics for Partition sld_signaltap:auto_signaltap_0
+ 33. SignalTap II Logic Analyzer Settings
+ 34. Elapsed Time Per Partition
+ 35. Analysis & Synthesis Messages
 
 
 
@@ -64,7 +67,7 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Thu Jun 07 11:47:35 2018           ;
+; Analysis & Synthesis Status     ; Successful - Thu Jun 07 16:28:25 2018           ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; experiement_digital_recorder                    ;
 ; Top-level Entity Name           ; experiement_digital_recorder                    ;
@@ -202,6 +205,7 @@ agreement for further details.
 ; dpram.vhd                                                          ; yes             ; User Wizard-Generated File         ; C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/dpram.vhd                                                          ;             ;
 ; recorder_module_looper.bdf                                         ; yes             ; User Block Diagram/Schematic File  ; C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/recorder_module_looper.bdf                                         ;             ;
 ; Looper_integrator.vhd                                              ; yes             ; User VHDL File                     ; C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Looper_integrator.vhd                                              ;             ;
+; Metronome.vhd                                                      ; yes             ; User VHDL File                     ; C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Metronome.vhd                                                      ;             ;
 ; ../../../Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd          ; yes             ; User VHDL File                     ; C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd                                                    ;             ;
 ; lpm_constant.tdf                                                   ; yes             ; Megafunction                       ; c:/intelfpga/17.0/quartus/libraries/megafunctions/lpm_constant.tdf                                                        ;             ;
 ; altsyncram.tdf                                                     ; yes             ; Megafunction                       ; c:/intelfpga/17.0/quartus/libraries/megafunctions/altsyncram.tdf                                                          ;             ;
@@ -683,19 +687,31 @@ agreement for further details.
 +----------------------------------------------------+-------------+---------------------------------------+
 
 
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Dependent File Changes for Partition Top                                                                                                                                         ;
++-----------------+-----------------------------------------------------------+-------------------+----------+----------------------------------+----------------------------------+
+; Hierarchy       ; File Name                                                 ; Relative Location ; Change   ; Old                              ; New                              ;
++-----------------+-----------------------------------------------------------+-------------------+----------+----------------------------------+----------------------------------+
+; loopersm:inst13 ; ../../../Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd ; Project Directory ; Checksum ; a456641c0ad5bd5c947ba3d7a095e857 ; f3ae79b1994b4c42ab1253daddb4717e ;
+; metronome:inst7 ; Metronome.vhd                                             ; Project Directory ; Checksum ; a6409941f98133ff42ec906639123e24 ; c257f4b8fbf77d91669afcb004b8922c ;
+; |               ; experiement_digital_recorder.bdf                          ; Project Directory ; Checksum ; 5c3c93b611dd6c980ff984b5d2f3f754 ; 9d63c7d422e553974d53df6d4bfdb1c7 ;
++-----------------+-----------------------------------------------------------+-------------------+----------+----------------------------------+----------------------------------+
+
+
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Partition for Top-Level Resource Utilization by Entity                                                                                                                                                                                                                                                                                                              ;
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------+--------------+
 ; Compilation Hierarchy Node                   ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                           ; Entity Name                  ; Library Name ;
 +----------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------+--------------+
-; |experiement_digital_recorder                ; 1126 (0)            ; 281 (0)                   ; 4194304           ; 0          ; 0    ; 0            ; |experiement_digital_recorder                                                                                                                                 ; experiement_digital_recorder ; work         ;
-;    |LooperSM:inst7|                          ; 302 (302)           ; 122 (122)                 ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|LooperSM:inst7                                                                                                                  ; LooperSM                     ; work         ;
+; |experiement_digital_recorder                ; 1196 (0)            ; 348 (0)                   ; 4194304           ; 1          ; 0    ; 0            ; |experiement_digital_recorder                                                                                                                                 ; experiement_digital_recorder ; work         ;
+;    |LooperSM:inst13|                         ; 303 (303)           ; 125 (125)                 ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|LooperSM:inst13                                                                                                                 ; LooperSM                     ; work         ;
 ;    |Looper_integrator:inst6|                 ; 636 (215)           ; 66 (66)                   ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|Looper_integrator:inst6                                                                                                         ; Looper_integrator            ; work         ;
 ;       |lpm_divide:Div0|                      ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|Looper_integrator:inst6|lpm_divide:Div0                                                                                         ; lpm_divide                   ; work         ;
 ;          |lpm_divide_apo:auto_generated|     ; 421 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|Looper_integrator:inst6|lpm_divide:Div0|lpm_divide_apo:auto_generated                                                           ; lpm_divide_apo               ; work         ;
 ;             |abs_divider_jbg:divider|        ; 421 (32)            ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|Looper_integrator:inst6|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider                                   ; abs_divider_jbg              ; work         ;
 ;                |alt_u_div_mve:divider|       ; 357 (357)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|Looper_integrator:inst6|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider|alt_u_div_mve:divider             ; alt_u_div_mve                ; work         ;
 ;                |lpm_abs_4p9:my_abs_num|      ; 32 (32)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|Looper_integrator:inst6|lpm_divide:Div0|lpm_divide_apo:auto_generated|abs_divider_jbg:divider|lpm_abs_4p9:my_abs_num            ; lpm_abs_4p9                  ; work         ;
+;    |Metronome:inst7|                         ; 69 (69)             ; 64 (64)                   ; 0                 ; 1          ; 0    ; 0            ; |experiement_digital_recorder|Metronome:inst7                                                                                                                 ; Metronome                    ; work         ;
 ;    |recorder_module_looper:inst|             ; 188 (0)             ; 93 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiement_digital_recorder|recorder_module_looper:inst                                                                                                     ; recorder_module_looper       ; work         ;
 ;       |addr_counter:inst4|                   ; 79 (79)             ; 50 (50)                   ; 0                 ; 0          ; 0    ; 0            ; |experiement_digital_recorder|recorder_module_looper:inst|addr_counter:inst4                                                                                  ; addr_counter                 ; work         ;
 ;       |dpram:inst1|                          ; 68 (0)              ; 10 (0)                    ; 4194304           ; 0          ; 0    ; 0            ; |experiement_digital_recorder|recorder_module_looper:inst|dpram:inst1                                                                                         ; dpram                        ; work         ;
@@ -710,7 +726,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 
 Encoding Type:  One-Hot
 +--------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |experiement_digital_recorder|LooperSM:inst7|state                                                             ;
+; State Machine - |experiement_digital_recorder|LooperSM:inst13|state                                                            ;
 +---------------------+-----------------+---------------+------------------+-----------------+---------------------+-------------+
 ; Name                ; state.REC_OTHER ; state.PRE_REC ; state.CH_CONTROL ; state.REC_FIRST ; state.PRE_REC_FIRST ; state.EMPTY ;
 +---------------------+-----------------+---------------+------------------+-----------------+---------------------+-------------+
@@ -723,18 +739,24 @@ Encoding Type:  One-Hot
 +---------------------+-----------------+---------------+------------------+-----------------+---------------------+-------------+
 
 
-+-------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                  ;
-+----------------------------------------+--------------------------------------------+
-; Register name                          ; Reason for Removal                         ;
-+----------------------------------------+--------------------------------------------+
-; LooperSM:inst7|arch_Ch0END[19..30]     ; Merged with LooperSM:inst7|arch_Ch0END[18] ;
-; LooperSM:inst7|arch_Ch1END[19..30]     ; Merged with LooperSM:inst7|arch_Ch1END[18] ;
-; LooperSM:inst7|arch_Ch2END[19..30]     ; Merged with LooperSM:inst7|arch_Ch2END[18] ;
-; LooperSM:inst7|arch_Ch3END[19..30]     ; Merged with LooperSM:inst7|arch_Ch3END[18] ;
-; LooperSM:inst7|arch_Ch0END[18]         ; Stuck at GND due to stuck port data_in     ;
-; Total Number of Removed Registers = 49 ;                                            ;
-+----------------------------------------+--------------------------------------------+
++---------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                    ;
++----------------------------------------+----------------------------------------------+
+; Register name                          ; Reason for Removal                           ;
++----------------------------------------+----------------------------------------------+
+; Metronome:inst7|BPMcurr[0,1,6,7]       ; Stuck at GND due to stuck port data_in       ;
+; Metronome:inst7|counterLimit[28..31]   ; Stuck at GND due to stuck port data_in       ;
+; Metronome:inst7|BPMcurr[2]             ; Merged with Metronome:inst7|BPMcurr[3]       ;
+; Metronome:inst7|BPMcurr[3]             ; Merged with Metronome:inst7|BPMcurr[4]       ;
+; Metronome:inst7|BPMcurr[4]             ; Merged with Metronome:inst7|BPMcurr[5]       ;
+; LooperSM:inst13|arch_Ch0END[19..30]    ; Merged with LooperSM:inst13|arch_Ch0END[18]  ;
+; LooperSM:inst13|arch_Ch1END[19..30]    ; Merged with LooperSM:inst13|arch_Ch1END[18]  ;
+; LooperSM:inst13|arch_Ch2END[19..30]    ; Merged with LooperSM:inst13|arch_Ch2END[18]  ;
+; LooperSM:inst13|arch_Ch3END[19..30]    ; Merged with LooperSM:inst13|arch_Ch3END[18]  ;
+; LooperSM:inst13|arch_Ch0END[18]        ; Stuck at GND due to stuck port data_in       ;
+; Metronome:inst7|BPMcurr[5]             ; Merged with LooperSM:inst13|arch_MetModeFlag ;
+; Total Number of Removed Registers = 61 ;                                              ;
++----------------------------------------+----------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -742,19 +764,22 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                               ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------+
-; 3:1                ; 30 bits   ; 60 LEs        ; 0 LEs                ; 60 LEs                 ; Yes        ; |experiement_digital_recorder|recorder_module_looper:inst|addr_counter:inst4|counter[5]  ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |experiement_digital_recorder|LooperSM:inst7|arch_recSel[1]                              ;
-; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst7|arch_Ch1END[7]                              ;
-; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst7|arch_Ch2END[16]                             ;
-; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst7|arch_Ch3END[15]                             ;
-; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst7|arch_Ch0END[4]                              ;
-; 33:1               ; 16 bits   ; 352 LEs       ; 336 LEs              ; 16 LEs                 ; Yes        ; |experiement_digital_recorder|Looper_integrator:inst6|data[2]                            ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 0 LEs                ; 60 LEs                 ; Yes        ; |experiement_digital_recorder|recorder_module_looper:inst|addr_counter:inst4|counter[2]  ;
+; 4:1                ; 30 bits   ; 60 LEs        ; 0 LEs                ; 60 LEs                 ; Yes        ; |experiement_digital_recorder|Metronome:inst7|counter[22]                                ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |experiement_digital_recorder|Metronome:inst7|quaterCounter[0]                           ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |experiement_digital_recorder|LooperSM:inst13|arch_recSel[1]                             ;
+; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst13|arch_Ch1END[2]                             ;
+; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst13|arch_Ch2END[1]                             ;
+; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst13|arch_Ch3END[10]                            ;
+; 7:1                ; 17 bits   ; 68 LEs        ; 0 LEs                ; 68 LEs                 ; Yes        ; |experiement_digital_recorder|LooperSM:inst13|arch_Ch0END[9]                             ;
+; 33:1               ; 16 bits   ; 352 LEs       ; 336 LEs              ; 16 LEs                 ; Yes        ; |experiement_digital_recorder|Looper_integrator:inst6|data[7]                            ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |experiement_digital_recorder|recorder_module_looper:inst|addr_counter:inst4|counter[31] ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst7|recCounter                                  ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst7|Mux9                                        ;
-; 4:1                ; 18 bits   ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst7|Selector158                                 ;
-; 14:1               ; 4 bits    ; 36 LEs        ; 20 LEs               ; 16 LEs                 ; No         ; |experiement_digital_recorder|LooperSM:inst7|state                                       ;
-; 14:1               ; 2 bits    ; 18 LEs        ; 8 LEs                ; 10 LEs                 ; No         ; |experiement_digital_recorder|LooperSM:inst7|state                                       ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |experiement_digital_recorder|Metronome:inst7|counter[0]                                 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst13|recCounter                                 ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst13|Mux11                                      ;
+; 4:1                ; 18 bits   ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst13|Selector148                                ;
+; 10:1               ; 4 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst13|state                                      ;
+; 10:1               ; 2 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; No         ; |experiement_digital_recorder|LooperSM:inst13|state                                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------+
 
 
@@ -878,6 +903,32 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: LPM_CONSTANT:inst14 ;
++--------------------+------------------+--------------------------+
+; Parameter Name     ; Value            ; Type                     ;
++--------------------+------------------+--------------------------+
+; LPM_WIDTH          ; 1                ; Untyped                  ;
+; LPM_CVALUE         ; 1                ; Signed Integer           ;
+; ENABLE_RUNTIME_MOD ; NO               ; Untyped                  ;
+; CBXI_PARAMETER     ; lpm_constant_t64 ; Untyped                  ;
++--------------------+------------------+--------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: LPM_CONSTANT:inst15 ;
++--------------------+------------------+--------------------------+
+; Parameter Name     ; Value            ; Type                     ;
++--------------------+------------------+--------------------------+
+; LPM_WIDTH          ; 8                ; Untyped                  ;
+; LPM_CVALUE         ; 60               ; Signed Integer           ;
+; ENABLE_RUNTIME_MOD ; NO               ; Untyped                  ;
+; CBXI_PARAMETER     ; lpm_constant_9a4 ; Untyped                  ;
++--------------------+------------------+--------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +------------------------------------------------------------------------------------------+
 ; Parameter Settings for Inferred Entity Instance: Looper_integrator:inst6|lpm_divide:Div0 ;
 +------------------------+----------------+------------------------------------------------+
@@ -925,11 +976,12 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; db/decode_sma.tdf                                         ; Project Directory     ; work    ; b32be775cb7a55227d94741c713a2bfa ;
 ; db/mux_rib.tdf                                            ; Project Directory     ; work    ; 9968ec5925c5f9b9b4bc20c3b85fb573 ;
 ; dpram.vhd                                                 ; Project Directory     ; work    ; e87f64abb6ecb01c9c287e64612f286d ;
-; experiement_digital_recorder.bdf                          ; Project Directory     ; work    ; 98a5a623e290fe65b54e978dac13f348 ;
+; experiement_digital_recorder.bdf                          ; Project Directory     ; work    ; 9d63c7d422e553974d53df6d4bfdb1c7 ;
 ; Looper_integrator.vhd                                     ; Project Directory     ; work    ; aa20495600a0bb80ede4bfd71636df32 ;
+; Metronome.vhd                                             ; Project Directory     ; work    ; c257f4b8fbf77d91669afcb004b8922c ;
 ; prescaler.vhd                                             ; Project Directory     ; work    ; ab0edd5f20e20144765babc8c2e3ab39 ;
 ; recorder_module_looper.bdf                                ; Project Directory     ; work    ; 20a31e78417505b11ba2032076c03521 ;
-; ../../../Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd ; Project Directory     ; work    ; 2434694316161e3c4a396ca9cbb7a5a0 ;
+; ../../../Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd ; Project Directory     ; work    ; f3ae79b1994b4c42ab1253daddb4717e ;
 +-----------------------------------------------------------+-----------------------+---------+----------------------------------+
 
 
@@ -938,44 +990,45 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------------------------------------------------------+-------+
 ; Type                                                   ; Count ;
 +--------------------------------------------------------+-------+
-; arriav_ff                                              ; 281   ;
-;     CLR                                                ; 9     ;
-;     CLR SCLR                                           ; 30    ;
+; arriav_ff                                              ; 348   ;
+;     CLR                                                ; 16    ;
+;     CLR SCLR                                           ; 60    ;
 ;     CLR SCLR SLD                                       ; 30    ;
-;     ENA                                                ; 4     ;
+;     ENA                                                ; 34    ;
 ;     ENA CLR                                            ; 46    ;
 ;     ENA CLR SCLR                                       ; 85    ;
 ;     ENA CLR SCLR SLD                                   ; 51    ;
 ;     ENA SCLR                                           ; 16    ;
 ;     plain                                              ; 10    ;
-; arriav_lcell_comb                                      ; 1126  ;
-;     arith                                              ; 440   ;
+; arriav_lcell_comb                                      ; 1196  ;
+;     arith                                              ; 472   ;
 ;         0 data inputs                                  ; 64    ;
-;         1 data inputs                                  ; 135   ;
+;         1 data inputs                                  ; 167   ;
 ;         2 data inputs                                  ; 108   ;
 ;         3 data inputs                                  ; 28    ;
 ;         4 data inputs                                  ; 77    ;
 ;         5 data inputs                                  ; 28    ;
-;     extend                                             ; 1     ;
-;         7 data inputs                                  ; 1     ;
-;     normal                                             ; 676   ;
-;         1 data inputs                                  ; 1     ;
-;         2 data inputs                                  ; 180   ;
-;         3 data inputs                                  ; 69    ;
-;         4 data inputs                                  ; 82    ;
-;         5 data inputs                                  ; 82    ;
-;         6 data inputs                                  ; 262   ;
+;     extend                                             ; 2     ;
+;         7 data inputs                                  ; 2     ;
+;     normal                                             ; 713   ;
+;         1 data inputs                                  ; 13    ;
+;         2 data inputs                                  ; 188   ;
+;         3 data inputs                                  ; 64    ;
+;         4 data inputs                                  ; 87    ;
+;         5 data inputs                                  ; 91    ;
+;         6 data inputs                                  ; 270   ;
 ;     shared                                             ; 9     ;
 ;         0 data inputs                                  ; 3     ;
 ;         2 data inputs                                  ; 3     ;
 ;         4 data inputs                                  ; 3     ;
+; arriav_mac                                             ; 1     ;
 ; blackbox                                               ; 1     ;
 ;     audio_codec_controller:audio_codec_controller_inst ; 1     ;
 ; boundary_port                                          ; 21    ;
 ; stratixv_ram_block                                     ; 512   ;
 ;                                                        ;       ;
 ; Max LUT depth                                          ; 57.60 ;
-; Average LUT depth                                      ; 18.45 ;
+; Average LUT depth                                      ; 17.34 ;
 +--------------------------------------------------------+-------+
 
 
@@ -1432,7 +1485,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
-    Info: Processing started: Thu Jun 07 11:47:09 2018
+    Info: Processing started: Thu Jun 07 16:27:58 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -1462,8 +1515,10 @@ Info (12021): Found 2 design units, including 1 entities, in source file metrono
     Info (12022): Found design unit 1: Metronome-Metronome_arch File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Metronome.vhd Line: 21
     Info (12023): Found entity 1: Metronome File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Metronome.vhd Line: 9
 Info (12021): Found 2 design units, including 1 entities, in source file /users/tpe1/desktop/lab_git/lab_project/looper_trial/sm/loopersm.vhd
-    Info (12022): Found design unit 1: LooperSM-arc_LooperSM File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 52
+    Info (12022): Found design unit 1: LooperSM-arc_LooperSM File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 54
     Info (12023): Found entity 1: LooperSM File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 10
+Info (12021): Found 1 design units, including 1 entities, in source file met_block_exp.bdf
+    Info (12023): Found entity 1: Met_block_exp
 Info (12127): Elaborating entity "experiement_digital_recorder" for the top level hierarchy
 Info (12128): Elaborating entity "audio_codec_controller" for hierarchy "audio_codec_controller:audio_codec_controller_inst"
 Info (12128): Elaborating entity "Looper_integrator" for hierarchy "Looper_integrator:inst6"
@@ -1550,8 +1605,14 @@ Info (12130): Elaborated megafunction instantiation "recorder_module_looper:inst
 Info (12133): Instantiated megafunction "recorder_module_looper:inst|LPM_CONSTANT:inst3" with the following parameter:
     Info (12134): Parameter "LPM_CVALUE" = "1"
     Info (12134): Parameter "LPM_WIDTH" = "1"
-Info (12128): Elaborating entity "LooperSM" for hierarchy "LooperSM:inst7"
-Warning (10036): Verilog HDL or VHDL warning at LooperSM.vhd(82): object "stpCounter" assigned a value but never read File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 82
+Info (12128): Elaborating entity "LooperSM" for hierarchy "LooperSM:inst13"
+Warning (10036): Verilog HDL or VHDL warning at LooperSM.vhd(86): object "stpCounter" assigned a value but never read File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 86
+Info (12128): Elaborating entity "Metronome" for hierarchy "Metronome:inst7"
+Info (12128): Elaborating entity "LPM_CONSTANT" for hierarchy "LPM_CONSTANT:inst15"
+Info (12130): Elaborated megafunction instantiation "LPM_CONSTANT:inst15"
+Info (12133): Instantiated megafunction "LPM_CONSTANT:inst15" with the following parameter:
+    Info (12134): Parameter "LPM_CVALUE" = "60"
+    Info (12134): Parameter "LPM_WIDTH" = "8"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_4k84.tdf
     Info (12023): Found entity 1: altsyncram_4k84 File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/db/altsyncram_4k84.tdf Line: 28
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_blc.tdf
@@ -1574,7 +1635,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr
     Info (12023): Found entity 1: cmpr_99c File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/db/cmpr_99c.tdf Line: 23
 Info (12033): Analysis and Synthesis generated SignalTap II or debug node instance "auto_signaltap_0"
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2018.06.07.11:47:26 Progress: Loading sld6ddbbe67/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2018.06.07.16:28:16 Progress: Loading sld6ddbbe67/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -1630,45 +1691,48 @@ Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Critical Warning (18061): Ignored Power-Up Level option on the following registers
     Critical Warning (18010): Register recorder_module_looper:inst|prescaler:inst27|PRESCALER_COUNTER[31] will power up to Low File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/prescaler.vhd Line: 38
     Critical Warning (18010): Register recorder_module_looper:inst|prescaler:inst27|PRESCALER_COUNTER[0] will power up to Low File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/prescaler.vhd Line: 38
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch0END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch0END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
     Critical Warning (18010): Register recorder_module_looper:inst|addr_counter:inst4|counter[0] will power up to Low File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/addr_counter.vhd Line: 25
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch1END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch1END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch2END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch2END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch3END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|arch_Ch3END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch0END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch0END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch2END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch2END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch1END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch1END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch3END[31] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|arch_Ch3END[0] will power up to Low File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
     Critical Warning (18010): Register recorder_module_looper:inst|addr_counter:inst4|counter[31] will power up to Low File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/addr_counter.vhd Line: 25
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[0] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[1] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[2] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[3] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[4] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[5] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[6] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[7] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[8] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[9] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[10] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[11] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[12] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[13] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[14] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[15] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[16] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-    Critical Warning (18010): Register LooperSM:inst7|memEndAddr[17] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 87
-Info (21057): Implemented 1777 device resources after synthesis - the final resource count might be different
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[0] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[1] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[2] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[3] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[4] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[5] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[6] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[7] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[8] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[9] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[10] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[11] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[12] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[13] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[14] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[15] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[16] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register LooperSM:inst13|memEndAddr[17] will power up to High File: C:/Users/tpe1/Desktop/Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd Line: 91
+    Critical Warning (18010): Register Metronome:inst7|counter[0] will power up to Low File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Metronome.vhd Line: 40
+    Critical Warning (18010): Register Metronome:inst7|counter[31] will power up to Low File: C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Metronome.vhd Line: 40
+Info (21057): Implemented 1892 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 16 input pins
     Info (21059): Implemented 4 output pins
     Info (21060): Implemented 1 bidirectional pins
-    Info (21061): Implemented 1243 logic cells
+    Info (21061): Implemented 1357 logic cells
     Info (21064): Implemented 512 RAM segments
+    Info (21062): Implemented 1 DSP elements
     Info (21071): Implemented 1 partitions
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 37 warnings
-    Info: Peak virtual memory: 861 megabytes
-    Info: Processing ended: Thu Jun 07 11:47:36 2018
-    Info: Elapsed time: 00:00:27
-    Info: Total CPU time (on all processors): 00:00:48
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 39 warnings
+    Info: Peak virtual memory: 858 megabytes
+    Info: Processing ended: Thu Jun 07 16:28:27 2018
+    Info: Elapsed time: 00:00:29
+    Info: Total CPU time (on all processors): 00:00:50
 
 

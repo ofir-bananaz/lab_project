@@ -42,8 +42,8 @@ set_location_assignment PIN_AA30 -to MICROPHON_ON ; #SW[9]
 #============================================================
 # LED
 #============================================================ #LEDR[0]
-#set_location_assignment PIN_AA24 -to LED 
-#set_location_assignment PIN_AB23 -to LEDR[1]
+#set_location_assignment PIN_AA24 -to metQua 
+#set_location_assignment PIN_AB23 -to metBar
 #set_location_assignment PIN_AC23 -to LEDR[2]
 #set_location_assignment PIN_AD24 -to LEDR[3]
 #set_location_assignment PIN_AG25 -to LEDR[4]
@@ -56,14 +56,14 @@ set_location_assignment PIN_AA30 -to MICROPHON_ON ; #SW[9]
 #============================================================
 # Seg7
 #============================================================
-#set_location_assignment PIN_W17 -to HEX0[0]
+set_location_assignment PIN_W17 -to metQua
 #set_location_assignment PIN_V18 -to HEX0[1]
 #set_location_assignment PIN_AG17 -to HEX0[2]
 #set_location_assignment PIN_AG16 -to HEX0[3]
 #set_location_assignment PIN_AH17 -to HEX0[4]
 #set_location_assignment PIN_AG18 -to HEX0[5]
 #set_location_assignment PIN_AH18 -to HEX0[6]
-#set_location_assignment PIN_AF16 -to HEX1[0]
+set_location_assignment PIN_AF16 -to metBar
 #set_location_assignment PIN_V16 -to HEX1[1]
 #set_location_assignment PIN_AE16 -to HEX1[2]
 #set_location_assignment PIN_AD17 -to HEX1[3]
