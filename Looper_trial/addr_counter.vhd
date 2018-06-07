@@ -7,20 +7,20 @@ entity addr_counter is
 		resetN, CLK_IN,en, en1, AddrZero	:in std_logic;
 		
 		
-		addr				:out std_logic_vector (17 downto 0)); --modify
+		addr				:out std_logic_vector (17 downto 0)); -- modify if want to extend memory address range
 end addr_counter;
 
 
 
 architecture addr_counter_arch of addr_counter is
 
-signal sig : std_logic_vector(17 downto 0):=(others=> '0');--modify
+signal sig : std_logic_vector(17 downto 0):=(others=> '0'); -- modify if want to extend memory address range
  
 begin
 	process(CLK_IN,resetN,en,en1)
 		 variable counter: integer ;
 		 variable curr_max: integer ;
-		 constant max: integer := 262143;--modify
+		 constant max: integer := 262143; -- modify if want to extend memory address range
 	begin
 		 if resetN = '0' then
 			  counter := 0 ;
@@ -34,7 +34,7 @@ begin
 			if(en='1' and en1='1') then
 				
 				sig <= std_logic_vector(to_unsigned(counter, addr'length));
-				counter := counter + 1 ; -- was moved from line 33 Can cause troubles?
+				counter := counter + 1 ;
 				
 				if (counter  = max) then
 					counter :=0;

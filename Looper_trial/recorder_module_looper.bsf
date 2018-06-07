@@ -76,8 +76,8 @@ agreement for further details.
 	(port
 		(pt 232 48)
 		(output)
-		(text "memClk" (rect 0 0 49 19)(font "Intel Clear" (font_size 8)))
-		(text "memClk" (rect 162 43 211 62)(font "Intel Clear" (font_size 8)))
+		(text "enable" (rect 0 0 40 19)(font "Intel Clear" (font_size 8)))
+		(text "enable" (rect 171 43 211 62)(font "Intel Clear" (font_size 8)))
 		(line (pt 232 48)(pt 216 48))
 	)
 	(port

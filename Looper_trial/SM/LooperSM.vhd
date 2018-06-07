@@ -11,6 +11,7 @@ entity LooperSM is
 	port (
 		----INPUTS----
 		--standard sychronic inputs
+		enable          : in std_logic;
 		clk             : in std_logic;
 		ResetN          : in std_logic;
 		
@@ -120,238 +121,238 @@ begin
 
 			
 		elsif (rising_edge(clk))  then
+		 if enable ='1' then
+				arch_loop_start <='0';		
 			
-			arch_loop_start <='0';		
-		
-			--Flip IMMEDIATE START MODE;
-			--if KB_IMMstart = '1' and arch_Imm_start = '0' then
-				--arch_Imm_start <= '1';
-			--elsif KB_IMMstart = '1' and arch_Imm_start = '1' then
-				--arch_Imm_start <= '0';
-			--end if; 
-			case state is
-				------------------------------
-				when EMPTY=> stateNum <= 0 ;-- debug
-				------------------------------
-				
-					arch_loop_start  <= '1'  ; -- also to zero in memory
-					arch_Imm_start   <= '0'  ; --mode for immediate start
-					arch_recSel      <= "00" ;
-					arch_recording   <= '0'  ;
+				--Flip IMMEDIATE START MODE;
+				--if KB_IMMstart = '1' and arch_Imm_start = '0' then
+					--arch_Imm_start <= '1';
+				--elsif KB_IMMstart = '1' and arch_Imm_start = '1' then
+					--arch_Imm_start <= '0';
+				--end if; 
+				case state is
+					------------------------------
+					when EMPTY=> stateNum <= 0 ;-- debug
+					------------------------------
 					
-					arch_Ch0END <= 0 ;
-					arch_Ch1END <= 0 ;
-					arch_Ch2END <= 0 ;
-					arch_Ch3END <= 0 ;
-					
-					
-					arch_Ch0ACT <= '0' ;
-					arch_Ch1ACT <= '0' ;
-					arch_Ch2ACT <= '0' ;
-					arch_Ch3ACT <= '0' ;
-
-					ch0HT <= '0' ;
-					ch1HT <= '0' ;
-					ch2HT <= '0' ;
-					ch3HT <= '0' ;
-					
-					
-					--ARCH VARIABLES-- 
-					recCounter := 0;
-					stpCounter := 0;
-					memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
-					
-
-					if KB_REC = '1' then
-						arch_recSel <= KB_Selchannel;
-						state<=PRE_REC_FIRST;
-					end if;
-					
-				------------------------------				
-				when PRE_REC_FIRST=> stateNum <= 1 ;-- debug
-				------------------------------
-				
-					arch_recording <='1';
-					arch_loop_start <='1';
-					case arch_recSel is
-						when "00" => arch_Ch0ACT <='1' ;
-						when "01" => arch_Ch1ACT <='1' ;
-						when "10" => arch_Ch2ACT <='1' ;
-						when "11" => arch_Ch3ACT <='1' ;
-					end case;
-					state<=REC_FIRST;
-				
-				------------------------------				
-				when REC_FIRST=> stateNum <= 2 ;-- debug
-				------------------------------
-					recCounter:= 1;
-					arch_recording <='1';
-					
-					if (262143 = conv_integer(CurrMemAddress) or KB_PLAY ='1' or KB_ALLPLAY = '1') then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
-						arch_recording <='0';
-						memEndAddr  :=  conv_integer(CurrMemAddress);
-						arch_loop_start <='1';
-						state<=CH_CONTROL;
-						case arch_recSel is
-							when "00" => ch0HT <= '1'; 
-							when "01" => ch1HT <= '1'; 
-							when "10" => ch2HT <= '1'; 
-							when "11" => ch3HT <= '1';  -- so we will be on
-						end case;
+						arch_loop_start  <= '1'  ; -- also to zero in memory
+						arch_Imm_start   <= '0'  ; --mode for immediate start
+						arch_recSel      <= "00" ;
+						arch_recording   <= '0'  ;
 						
-						arch_Ch0END <= memEndAddr;
-						arch_Ch1END <= memEndAddr;
-						arch_Ch2END <= memEndAddr;
-						arch_Ch3END <= memEndAddr;
-					end if;       
-					              
-					
-				------------------------------
-				when CH_CONTROL=> stateNum <= 3 ;-- debug
-				------------------------------
-					-- default values
-					arch_recording <='0'; -- dont start
+						arch_Ch0END <= 0 ;
+						arch_Ch1END <= 0 ;
+						arch_Ch2END <= 0 ;
+						arch_Ch3END <= 0 ;
+						
+						
+						arch_Ch0ACT <= '0' ;
+						arch_Ch1ACT <= '0' ;
+						arch_Ch2ACT <= '0' ;
+						arch_Ch3ACT <= '0' ;
 
-					-----
-					if KB_REC = '1' then
-					-----
-						state<=PRE_REC;
-						arch_recSel <= KB_Selchannel;
-						if (recCounter = 1) and ((KB_Selchannel = "00" and ch0HT='1') or (KB_Selchannel = "01" and ch1HT='1') or (KB_Selchannel = "10" and ch2HT='1') or (KB_Selchannel = "11" and ch3HT='1')) then -- if we choose to record on a lonely track -> that's a first rec
+						ch0HT <= '0' ;
+						ch1HT <= '0' ;
+						ch2HT <= '0' ;
+						ch3HT <= '0' ;
+						
+						
+						--ARCH VARIABLES-- 
+						recCounter := 0;
+						stpCounter := 0;
+						memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
+						
+
+						if KB_REC = '1' then
+							arch_recSel <= KB_Selchannel;
 							state<=PRE_REC_FIRST;
 						end if;
-						if (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
-							recCounter:= recCounter+1;
 						
-						end if;
-						
-						
-					-----
-					elsif KB_PLAY = '1' then -- CHANGE TO IF HAS TRACK --> PLAY
-					-----
-						case KB_Selchannel is
-							when "00" => if ch0HT='1' then arch_Ch0ACT <='1'; end if;
-							when "01" => if ch1HT='1' then arch_Ch1ACT <='1'; end if;
-							when "10" => if ch2HT='1' then arch_Ch2ACT <='1'; end if;
-							when "11" => if ch3HT='1' then arch_Ch3ACT <='1'; end if;
-						end case;
-					-----
-					elsif KB_STOP = '1' then
-					-----
-						case KB_Selchannel is
-							when "00" => arch_Ch0ACT <='0';
-							when "01" => arch_Ch1ACT <='0';
-							when "10" => arch_Ch2ACT <='0';
-							when "11" => arch_Ch3ACT <='0';
-						end case;
-						
-					-----
-					elsif KB_ClearCH = '1' then
-					-----
-						if (KB_Selchannel = "00" and ch0HT='1') or (KB_Selchannel = "01" and ch1HT='1') or (KB_Selchannel = "10" and ch2HT='1') or (KB_Selchannel = "11" and ch3HT='1') then
-							recCounter:= recCounter-1;
-						end if;
-						
-						case KB_Selchannel is
-							when "00" =>  if ch0HT='1' then arch_Ch0ACT <='0'; ch0HT <= '0';end if; 
-							when "01" =>  if ch1HT='1' then arch_Ch1ACT <='0'; ch1HT <= '0';end if; 
-							when "10" =>  if ch2HT='1' then arch_Ch2ACT <='0'; ch2HT <= '0';end if; 
-							when "11" =>  if ch3HT='1' then arch_Ch3ACT <='0'; ch3HT <= '0';end if; 
-						end case;
-						
-						
-						if recCounter = 0 then
-							arch_loop_start <='1';
-							state<=EMPTY;
-						end if;
-					end if;
-
-				------------------------------
-				when PRE_REC=> stateNum <= 4 ;-- debug
-				------------------------------
-					if arch_loop_start = '1' then -- can improve by allowing stopping before record start
-						arch_recording <='1';
-						case arch_recSel is
-							when "00" => arch_Ch0ACT <='1'; 
-							when "01" => arch_Ch1ACT <='1';
-							when "10" => arch_Ch2ACT <='1';
-							when "11" => arch_Ch3ACT <='1';
-						end case;
-						state<=REC_OTHER;
-					end if;
-
-				------------------------------
-				when REC_OTHER=> stateNum <= 5 ;-- debug
+					------------------------------				
+					when PRE_REC_FIRST=> stateNum <= 1 ;-- debug
 					------------------------------
-					arch_recording <='1';
-					if (conv_integer(CurrMemAddress) = memEndAddr -1 or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
-						arch_recording <='0';
-						state<=CH_CONTROL;
+					
+						arch_recording <='1';
+						arch_loop_start <='1';
 						case arch_recSel is
-							when "00" => ch0HT <= '1'; arch_Ch0END <= conv_integer(CurrMemAddress)-0; --want to end at the adress of 4
-							when "01" => ch1HT <= '1'; arch_Ch1END <= conv_integer(CurrMemAddress)-1;
-							when "10" => ch2HT <= '1'; arch_Ch2END <= conv_integer(CurrMemAddress)-2;
-							when "11" => ch3HT <= '1'; arch_Ch3END <= conv_integer(CurrMemAddress)-3;
+							when "00" => arch_Ch0ACT <='1' ;
+							when "01" => arch_Ch1ACT <='1' ;
+							when "10" => arch_Ch2ACT <='1' ;
+							when "11" => arch_Ch3ACT <='1' ;
 						end case;
+						state<=REC_FIRST;
+					
+					------------------------------				
+					when REC_FIRST=> stateNum <= 2 ;-- debug
+					------------------------------
+						recCounter:= 1;
+						arch_recording <='1';
 						
-					elsif (KB_STOP ='1') then
-						arch_recording <='0';
-						state<=CH_CONTROL;
-						case arch_recSel is
-							when "00" => ch0HT <= '1'; arch_Ch0ACT <='1'; arch_Ch0END <= conv_integer(CurrMemAddress)-0;  --want to end at the address of 0,
-							when "01" => ch1HT <= '1'; arch_Ch1ACT <='1'; arch_Ch1END <= conv_integer(CurrMemAddress)-1;  
-							when "10" => ch2HT <= '1'; arch_Ch2ACT <='1'; arch_Ch2END <= conv_integer(CurrMemAddress)-2;  
-							when "11" => ch3HT <= '1'; arch_Ch3ACT <='1'; arch_Ch3END <= conv_integer(CurrMemAddress)-3;  
-						end case;
-					end if;
-			end case;
-			
-			
-			-- CHANNEL ACTIVATION DECISION MAKING --
-			-- CH0
-			if ch0HT = '1' and arch_Ch0END >= conv_integer(CurrMemAddress) and arch_Ch0ACT = '1' then
-				arch_Ch0DEC <='1';
-			else
-				arch_Ch0DEC <='0';
-			end if;
-			
-			--CH1
-			if ch1HT = '1' and arch_Ch1END >= conv_integer(CurrMemAddress) and arch_Ch1ACT = '1' then
-				arch_Ch1DEC <='1';
-			else
-				arch_Ch1DEC <='0';
-			end if;
-			
-			--CH2
-			if ch2HT = '1' and arch_Ch2END >= conv_integer(CurrMemAddress) and arch_Ch2ACT = '1' then
-				arch_Ch2DEC <='1';
-			else
-				arch_Ch2DEC <='0';
-			end if;
-			
-			--CH3
-			if ch3HT = '1' and arch_Ch3END >= conv_integer(CurrMemAddress) and arch_Ch3ACT = '1' then
-				arch_Ch3DEC <='1';
-			else
-				arch_Ch3DEC <='0';
-			end if;
-			
-			
-			if conv_integer(CurrMemAddress) = memEndAddr-1 then -- zero address will be set only the round after
-				arch_loop_start <='1';
-			end if;
-			
-			
-			
-			--DEBUG --
-			--endAddr <= conv_std_logic_vector(memEndAddr,18);
-			--currMemAddress <= currMemAddress+'1'; --debug
-			--if (arch_loop_start = '1') then currMemAddress <= "000000000000000000"; end if; --debug
+						if (262143 = conv_integer(CurrMemAddress) or KB_PLAY ='1' or KB_ALLPLAY = '1') then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
+							arch_recording <='0';
+							memEndAddr  :=  conv_integer(CurrMemAddress);
+							arch_loop_start <='1';
+							state<=CH_CONTROL;
+							case arch_recSel is
+								when "00" => ch0HT <= '1'; 
+								when "01" => ch1HT <= '1'; 
+								when "10" => ch2HT <= '1'; 
+								when "11" => ch3HT <= '1';  -- so we will be on
+							end case;
+							
+							arch_Ch0END <= memEndAddr;
+							arch_Ch1END <= memEndAddr;
+							arch_Ch2END <= memEndAddr;
+							arch_Ch3END <= memEndAddr;
+						end if;       
+										  
+						
+					------------------------------
+					when CH_CONTROL=> stateNum <= 3 ;-- debug
+					------------------------------
+						-- default values
+						arch_recording <='0'; -- dont start
 
-						
-			
-		end if;
-		
+						-----
+						if KB_REC = '1' then
+						-----
+							state<=PRE_REC;
+							arch_recSel <= KB_Selchannel;
+							if (recCounter = 1) and ((KB_Selchannel = "00" and ch0HT='1') or (KB_Selchannel = "01" and ch1HT='1') or (KB_Selchannel = "10" and ch2HT='1') or (KB_Selchannel = "11" and ch3HT='1')) then -- if we choose to record on a lonely track -> that's a first rec
+								state<=PRE_REC_FIRST;
+							end if;
+							if (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
+								recCounter:= recCounter+1;
+							
+							end if;
+							
+							
+						-----
+						elsif KB_PLAY = '1' then -- CHANGE TO IF HAS TRACK --> PLAY
+						-----
+							case KB_Selchannel is
+								when "00" => if ch0HT='1' then arch_Ch0ACT <='1'; end if;
+								when "01" => if ch1HT='1' then arch_Ch1ACT <='1'; end if;
+								when "10" => if ch2HT='1' then arch_Ch2ACT <='1'; end if;
+								when "11" => if ch3HT='1' then arch_Ch3ACT <='1'; end if;
+							end case;
+						-----
+						elsif KB_STOP = '1' then
+						-----
+							case KB_Selchannel is
+								when "00" => arch_Ch0ACT <='0';
+								when "01" => arch_Ch1ACT <='0';
+								when "10" => arch_Ch2ACT <='0';
+								when "11" => arch_Ch3ACT <='0';
+							end case;
+							
+						-----
+						elsif KB_ClearCH = '1' then
+						-----
+							if (KB_Selchannel = "00" and ch0HT='1') or (KB_Selchannel = "01" and ch1HT='1') or (KB_Selchannel = "10" and ch2HT='1') or (KB_Selchannel = "11" and ch3HT='1') then
+								recCounter:= recCounter-1;
+							end if;
+							
+							case KB_Selchannel is
+								when "00" =>  if ch0HT='1' then arch_Ch0ACT <='0'; ch0HT <= '0';end if; 
+								when "01" =>  if ch1HT='1' then arch_Ch1ACT <='0'; ch1HT <= '0';end if; 
+								when "10" =>  if ch2HT='1' then arch_Ch2ACT <='0'; ch2HT <= '0';end if; 
+								when "11" =>  if ch3HT='1' then arch_Ch3ACT <='0'; ch3HT <= '0';end if; 
+							end case;
+							
+							
+							if recCounter = 0 then
+								arch_loop_start <='1';
+								state<=EMPTY;
+							end if;
+						end if;
+
+					------------------------------
+					when PRE_REC=> stateNum <= 4 ;-- debug
+					------------------------------
+						if arch_loop_start = '1' then -- can improve by allowing stopping before record start
+							arch_recording <='1';
+							case arch_recSel is
+								when "00" => arch_Ch0ACT <='1'; 
+								when "01" => arch_Ch1ACT <='1';
+								when "10" => arch_Ch2ACT <='1';
+								when "11" => arch_Ch3ACT <='1';
+							end case;
+							state<=REC_OTHER;
+						end if;
+
+					------------------------------
+					when REC_OTHER=> stateNum <= 5 ;-- debug
+						------------------------------
+						arch_recording <='1';
+						if (conv_integer(CurrMemAddress) = memEndAddr -1 or KB_PLAY ='1' or KB_ALLPLAY ='1') then -- end of recording
+							arch_recording <='0';
+							state<=CH_CONTROL;
+							case arch_recSel is
+								when "00" => ch0HT <= '1'; arch_Ch0END <= conv_integer(CurrMemAddress)-0; --want to end at the adress of 4
+								when "01" => ch1HT <= '1'; arch_Ch1END <= conv_integer(CurrMemAddress)-1;
+								when "10" => ch2HT <= '1'; arch_Ch2END <= conv_integer(CurrMemAddress)-2;
+								when "11" => ch3HT <= '1'; arch_Ch3END <= conv_integer(CurrMemAddress)-3;
+							end case;
+							
+						elsif (KB_STOP ='1') then
+							arch_recording <='0';
+							state<=CH_CONTROL;
+							case arch_recSel is
+								when "00" => ch0HT <= '1'; arch_Ch0ACT <='1'; arch_Ch0END <= conv_integer(CurrMemAddress)-0;  --want to end at the address of 0,
+								when "01" => ch1HT <= '1'; arch_Ch1ACT <='1'; arch_Ch1END <= conv_integer(CurrMemAddress)-1;  
+								when "10" => ch2HT <= '1'; arch_Ch2ACT <='1'; arch_Ch2END <= conv_integer(CurrMemAddress)-2;  
+								when "11" => ch3HT <= '1'; arch_Ch3ACT <='1'; arch_Ch3END <= conv_integer(CurrMemAddress)-3;  
+							end case;
+						end if;
+				end case;
+				
+				
+				-- CHANNEL ACTIVATION DECISION MAKING --
+				-- CH0
+				if ch0HT = '1' and arch_Ch0END >= conv_integer(CurrMemAddress) and arch_Ch0ACT = '1' then
+					arch_Ch0DEC <='1';
+				else
+					arch_Ch0DEC <='0';
+				end if;
+				
+				--CH1
+				if ch1HT = '1' and arch_Ch1END >= conv_integer(CurrMemAddress) and arch_Ch1ACT = '1' then
+					arch_Ch1DEC <='1';
+				else
+					arch_Ch1DEC <='0';
+				end if;
+				
+				--CH2
+				if ch2HT = '1' and arch_Ch2END >= conv_integer(CurrMemAddress) and arch_Ch2ACT = '1' then
+					arch_Ch2DEC <='1';
+				else
+					arch_Ch2DEC <='0';
+				end if;
+				
+				--CH3
+				if ch3HT = '1' and arch_Ch3END >= conv_integer(CurrMemAddress) and arch_Ch3ACT = '1' then
+					arch_Ch3DEC <='1';
+				else
+					arch_Ch3DEC <='0';
+				end if;
+				
+				
+				if conv_integer(CurrMemAddress) = memEndAddr-1 then -- zero address will be set only the round after
+					arch_loop_start <='1';
+				end if;
+				
+				
+				
+				--DEBUG --
+				--endAddr <= conv_std_logic_vector(memEndAddr,18);
+				--currMemAddress <= currMemAddress+'1'; --debug
+				--if (arch_loop_start = '1') then currMemAddress <= "000000000000000000"; end if; --debug
+
+							
+				
+			end if;--enable
+		end if; 
 end process;
 
 -- Asynchronous Part
