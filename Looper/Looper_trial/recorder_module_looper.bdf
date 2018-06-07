@@ -546,8 +546,8 @@ agreement for further details.
 )
 (symbol
 	(rect 392 120 576 264)
-	(text "addr_counter" (rect 5 0 68 12)(font "Arial" ))
-	(text "inst4" (rect 8 128 30 145)(font "Intel Clear" ))
+	(text "addr_counter_zero" (rect 5 0 94 12)(font "Arial" ))
+	(text "inst2" (rect 8 128 30 145)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
