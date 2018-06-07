@@ -1,0 +1,61 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity Metronome is
+	port(
+		RESETN, CLK, enable	: in std_logic                 ;
+		resetCount	         : in std_logic                 ;
+		BPMin                : in  integer  range 0 to 255  ; -- bpm is in range 0-255;
+		quaterCountIn        : in  integer  range 1 to 4    ;
+		
+		dout				      : out std_logic ;
+		newBPM 			      : out std_logic);
+end Metronome;
+
+
+
+architecture Metronome_arch of Metronome is
+	signal arch_dout, arch_newBPM : std_logic ;
+	 
+begin
+
+	process(CLK,RESETN,TURBO)
+		 variable counter: integer                     ;
+		 variable BPMcurr: integer range 0 to 255 := 0 ;
+		 constant counterLimit: integer := 50000000    ;
+	    constant equationConst: integer := 833333     ; -- 50Mhz/ 60 sec aprox.
+		 constant SecPerMin: integer := 60             ;
+		 
+	begin
+	
+			if RESETN = '0' then
+				arch_dout   <= '0' ;
+				arch_newBPM <= '0' ;
+				BPMcurr     : = 0  ;
+				counter     : = 0  ;
+				
+			elsif rising_edge(CLK) then
+			  counter := counter + 1 ;
+
+				if ((currBPM = BPMin)  or (quaterCount \= quaterCountIn)) then -- newBPM insertion -> reset 
+					arch_newBPM = '1';
+					BPMcurr = BPMin
+					counterLimit := equationConst*BPMin;
+					counter :=0;
+					
+				elsif (counterLimit = counter or resetCount ='1')
+					arch_dout <='1' ;
+					counter :=0;
+					
+				else
+					arch_dout <='0';
+					
+				end if;
+
+			end if; -- rising clock end;
+	end process;
+	
+	dout   <= arch_dout   ;
+	newBPM <= arch_newBPM ;
+
+end Metronome_arch;

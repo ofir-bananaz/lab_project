@@ -1,0 +1,837 @@
+TimeQuest Timing Analyzer report for mem_trial
+Mon Jun 04 09:42:50 2018
+Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. TimeQuest Timing Analyzer Summary
+  3. Parallel Compilation
+  4. Clocks
+  5. Slow 1100mV 85C Model Fmax Summary
+  6. Timing Closure Recommendations
+  7. Slow 1100mV 85C Model Setup Summary
+  8. Slow 1100mV 85C Model Hold Summary
+  9. Slow 1100mV 85C Model Recovery Summary
+ 10. Slow 1100mV 85C Model Removal Summary
+ 11. Slow 1100mV 85C Model Minimum Pulse Width Summary
+ 12. Slow 1100mV 85C Model Metastability Summary
+ 13. Slow 1100mV 0C Model Fmax Summary
+ 14. Slow 1100mV 0C Model Setup Summary
+ 15. Slow 1100mV 0C Model Hold Summary
+ 16. Slow 1100mV 0C Model Recovery Summary
+ 17. Slow 1100mV 0C Model Removal Summary
+ 18. Slow 1100mV 0C Model Minimum Pulse Width Summary
+ 19. Slow 1100mV 0C Model Metastability Summary
+ 20. Fast 1100mV 85C Model Setup Summary
+ 21. Fast 1100mV 85C Model Hold Summary
+ 22. Fast 1100mV 85C Model Recovery Summary
+ 23. Fast 1100mV 85C Model Removal Summary
+ 24. Fast 1100mV 85C Model Minimum Pulse Width Summary
+ 25. Fast 1100mV 85C Model Metastability Summary
+ 26. Fast 1100mV 0C Model Setup Summary
+ 27. Fast 1100mV 0C Model Hold Summary
+ 28. Fast 1100mV 0C Model Recovery Summary
+ 29. Fast 1100mV 0C Model Removal Summary
+ 30. Fast 1100mV 0C Model Minimum Pulse Width Summary
+ 31. Fast 1100mV 0C Model Metastability Summary
+ 32. Multicorner Timing Analysis Summary
+ 33. Board Trace Model Assignments
+ 34. Input Transition Times
+ 35. Signal Integrity Metrics (Slow 1100mv 0c Model)
+ 36. Signal Integrity Metrics (Slow 1100mv 85c Model)
+ 37. Signal Integrity Metrics (Fast 1100mv 0c Model)
+ 38. Signal Integrity Metrics (Fast 1100mv 85c Model)
+ 39. Setup Transfers
+ 40. Hold Transfers
+ 41. Recovery Transfers
+ 42. Removal Transfers
+ 43. Report TCCS
+ 44. Report RSKM
+ 45. Unconstrained Paths Summary
+ 46. Clock Status Summary
+ 47. Unconstrained Input Ports
+ 48. Unconstrained Output Ports
+ 49. Unconstrained Input Ports
+ 50. Unconstrained Output Ports
+ 51. TimeQuest Timing Analyzer Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2017  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++-----------------------------------------------------------------------------+
+; TimeQuest Timing Analyzer Summary                                           ;
++-----------------------+-----------------------------------------------------+
+; Quartus Prime Version ; Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
+; Timing Analyzer       ; TimeQuest                                           ;
+; Revision Name         ; mem_trial                                           ;
+; Device Family         ; Cyclone V                                           ;
+; Device Name           ; 5CSXFC6D6F31C6                                      ;
+; Timing Models         ; Final                                               ;
+; Delay Model           ; Combined                                            ;
+; Rise/Fall Delays      ; Enabled                                             ;
++-----------------------+-----------------------------------------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.63        ;
+; Maximum used               ; 2           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;  62.7%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Clocks                                                                                                                                                                                                                                                                                 ;
++------------------------------------------------------------+------+--------+------------+-------+-------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+----------------------------------------------------------------+
+; Clock Name                                                 ; Type ; Period ; Frequency  ; Rise  ; Fall  ; Duty Cycle ; Divide by ; Multiply by ; Phase ; Offset ; Edge List ; Edge Shift ; Inverted ; Master ; Source ; Targets                                                        ;
++------------------------------------------------------------+------+--------+------------+-------+-------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+----------------------------------------------------------------+
+; AUD_BCLK                                                   ; Base ; 1.000  ; 1000.0 MHz ; 0.000 ; 0.500 ;            ;           ;             ;       ;        ;           ;            ;          ;        ;        ; { AUD_BCLK }                                                   ;
+; CLOCK_50                                                   ; Base ; 1.000  ; 1000.0 MHz ; 0.000 ; 0.500 ;            ;           ;             ;       ;        ;           ;            ;          ;        ;        ; { CLOCK_50 }                                                   ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; Base ; 1.000  ; 1000.0 MHz ; 0.000 ; 0.500 ;            ;           ;             ;       ;        ;           ;            ;          ;        ;        ; { recorder_module_looper:inst|prescaler:inst27|prescaler_1_t } ;
++------------------------------------------------------------+------+--------+------------+-------+-------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+----------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------+
+; Slow 1100mV 85C Model Fmax Summary                                                               ;
++------------+-----------------+------------------------------------------------------------+------+
+; Fmax       ; Restricted Fmax ; Clock Name                                                 ; Note ;
++------------+-----------------+------------------------------------------------------------+------+
+; 17.04 MHz  ; 17.04 MHz       ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ;      ;
+; 135.83 MHz ; 135.83 MHz      ; CLOCK_50                                                   ;      ;
+; 184.3 MHz  ; 184.3 MHz       ; AUD_BCLK                                                   ;      ;
++------------+-----------------+------------------------------------------------------------+------+
+This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
+
+
+----------------------------------
+; Timing Closure Recommendations ;
+----------------------------------
+HTML report is unavailable in plain text report export.
+
+
++--------------------------------------------------------------------------------------+
+; Slow 1100mV 85C Model Setup Summary                                                  ;
++------------------------------------------------------------+---------+---------------+
+; Clock                                                      ; Slack   ; End Point TNS ;
++------------------------------------------------------------+---------+---------------+
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -57.695 ; -1101.359     ;
+; CLOCK_50                                                   ; -6.362  ; -63355.636    ;
+; AUD_BCLK                                                   ; -5.967  ; -244.255      ;
++------------------------------------------------------------+---------+---------------+
+
+
++------------------------------------------------------------------------------------+
+; Slow 1100mV 85C Model Hold Summary                                                 ;
++------------------------------------------------------------+-------+---------------+
+; Clock                                                      ; Slack ; End Point TNS ;
++------------------------------------------------------------+-------+---------------+
+; CLOCK_50                                                   ; 0.186 ; 0.000         ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.363 ; 0.000         ;
+; AUD_BCLK                                                   ; 0.375 ; 0.000         ;
++------------------------------------------------------------+-------+---------------+
+
+
++----------------------------------------+
+; Slow 1100mV 85C Model Recovery Summary ;
++----------+--------+--------------------+
+; Clock    ; Slack  ; End Point TNS      ;
++----------+--------+--------------------+
+; CLOCK_50 ; -7.445 ; -51.996            ;
+; AUD_BCLK ; -6.191 ; -310.963           ;
++----------+--------+--------------------+
+
+
++---------------------------------------+
+; Slow 1100mV 85C Model Removal Summary ;
++----------+-------+--------------------+
+; Clock    ; Slack ; End Point TNS      ;
++----------+-------+--------------------+
+; AUD_BCLK ; 0.580 ; 0.000              ;
+; CLOCK_50 ; 1.003 ; 0.000              ;
++----------+-------+--------------------+
+
+
++-------------------------------------------------------------------------------------+
+; Slow 1100mV 85C Model Minimum Pulse Width Summary                                   ;
++------------------------------------------------------------+--------+---------------+
+; Clock                                                      ; Slack  ; End Point TNS ;
++------------------------------------------------------------+--------+---------------+
+; CLOCK_50                                                   ; -2.174 ; -76654.802    ;
+; AUD_BCLK                                                   ; -2.174 ; -301.086      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.394 ; -42.174       ;
++------------------------------------------------------------+--------+---------------+
+
+
+-----------------------------------------------
+; Slow 1100mV 85C Model Metastability Summary ;
+-----------------------------------------------
+Design MTBF is not calculated because the design doesn't meet its timing requirements.
+
+
+
++--------------------------------------------------------------------------------------------------+
+; Slow 1100mV 0C Model Fmax Summary                                                                ;
++------------+-----------------+------------------------------------------------------------+------+
+; Fmax       ; Restricted Fmax ; Clock Name                                                 ; Note ;
++------------+-----------------+------------------------------------------------------------+------+
+; 16.25 MHz  ; 16.25 MHz       ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ;      ;
+; 138.1 MHz  ; 138.1 MHz       ; CLOCK_50                                                   ;      ;
+; 186.22 MHz ; 186.22 MHz      ; AUD_BCLK                                                   ;      ;
++------------+-----------------+------------------------------------------------------------+------+
+This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
+
+
++--------------------------------------------------------------------------------------+
+; Slow 1100mV 0C Model Setup Summary                                                   ;
++------------------------------------------------------------+---------+---------------+
+; Clock                                                      ; Slack   ; End Point TNS ;
++------------------------------------------------------------+---------+---------------+
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -60.520 ; -1146.272     ;
+; CLOCK_50                                                   ; -6.241  ; -58551.424    ;
+; AUD_BCLK                                                   ; -5.781  ; -235.730      ;
++------------------------------------------------------------+---------+---------------+
+
+
++-------------------------------------------------------------------------------------+
+; Slow 1100mV 0C Model Hold Summary                                                   ;
++------------------------------------------------------------+--------+---------------+
+; Clock                                                      ; Slack  ; End Point TNS ;
++------------------------------------------------------------+--------+---------------+
+; CLOCK_50                                                   ; -0.080 ; -0.080        ;
+; AUD_BCLK                                                   ; 0.342  ; 0.000         ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.360  ; 0.000         ;
++------------------------------------------------------------+--------+---------------+
+
+
++---------------------------------------+
+; Slow 1100mV 0C Model Recovery Summary ;
++----------+--------+-------------------+
+; Clock    ; Slack  ; End Point TNS     ;
++----------+--------+-------------------+
+; CLOCK_50 ; -7.042 ; -47.735           ;
+; AUD_BCLK ; -5.957 ; -298.853          ;
++----------+--------+-------------------+
+
+
++--------------------------------------+
+; Slow 1100mV 0C Model Removal Summary ;
++----------+-------+-------------------+
+; Clock    ; Slack ; End Point TNS     ;
++----------+-------+-------------------+
+; AUD_BCLK ; 0.487 ; 0.000             ;
+; CLOCK_50 ; 0.938 ; 0.000             ;
++----------+-------+-------------------+
+
+
++-------------------------------------------------------------------------------------+
+; Slow 1100mV 0C Model Minimum Pulse Width Summary                                    ;
++------------------------------------------------------------+--------+---------------+
+; Clock                                                      ; Slack  ; End Point TNS ;
++------------------------------------------------------------+--------+---------------+
+; CLOCK_50                                                   ; -2.174 ; -76460.793    ;
+; AUD_BCLK                                                   ; -2.174 ; -299.939      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.394 ; -40.396       ;
++------------------------------------------------------------+--------+---------------+
+
+
+----------------------------------------------
+; Slow 1100mV 0C Model Metastability Summary ;
+----------------------------------------------
+Design MTBF is not calculated because the design doesn't meet its timing requirements.
+
+
+
++--------------------------------------------------------------------------------------+
+; Fast 1100mV 85C Model Setup Summary                                                  ;
++------------------------------------------------------------+---------+---------------+
+; Clock                                                      ; Slack   ; End Point TNS ;
++------------------------------------------------------------+---------+---------------+
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -28.687 ; -551.732      ;
+; AUD_BCLK                                                   ; -4.067  ; -73.524       ;
+; CLOCK_50                                                   ; -3.448  ; -32290.355    ;
++------------------------------------------------------------+---------+---------------+
+
+
++------------------------------------------------------------------------------------+
+; Fast 1100mV 85C Model Hold Summary                                                 ;
++------------------------------------------------------------+-------+---------------+
+; Clock                                                      ; Slack ; End Point TNS ;
++------------------------------------------------------------+-------+---------------+
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.150 ; 0.000         ;
+; CLOCK_50                                                   ; 0.155 ; 0.000         ;
+; AUD_BCLK                                                   ; 0.181 ; 0.000         ;
++------------------------------------------------------------+-------+---------------+
+
+
++----------------------------------------+
+; Fast 1100mV 85C Model Recovery Summary ;
++----------+--------+--------------------+
+; Clock    ; Slack  ; End Point TNS      ;
++----------+--------+--------------------+
+; CLOCK_50 ; -4.945 ; -10.145            ;
+; AUD_BCLK ; -3.919 ; -205.578           ;
++----------+--------+--------------------+
+
+
++---------------------------------------+
+; Fast 1100mV 85C Model Removal Summary ;
++----------+-------+--------------------+
+; Clock    ; Slack ; End Point TNS      ;
++----------+-------+--------------------+
+; CLOCK_50 ; 0.540 ; 0.000              ;
+; AUD_BCLK ; 0.785 ; 0.000              ;
++----------+-------+--------------------+
+
+
++-------------------------------------------------------------------------------------+
+; Fast 1100mV 85C Model Minimum Pulse Width Summary                                   ;
++------------------------------------------------------------+--------+---------------+
+; Clock                                                      ; Slack  ; End Point TNS ;
++------------------------------------------------------------+--------+---------------+
+; CLOCK_50                                                   ; -2.174 ; -77635.572    ;
+; AUD_BCLK                                                   ; -2.174 ; -316.425      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.151 ; -2.231        ;
++------------------------------------------------------------+--------+---------------+
+
+
+-----------------------------------------------
+; Fast 1100mV 85C Model Metastability Summary ;
+-----------------------------------------------
+Design MTBF is not calculated because the design doesn't meet its timing requirements.
+
+
+
++--------------------------------------------------------------------------------------+
+; Fast 1100mV 0C Model Setup Summary                                                   ;
++------------------------------------------------------------+---------+---------------+
+; Clock                                                      ; Slack   ; End Point TNS ;
++------------------------------------------------------------+---------+---------------+
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -27.430 ; -521.935      ;
+; AUD_BCLK                                                   ; -3.429  ; -55.881       ;
+; CLOCK_50                                                   ; -2.993  ; -25416.591    ;
++------------------------------------------------------------+---------+---------------+
+
+
++------------------------------------------------------------------------------------+
+; Fast 1100mV 0C Model Hold Summary                                                  ;
++------------------------------------------------------------+-------+---------------+
+; Clock                                                      ; Slack ; End Point TNS ;
++------------------------------------------------------------+-------+---------------+
+; CLOCK_50                                                   ; 0.016 ; 0.000         ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 0.128 ; 0.000         ;
+; AUD_BCLK                                                   ; 0.171 ; 0.000         ;
++------------------------------------------------------------+-------+---------------+
+
+
++---------------------------------------+
+; Fast 1100mV 0C Model Recovery Summary ;
++----------+--------+-------------------+
+; Clock    ; Slack  ; End Point TNS     ;
++----------+--------+-------------------+
+; CLOCK_50 ; -4.165 ; -6.042            ;
+; AUD_BCLK ; -3.213 ; -167.791          ;
++----------+--------+-------------------+
+
+
++--------------------------------------+
+; Fast 1100mV 0C Model Removal Summary ;
++----------+-------+-------------------+
+; Clock    ; Slack ; End Point TNS     ;
++----------+-------+-------------------+
+; AUD_BCLK ; 0.430 ; 0.000             ;
+; CLOCK_50 ; 0.493 ; 0.000             ;
++----------+-------+-------------------+
+
+
++-------------------------------------------------------------------------------------+
+; Fast 1100mV 0C Model Minimum Pulse Width Summary                                    ;
++------------------------------------------------------------+--------+---------------+
+; Clock                                                      ; Slack  ; End Point TNS ;
++------------------------------------------------------------+--------+---------------+
+; CLOCK_50                                                   ; -2.174 ; -78939.562    ;
+; AUD_BCLK                                                   ; -2.174 ; -335.061      ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -0.090 ; -0.884        ;
++------------------------------------------------------------+--------+---------------+
+
+
+----------------------------------------------
+; Fast 1100mV 0C Model Metastability Summary ;
+----------------------------------------------
+Design MTBF is not calculated because the design doesn't meet its timing requirements.
+
+
+
++------------------------------------------------------------------------------------------------------------------------------+
+; Multicorner Timing Analysis Summary                                                                                          ;
++-------------------------------------------------------------+------------+--------+----------+---------+---------------------+
+; Clock                                                       ; Setup      ; Hold   ; Recovery ; Removal ; Minimum Pulse Width ;
++-------------------------------------------------------------+------------+--------+----------+---------+---------------------+
+; Worst-case Slack                                            ; -60.520    ; -0.080 ; -7.445   ; 0.430   ; -2.174              ;
+;  AUD_BCLK                                                   ; -5.967     ; 0.171  ; -6.191   ; 0.430   ; -2.174              ;
+;  CLOCK_50                                                   ; -6.362     ; -0.080 ; -7.445   ; 0.493   ; -2.174              ;
+;  recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -60.520    ; 0.128  ; N/A      ; N/A     ; -0.394              ;
+; Design-wide TNS                                             ; -64701.25  ; -0.08  ; -362.959 ; 0.0     ; -79275.507          ;
+;  AUD_BCLK                                                   ; -244.255   ; 0.000  ; -310.963 ; 0.000   ; -335.061            ;
+;  CLOCK_50                                                   ; -63355.636 ; -0.080 ; -51.996  ; 0.000   ; -78939.562          ;
+;  recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; -1146.272  ; 0.000  ; N/A      ; N/A     ; -42.174             ;
++-------------------------------------------------------------+------------+--------+----------+---------+---------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Board Trace Model Assignments                                                                                                                                                                                                                                                                                                                                                                                    ;
++---------------+--------------+-------------------+-------------------------+-------------------------+---------------+---------------------+----------------+------------------+--------+------------------+------------------------+------------------------+--------------+---------------+-----------------+-------+---------------------+--------------------+---------------+-----------------+-------------+
+; Pin           ; I/O Standard ; Near Tline Length ; Near Tline L per Length ; Near Tline C per Length ; Near Series R ; Near Differential R ; Near Pull-up R ; Near Pull-down R ; Near C ; Far Tline Length ; Far Tline L per Length ; Far Tline C per Length ; Far Series R ; Far Pull-up R ; Far Pull-down R ; Far C ; Termination Voltage ; Far Differential R ; EBD File Name ; EBD Signal Name ; EBD Far-end ;
++---------------+--------------+-------------------+-------------------------+-------------------------+---------------+---------------------+----------------+------------------+--------+------------------+------------------------+------------------------+--------------+---------------+-----------------+-------+---------------------+--------------------+---------------+-----------------+-------------+
+; MICROPHON_LED ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; AUD_DACDAT    ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; AUD_XCK       ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; AUD_I2C_SCLK  ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; AUD_I2C_SDAT  ; 3.3-V LVTTL  ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
++---------------+--------------+-------------------+-------------------------+-------------------------+---------------+---------------------+----------------+------------------+--------+------------------+------------------------+------------------------+--------------+---------------+-----------------+-------+---------------------+--------------------+---------------+-----------------+-------------+
+
+
++----------------------------------------------------------------------+
+; Input Transition Times                                               ;
++-------------------+--------------+-----------------+-----------------+
+; Pin               ; I/O Standard ; 10-90 Rise Time ; 90-10 Fall Time ;
++-------------------+--------------+-----------------+-----------------+
+; AUD_I2C_SDAT      ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; AUD_BCLK          ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; AUD_DACLRCK       ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; AUD_ADCDAT        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; MICROPHON_ON      ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; AUD_ADCLRCK       ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; CLOCK_50          ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; resetN            ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; IntergratorDIV[2] ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; IntergratorDIV[0] ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; IntergratorDIV[1] ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; SelCh4Cmd[0]      ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; recB              ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; SelCh4Cmd[1]      ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; stopB             ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; playB             ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; clearB            ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
++-------------------+--------------+-----------------+-----------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Slow 1100mv 0c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin           ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; MICROPHON_LED ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.5e-07 V                    ; 3.14 V              ; -0.195 V            ; 0.158 V                              ; 0.394 V                              ; 4.46e-10 s                  ; 1.64e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.5e-07 V                   ; 3.14 V             ; -0.195 V           ; 0.158 V                             ; 0.394 V                             ; 4.46e-10 s                 ; 1.64e-10 s                 ; Yes                       ; No                        ;
+; AUD_DACDAT    ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.35e-07 V                   ; 3.14 V              ; -0.258 V            ; 0.13 V                               ; 0.399 V                              ; 4.27e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.08 V                      ; 3.35e-07 V                  ; 3.14 V             ; -0.258 V           ; 0.13 V                              ; 0.399 V                             ; 4.27e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; AUD_XCK       ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.35e-07 V                   ; 3.14 V              ; -0.258 V            ; 0.13 V                               ; 0.399 V                              ; 4.27e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.08 V                      ; 3.35e-07 V                  ; 3.14 V             ; -0.258 V           ; 0.13 V                              ; 0.399 V                             ; 4.27e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; AUD_I2C_SCLK  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 2.62e-07 V                   ; 3.1 V               ; -0.153 V            ; 0.035 V                              ; 0.31 V                               ; 4.23e-10 s                  ; 1.59e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 2.62e-07 V                  ; 3.1 V              ; -0.153 V           ; 0.035 V                             ; 0.31 V                              ; 4.23e-10 s                 ; 1.59e-10 s                 ; Yes                       ; No                        ;
+; AUD_I2C_SDAT  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.5e-07 V                    ; 3.14 V              ; -0.195 V            ; 0.158 V                              ; 0.394 V                              ; 4.46e-10 s                  ; 1.64e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.5e-07 V                   ; 3.14 V             ; -0.195 V           ; 0.158 V                             ; 0.394 V                             ; 4.46e-10 s                 ; 1.64e-10 s                 ; Yes                       ; No                        ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Slow 1100mv 85c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin           ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; MICROPHON_LED ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.32e-05 V                   ; 3.09 V              ; -0.11 V             ; 0.031 V                              ; 0.155 V                              ; 5.43e-10 s                  ; 3.14e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 3.32e-05 V                  ; 3.09 V             ; -0.11 V            ; 0.031 V                             ; 0.155 V                             ; 5.43e-10 s                 ; 3.14e-10 s                 ; Yes                       ; Yes                       ;
+; AUD_DACDAT    ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.19e-05 V                   ; 3.1 V               ; -0.133 V            ; 0.025 V                              ; 0.169 V                              ; 4.92e-10 s                  ; 3.13e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.19e-05 V                  ; 3.1 V              ; -0.133 V           ; 0.025 V                             ; 0.169 V                             ; 4.92e-10 s                 ; 3.13e-10 s                 ; Yes                       ; No                        ;
+; AUD_XCK       ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.19e-05 V                   ; 3.1 V               ; -0.133 V            ; 0.025 V                              ; 0.169 V                              ; 4.92e-10 s                  ; 3.13e-10 s                  ; Yes                        ; No                         ; 3.08 V                      ; 3.19e-05 V                  ; 3.1 V              ; -0.133 V           ; 0.025 V                             ; 0.169 V                             ; 4.92e-10 s                 ; 3.13e-10 s                 ; Yes                       ; No                        ;
+; AUD_I2C_SCLK  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 2.61e-05 V                   ; 3.09 V              ; -0.0638 V           ; 0.034 V                              ; 0.099 V                              ; 5.12e-10 s                  ; 2.97e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 2.61e-05 V                  ; 3.09 V             ; -0.0638 V          ; 0.034 V                             ; 0.099 V                             ; 5.12e-10 s                 ; 2.97e-10 s                 ; Yes                       ; Yes                       ;
+; AUD_I2C_SDAT  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.08 V                       ; 3.32e-05 V                   ; 3.09 V              ; -0.11 V             ; 0.031 V                              ; 0.155 V                              ; 5.43e-10 s                  ; 3.14e-10 s                  ; Yes                        ; Yes                        ; 3.08 V                      ; 3.32e-05 V                  ; 3.09 V             ; -0.11 V            ; 0.031 V                             ; 0.155 V                             ; 5.43e-10 s                 ; 3.14e-10 s                 ; Yes                       ; Yes                       ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Fast 1100mv 0c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin           ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; MICROPHON_LED ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.94e-06 V                   ; 3.69 V              ; -0.414 V            ; 0.134 V                              ; 0.585 V                              ; 4.19e-10 s                  ; 1.53e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.94e-06 V                  ; 3.69 V             ; -0.414 V           ; 0.134 V                             ; 0.585 V                             ; 4.19e-10 s                 ; 1.53e-10 s                 ; Yes                       ; No                        ;
+; AUD_DACDAT    ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.72e-06 V                   ; 3.7 V               ; -0.49 V             ; 0.117 V                              ; 0.622 V                              ; 3.84e-10 s                  ; 1.48e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.72e-06 V                  ; 3.7 V              ; -0.49 V            ; 0.117 V                             ; 0.622 V                             ; 3.84e-10 s                 ; 1.48e-10 s                 ; Yes                       ; No                        ;
+; AUD_XCK       ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.72e-06 V                   ; 3.7 V               ; -0.49 V             ; 0.117 V                              ; 0.622 V                              ; 3.84e-10 s                  ; 1.48e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.72e-06 V                  ; 3.7 V              ; -0.49 V            ; 0.117 V                             ; 0.622 V                             ; 3.84e-10 s                 ; 1.48e-10 s                 ; Yes                       ; No                        ;
+; AUD_I2C_SCLK  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 3.63e-06 V                   ; 3.64 V              ; -0.326 V            ; 0.091 V                              ; 0.479 V                              ; 3.83e-10 s                  ; 1.5e-10 s                   ; Yes                        ; No                         ; 3.63 V                      ; 3.63e-06 V                  ; 3.64 V             ; -0.326 V           ; 0.091 V                             ; 0.479 V                             ; 3.83e-10 s                 ; 1.5e-10 s                  ; Yes                       ; No                        ;
+; AUD_I2C_SDAT  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 4.94e-06 V                   ; 3.69 V              ; -0.414 V            ; 0.134 V                              ; 0.585 V                              ; 4.19e-10 s                  ; 1.53e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 4.94e-06 V                  ; 3.69 V             ; -0.414 V           ; 0.134 V                             ; 0.585 V                             ; 4.19e-10 s                 ; 1.53e-10 s                 ; Yes                       ; No                        ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Signal Integrity Metrics (Fast 1100mv 85c Model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; Pin           ; I/O Standard ; Board Delay on Rise ; Board Delay on Fall ; Steady State Voh at FPGA Pin ; Steady State Vol at FPGA Pin ; Voh Max at FPGA Pin ; Vol Min at FPGA Pin ; Ringback Voltage on Rise at FPGA Pin ; Ringback Voltage on Fall at FPGA Pin ; 10-90 Rise Time at FPGA Pin ; 90-10 Fall Time at FPGA Pin ; Monotonic Rise at FPGA Pin ; Monotonic Fall at FPGA Pin ; Steady State Voh at Far-end ; Steady State Vol at Far-end ; Voh Max at Far-end ; Vol Min at Far-end ; Ringback Voltage on Rise at Far-end ; Ringback Voltage on Fall at Far-end ; 10-90 Rise Time at Far-end ; 90-10 Fall Time at Far-end ; Monotonic Rise at Far-end ; Monotonic Fall at Far-end ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+; MICROPHON_LED ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000238 V                   ; 3.64 V              ; -0.254 V            ; 0.052 V                              ; 0.543 V                              ; 4.59e-10 s                  ; 1.96e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000238 V                  ; 3.64 V             ; -0.254 V           ; 0.052 V                             ; 0.543 V                             ; 4.59e-10 s                 ; 1.96e-10 s                 ; Yes                       ; No                        ;
+; AUD_DACDAT    ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000229 V                   ; 3.65 V              ; -0.316 V            ; 0.041 V                              ; 0.53 V                               ; 4.29e-10 s                  ; 1.87e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000229 V                  ; 3.65 V             ; -0.316 V           ; 0.041 V                             ; 0.53 V                              ; 4.29e-10 s                 ; 1.87e-10 s                 ; Yes                       ; No                        ;
+; AUD_XCK       ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000229 V                   ; 3.65 V              ; -0.316 V            ; 0.041 V                              ; 0.53 V                               ; 4.29e-10 s                  ; 1.87e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000229 V                  ; 3.65 V             ; -0.316 V           ; 0.041 V                             ; 0.53 V                              ; 4.29e-10 s                 ; 1.87e-10 s                 ; Yes                       ; No                        ;
+; AUD_I2C_SCLK  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000184 V                   ; 3.64 V              ; -0.19 V             ; 0.019 V                              ; 0.425 V                              ; 4.44e-10 s                  ; 1.91e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000184 V                  ; 3.64 V             ; -0.19 V            ; 0.019 V                             ; 0.425 V                             ; 4.44e-10 s                 ; 1.91e-10 s                 ; Yes                       ; No                        ;
+; AUD_I2C_SDAT  ; 3.3-V LVTTL  ; 0 s                 ; 0 s                 ; 3.63 V                       ; 0.000238 V                   ; 3.64 V              ; -0.254 V            ; 0.052 V                              ; 0.543 V                              ; 4.59e-10 s                  ; 1.96e-10 s                  ; Yes                        ; No                         ; 3.63 V                      ; 0.000238 V                  ; 3.64 V             ; -0.254 V           ; 0.052 V                             ; 0.543 V                             ; 4.59e-10 s                 ; 1.96e-10 s                 ; Yes                       ; No                        ;
++---------------+--------------+---------------------+---------------------+------------------------------+------------------------------+---------------------+---------------------+--------------------------------------+--------------------------------------+-----------------------------+-----------------------------+----------------------------+----------------------------+-----------------------------+-----------------------------+--------------------+--------------------+-------------------------------------+-------------------------------------+----------------------------+----------------------------+---------------------------+---------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Setup Transfers                                                                                                                                                         ;
++------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
+; From Clock                                                 ; To Clock                                                   ; RR Paths     ; FR Paths ; RF Paths ; FF Paths ;
++------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
+; AUD_BCLK                                                   ; AUD_BCLK                                                   ; 1315         ; 14       ; 4        ; 168      ;
+; CLOCK_50                                                   ; AUD_BCLK                                                   ; 30           ; 0        ; 0        ; 0        ;
+; AUD_BCLK                                                   ; CLOCK_50                                                   ; 25           ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                   ; CLOCK_50                                                   ; 99409        ; 0        ; 0        ; 0        ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; CLOCK_50                                                   ; 352          ; 80       ; 0        ; 0        ;
+; CLOCK_50                                                   ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 944          ; 0        ; 0        ; 0        ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; > 2147483647 ; 0        ; 0        ; 0        ;
++------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
+Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Hold Transfers                                                                                                                                                          ;
++------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
+; From Clock                                                 ; To Clock                                                   ; RR Paths     ; FR Paths ; RF Paths ; FF Paths ;
++------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
+; AUD_BCLK                                                   ; AUD_BCLK                                                   ; 1315         ; 14       ; 4        ; 168      ;
+; CLOCK_50                                                   ; AUD_BCLK                                                   ; 30           ; 0        ; 0        ; 0        ;
+; AUD_BCLK                                                   ; CLOCK_50                                                   ; 25           ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                   ; CLOCK_50                                                   ; 99409        ; 0        ; 0        ; 0        ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; CLOCK_50                                                   ; 352          ; 80       ; 0        ; 0        ;
+; CLOCK_50                                                   ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; 944          ; 0        ; 0        ; 0        ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; > 2147483647 ; 0        ; 0        ; 0        ;
++------------------------------------------------------------+------------------------------------------------------------+--------------+----------+----------+----------+
+Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
+
+
++-------------------------------------------------------------------+
+; Recovery Transfers                                                ;
++------------+----------+----------+----------+----------+----------+
+; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
++------------+----------+----------+----------+----------+----------+
+; CLOCK_50   ; AUD_BCLK ; 23       ; 0        ; 30       ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 78       ; 0        ; 0        ; 0        ;
++------------+----------+----------+----------+----------+----------+
+Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
+
+
++-------------------------------------------------------------------+
+; Removal Transfers                                                 ;
++------------+----------+----------+----------+----------+----------+
+; From Clock ; To Clock ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
++------------+----------+----------+----------+----------+----------+
+; CLOCK_50   ; AUD_BCLK ; 23       ; 0        ; 30       ; 0        ;
+; CLOCK_50   ; CLOCK_50 ; 78       ; 0        ; 0        ; 0        ;
++------------+----------+----------+----------+----------+----------+
+Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
+
+
+---------------
+; Report TCCS ;
+---------------
+No dedicated SERDES Transmitter circuitry present in device or used in design
+
+
+---------------
+; Report RSKM ;
+---------------
+No non-DPA dedicated SERDES Receiver circuitry present in device or used in design
+
+
++------------------------------------------------+
+; Unconstrained Paths Summary                    ;
++---------------------------------+-------+------+
+; Property                        ; Setup ; Hold ;
++---------------------------------+-------+------+
+; Illegal Clocks                  ; 0     ; 0    ;
+; Unconstrained Clocks            ; 0     ; 0    ;
+; Unconstrained Input Ports       ; 14    ; 14   ;
+; Unconstrained Input Port Paths  ; 691   ; 691  ;
+; Unconstrained Output Ports      ; 5     ; 5    ;
+; Unconstrained Output Port Paths ; 8     ; 8    ;
++---------------------------------+-------+------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Status Summary                                                                                                                         ;
++------------------------------------------------------------+------------------------------------------------------------+------+-------------+
+; Target                                                     ; Clock                                                      ; Type ; Status      ;
++------------------------------------------------------------+------------------------------------------------------------+------+-------------+
+; AUD_BCLK                                                   ; AUD_BCLK                                                   ; Base ; Constrained ;
+; CLOCK_50                                                   ; CLOCK_50                                                   ; Base ; Constrained ;
+; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; recorder_module_looper:inst|prescaler:inst27|prescaler_1_t ; Base ; Constrained ;
++------------------------------------------------------------+------------------------------------------------------------+------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------+
+; Unconstrained Input Ports                                                                                ;
++-------------------+--------------------------------------------------------------------------------------+
+; Input Port        ; Comment                                                                              ;
++-------------------+--------------------------------------------------------------------------------------+
+; AUD_ADCDAT        ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_ADCLRCK       ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_DACLRCK       ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; IntergratorDIV[0] ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; IntergratorDIV[1] ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; IntergratorDIV[2] ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; MICROPHON_ON      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; SelCh4Cmd[0]      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; SelCh4Cmd[1]      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; clearB            ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; playB             ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; recB              ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; resetN            ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; stopB             ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
++-------------------+--------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------+
+; Unconstrained Output Ports                                                                            ;
++---------------+---------------------------------------------------------------------------------------+
+; Output Port   ; Comment                                                                               ;
++---------------+---------------------------------------------------------------------------------------+
+; AUD_DACDAT    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_I2C_SCLK  ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_I2C_SDAT  ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_XCK       ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; MICROPHON_LED ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
++---------------+---------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------+
+; Unconstrained Input Ports                                                                                ;
++-------------------+--------------------------------------------------------------------------------------+
+; Input Port        ; Comment                                                                              ;
++-------------------+--------------------------------------------------------------------------------------+
+; AUD_ADCDAT        ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_ADCLRCK       ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_DACLRCK       ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; IntergratorDIV[0] ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; IntergratorDIV[1] ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; IntergratorDIV[2] ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; MICROPHON_ON      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; SelCh4Cmd[0]      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; SelCh4Cmd[1]      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; clearB            ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; playB             ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; recB              ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; resetN            ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; stopB             ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
++-------------------+--------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------+
+; Unconstrained Output Ports                                                                            ;
++---------------+---------------------------------------------------------------------------------------+
+; Output Port   ; Comment                                                                               ;
++---------------+---------------------------------------------------------------------------------------+
+; AUD_DACDAT    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_I2C_SCLK  ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_I2C_SDAT  ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; AUD_XCK       ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; MICROPHON_LED ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
++---------------+---------------------------------------------------------------------------------------+
+
+
++------------------------------------+
+; TimeQuest Timing Analyzer Messages ;
++------------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime TimeQuest Timing Analyzer
+    Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+    Info: Processing started: Mon Jun 04 09:42:02 2018
+Info: Command: quartus_sta experiement_digital_recorder -c mem_trial
+Info: qsta_default_script.tcl version: #1
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 85 degrees C
+Info (332164): Evaluating HDL-embedded SDC commands
+    Info (332165): Entity mem_trial
+        Info (332166): set_false_path -from *rdptr_g* -to *ws_dgrp|dffpipe_0v8:dffpipe13|dffe14a* 
+        Info (332166): set_false_path -from *delayed_wrptr_g* -to *rs_dgwp|dffpipe_vu8:dffpipe10|dffe11a* 
+        Info (332166): set_false_path -from *rdptr_g* -to *ws_dgrp|dffpipe_fd9:dffpipe16|dffe17a* 
+        Info (332166): set_false_path -from *delayed_wrptr_g* -to *rs_dgwp|dffpipe_ed9:dffpipe13|dffe14a* 
+Critical Warning (332012): Synopsys Design Constraints File file not found: 'mem_trial.sdc'. A Synopsys Design Constraints File is required by the TimeQuest Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
+Info (332142): No user constrained base clocks found in the design. Calling "derive_clocks -period 1.0"
+Info (332105): Deriving Clocks
+    Info (332105): create_clock -period 1.000 -name recorder_module_looper:inst|prescaler:inst27|prescaler_1_t recorder_module_looper:inst|prescaler:inst27|prescaler_1_t
+    Info (332105): create_clock -period 1.000 -name CLOCK_50 CLOCK_50
+    Info (332105): create_clock -period 1.000 -name AUD_BCLK AUD_BCLK
+Info (332143): No user constrained clock uncertainty found in the design. Calling "derive_clock_uncertainty"
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Info: Found TIMEQUEST_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
+Info: Analyzing Slow 1100mV 85C Model
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
+Info (332146): Worst-case setup slack is -57.695
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):   -57.695           -1101.359 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -6.362          -63355.636 CLOCK_50 
+    Info (332119):    -5.967            -244.255 AUD_BCLK 
+Info (332146): Worst-case hold slack is 0.186
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.186               0.000 CLOCK_50 
+    Info (332119):     0.363               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.375               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -7.445
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -7.445             -51.996 CLOCK_50 
+    Info (332119):    -6.191            -310.963 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.580
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.580               0.000 AUD_BCLK 
+    Info (332119):     1.003               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is -2.174
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -2.174          -76654.802 CLOCK_50 
+    Info (332119):    -2.174            -301.086 AUD_BCLK 
+    Info (332119):    -0.394             -42.174 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+Info (332114): Report Metastability: Found 51 synchronizer chains.
+    Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
+Info: Analyzing Slow 1100mV 0C Model
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
+Info (332146): Worst-case setup slack is -60.520
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):   -60.520           -1146.272 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -6.241          -58551.424 CLOCK_50 
+    Info (332119):    -5.781            -235.730 AUD_BCLK 
+Info (332146): Worst-case hold slack is -0.080
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -0.080              -0.080 CLOCK_50 
+    Info (332119):     0.342               0.000 AUD_BCLK 
+    Info (332119):     0.360               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+Info (332146): Worst-case recovery slack is -7.042
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -7.042             -47.735 CLOCK_50 
+    Info (332119):    -5.957            -298.853 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.487
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.487               0.000 AUD_BCLK 
+    Info (332119):     0.938               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is -2.174
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -2.174          -76460.793 CLOCK_50 
+    Info (332119):    -2.174            -299.939 AUD_BCLK 
+    Info (332119):    -0.394             -40.396 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+Info (332114): Report Metastability: Found 51 synchronizer chains.
+    Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
+Info: Analyzing Fast 1100mV 85C Model
+Info (334003): Started post-fitting delay annotation
+Info (334004): Delay annotation completed successfully
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
+Info (332146): Worst-case setup slack is -28.687
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):   -28.687            -551.732 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -4.067             -73.524 AUD_BCLK 
+    Info (332119):    -3.448          -32290.355 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.150
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.150               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.155               0.000 CLOCK_50 
+    Info (332119):     0.181               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -4.945
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -4.945             -10.145 CLOCK_50 
+    Info (332119):    -3.919            -205.578 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.540
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.540               0.000 CLOCK_50 
+    Info (332119):     0.785               0.000 AUD_BCLK 
+Info (332146): Worst-case minimum pulse width slack is -2.174
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -2.174          -77635.572 CLOCK_50 
+    Info (332119):    -2.174            -316.425 AUD_BCLK 
+    Info (332119):    -0.151              -2.231 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+Info (332114): Report Metastability: Found 51 synchronizer chains.
+    Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
+Info: Analyzing Fast 1100mV 0C Model
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in TimeQuest to see clock uncertainties.
+Critical Warning (332148): Timing requirements not met
+    Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
+Info (332146): Worst-case setup slack is -27.430
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):   -27.430            -521.935 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):    -3.429             -55.881 AUD_BCLK 
+    Info (332119):    -2.993          -25416.591 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.016
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.016               0.000 CLOCK_50 
+    Info (332119):     0.128               0.000 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+    Info (332119):     0.171               0.000 AUD_BCLK 
+Info (332146): Worst-case recovery slack is -4.165
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -4.165              -6.042 CLOCK_50 
+    Info (332119):    -3.213            -167.791 AUD_BCLK 
+Info (332146): Worst-case removal slack is 0.430
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):     0.430               0.000 AUD_BCLK 
+    Info (332119):     0.493               0.000 CLOCK_50 
+Info (332146): Worst-case minimum pulse width slack is -2.174
+    Info (332119):     Slack       End Point TNS Clock 
+    Info (332119): ========= =================== =====================
+    Info (332119):    -2.174          -78939.562 CLOCK_50 
+    Info (332119):    -2.174            -335.061 AUD_BCLK 
+    Info (332119):    -0.090              -0.884 recorder_module_looper:inst|prescaler:inst27|prescaler_1_t 
+Info (332114): Report Metastability: Found 51 synchronizer chains.
+    Info (332114): Design MTBF is not calculated because the design doesn't meet its timing requirements.
+Info (332102): Design is not fully constrained for setup requirements
+Info (332102): Design is not fully constrained for hold requirements
+Info: Quartus Prime TimeQuest Timing Analyzer was successful. 0 errors, 6 warnings
+    Info: Peak virtual memory: 5277 megabytes
+    Info: Processing ended: Mon Jun 04 09:42:50 2018
+    Info: Elapsed time: 00:00:48
+    Info: Total CPU time (on all processors): 00:00:59
+
+

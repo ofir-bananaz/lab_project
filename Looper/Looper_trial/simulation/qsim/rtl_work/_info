@@ -1,0 +1,54 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim
+vMet_block_exp
+!s110 1528375651
+!i10b 1
+!s100 N_U3?Y<zOWH<1B`heEQf`0
+I?eITk<o^O<m8QR_AnW;GV3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1528375648
+8experiement_digital_recorder.vo
+Fexperiement_digital_recorder.vo
+L0 32
+Z2 OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1528375651.000000
+!s107 experiement_digital_recorder.vo|
+!s90 -work|work|experiement_digital_recorder.vo|
+!i113 1
+Z3 o-work work
+Z4 tCvgOpt 0
+n@met_block_exp
+vMet_block_exp_vlg_vec_tst
+!s110 1528375652
+!i10b 1
+!s100 EDj>mIjRcC:C7Q2?VL_>10
+Iz?lCoR5RYB@kQU0GE:fK51
+R1
+R0
+w1528375645
+8Waveform2.vwf.vt
+FWaveform2.vwf.vt
+L0 30
+R2
+r1
+!s85 0
+31
+!s108 1528375652.000000
+!s107 Waveform2.vwf.vt|
+!s90 -work|work|Waveform2.vwf.vt|
+!i113 1
+R3
+R4
+n@met_block_exp_vlg_vec_tst

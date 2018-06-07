@@ -1,0 +1,75 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity One_sec_turbo is
+	port(
+		RESETN, CLK, TURBO		:in std_logic;
+		dout				:out std_logic;
+		duty50 			:out std_logic);
+end One_sec_turbo;
+
+
+
+architecture One_sec_turbo_arch of One_sec_turbo is
+	signal duty : std_logic ; 
+	 signal turbo_flag : std_logic ;
+	 
+begin
+
+	process(CLK,RESETN,TURBO)
+		 variable counter: integer ;
+	    --constant sec: integer := 50000000 ;
+		 constant sec: integer := 20 ; -- for simulation
+		 --constant turbo_sec: integer := 10000000 ; 
+		 constant turbo_sec: integer := 4; 
+	begin
+	
+			if RESETN = '0' then
+				counter := 0 ;
+				dout <= '0' ;
+				duty <= '0';
+				
+			elsif rising_edge(CLK) then
+					if TURBO = '1' then
+						if turbo_flag = '0' then --zero counter if first turbo
+							counter := -1;
+						end if;
+						turbo_flag <= '1';
+					else
+						turbo_flag <= '0';
+					end if; --End of turbo check
+					
+					counter := counter + 1 ;
+					
+					if turbo_flag = '1' then --if on turbo mode check ounter as turbo mode
+						if (counter  = turbo_sec) then
+							dout <= '1';
+							counter := 0;
+							if (duty = '0') then
+								duty <='1';
+							else
+								duty <='0';
+							end if;
+								
+						else
+							dout <='0';
+						end if;
+						
+						
+					elsif (counter  = sec) then -- turbo mode is OFF - check in normal mode
+						dout <='1' ;
+						counter :=0;
+						if (duty = '0') then
+							duty <='1';
+						else
+							duty <='0';
+						end if;
+					else
+						dout <='0';
+					end if;
+
+				end if; -- rising clock end;
+	end process;
+	duty50 <= duty;
+
+end One_sec_turbo_arch;

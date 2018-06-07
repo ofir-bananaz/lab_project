@@ -1,0 +1,93 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "MICROPHON_LED",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_DACDAT",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_XCK",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_I2C_SCLK",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_I2C_SDAT",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_BCLK",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_DACLRCK",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_ADCDAT",
+					"strict" : false
+				},
+				{
+					"name" : "MICROPHON_ON",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_ADCLRCK",
+					"strict" : false
+				},
+				{
+					"name" : "CLOCK_50",
+					"strict" : false
+				},
+				{
+					"name" : "resetN",
+					"strict" : false
+				},
+				{
+					"name" : "IntergratorDIV[2]",
+					"strict" : false
+				},
+				{
+					"name" : "IntergratorDIV[0]",
+					"strict" : false
+				},
+				{
+					"name" : "IntergratorDIV[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SelCh4Cmd[0]",
+					"strict" : false
+				},
+				{
+					"name" : "recB",
+					"strict" : false
+				},
+				{
+					"name" : "SelCh4Cmd[1]",
+					"strict" : false
+				},
+				{
+					"name" : "stopB",
+					"strict" : false
+				},
+				{
+					"name" : "playB",
+					"strict" : false
+				},
+				{
+					"name" : "clearB",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
