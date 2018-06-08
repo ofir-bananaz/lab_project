@@ -267,7 +267,7 @@ agreement for further details.
 )
 (symbol
 	(rect 2200 128 2392 272)
-	(text "KEY" (rect 5 0 27 12)(font "Arial" ))
+	(text "KEY_MET" (rect 5 0 54 12)(font "Arial" ))
 	(text "inst" (rect 8 128 25 140)(font "Arial" ))
 	(port
 		(pt 0 32)
@@ -520,29 +520,19 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 2136 272)
-	(pt 2136 296)
+	(text "DOUT[8..0]" (rect 2136 176 2187 193)(font "Intel Clear" ))
+	(pt 2200 192)
+	(pt 2128 192)
 	(bus)
 )
 (connector
-	(pt 2072 264)
-	(pt 2072 296)
+	(pt 2136 272)
+	(pt 2136 264)
 	(bus)
 )
 (connector
 	(pt 2064 264)
-	(pt 2072 264)
-	(bus)
-)
-(connector
-	(pt 2072 296)
-	(pt 2136 296)
-	(bus)
-)
-(connector
-	(text "DOUT[8..0]" (rect 2136 176 2187 193)(font "Intel Clear" ))
-	(pt 2200 192)
-	(pt 2128 192)
+	(pt 2136 264)
 	(bus)
 )
 (junction (pt 1424 264))

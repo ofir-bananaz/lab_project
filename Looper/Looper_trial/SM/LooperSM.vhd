@@ -18,10 +18,10 @@ entity LooperSM is
 		--keyboard controller inputs
 		KB_Selchannel                      : in std_logic_vector(1 downto 0); --4 channels
 		KB_PLAY                            : in std_logic;
-		KB_ALLPLAY                         : in std_logic;
 		KB_REC                             : in std_logic;
 		KB_STOP                            : in std_logic;
 		KB_ClearCH                         : in std_logic;
+		KB_ALLPLAY                         : in std_logic;
 		                   
 		
 		--Metronome Mode
@@ -43,7 +43,11 @@ entity LooperSM is
 		--currentMemAddress   : out std_logic_vector(17 downto 0); --debug
 		
 		
-		Ch0Activate, Ch1Activate, Ch2Activate, Ch3Activate :  out std_logic
+		ChActivate                         : out std_logic_vector(3 downto 0);
+		
+		chPlayingVGA                       : out std_logic_vector(3 downto 0);-- play or stopped
+		chHasTrackVGA                      : out std_logic_vector(3 downto 0);--
+		chRecordingVGA                     : out std_logic_vector(3 downto 0)
 
 		
 	);
@@ -69,6 +73,11 @@ architecture arc_LooperSM of LooperSM is
 	signal arch_Ch0DEC, arch_Ch1DEC, arch_Ch2DEC, arch_Ch3DEC: std_logic; -- DECISION variable
 	signal ch0HT, ch1HT, ch2HT, ch3HT: std_logic; -- does our channel "has track?"
 	signal arch_MetRESET: std_logic;
+	
+	
+	--VGA OUTPUTS --
+	signal arch_chPlayingVGA, arch_chHasTrackVGA, arch_chRecordingVGA : std_logic_vector(3 downto 0);
+	
 	
 	--DEBUG--
 	--signal currMemAddress  : std_logic_vector(17 downto 0); --debug
@@ -385,13 +394,35 @@ begin
     			end if;
     			
     			
-    			
+    			  						
+				if arch_recording = '1' then
+					case arch_recSel is -- can be implemented using shift but not straight forward enough
+						when "00" => arch_chRecordingVGA <= "0001";
+						when "01" => arch_chRecordingVGA <= "0010"; 
+						when "10" => arch_chRecordingVGA <= "0100"; 
+						when "11" => arch_chRecordingVGA <= "1000";
+					end case;
+				else
+					arch_chRecordingVGA <= "0000";
+				end if;
+				
+				arch_chPlayingVGA(0)   <= arch_Ch0ACT;
+				arch_chPlayingVGA(1)   <= arch_Ch1ACT;
+				arch_chPlayingVGA(2)   <= arch_Ch2ACT;
+				arch_chPlayingVGA(3)   <= arch_Ch3ACT;
+				  
+				arch_chHasTrackVGA(0)  <= ch0HT;
+				arch_chHasTrackVGA(1)  <= ch1HT;
+				arch_chHasTrackVGA(2)  <= ch2HT;
+				arch_chHasTrackVGA(3)  <= ch3HT;
+				
+				
     			--DEBUG --
     			--endAddr <= conv_std_logic_vector(memEndAddr,18);
     			--currMemAddress <= currMemAddress+'1'; --debug
     			--if (arch_loop_start = '1') then currMemAddress <= "000000000000000000"; end if; --debug
-  
-  						
+				
+
   			
   		end if;--enable
   	end if; 
@@ -399,15 +430,21 @@ end process;
 
 -- Asynchronous Part
 
-	recSel          <= arch_recSel;
-	recording       <= arch_recording;
-	loop_start      <= arch_loop_start;
-	Ch0Activate     <= arch_Ch0DEC;
-	Ch1Activate     <= arch_Ch1DEC;
-	Ch2Activate     <= arch_Ch2DEC;
-	Ch3Activate     <= arch_Ch3DEC;
-	MetRESET        <= arch_MetRESET;
+	recSel          <= arch_recSel         ;
+	recording       <= arch_recording      ;
+	loop_start      <= arch_loop_start     ;
+	ChActivate(0)   <= arch_Ch0DEC         ;
+	ChActivate(1)   <= arch_Ch1DEC         ;
+	ChActivate(2)   <= arch_Ch2DEC         ;
+	ChActivate(3)   <= arch_Ch3DEC         ;
+	 
+	chHasTrackVGA   <= arch_chHasTrackVGA  ;
+	chPlayingVGA    <= arch_chPlayingVGA   ;
+	chRecordingVGA  <= arch_chRecordingVGA ;
+	
+	MetRESET        <= arch_MetRESET       ;
 	commandRecieved <= arch_commandRecieved;
+	
 	
 	
 	CurrState   <=  conv_std_logic_vector(stateNum,3); --debug
