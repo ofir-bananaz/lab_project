@@ -1,6 +1,6 @@
 Analysis & Synthesis report for TOP
-Fri Jun 08 14:13:19 2018
-Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
+Fri Jun 08 18:57:33 2018
+Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
 ---------------------
@@ -119,27 +119,27 @@ agreement for further details.
 
 
 
-+-----------------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                                      ;
-+---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Fri Jun 08 14:13:19 2018           ;
-; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Standard Edition ;
-; Revision Name                   ; TOP                                             ;
-; Top-level Entity Name           ; Met_Top                                         ;
-; Family                          ; Cyclone V                                       ;
-; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 144                                             ;
-; Total pins                      ; 24                                              ;
-; Total virtual pins              ; 0                                               ;
-; Total block memory bits         ; 7,680                                           ;
-; Total DSP Blocks                ; 0                                               ;
-; Total HSSI RX PCSs              ; 0                                               ;
-; Total HSSI PMA RX Deserializers ; 0                                               ;
-; Total HSSI TX PCSs              ; 0                                               ;
-; Total HSSI PMA TX Serializers   ; 0                                               ;
-; Total PLLs                      ; 0                                               ;
-; Total DLLs                      ; 0                                               ;
-+---------------------------------+-------------------------------------------------+
++-------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                  ;
++---------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Fri Jun 08 18:57:32 2018       ;
+; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
+; Revision Name                   ; TOP                                         ;
+; Top-level Entity Name           ; Met_Top                                     ;
+; Family                          ; Cyclone V                                   ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 144                                         ;
+; Total pins                      ; 24                                          ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 7,680                                       ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0                                           ;
+; Total DLLs                      ; 0                                           ;
++---------------------------------+---------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------+
@@ -234,106 +234,106 @@ agreement for further details.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 8           ;
-; Maximum allowed            ; 4           ;
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 4           ;
+; Maximum used               ; 2           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   0.0%      ;
+;     Processor 2            ;   0.0%      ;
 +----------------------------+-------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                             ;
-+-----------------------------------+-----------------+-------------------------------------------------------+----------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path  ; Used in Netlist ; File Type                                             ; File Name with Absolute Path                                               ; Library ;
-+-----------------------------------+-----------------+-------------------------------------------------------+----------------------------------------------------------------------------+---------+
-; Metronome/HEXSS.vhd               ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd               ;         ;
-; KBD/lpf.vhd                       ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/KBD/lpf.vhd                       ;         ;
-; KBD/byterec.vhd                   ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/KBD/byterec.vhd                   ;         ;
-; KBD/bitrec.vhd                    ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/KBD/bitrec.vhd                    ;         ;
-; Metronome/MET_kbd/setting.vhd     ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/setting.vhd     ;         ;
-; Metronome/MET_kbd/KEY_NOTE_2.bdf  ; yes             ; User Block Diagram/Schematic File                     ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_NOTE_2.bdf  ;         ;
-; Metronome/MET_kbd/KEY_2.vhd       ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_2.vhd       ;         ;
-; Metronome/MET_kbd/KBD_MOD_met.bdf ; yes             ; User Block Diagram/Schematic File                     ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KBD_MOD_met.bdf ;         ;
-; Metronome/Metronome.vhd           ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Metronome.vhd           ;         ;
-; piano/KEY_NOTE.bdf                ; yes             ; User Block Diagram/Schematic File                     ; C:/Users/tpe1/Desktop/lab_project/Looper/piano/KEY_NOTE.bdf                ;         ;
-; Metronome/Met_Top.bdf             ; yes             ; User Block Diagram/Schematic File                     ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Met_Top.bdf             ;         ;
-; Metronome/MET_kbd/KEY_KBD.vhd     ; yes             ; User VHDL File                                        ; C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_KBD.vhd     ;         ;
-; lpm_constant.tdf                  ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/lpm_constant.tdf         ;         ;
-; altsyncram.tdf                    ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/altsyncram.tdf           ;         ;
-; stratix_ram_block.inc             ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc    ;         ;
-; lpm_mux.inc                       ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/lpm_mux.inc              ;         ;
-; lpm_decode.inc                    ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/lpm_decode.inc           ;         ;
-; aglobal170.inc                    ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/aglobal170.inc           ;         ;
-; a_rdenreg.inc                     ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/a_rdenreg.inc            ;         ;
-; altrom.inc                        ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/altrom.inc               ;         ;
-; altram.inc                        ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/altram.inc               ;         ;
-; altdpram.inc                      ; yes             ; Megafunction                                          ; c:/intelfpga/17.0/quartus/libraries/megafunctions/altdpram.inc             ;         ;
-; db/altsyncram_q661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_q661.tdf            ;         ;
-; TOP.Met_Top0.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top0.rtl.mif           ;         ;
-; db/altsyncram_r661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_r661.tdf            ;         ;
-; TOP.Met_Top1.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top1.rtl.mif           ;         ;
-; db/altsyncram_s661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_s661.tdf            ;         ;
-; TOP.Met_Top2.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top2.rtl.mif           ;         ;
-; db/altsyncram_t661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_t661.tdf            ;         ;
-; TOP.Met_Top3.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top3.rtl.mif           ;         ;
-; db/altsyncram_u661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_u661.tdf            ;         ;
-; TOP.Met_Top4.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top4.rtl.mif           ;         ;
-; db/altsyncram_v661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_v661.tdf            ;         ;
-; TOP.Met_Top5.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top5.rtl.mif           ;         ;
-; db/altsyncram_0761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_0761.tdf            ;         ;
-; TOP.Met_Top6.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top6.rtl.mif           ;         ;
-; db/altsyncram_1761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_1761.tdf            ;         ;
-; TOP.Met_Top7.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top7.rtl.mif           ;         ;
-; db/altsyncram_2761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_2761.tdf            ;         ;
-; TOP.Met_Top8.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top8.rtl.mif           ;         ;
-; db/altsyncram_3761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_3761.tdf            ;         ;
-; TOP.Met_Top9.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top9.rtl.mif           ;         ;
-; db/altsyncram_b861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_b861.tdf            ;         ;
-; TOP.Met_Top10.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top10.rtl.mif          ;         ;
-; db/altsyncram_c861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_c861.tdf            ;         ;
-; TOP.Met_Top11.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top11.rtl.mif          ;         ;
-; db/altsyncram_d861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_d861.tdf            ;         ;
-; TOP.Met_Top12.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top12.rtl.mif          ;         ;
-; db/altsyncram_e861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_e861.tdf            ;         ;
-; TOP.Met_Top13.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top13.rtl.mif          ;         ;
-; db/altsyncram_f861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_f861.tdf            ;         ;
-; TOP.Met_Top14.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top14.rtl.mif          ;         ;
-; db/altsyncram_g861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_g861.tdf            ;         ;
-; TOP.Met_Top15.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top15.rtl.mif          ;         ;
-; db/altsyncram_h861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_h861.tdf            ;         ;
-; TOP.Met_Top16.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top16.rtl.mif          ;         ;
-; db/altsyncram_i861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_i861.tdf            ;         ;
-; TOP.Met_Top17.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top17.rtl.mif          ;         ;
-; db/altsyncram_j861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_j861.tdf            ;         ;
-; TOP.Met_Top18.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top18.rtl.mif          ;         ;
-; db/altsyncram_k861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_k861.tdf            ;         ;
-; TOP.Met_Top19.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top19.rtl.mif          ;         ;
-; db/altsyncram_l861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_l861.tdf            ;         ;
-; TOP.Met_Top20.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top20.rtl.mif          ;         ;
-; db/altsyncram_m861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_m861.tdf            ;         ;
-; TOP.Met_Top21.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top21.rtl.mif          ;         ;
-; db/altsyncram_n861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_n861.tdf            ;         ;
-; TOP.Met_Top22.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top22.rtl.mif          ;         ;
-; db/altsyncram_o861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_o861.tdf            ;         ;
-; TOP.Met_Top23.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top23.rtl.mif          ;         ;
-; db/altsyncram_p861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_p861.tdf            ;         ;
-; TOP.Met_Top24.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top24.rtl.mif          ;         ;
-; db/altsyncram_q861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_q861.tdf            ;         ;
-; TOP.Met_Top25.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top25.rtl.mif          ;         ;
-; db/altsyncram_r861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_r861.tdf            ;         ;
-; TOP.Met_Top26.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top26.rtl.mif          ;         ;
-; db/altsyncram_s861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_s861.tdf            ;         ;
-; TOP.Met_Top27.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top27.rtl.mif          ;         ;
-; db/altsyncram_t861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_t861.tdf            ;         ;
-; TOP.Met_Top28.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top28.rtl.mif          ;         ;
-; db/altsyncram_u861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_u861.tdf            ;         ;
-; TOP.Met_Top29.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/tpe1/Desktop/lab_project/Looper/db/TOP.Met_Top29.rtl.mif          ;         ;
-+-----------------------------------+-----------------+-------------------------------------------------------+----------------------------------------------------------------------------+---------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                               ;
++-----------------------------------+-----------------+-------------------------------------------------------+------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path  ; Used in Netlist ; File Type                                             ; File Name with Absolute Path                                                 ; Library ;
++-----------------------------------+-----------------+-------------------------------------------------------+------------------------------------------------------------------------------+---------+
+; Metronome/HEXSS.vhd               ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd                     ;         ;
+; KBD/lpf.vhd                       ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/KBD/lpf.vhd                             ;         ;
+; KBD/byterec.vhd                   ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/KBD/byterec.vhd                         ;         ;
+; KBD/bitrec.vhd                    ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/KBD/bitrec.vhd                          ;         ;
+; Metronome/MET_kbd/setting.vhd     ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/setting.vhd           ;         ;
+; Metronome/MET_kbd/KEY_NOTE_2.bdf  ; yes             ; User Block Diagram/Schematic File                     ; C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_NOTE_2.bdf        ;         ;
+; Metronome/MET_kbd/KEY_2.vhd       ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_2.vhd             ;         ;
+; Metronome/MET_kbd/KBD_MOD_met.bdf ; yes             ; User Block Diagram/Schematic File                     ; C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KBD_MOD_met.bdf       ;         ;
+; Metronome/Metronome.vhd           ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/Metronome/Metronome.vhd                 ;         ;
+; piano/KEY_NOTE.bdf                ; yes             ; User Block Diagram/Schematic File                     ; C:/intelFPGA_lite/lab_project/Looper/piano/KEY_NOTE.bdf                      ;         ;
+; Metronome/Met_Top.bdf             ; yes             ; User Block Diagram/Schematic File                     ; C:/intelFPGA_lite/lab_project/Looper/Metronome/Met_Top.bdf                   ;         ;
+; Metronome/MET_kbd/KEY_KBD.vhd     ; yes             ; User VHDL File                                        ; C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_KBD.vhd           ;         ;
+; lpm_constant.tdf                  ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_constant.tdf      ;         ;
+; altsyncram.tdf                    ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
+; stratix_ram_block.inc             ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
+; lpm_mux.inc                       ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_mux.inc           ;         ;
+; lpm_decode.inc                    ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_decode.inc        ;         ;
+; aglobal170.inc                    ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/aglobal170.inc        ;         ;
+; a_rdenreg.inc                     ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_rdenreg.inc         ;         ;
+; altrom.inc                        ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altrom.inc            ;         ;
+; altram.inc                        ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altram.inc            ;         ;
+; altdpram.inc                      ; yes             ; Megafunction                                          ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altdpram.inc          ;         ;
+; db/altsyncram_q661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_q661.tdf                  ;         ;
+; TOP.Met_Top0.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top0.rtl.mif                 ;         ;
+; db/altsyncram_r661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_r661.tdf                  ;         ;
+; TOP.Met_Top1.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top1.rtl.mif                 ;         ;
+; db/altsyncram_s661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_s661.tdf                  ;         ;
+; TOP.Met_Top2.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top2.rtl.mif                 ;         ;
+; db/altsyncram_t661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_t661.tdf                  ;         ;
+; TOP.Met_Top3.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top3.rtl.mif                 ;         ;
+; db/altsyncram_u661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_u661.tdf                  ;         ;
+; TOP.Met_Top4.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top4.rtl.mif                 ;         ;
+; db/altsyncram_v661.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_v661.tdf                  ;         ;
+; TOP.Met_Top5.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top5.rtl.mif                 ;         ;
+; db/altsyncram_0761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_0761.tdf                  ;         ;
+; TOP.Met_Top6.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top6.rtl.mif                 ;         ;
+; db/altsyncram_1761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_1761.tdf                  ;         ;
+; TOP.Met_Top7.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top7.rtl.mif                 ;         ;
+; db/altsyncram_2761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_2761.tdf                  ;         ;
+; TOP.Met_Top8.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top8.rtl.mif                 ;         ;
+; db/altsyncram_3761.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_3761.tdf                  ;         ;
+; TOP.Met_Top9.rtl.mif              ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top9.rtl.mif                 ;         ;
+; db/altsyncram_b861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_b861.tdf                  ;         ;
+; TOP.Met_Top10.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top10.rtl.mif                ;         ;
+; db/altsyncram_c861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_c861.tdf                  ;         ;
+; TOP.Met_Top11.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top11.rtl.mif                ;         ;
+; db/altsyncram_d861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_d861.tdf                  ;         ;
+; TOP.Met_Top12.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top12.rtl.mif                ;         ;
+; db/altsyncram_e861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_e861.tdf                  ;         ;
+; TOP.Met_Top13.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top13.rtl.mif                ;         ;
+; db/altsyncram_f861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_f861.tdf                  ;         ;
+; TOP.Met_Top14.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top14.rtl.mif                ;         ;
+; db/altsyncram_g861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_g861.tdf                  ;         ;
+; TOP.Met_Top15.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top15.rtl.mif                ;         ;
+; db/altsyncram_h861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_h861.tdf                  ;         ;
+; TOP.Met_Top16.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top16.rtl.mif                ;         ;
+; db/altsyncram_i861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_i861.tdf                  ;         ;
+; TOP.Met_Top17.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top17.rtl.mif                ;         ;
+; db/altsyncram_j861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_j861.tdf                  ;         ;
+; TOP.Met_Top18.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top18.rtl.mif                ;         ;
+; db/altsyncram_k861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_k861.tdf                  ;         ;
+; TOP.Met_Top19.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top19.rtl.mif                ;         ;
+; db/altsyncram_l861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_l861.tdf                  ;         ;
+; TOP.Met_Top20.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top20.rtl.mif                ;         ;
+; db/altsyncram_m861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_m861.tdf                  ;         ;
+; TOP.Met_Top21.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top21.rtl.mif                ;         ;
+; db/altsyncram_n861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_n861.tdf                  ;         ;
+; TOP.Met_Top22.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top22.rtl.mif                ;         ;
+; db/altsyncram_o861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_o861.tdf                  ;         ;
+; TOP.Met_Top23.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top23.rtl.mif                ;         ;
+; db/altsyncram_p861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_p861.tdf                  ;         ;
+; TOP.Met_Top24.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top24.rtl.mif                ;         ;
+; db/altsyncram_q861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_q861.tdf                  ;         ;
+; TOP.Met_Top25.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top25.rtl.mif                ;         ;
+; db/altsyncram_r861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_r861.tdf                  ;         ;
+; TOP.Met_Top26.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top26.rtl.mif                ;         ;
+; db/altsyncram_s861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_s861.tdf                  ;         ;
+; TOP.Met_Top27.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top27.rtl.mif                ;         ;
+; db/altsyncram_t861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_t861.tdf                  ;         ;
+; TOP.Met_Top28.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top28.rtl.mif                ;         ;
+; db/altsyncram_u861.tdf            ; yes             ; Auto-Generated Megafunction                           ; C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_u861.tdf                  ;         ;
+; TOP.Met_Top29.rtl.mif             ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/intelFPGA_lite/lab_project/Looper/db/TOP.Met_Top29.rtl.mif                ;         ;
++-----------------------------------+-----------------+-------------------------------------------------------+------------------------------------------------------------------------------+---------+
 
 
 +---------------------------------------------------------+
@@ -3346,7 +3346,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:16     ;
 +----------------+--------------+
 
 
@@ -3355,118 +3355,118 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
-    Info: Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
-    Info: Processing started: Fri Jun 08 14:13:06 2018
+    Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+    Info: Processing started: Fri Jun 08 18:56:21 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off TOP -c TOP
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file metronome/hexss.vhd
-    Info (12022): Found design unit 1: hexss-arc_hexss File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 10
-    Info (12023): Found entity 1: hexss File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 3
+    Info (12022): Found design unit 1: hexss-arc_hexss File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 10
+    Info (12023): Found entity 1: hexss File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 3
 Info (12021): Found 2 design units, including 1 entities, in source file kbd/lpf.vhd
-    Info (12022): Found design unit 1: lpf-arc_lpf File: C:/Users/tpe1/Desktop/lab_project/Looper/KBD/lpf.vhd Line: 16
-    Info (12023): Found entity 1: lpf File: C:/Users/tpe1/Desktop/lab_project/Looper/KBD/lpf.vhd Line: 10
+    Info (12022): Found design unit 1: lpf-arc_lpf File: C:/intelFPGA_lite/lab_project/Looper/KBD/lpf.vhd Line: 16
+    Info (12023): Found entity 1: lpf File: C:/intelFPGA_lite/lab_project/Looper/KBD/lpf.vhd Line: 10
 Info (12021): Found 1 design units, including 1 entities, in source file kbd/kbd.bdf
     Info (12023): Found entity 1: KBD
 Info (12021): Found 2 design units, including 1 entities, in source file kbd/byterec.vhd
-    Info (12022): Found design unit 1: byterec-arc_byterec File: C:/Users/tpe1/Desktop/lab_project/Looper/KBD/byterec.vhd Line: 28
-    Info (12023): Found entity 1: byterec File: C:/Users/tpe1/Desktop/lab_project/Looper/KBD/byterec.vhd Line: 18
+    Info (12022): Found design unit 1: byterec-arc_byterec File: C:/intelFPGA_lite/lab_project/Looper/KBD/byterec.vhd Line: 28
+    Info (12023): Found entity 1: byterec File: C:/intelFPGA_lite/lab_project/Looper/KBD/byterec.vhd Line: 18
 Info (12021): Found 2 design units, including 1 entities, in source file kbd/bitrec.vhd
-    Info (12022): Found design unit 1: bitrec-arc_bitrec File: C:/Users/tpe1/Desktop/lab_project/Looper/KBD/bitrec.vhd Line: 17
-    Info (12023): Found entity 1: bitrec File: C:/Users/tpe1/Desktop/lab_project/Looper/KBD/bitrec.vhd Line: 8
+    Info (12022): Found design unit 1: bitrec-arc_bitrec File: C:/intelFPGA_lite/lab_project/Looper/KBD/bitrec.vhd Line: 17
+    Info (12023): Found entity 1: bitrec File: C:/intelFPGA_lite/lab_project/Looper/KBD/bitrec.vhd Line: 8
 Info (12021): Found 2 design units, including 1 entities, in source file metronome/met_kbd/setting.vhd
-    Info (12022): Found design unit 1: setting-behavior File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/setting.vhd Line: 16
-    Info (12023): Found entity 1: setting File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/setting.vhd Line: 7
+    Info (12022): Found design unit 1: setting-behavior File: C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/setting.vhd Line: 16
+    Info (12023): Found entity 1: setting File: C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/setting.vhd Line: 7
 Info (12021): Found 1 design units, including 1 entities, in source file metronome/met_kbd/key_note_2.bdf
     Info (12023): Found entity 1: KEY_NOTE_2
 Info (12021): Found 2 design units, including 1 entities, in source file metronome/met_kbd/key_2.vhd
-    Info (12022): Found design unit 1: KEY_2-behavior File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_2.vhd Line: 18
-    Info (12023): Found entity 1: KEY_2 File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_2.vhd Line: 7
+    Info (12022): Found design unit 1: KEY_2-behavior File: C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_2.vhd Line: 18
+    Info (12023): Found entity 1: KEY_2 File: C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_2.vhd Line: 7
 Warning (12019): Can't analyze file -- file Metronome/MET_kbd/KEY.vhd is missing
 Info (12021): Found 1 design units, including 1 entities, in source file metronome/met_kbd/kbd_mod_met.bdf
     Info (12023): Found entity 1: KBD_MOD_met
-Warning (10639): VHDL warning at Metronome.vhd(35): constant value overflow File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Metronome.vhd Line: 35
+Warning (10639): VHDL warning at Metronome.vhd(35): constant value overflow File: C:/intelFPGA_lite/lab_project/Looper/Metronome/Metronome.vhd Line: 35
 Info (12021): Found 2 design units, including 1 entities, in source file metronome/metronome.vhd
-    Info (12022): Found design unit 1: Metronome-Metronome_arch File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Metronome.vhd Line: 22
-    Info (12023): Found entity 1: Metronome File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Metronome.vhd Line: 9
+    Info (12022): Found design unit 1: Metronome-Metronome_arch File: C:/intelFPGA_lite/lab_project/Looper/Metronome/Metronome.vhd Line: 22
+    Info (12023): Found entity 1: Metronome File: C:/intelFPGA_lite/lab_project/Looper/Metronome/Metronome.vhd Line: 9
 Info (12021): Found 1 design units, including 1 entities, in source file metronome/met_block_exp.bdf
     Info (12023): Found entity 1: Met_block_exp
 Info (12021): Found 2 design units, including 1 entities, in source file looper_trial/addr_counter_zero.vhd
-    Info (12022): Found design unit 1: addr_counter_zero-addr_counter_zero_arch File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/addr_counter_zero.vhd Line: 15
-    Info (12023): Found entity 1: addr_counter_zero File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/addr_counter_zero.vhd Line: 5
+    Info (12022): Found design unit 1: addr_counter_zero-addr_counter_zero_arch File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/addr_counter_zero.vhd Line: 15
+    Info (12023): Found entity 1: addr_counter_zero File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/addr_counter_zero.vhd Line: 5
 Info (12021): Found 1 design units, including 1 entities, in source file looper_trial/loopermemcontroller.bdf
     Info (12023): Found entity 1: LooperMemController
 Info (12021): Found 1 design units, including 1 entities, in source file piano/experiment_sinus_generator.bdf
     Info (12023): Found entity 1: experiment_sinus_generator
 Info (12021): Found 2 design units, including 1 entities, in source file looper_trial/sm/loopersm.vhd
-    Info (12022): Found design unit 1: LooperSM-arc_LooperSM File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/SM/LooperSM.vhd Line: 58
-    Info (12023): Found entity 1: LooperSM File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/SM/LooperSM.vhd Line: 10
+    Info (12022): Found design unit 1: LooperSM-arc_LooperSM File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/SM/LooperSM.vhd Line: 58
+    Info (12023): Found entity 1: LooperSM File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/SM/LooperSM.vhd Line: 10
 Info (12021): Found 1 design units, including 1 entities, in source file looper_trial/recorder_module_looper.bdf
     Info (12023): Found entity 1: recorder_module_looper
 Warning (12019): Can't analyze file -- file Looper_trial/prescaler_new.vhd is missing
 Info (12021): Found 2 design units, including 1 entities, in source file looper_trial/prescaler.vhd
-    Info (12022): Found design unit 1: prescaler-behave File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/prescaler.vhd Line: 26
-    Info (12023): Found entity 1: prescaler File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/prescaler.vhd Line: 13
+    Info (12022): Found design unit 1: prescaler-behave File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/prescaler.vhd Line: 26
+    Info (12023): Found entity 1: prescaler File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/prescaler.vhd Line: 13
 Info (12021): Found 2 design units, including 1 entities, in source file looper_trial/looper_integrator.vhd
-    Info (12022): Found design unit 1: Looper_integrator-arc_Looper_integrator File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/Looper_integrator.vhd Line: 35
-    Info (12023): Found entity 1: Looper_integrator File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/Looper_integrator.vhd Line: 10
+    Info (12022): Found design unit 1: Looper_integrator-arc_Looper_integrator File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/Looper_integrator.vhd Line: 35
+    Info (12023): Found entity 1: Looper_integrator File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/Looper_integrator.vhd Line: 10
 Info (12021): Found 2 design units, including 1 entities, in source file looper_trial/dpram.vhd
-    Info (12022): Found design unit 1: dpram-SYN File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/dpram.vhd Line: 57
-    Info (12023): Found entity 1: dpram File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/dpram.vhd Line: 43
+    Info (12022): Found design unit 1: dpram-SYN File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/dpram.vhd Line: 57
+    Info (12023): Found entity 1: dpram File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/dpram.vhd Line: 43
 Info (12021): Found 1 design units, including 1 entities, in source file looper_trial/audio_codec_controller.qxp
-    Info (12023): Found entity 1: audio_codec_controller File: C:/Users/tpe1/Desktop/lab_project/Looper/Looper_trial/audio_codec_controller.qxp Line: -1
+    Info (12023): Found entity 1: audio_codec_controller File: C:/intelFPGA_lite/lab_project/Looper/Looper_trial/audio_codec_controller.qxp Line: -1
 Warning (12019): Can't analyze file -- file Looper_trial/addr_counter_new.vhd is missing
 Warning (12019): Can't analyze file -- file Looper_trial/addr_counter.vhd is missing
 Warning (12019): Can't analyze file -- file piano/KBD/lpf.vhd is missing
 Info (12021): Found 2 design units, including 1 entities, in source file piano/wave_integrator_13.vhd
-    Info (12022): Found design unit 1: wave_integrator_13-behave File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/wave_integrator_13.vhd Line: 30
-    Info (12023): Found entity 1: wave_integrator_13 File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/wave_integrator_13.vhd Line: 7
+    Info (12022): Found design unit 1: wave_integrator_13-behave File: C:/intelFPGA_lite/lab_project/Looper/piano/wave_integrator_13.vhd Line: 30
+    Info (12023): Found entity 1: wave_integrator_13 File: C:/intelFPGA_lite/lab_project/Looper/piano/wave_integrator_13.vhd Line: 7
 Info (12021): Found 2 design units, including 1 entities, in source file piano/wave_integrator_2.vhd
-    Info (12022): Found design unit 1: wave_integrator_2-behave File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/wave_integrator_2.vhd Line: 20
-    Info (12023): Found entity 1: wave_integrator_2 File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/wave_integrator_2.vhd Line: 7
+    Info (12022): Found design unit 1: wave_integrator_2-behave File: C:/intelFPGA_lite/lab_project/Looper/piano/wave_integrator_2.vhd Line: 20
+    Info (12023): Found entity 1: wave_integrator_2 File: C:/intelFPGA_lite/lab_project/Looper/piano/wave_integrator_2.vhd Line: 7
 Info (12021): Found 2 design units, including 1 entities, in source file piano/sintable.vhd
-    Info (12022): Found design unit 1: sintable-arch File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/SinTable.vhd Line: 22
-    Info (12023): Found entity 1: sintable File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/SinTable.vhd Line: 12
+    Info (12022): Found design unit 1: sintable-arch File: C:/intelFPGA_lite/lab_project/Looper/piano/SinTable.vhd Line: 22
+    Info (12023): Found entity 1: sintable File: C:/intelFPGA_lite/lab_project/Looper/piano/SinTable.vhd Line: 12
 Info (12021): Found 2 design units, including 1 entities, in source file piano/prescaler_new.vhd
-    Info (12022): Found design unit 1: prescaler_NEW-behave File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/prescaler_NEW.vhd Line: 27
-    Info (12023): Found entity 1: prescaler_NEW File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/prescaler_NEW.vhd Line: 13
+    Info (12022): Found design unit 1: prescaler_NEW-behave File: C:/intelFPGA_lite/lab_project/Looper/piano/prescaler_NEW.vhd Line: 27
+    Info (12023): Found entity 1: prescaler_NEW File: C:/intelFPGA_lite/lab_project/Looper/piano/prescaler_NEW.vhd Line: 13
 Info (12021): Found 2 design units, including 1 entities, in source file piano/prescaler_effect.vhd
-    Info (12022): Found design unit 1: prescaler_EFFECT-behave File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/prescaler_EFFECT.vhd Line: 26
-    Info (12023): Found entity 1: prescaler_EFFECT File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/prescaler_EFFECT.vhd Line: 13
+    Info (12022): Found design unit 1: prescaler_EFFECT-behave File: C:/intelFPGA_lite/lab_project/Looper/piano/prescaler_EFFECT.vhd Line: 26
+    Info (12023): Found entity 1: prescaler_EFFECT File: C:/intelFPGA_lite/lab_project/Looper/piano/prescaler_EFFECT.vhd Line: 13
 Info (12021): Found 1 design units, including 1 entities, in source file piano/piano_mod_new.bdf
     Info (12023): Found entity 1: PIANO_MOD_NEW
 Info (12021): Found 1 design units, including 1 entities, in source file piano/piano_block.bdf
     Info (12023): Found entity 1: PIANO_BLOCK
 Info (12021): Found 1 design units, including 1 entities, in source file piano/note_model.bdf
     Info (12023): Found entity 1: note_model
-Warning (12090): Entity "mux" obtained from "piano/mux.vhd" instead of from Quartus Prime megafunction library File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/mux.vhd Line: 6
+Warning (12090): Entity "mux" obtained from "piano/mux.vhd" instead of from Quartus Prime megafunction library File: C:/intelFPGA_lite/lab_project/Looper/piano/mux.vhd Line: 6
 Info (12021): Found 2 design units, including 1 entities, in source file piano/mux.vhd
-    Info (12022): Found design unit 1: mux-arch File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/mux.vhd Line: 17
-    Info (12023): Found entity 1: mux File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/mux.vhd Line: 6
+    Info (12022): Found design unit 1: mux-arch File: C:/intelFPGA_lite/lab_project/Looper/piano/mux.vhd Line: 17
+    Info (12023): Found entity 1: mux File: C:/intelFPGA_lite/lab_project/Looper/piano/mux.vhd Line: 6
 Info (12021): Found 1 design units, including 1 entities, in source file piano/key_note.bdf
     Info (12023): Found entity 1: KEY_NOTE
 Info (12021): Found 2 design units, including 1 entities, in source file piano/key.vhd
-    Info (12022): Found design unit 1: KEY-behavior File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/KEY.vhd Line: 18
-    Info (12023): Found entity 1: KEY File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/KEY.vhd Line: 7
+    Info (12022): Found design unit 1: KEY-behavior File: C:/intelFPGA_lite/lab_project/Looper/piano/KEY.vhd Line: 18
+    Info (12023): Found entity 1: KEY File: C:/intelFPGA_lite/lab_project/Looper/piano/KEY.vhd Line: 7
 Info (12021): Found 1 design units, including 1 entities, in source file piano/kbd_mod.bdf
     Info (12023): Found entity 1: KBD_MOD
 Info (12021): Found 1 design units, including 1 entities, in source file piano/effect_adsr.bdf
     Info (12023): Found entity 1: effect_adsr
 Warning (12019): Can't analyze file -- file piano/audio_codec_controller.qxp is missing
 Info (12021): Found 2 design units, including 1 entities, in source file piano/adsr_table.vhd
-    Info (12022): Found design unit 1: ADSR_table-arch File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/ADSR_table.vhd Line: 16
-    Info (12023): Found entity 1: ADSR_table File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/ADSR_table.vhd Line: 6
+    Info (12022): Found design unit 1: ADSR_table-arch File: C:/intelFPGA_lite/lab_project/Looper/piano/ADSR_table.vhd Line: 16
+    Info (12023): Found entity 1: ADSR_table File: C:/intelFPGA_lite/lab_project/Looper/piano/ADSR_table.vhd Line: 6
 Info (12021): Found 2 design units, including 1 entities, in source file piano/addr_counter.vhd
-    Info (12022): Found design unit 1: addr_counter-addr_counter_arch File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/addr_counter.vhd Line: 18
-    Info (12023): Found entity 1: addr_counter File: C:/Users/tpe1/Desktop/lab_project/Looper/piano/addr_counter.vhd Line: 7
+    Info (12022): Found design unit 1: addr_counter-addr_counter_arch File: C:/intelFPGA_lite/lab_project/Looper/piano/addr_counter.vhd Line: 18
+    Info (12023): Found entity 1: addr_counter File: C:/intelFPGA_lite/lab_project/Looper/piano/addr_counter.vhd Line: 7
 Warning (12019): Can't analyze file -- file Looper_trial/KBD_MOD_LOOPER.bdf is missing
 Info (12021): Found 1 design units, including 1 entities, in source file top.bdf
     Info (12023): Found entity 1: TOP
 Info (12021): Found 1 design units, including 1 entities, in source file metronome/met_top.bdf
     Info (12023): Found entity 1: Met_Top
 Info (12021): Found 2 design units, including 1 entities, in source file metronome/met_kbd/key_kbd.vhd
-    Info (12022): Found design unit 1: KEY_MET-behavior File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_KBD.vhd Line: 18
-    Info (12023): Found entity 1: KEY_MET File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/MET_kbd/KEY_KBD.vhd Line: 7
+    Info (12022): Found design unit 1: KEY_MET-behavior File: C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_KBD.vhd Line: 18
+    Info (12023): Found entity 1: KEY_MET File: C:/intelFPGA_lite/lab_project/Looper/Metronome/MET_kbd/KEY_KBD.vhd Line: 7
 Info (12127): Elaborating entity "Met_Top" for the top level hierarchy
 Info (12128): Elaborating entity "Metronome" for hierarchy "Metronome:inst"
 Info (12128): Elaborating entity "KBD_MOD_met" for hierarchy "KBD_MOD_met:inst2"
@@ -3494,33 +3494,33 @@ Info (12133): Instantiated megafunction "KBD_MOD_met:inst2|LPM_CONSTANT:2456754"
     Info (12134): Parameter "LPM_CVALUE" = "105"
     Info (12134): Parameter "LPM_WIDTH" = "8"
 Info (12128): Elaborating entity "hexss" for hierarchy "hexss:inst1"
-Warning (10631): VHDL Process Statement warning at HEXSS.vhd(12): inferring latch(es) for signal or variable "ss", which holds its previous value in one or more paths through the process File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[0]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[1]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[2]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[3]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[4]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[5]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Info (10041): Inferred latch for "ss[6]" at HEXSS.vhd(12) File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (10631): VHDL Process Statement warning at HEXSS.vhd(12): inferring latch(es) for signal or variable "ss", which holds its previous value in one or more paths through the process File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[0]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[1]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[2]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[3]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[4]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[5]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Info (10041): Inferred latch for "ss[6]" at HEXSS.vhd(12) File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
 Info (12128): Elaborating entity "LPM_CONSTANT" for hierarchy "LPM_CONSTANT:inst20"
 Info (12130): Elaborated megafunction instantiation "LPM_CONSTANT:inst20"
 Info (12133): Instantiated megafunction "LPM_CONSTANT:inst20" with the following parameter:
     Info (12134): Parameter "LPM_CVALUE" = "1"
     Info (12134): Parameter "LPM_WIDTH" = "1"
-Warning (14026): LATCH primitive "hexss:inst3|ss[0]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst3|ss[1]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst3|ss[2]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst3|ss[3]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst3|ss[4]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst3|ss[5]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst3|ss[6]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[0]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[1]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[2]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[3]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[4]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[5]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
-Warning (14026): LATCH primitive "hexss:inst1|ss[6]" is permanently enabled File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[0]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[1]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[2]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[3]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[4]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[5]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst3|ss[6]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[0]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[1]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[2]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[3]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[4]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[5]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
+Warning (14026): LATCH primitive "hexss:inst1|ss[6]" is permanently enabled File: C:/intelFPGA_lite/lab_project/Looper/Metronome/HEXSS.vhd Line: 12
 Info (19000): Inferred 30 megafunctions from design logic
     Info (276031): Inferred altsyncram megafunction from the following design logic: "Metronome:inst|Mux2_rtl_0"
         Info (286033): Parameter OPERATION_MODE set to ROM
@@ -3772,7 +3772,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux2_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top0.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_q661.tdf
-    Info (12023): Found entity 1: altsyncram_q661 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_q661.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_q661 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_q661.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux3_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux3_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3783,7 +3783,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux3_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top1.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_r661.tdf
-    Info (12023): Found entity 1: altsyncram_r661 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_r661.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_r661 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_r661.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux4_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux4_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3794,7 +3794,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux4_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top2.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_s661.tdf
-    Info (12023): Found entity 1: altsyncram_s661 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_s661.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_s661 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_s661.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux5_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux5_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3805,7 +3805,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux5_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top3.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_t661.tdf
-    Info (12023): Found entity 1: altsyncram_t661 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_t661.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_t661 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_t661.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux6_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux6_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3816,7 +3816,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux6_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top4.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_u661.tdf
-    Info (12023): Found entity 1: altsyncram_u661 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_u661.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_u661 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_u661.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux7_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux7_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3827,7 +3827,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux7_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top5.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_v661.tdf
-    Info (12023): Found entity 1: altsyncram_v661 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_v661.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_v661 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_v661.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux8_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux8_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3838,7 +3838,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux8_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top6.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_0761.tdf
-    Info (12023): Found entity 1: altsyncram_0761 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_0761.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_0761 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_0761.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux9_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux9_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3849,7 +3849,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux9_rtl_0" w
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top7.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_1761.tdf
-    Info (12023): Found entity 1: altsyncram_1761 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_1761.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_1761 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_1761.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux10_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux10_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3860,7 +3860,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux10_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top8.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_2761.tdf
-    Info (12023): Found entity 1: altsyncram_2761 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_2761.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_2761 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_2761.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux11_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux11_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3871,7 +3871,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux11_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top9.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_3761.tdf
-    Info (12023): Found entity 1: altsyncram_3761 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_3761.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_3761 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_3761.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux12_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux12_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3882,7 +3882,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux12_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top10.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_b861.tdf
-    Info (12023): Found entity 1: altsyncram_b861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_b861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_b861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_b861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux13_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux13_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3893,7 +3893,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux13_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top11.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_c861.tdf
-    Info (12023): Found entity 1: altsyncram_c861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_c861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_c861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_c861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux14_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux14_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3904,7 +3904,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux14_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top12.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_d861.tdf
-    Info (12023): Found entity 1: altsyncram_d861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_d861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_d861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_d861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux15_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux15_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3915,7 +3915,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux15_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top13.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_e861.tdf
-    Info (12023): Found entity 1: altsyncram_e861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_e861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_e861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_e861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux16_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux16_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3926,7 +3926,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux16_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top14.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_f861.tdf
-    Info (12023): Found entity 1: altsyncram_f861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_f861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_f861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_f861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux17_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux17_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3937,7 +3937,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux17_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top15.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_g861.tdf
-    Info (12023): Found entity 1: altsyncram_g861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_g861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_g861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_g861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux18_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux18_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3948,7 +3948,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux18_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top16.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_h861.tdf
-    Info (12023): Found entity 1: altsyncram_h861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_h861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_h861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_h861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux19_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux19_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3959,7 +3959,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux19_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top17.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_i861.tdf
-    Info (12023): Found entity 1: altsyncram_i861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_i861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_i861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_i861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux20_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux20_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3970,7 +3970,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux20_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top18.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_j861.tdf
-    Info (12023): Found entity 1: altsyncram_j861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_j861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_j861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_j861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux21_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux21_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3981,7 +3981,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux21_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top19.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_k861.tdf
-    Info (12023): Found entity 1: altsyncram_k861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_k861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_k861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_k861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux22_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux22_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -3992,7 +3992,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux22_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top20.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_l861.tdf
-    Info (12023): Found entity 1: altsyncram_l861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_l861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_l861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_l861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux23_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux23_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4003,7 +4003,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux23_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top21.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_m861.tdf
-    Info (12023): Found entity 1: altsyncram_m861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_m861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_m861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_m861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux24_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux24_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4014,7 +4014,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux24_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top22.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_n861.tdf
-    Info (12023): Found entity 1: altsyncram_n861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_n861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_n861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_n861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux25_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux25_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4025,7 +4025,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux25_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top23.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_o861.tdf
-    Info (12023): Found entity 1: altsyncram_o861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_o861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_o861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_o861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux26_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux26_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4036,7 +4036,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux26_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top24.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_p861.tdf
-    Info (12023): Found entity 1: altsyncram_p861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_p861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_p861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_p861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux27_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux27_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4047,7 +4047,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux27_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top25.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_q861.tdf
-    Info (12023): Found entity 1: altsyncram_q861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_q861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_q861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_q861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux28_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux28_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4058,7 +4058,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux28_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top26.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_r861.tdf
-    Info (12023): Found entity 1: altsyncram_r861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_r861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_r861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_r861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux29_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux29_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4069,7 +4069,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux29_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top27.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_s861.tdf
-    Info (12023): Found entity 1: altsyncram_s861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_s861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_s861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_s861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux30_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux30_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4080,7 +4080,7 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux30_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top28.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_t861.tdf
-    Info (12023): Found entity 1: altsyncram_t861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_t861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_t861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_t861.tdf Line: 28
 Info (12130): Elaborated megafunction instantiation "Metronome:inst|altsyncram:Mux31_rtl_0"
 Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux31_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "ROM"
@@ -4091,11 +4091,11 @@ Info (12133): Instantiated megafunction "Metronome:inst|altsyncram:Mux31_rtl_0" 
     Info (12134): Parameter "RAM_BLOCK_TYPE" = "AUTO"
     Info (12134): Parameter "INIT_FILE" = "TOP.Met_Top29.rtl.mif"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_u861.tdf
-    Info (12023): Found entity 1: altsyncram_u861 File: C:/Users/tpe1/Desktop/lab_project/Looper/db/altsyncram_u861.tdf Line: 28
+    Info (12023): Found entity 1: altsyncram_u861 File: C:/intelFPGA_lite/lab_project/Looper/db/altsyncram_u861.tdf Line: 28
 Info (286030): Timing-Driven Synthesis is running
 Critical Warning (18061): Ignored Power-Up Level option on the following registers
-    Critical Warning (18010): Register Metronome:inst|counter[31] will power up to Low File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Metronome.vhd Line: 302
-    Critical Warning (18010): Register Metronome:inst|counter[0] will power up to Low File: C:/Users/tpe1/Desktop/lab_project/Looper/Metronome/Metronome.vhd Line: 302
+    Critical Warning (18010): Register Metronome:inst|counter[31] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper/Metronome/Metronome.vhd Line: 302
+    Critical Warning (18010): Register Metronome:inst|counter[0] will power up to Low File: C:/intelFPGA_lite/lab_project/Looper/Metronome/Metronome.vhd Line: 302
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Info (21057): Implemented 413 device resources after synthesis - the final resource count might be different
@@ -4104,9 +4104,9 @@ Info (21057): Implemented 413 device resources after synthesis - the final resou
     Info (21061): Implemented 359 logic cells
     Info (21064): Implemented 30 RAM segments
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 28 warnings
-    Info: Peak virtual memory: 753 megabytes
-    Info: Processing ended: Fri Jun 08 14:13:19 2018
-    Info: Elapsed time: 00:00:13
-    Info: Total CPU time (on all processors): 00:00:25
+    Info: Peak virtual memory: 4908 megabytes
+    Info: Processing ended: Fri Jun 08 18:57:33 2018
+    Info: Elapsed time: 00:01:12
+    Info: Total CPU time (on all processors): 00:02:03
 
 

@@ -1,9 +1,0 @@
-
-State Machine - |experiement_digital_recorder|LooperSM:inst13|state
-Name state.REC_OTHER state.PRE_REC state.CH_CONTROL state.REC_FIRST state.PRE_REC_FIRST state.EMPTY 
-state.EMPTY 0 0 0 0 0 0 
-state.PRE_REC_FIRST 0 0 0 0 1 1 
-state.REC_FIRST 0 0 0 1 0 1 
-state.CH_CONTROL 0 0 1 0 0 1 
-state.PRE_REC 0 1 0 0 0 1 
-state.REC_OTHER 1 0 0 0 0 1 
