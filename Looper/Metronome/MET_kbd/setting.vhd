@@ -26,10 +26,10 @@ begin
 		 if resetN = '0' then
 			 counter := 60;
 		 elsif rising_edge(clk) then
-			if up='1' and counter >20 and counter <255 then
+			if up='1' and counter >=20 and counter <255 then
 				counter := counter+1;
 			end if;
-			if down='1' and counter >20 and counter <255 then
+			if down='1' and counter >20 and counter <=255 then
 				counter := counter-1;
 			end if;
 			
