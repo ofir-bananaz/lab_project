@@ -7,7 +7,7 @@ Note: if both ModelSim-Altera and ModelSim executables are available, ModelSim-A
 
 **** Generating the ModelSim Testbench ****
 
-quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source="C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf" --testbench_file="C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vt"
+quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source="C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf" --testbench_file="C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/Waveform3.vwf.vht"
 
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
@@ -26,18 +26,15 @@ Info: Running Quartus Prime EDA Netlist Writer
     Info: devices manufactured by Intel and sold by Intel or its 
     Info: authorized distributors.  Please refer to the applicable 
     Info: agreement for further details.
-    Info: Processing started: Thu Jun 07 15:47:24 2018
-Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vt
-Info (119006): Selected device 5CSXFC6D6F31C6 for design "experiement_digital_recorder"
+    Info: Processing started: Sat Jun 09 19:29:47 2018
+Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf --testbench_file=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/Waveform3.vwf.vht
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-
-Completed successfully. 
 
 Completed successfully. 
 
 **** Generating the functional simulation netlist ****
 
-quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/" experiement_digital_recorder -c experiement_digital_recorder
+quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/" experiement_digital_recorder -c experiement_digital_recorder
 
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
@@ -56,22 +53,21 @@ Info: Running Quartus Prime EDA Netlist Writer
     Info: devices manufactured by Intel and sold by Intel or its 
     Info: authorized distributors.  Please refer to the applicable 
     Info: agreement for further details.
-    Info: Processing started: Thu Jun 07 15:47:26 2018
-Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-Info (119006): Selected device 5CSXFC6D6F31C6 for design "experiement_digital_recorder"
+    Info: Processing started: Sat Jun 09 19:29:49 2018
+Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (204019): Generated file experiement_digital_recorder.vo in folder "C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim//" for EDA simulation tool
+Info (204019): Generated file experiement_digital_recorder.vho in folder "C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim//" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 605 megabytes
-    Info: Processing ended: Thu Jun 07 15:47:28 2018
-    Info: Elapsed time: 00:00:02
+    Info: Peak virtual memory: 610 megabytes
+    Info: Processing ended: Sat Jun 09 19:29:52 2018
+    Info: Elapsed time: 00:00:03
     Info: Total CPU time (on all processors): 00:00:02
 
 Completed successfully. 
 
 **** Generating the ModelSim .do script ****
 
-C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/experiement_digital_recorder.do generated.
+C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/experiement_digital_recorder.do generated.
 
 Completed successfully. 
 
@@ -85,78 +81,85 @@ Reading C:/intelFPGA/17.0/modelsim_ase/tcl/vsim/pref.tcl
 
 
 # do experiement_digital_recorder.do
-
 # ** Warning: (vlib-34) Library already exists at "work".
 
-# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 15:47:31 on Jun 07,2018
-# vlog -work work experiement_digital_recorder.vo 
-# -- Compiling module Met_block_exp
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 19:29:53 on Jun 09,2018
+# vcom -work work experiement_digital_recorder.vho 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package VITAL_Timing
+# -- Loading package VITAL_Primitives
+# -- Loading package dffeas_pack
+# -- Loading package altera_primitives_components
+# -- Loading package altera_lnsim_components
+# -- Loading package cyclonev_atom_pack
+# -- Loading package cyclonev_components
+# -- Compiling entity mux_loop_TEST
+# -- Compiling architecture structure of mux_loop_TEST
 
-# 
-# Top level modules:
-# 	Met_block_exp
-# End time: 15:47:31 on Jun 07,2018, Elapsed time: 0:00:00
+# End time: 19:29:54 on Jun 09,2018, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 
-# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 15:47:32 on Jun 07,2018
-# vlog -work work Waveform2.vwf.vt 
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 19:29:54 on Jun 09,2018
+# vcom -work work Waveform3.vwf.vht 
+# -- Loading package STANDARD
 
-# -- Compiling module Met_block_exp_vlg_vec_tst
-# 
-# Top level modules:
-# 	Met_block_exp_vlg_vec_tst
-# End time: 15:47:32 on Jun 07,2018, Elapsed time: 0:00:00
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity mux_loop_TEST_vhd_vec_tst
+# -- Compiling architecture mux_loop_TEST_arch of mux_loop_TEST_vhd_vec_tst
+# End time: 19:29:54 on Jun 09,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 
-# vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.Met_block_exp_vlg_vec_tst 
-# Start time: 15:47:32 on Jun 07,2018
-# Loading work.Met_block_exp_vlg_vec_tst
-# Loading work.Met_block_exp
-# Loading altera_ver.dffeas
+# vsim -novopt -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.mux_loop_TEST_vhd_vec_tst 
+# Start time: 19:29:54 on Jun 09,2018
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.mux_loop_test_vhd_vec_tst(mux_loop_test_arch)
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading altera.dffeas_pack
+# Loading altera.altera_primitives_components
+# Loading altera_lnsim.altera_lnsim_components
+# Loading cyclonev.cyclonev_atom_pack(body)
+# Loading cyclonev.cyclonev_components
+# Loading work.mux_loop_test(structure)
+# Loading altera.dffeas(vital_dffeas)
+# Loading cyclonev.cyclonev_lcell_comb(vital_lcell_comb)
+# Loading ieee.std_logic_arith(body)
+# Loading cyclonev.cyclonev_io_obuf(arch)
+# Loading cyclonev.cyclonev_io_ibuf(arch)
+# Loading cyclonev.cyclonev_clkena(behavior)
+# Loading cyclonev.cyclonev_jtag(behavior)
+# Loading cyclonev.cyclonev_ram_block(block_arch)
 # Loading sv_std.std
-# Loading altera_lnsim_ver.generic_m10k
-# Loading altera_lnsim_ver.altera_lnsim_functions
-# Loading altera_lnsim_ver.common_28nm_ram_block
-# Loading altera_lnsim_ver.common_28nm_ram_register
-# Loading altera_lnsim_ver.common_28nm_ram_pulse_generator
-# ** Warning: (vsim-3017) Waveform2.vwf.vt(44): [TFMPC] - Too few port connections. Expected 12, found 8.
-#    Time: 0 ps  Iteration: 0  Instance: /Met_block_exp_vlg_vec_tst/i1 File: experiement_digital_recorder.vo
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tms'.
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tck'.
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tdi'.
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tdo'.
-# Loading altera_ver.PRIM_GDFF_LOW
-# ** Warning: (vsim-3017) experiement_digital_recorder.vo(5383): [TFMPC] - Too few port connections. Expected 21, found 14.
-#    Time: 0 ps  Iteration: 0  Instance: /Met_block_exp_vlg_vec_tst/i1/altera_internal_jtag File: nofile
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'ntrst'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'corectl'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'ntdopinena'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tckcore'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tdicore'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tmscore'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tdocore'.
-# ** Warning: Design size of 18761 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Loading altera_lnsim.generic_m10k
+# Loading altera_lnsim.altera_lnsim_functions
+# Loading altera_lnsim.common_28nm_ram_block
+# Loading altera_lnsim.common_28nm_ram_register
+# Loading altera_lnsim.common_28nm_ram_pulse_generator
+# ** Warning: Design size of 783564 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
 # Expect performance to be adversely affected.
-# after#25
+# after#34
 
-# ** Note: $finish    : Waveform2.vwf.vt(57)
-#    Time: 1 us  Iteration: 0  Instance: /Met_block_exp_vlg_vec_tst
-# End time: 15:47:36 on Jun 07,2018, Elapsed time: 0:00:04
-# Errors: 0, Warnings: 14
+# End time: 19:29:57 on Jun 09,2018, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 1
 
 Completed successfully. 
 
 **** Converting ModelSim VCD to vector waveform ****
 
-Reading C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf...
+Reading C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf...
 
-Reading C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/experiement_digital_recorder.msim.vcd...
+Reading C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/experiement_digital_recorder.msim.vcd...
 
 Processing channel transitions... 
 
-Writing the resulting VWF to C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/experiement_digital_recorder_20180607154736.sim.vwf
+Writing the resulting VWF to C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/experiement_digital_recorder_20180609192957.sim.vwf
 
 Finished VCD to VWF conversion.
 

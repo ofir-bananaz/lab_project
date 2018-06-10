@@ -128,6 +128,10 @@ begin
 			ch3HT <= '0';
 			
 			arch_commandRecieved <='0';
+			arch_chPlayingVGA <="0000";
+			arch_chHasTrackVGA <="0000";
+			arch_chRecordingVGA <="0000"; 
+			MetBarENDTOKEN <= '0';
 			
 			--ARCH VARIABLES-- 
 			recCounter := 0;
@@ -148,11 +152,12 @@ begin
 		end if;
 
       if (MetMode = '1' and arch_MetModeFlag /= '1')  then
+    		MetBarENDTOKEN <= '0'   ;
 			state <= EMPTY          ;
       	arch_MetModeFlag  <= '1';
   		
       elsif (MetMode = '0' and arch_MetModeFlag /= '0') then -- Switch Met-mode OFF
-      	state <= EMPTY      ;
+      	state <= EMPTY          ;
       	arch_MetModeFlag  <= '0';
       end if;
 		
@@ -197,35 +202,42 @@ begin
     					ch2HT <= '0' ;
     					ch3HT <= '0' ;
     					
+						arch_chPlayingVGA <="0000";
+						arch_chHasTrackVGA <="0000";
+						arch_chRecordingVGA <="0000"; 
     					
     					--ARCH VARIABLES-- 
     					recCounter := 0;
     					stpCounter := 0;
     					memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
-    					
+    					MetBarENDTOKEN <= '0';
     
     					if KB_REC = '1' then
-    						arch_MetRESET <='1';
-    						MetBarENDTOKEN <= '0';
-							
+							arch_MetRESET <='1';
     						arch_recSel <= KB_Selchannel;
     						state<=PRE_REC_FIRST;
     					end if;
     					
     				------------------------------				
     				when PRE_REC_FIRST=> stateNum <= 1 ;-- debug
-    				------------------------------
+    				------------------------------						
+						if (arch_MetModeFlag ='1' and MetBarENDTOKEN = '1') or --MET-Mode cond
+							(arch_MetModeFlag ='0') then
+							
+							MetBarENDTOKEN <= '0'; --used token
 
-						arch_recording <='1';
-						arch_loop_start <='1';
-						case arch_recSel is
-							when "00" => arch_Ch0ACT <='1' ;
-							when "01" => arch_Ch1ACT <='1' ;
-							when "10" => arch_Ch2ACT <='1' ;
-							when "11" => arch_Ch3ACT <='1' ;
-						end case;
+							arch_recording <='1';
+							arch_loop_start <='1';
+							case arch_recSel is
+								when "00" => arch_Ch0ACT <='1' ; ch0HT <= '1';
+								when "01" => arch_Ch1ACT <='1' ; ch1HT <= '1';
+								when "10" => arch_Ch2ACT <='1' ; ch2HT <= '1';
+								when "11" => arch_Ch3ACT <='1' ; ch3HT <= '1';
+							end case;
 						
-						state<=REC_FIRST;
+							state<=REC_FIRST;
+						
+						end if;
 
     				
     				------------------------------				
@@ -235,19 +247,13 @@ begin
     					arch_recording <='1';
     					
     					if (arch_MetModeFlag ='1' and MetBarENDTOKEN = '1') or --MET-Mode cond
-							(arch_MetModeFlag ='0' and ( KB_PLAY ='1' or KB_ALLPLAY = '1')) or (262143 = conv_integer(CurrMemAddress)) then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
+							(arch_MetModeFlag ='0' and ( KB_PLAY ='1' or KB_ALLPLAY = '1')) or (conv_integer(CurrMemAddress) = memEndAddr -1) then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
 							
 							MetBarENDTOKEN <= '0'; --used token
     						arch_recording <='0';
     						memEndAddr  :=  conv_integer(CurrMemAddress);
     						arch_loop_start <='1';
     						state<=CH_CONTROL;
-    						case arch_recSel is
-    							when "00" => ch0HT <= '1'; 
-    							when "01" => ch1HT <= '1'; 
-    							when "10" => ch2HT <= '1'; 
-    							when "11" => ch3HT <= '1';  -- so we will be on
-    						end case;
     						
     						arch_Ch0END <= memEndAddr;
     						arch_Ch1END <= memEndAddr;
@@ -321,10 +327,18 @@ begin
     				------------------------------
     				when PRE_REC=> stateNum <= 4 ;-- debug
     				------------------------------
-    					if arch_loop_start = '1' then -- can improve by allowing stopping before record start
+						case arch_recSel is
+							when "00" => ch0HT <= '1';
+							when "01" => ch1HT <= '1';
+							when "10" => ch2HT <= '1';
+							when "11" => ch3HT <= '1';
+						end case;
+						
+						
+						if arch_loop_start = '1' then -- can improve by allowing stopping before record start
     						arch_recording <='1';
     						case arch_recSel is
-    							when "00" => arch_Ch0ACT <='1'; 
+    							when "00" => arch_Ch0ACT <='1';
     							when "01" => arch_Ch1ACT <='1';
     							when "10" => arch_Ch2ACT <='1';
     							when "11" => arch_Ch3ACT <='1';

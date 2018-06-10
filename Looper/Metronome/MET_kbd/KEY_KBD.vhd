@@ -4,7 +4,7 @@ use ieee.STD_LOGIC_arith.all;
 use ieee.STD_LOGIC_UNSIGNED.all;
 
 
-entity KEY_MET is
+entity KEY_kbd is
 
 port ( resetN : in std_logic ;
  clk : in std_logic ;
@@ -13,9 +13,9 @@ port ( resetN : in std_logic ;
  make : in std_logic ;
  break : in std_logic ;
  dout : out std_logic );
-end KEY_MET;
+end KEY_kbd;
 
-architecture behavior of KEY_MET is
+architecture behavior of KEY_kbd is
 
  signal out_X: std_logic;
  

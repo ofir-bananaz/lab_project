@@ -338,6 +338,7 @@ X"00B383E1"
 						counter := 0       ;
 						quaterCounter := quaterCounter + 1 ;
 						
+						
 						if quaterCounter = quaterCounterLimit then
 							quaterCounter := 0;
 							arch_barEND <= '1';
@@ -351,7 +352,7 @@ X"00B383E1"
 	
 	quater <= arch_dout   ;
 	barEND    <= arch_barEND    ;
-	newBPM <= arch_newBPM ;
+	newBPM <= arch_newBPM ; 
 	duty20ms <= arch_duty20ms;
 
 end Metronome_arch;

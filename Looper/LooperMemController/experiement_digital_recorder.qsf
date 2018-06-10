@@ -39,10 +39,10 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSXFC6D6F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY experiement_digital_recorder
+set_global_assignment -name TOP_LEVEL_ENTITY test
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "09:45:43  JUNE 04, 2018"
-set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Standard Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -183,62 +183,6 @@ set_location_assignment PIN_AB30 -to SelCh4Cmd[0]
 set_location_assignment PIN_Y27 -to SelCh4Cmd[1]
 set_global_assignment -name ENABLE_SIGNALTAP ON
 set_global_assignment -name USE_SIGNALTAP_FILE output_files/stp2.stp
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACDAT
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_I2C_SCLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_I2C_SDAT
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_XCK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_LED
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_ON
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recording
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to resetN
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sel[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sel[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Zero
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch0Activate
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch1Activate
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch2Activate
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch3Activate
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[8]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[9]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[10]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[11]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[12]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[13]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[14]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[15]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[16]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[17]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Imm_start
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_ALLPLAY
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_ClearCH
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_IMMstart
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_PLAY
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_REC
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_RecOnMet
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_Selchannel[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_Selchannel[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_STOP
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to loop_start
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recSel[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recSel[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ResetN
 set_global_assignment -name SLD_NODE_CREATOR_ID 110 -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_ENTITY_NAME sld_signaltap -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to CLOCK_50 -section_id auto_signaltap_0
@@ -641,6 +585,64 @@ set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[7] -t
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[14] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[19] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[25] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
+set_location_assignment PIN_W17 -to metQua
+set_location_assignment PIN_AF16 -to metBar
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_I2C_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_I2C_SDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_XCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_LED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_ON
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recording
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to resetN
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sel[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sel[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Active[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Zero
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch0Activate
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch1Activate
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch2Activate
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Ch3Activate
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currMemAddress[17]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Imm_start
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_ALLPLAY
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_ClearCH
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_IMMstart
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_PLAY
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_REC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_RecOnMet
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_Selchannel[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_Selchannel[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KB_STOP
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to loop_start
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recSel[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recSel[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ResetN
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to altera_reserved_tck
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to altera_reserved_tdi
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to altera_reserved_tdo
@@ -654,14 +656,23 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to recB
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SelCh4Cmd[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SelCh4Cmd[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to stopB
-set_location_assignment PIN_W17 -to metQua
-set_location_assignment PIN_AF16 -to metBar
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to metBar
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to metQua
-set_global_assignment -name PARTITION_NETLIST_TYPE POST_FIT -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VHDL_FILE ../KBD/lpf.vhd
+set_global_assignment -name BDF_FILE ../KBD/KBD.bdf
+set_global_assignment -name VHDL_FILE ../KBD/byterec.vhd
+set_global_assignment -name VHDL_FILE ../KBD/bitrec.vhd
+set_global_assignment -name VHDL_FILE looper_kbd/mux_loop.vhd
+set_global_assignment -name VHDL_FILE looper_kbd/KEY_recived_2.vhd
+set_global_assignment -name VHDL_FILE looper_kbd/KEY_recived_1.vhd
+set_global_assignment -name VHDL_FILE looper_kbd/KEY_recived.vhd
+set_global_assignment -name BDF_FILE looper_kbd/KEY_NOTE_4.bdf
+set_global_assignment -name BDF_FILE looper_kbd/KEY_NOTE_3.bdf
+set_global_assignment -name BDF_FILE looper_kbd/KEY_NOTE_2.bdf
+set_global_assignment -name BDF_FILE looper_kbd/KEY_NOTE.bdf
+set_global_assignment -name VHDL_FILE looper_kbd/KEY_2.vhd
+set_global_assignment -name VHDL_FILE looper_kbd/KEY.vhd
+set_global_assignment -name VHDL_FILE SM/LooperSM.vhd
 set_global_assignment -name BDF_FILE looper_kbd/KBD_MOD_looper.bdf
 set_global_assignment -name BDF_FILE LooperMemController.bdf
 set_global_assignment -name VHDL_FILE prescaler.vhd
@@ -679,7 +690,39 @@ set_global_assignment -name VHDL_FILE addr_counter_new.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform1.vwf
 set_global_assignment -name SIGNALTAP_FILE output_files/stp1.stp
 set_global_assignment -name SIGNALTAP_FILE output_files/stp2.stp
-set_global_assignment -name VHDL_FILE ../../../Lab_git/lab_project/Looper_trial/SM/LooperSM.vhd
 set_global_assignment -name BDF_FILE Met_block_exp.bdf
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform2.vwf
+set_global_assignment -name BDF_FILE test.bdf
+set_location_assignment PIN_AA24 -to pin_name1
+set_location_assignment PIN_AB23 -to pin_name2
+set_location_assignment PIN_AC23 -to pin_name3
+set_location_assignment PIN_AD24 -to pin_name4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to kbd_clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to kbd_dat
+set_location_assignment PIN_AA24 -to rec_1
+set_location_assignment PIN_AB23 -to rec_2
+set_location_assignment PIN_AC23 -to rec_3
+set_location_assignment PIN_AD24 -to rec_4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to rec_1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to rec_2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to rec_3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to rec_4
+set_global_assignment -name VHDL_FILE looper_kbd/mux_loop_TEST.vhd
+set_location_assignment PIN_AG25 -to PLAYLED
+set_location_assignment PIN_AF25 -to RECLED
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform3.vwf
+set_global_assignment -name PARTITION_NETLIST_TYPE POST_FIT -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_AG25 -to PLAYLED1
+set_location_assignment PIN_AF25 -to RECLED1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLEARLED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PLAYLED1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RECLED1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to STOPLED
+set_location_assignment PIN_AB25 -to KBD_CLK
+set_location_assignment PIN_AA25 -to KBD_DAT
+set_location_assignment PIN_AB25 -to kbd_clk
+set_location_assignment PIN_AA25 -to kbd_dat
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name SLD_FILE db/stp2_auto_stripped.stp

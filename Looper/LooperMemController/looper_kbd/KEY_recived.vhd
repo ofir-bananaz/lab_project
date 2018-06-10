@@ -34,6 +34,7 @@ begin
 			 pressed <= '1';
 			 out_X <= '1';
 			 elsif (recived='1') then
+			 --elsif (din(7 DOWNTO 0) = KEY_CODE) and (break = '1') then
 			 pressed <= '0';
 			 OUT_X<='0';
 			 end if;

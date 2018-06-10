@@ -229,7 +229,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 592 184 784 328)
+	(rect 656 184 848 328)
 	(text "Metronome" (rect 5 0 59 12)(font "Arial" ))
 	(text "inst" (rect 8 128 25 140)(font "Arial" ))
 	(port
@@ -453,18 +453,6 @@ agreement for further details.
 	(annotation_block (parameter)(rect 256 392 393 449))
 )
 (connector
-	(pt 544 248)
-	(pt 592 248)
-)
-(connector
-	(pt 592 264)
-	(pt 488 264)
-)
-(connector
-	(pt 488 264)
-	(pt 488 240)
-)
-(connector
 	(pt 488 240)
 	(pt 232 240)
 )
@@ -474,23 +462,9 @@ agreement for further details.
 	(pt 296 88)
 )
 (connector
-	(text "RESET" (rect 528 200 558 217)(font "Intel Clear" ))
-	(pt 592 216)
-	(pt 520 216)
-)
-(connector
-	(text "CLK" (rect 528 216 548 233)(font "Intel Clear" ))
-	(pt 520 232)
-	(pt 592 232)
-)
-(connector
 	(text "RESET" (rect 264 120 294 137)(font "Intel Clear" ))
 	(pt 256 136)
 	(pt 304 136)
-)
-(connector
-	(pt 544 248)
-	(pt 544 296)
 )
 (connector
 	(text "RESET" (rect 176 280 206 297)(font "Intel Clear" ))
@@ -501,23 +475,6 @@ agreement for further details.
 	(text "CLK" (rect 176 264 196 281)(font "Intel Clear" ))
 	(pt 168 280)
 	(pt 240 280)
-)
-(connector
-	(text "count[7..0]" (rect 456 264 505 281)(font "Intel Clear" ))
-	(pt 448 280)
-	(pt 488 280)
-	(bus)
-)
-(connector
-	(pt 568 280)
-	(pt 568 320)
-	(bus)
-)
-(connector
-	(text "count[7..0]" (rect 576 264 625 281)(font "Intel Clear" ))
-	(pt 592 280)
-	(pt 568 280)
-	(bus)
 )
 (connector
 	(text "count[3..0]" (rect 552 368 601 385)(font "Intel Clear" ))
@@ -552,11 +509,6 @@ agreement for further details.
 	(pt 464 512)
 )
 (connector
-	(text "count[7..0]" (rect 800 344 849 361)(font "Intel Clear" ))
-	(pt 848 360)
-	(pt 792 360)
-)
-(connector
 	(pt 784 384)
 	(pt 848 384)
 	(bus)
@@ -578,20 +530,42 @@ agreement for further details.
 	(pt 848 336)
 )
 (connector
-	(pt 784 216)
-	(pt 848 216)
+	(pt 488 240)
+	(pt 488 264)
 )
 (connector
-	(pt 784 232)
-	(pt 848 232)
+	(pt 544 296)
+	(pt 544 248)
 )
 (connector
-	(pt 784 248)
-	(pt 848 248)
+	(text "RESET" (rect 592 200 622 217)(font "Intel Clear" ))
+	(pt 584 216)
+	(pt 656 216)
 )
 (connector
-	(pt 784 264)
-	(pt 848 264)
+	(text "CLK" (rect 592 216 612 233)(font "Intel Clear" ))
+	(pt 584 232)
+	(pt 656 232)
+)
+(connector
+	(pt 544 248)
+	(pt 656 248)
+)
+(connector
+	(pt 488 264)
+	(pt 656 264)
+)
+(connector
+	(text "count[7..0]" (rect 585 264 634 281)(font "Intel Clear" ))
+	(pt 448 280)
+	(pt 656 280)
+	(bus)
+)
+(connector
+	(text "count[7..0]" (rect 824 344 873 361)(font "Intel Clear" ))
+	(pt 848 360)
+	(pt 816 360)
+	(bus)
 )
 (junction (pt 464 488))
 (junction (pt 520 296))

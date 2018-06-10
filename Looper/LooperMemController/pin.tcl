@@ -1,6 +1,6 @@
 #============================================================
 #A.Grinshpun Feb 2018
-#
+#THIS IS THE ONE
 #============================================================
 
 
@@ -12,58 +12,58 @@ set_global_assignment -name DEVICE 5CSXFC6D6F31C6
 #============================================================
 # CLOCK
 #============================================================
-set_location_assignment PIN_AA16 -to CLOCK2_50
-set_location_assignment PIN_Y26 -to CLOCK3_50
-set_location_assignment PIN_K14 -to CLOCK4_50
+#set_location_assignment PIN_AA16 -to CLOCK2_50
+#set_location_assignment PIN_Y26 -to CLOCK3_50
+#set_location_assignment PIN_K14 -to CLOCK4_50
 set_location_assignment PIN_AF14 -to CLOCK_50
 
 #============================================================
 # KEY
 #============================================================
-set_location_assignment PIN_AJ4 -to playB  ; # KEY[0]
-set_location_assignment PIN_AK4 -to recB
-set_location_assignment PIN_AA14 -to stopB
-set_location_assignment PIN_AA15 -to clearB
+#set_location_assignment PIN_AJ4 -to playB  ; # KEY[0]
+#set_location_assignment PIN_AK4 -to recB
+#set_location_assignment PIN_AA14 -to stopB
+#set_location_assignment PIN_AA15 -to clearB
 
 #============================================================
 # SW
 #============================================================
-set_location_assignment PIN_AB30 -to SelCh4Cmd[0] ; #SW[0]
-set_location_assignment PIN_Y27 -to SelCh4Cmd[1] ; #SW[1]
+#set_location_assignment PIN_AB30 -to SelCh4Cmd[0] ; #SW[0]
+#set_location_assignment PIN_Y27 -to SelCh4Cmd[1] ; #SW[1]
 #set_location_assignment PIN_AB28 -to SW[2] ; #SW[2]
 #set_location_assignment PIN_AC30 -to IntergratorDIV[0] ; #SW[3]
 #set_location_assignment PIN_W25 -to IntergratorDIV[1] ; #SW[4]
 #set_location_assignment PIN_V25 -to IntergratorDIV[2] ; #SW[5]
 #set_location_assignment PIN_AC28 -to SW[6]
 set_location_assignment PIN_AD30 -to resetN
-set_location_assignment PIN_AC29 -to IntergratorDIV[0]
+#set_location_assignment PIN_AC29 -to IntergratorDIV[0]
 set_location_assignment PIN_AA30 -to MICROPHON_ON ; #SW[9]
 
 #============================================================
 # LED
 #============================================================ #LEDR[0]
-#set_location_assignment PIN_AA24 -to metQua 
-#set_location_assignment PIN_AB23 -to metBar
-#set_location_assignment PIN_AC23 -to LEDR[2]
-#set_location_assignment PIN_AD24 -to LEDR[3]
-#set_location_assignment PIN_AG25 -to LEDR[4]
-#set_location_assignment PIN_AF25 -to LEDR[5]
-#set_location_assignment PIN_AE24 -to LEDR[6]
-#set_location_assignment PIN_AF24 -to LEDR[7]
+set_location_assignment PIN_AA24 -to rec_1 
+set_location_assignment PIN_AB23 -to rec_2
+set_location_assignment PIN_AC23 -to rec_3
+set_location_assignment PIN_AD24 -to rec_4
+#set_location_assignment PIN_AG25 -to PLAYLED1
+#set_location_assignment PIN_AF25 -to RECLED1
+#Set_location_assignment PIN_AE24 -to STOPLED
+#set_location_assignment PIN_AF24 -to CLEARLED
 #set_location_assignment PIN_AB22 -to LEDR[8]
 #set_location_assignment PIN_AC22 -to MICROPHON_LED ; #LEDR[9]
 
 #============================================================
 # Seg7
 #============================================================
-set_location_assignment PIN_W17 -to metQua
+#set_location_assignment PIN_W17 -to metQua
 #set_location_assignment PIN_V18 -to HEX0[1]
 #set_location_assignment PIN_AG17 -to HEX0[2]
 #set_location_assignment PIN_AG16 -to HEX0[3]
 #set_location_assignment PIN_AH17 -to HEX0[4]
 #set_location_assignment PIN_AG18 -to HEX0[5]
 #set_location_assignment PIN_AH18 -to HEX0[6]
-set_location_assignment PIN_AF16 -to metBar
+#set_location_assignment PIN_AF16 -to metBar
 #set_location_assignment PIN_V16 -to HEX1[1]
 #set_location_assignment PIN_AE16 -to HEX1[2]
 #set_location_assignment PIN_AD17 -to HEX1[3]
@@ -204,18 +204,18 @@ set_location_assignment PIN_AH30 -to AUD_XCK
 #============================================================
 # PS2
 #============================================================
-set_location_assignment PIN_AB25 -to PS2_CLK
-set_location_assignment PIN_AC25 -to PS2_CLK2
-set_location_assignment PIN_AA25 -to PS2_DAT
-set_location_assignment PIN_AB26 -to PS2_DAT2
+set_location_assignment PIN_AB25 -to kbd_clk
+#set_location_assignment PIN_AC25 -to PS2_CLK2
+set_location_assignment PIN_AA25 -to kbd_dat
+#set_location_assignment PIN_AB26 -to PS2_DAT2
 
 #============================================================
 # ADC
 #============================================================
-set_location_assignment PIN_Y21 -to ADC_CONVST
-set_location_assignment PIN_W22 -to ADC_DIN
-set_location_assignment PIN_V23 -to ADC_DOUT
-set_location_assignment PIN_W24 -to ADC_SCLK
+#set_location_assignment PIN_Y21 -to ADC_CONVST
+#set_location_assignment PIN_W22 -to ADC_DIN
+#set_location_assignment PIN_V23 -to ADC_DOUT
+#set_location_assignment PIN_W24 -to ADC_SCLK
 
 #============================================================
 # I2C for Audio and Video-In

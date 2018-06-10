@@ -1,54 +1,62 @@
 # do experiement_digital_recorder.do
 # ** Warning: (vlib-34) Library already exists at "work".
-# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 15:47:31 on Jun 07,2018
-# vlog -work work experiement_digital_recorder.vo 
-# -- Compiling module Met_block_exp
-# 
-# Top level modules:
-# 	Met_block_exp
-# End time: 15:47:31 on Jun 07,2018, Elapsed time: 0:00:00
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 19:29:53 on Jun 09,2018
+# vcom -work work experiement_digital_recorder.vho 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package VITAL_Timing
+# -- Loading package VITAL_Primitives
+# -- Loading package dffeas_pack
+# -- Loading package altera_primitives_components
+# -- Loading package altera_lnsim_components
+# -- Loading package cyclonev_atom_pack
+# -- Loading package cyclonev_components
+# -- Compiling entity mux_loop_TEST
+# -- Compiling architecture structure of mux_loop_TEST
+# End time: 19:29:54 on Jun 09,2018, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 15:47:32 on Jun 07,2018
-# vlog -work work Waveform2.vwf.vt 
-# -- Compiling module Met_block_exp_vlg_vec_tst
-# 
-# Top level modules:
-# 	Met_block_exp_vlg_vec_tst
-# End time: 15:47:32 on Jun 07,2018, Elapsed time: 0:00:00
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 19:29:54 on Jun 09,2018
+# vcom -work work Waveform3.vwf.vht 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity mux_loop_TEST_vhd_vec_tst
+# -- Compiling architecture mux_loop_TEST_arch of mux_loop_TEST_vhd_vec_tst
+# End time: 19:29:54 on Jun 09,2018, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.Met_block_exp_vlg_vec_tst 
-# Start time: 15:47:32 on Jun 07,2018
-# Loading work.Met_block_exp_vlg_vec_tst
-# Loading work.Met_block_exp
-# Loading altera_ver.dffeas
+# vsim -novopt -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.mux_loop_TEST_vhd_vec_tst 
+# Start time: 19:29:54 on Jun 09,2018
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.mux_loop_test_vhd_vec_tst(mux_loop_test_arch)
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading altera.dffeas_pack
+# Loading altera.altera_primitives_components
+# Loading altera_lnsim.altera_lnsim_components
+# Loading cyclonev.cyclonev_atom_pack(body)
+# Loading cyclonev.cyclonev_components
+# Loading work.mux_loop_test(structure)
+# Loading altera.dffeas(vital_dffeas)
+# Loading cyclonev.cyclonev_lcell_comb(vital_lcell_comb)
+# Loading ieee.std_logic_arith(body)
+# Loading cyclonev.cyclonev_io_obuf(arch)
+# Loading cyclonev.cyclonev_io_ibuf(arch)
+# Loading cyclonev.cyclonev_clkena(behavior)
+# Loading cyclonev.cyclonev_jtag(behavior)
+# Loading cyclonev.cyclonev_ram_block(block_arch)
 # Loading sv_std.std
-# Loading altera_lnsim_ver.generic_m10k
-# Loading altera_lnsim_ver.altera_lnsim_functions
-# Loading altera_lnsim_ver.common_28nm_ram_block
-# Loading altera_lnsim_ver.common_28nm_ram_register
-# Loading altera_lnsim_ver.common_28nm_ram_pulse_generator
-# ** Warning: (vsim-3017) Waveform2.vwf.vt(44): [TFMPC] - Too few port connections. Expected 12, found 8.
-#    Time: 0 ps  Iteration: 0  Instance: /Met_block_exp_vlg_vec_tst/i1 File: experiement_digital_recorder.vo
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tms'.
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tck'.
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tdi'.
-# ** Warning: (vsim-3722) Waveform2.vwf.vt(44): [TFMPC] - Missing connection for port 'altera_reserved_tdo'.
-# Loading altera_ver.PRIM_GDFF_LOW
-# ** Warning: (vsim-3017) experiement_digital_recorder.vo(5383): [TFMPC] - Too few port connections. Expected 21, found 14.
-#    Time: 0 ps  Iteration: 0  Instance: /Met_block_exp_vlg_vec_tst/i1/altera_internal_jtag File: nofile
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'ntrst'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'corectl'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'ntdopinena'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tckcore'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tdicore'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tmscore'.
-# ** Warning: (vsim-3722) experiement_digital_recorder.vo(5383): [TFMPC] - Missing connection for port 'tdocore'.
-# ** Warning: Design size of 18761 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Loading altera_lnsim.generic_m10k
+# Loading altera_lnsim.altera_lnsim_functions
+# Loading altera_lnsim.common_28nm_ram_block
+# Loading altera_lnsim.common_28nm_ram_register
+# Loading altera_lnsim.common_28nm_ram_pulse_generator
+# ** Warning: Design size of 783564 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
 # Expect performance to be adversely affected.
-# after#25
-# ** Note: $finish    : Waveform2.vwf.vt(57)
-#    Time: 1 us  Iteration: 0  Instance: /Met_block_exp_vlg_vec_tst
-# End time: 15:47:36 on Jun 07,2018, Elapsed time: 0:00:04
-# Errors: 0, Warnings: 14
+# after#34
+# End time: 19:29:57 on Jun 09,2018, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 1

@@ -1,5 +1,5 @@
 Flow report for experiement_digital_recorder
-Thu Jun 07 16:31:07 2018
+Sat Jun 09 21:25:52 2018
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 
 
@@ -41,25 +41,25 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Thu Jun 07 16:30:36 2018           ;
+; Flow Status                     ; Successful - Sat Jun 09 21:25:23 2018           ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Standard Edition ;
 ; Revision Name                   ; experiement_digital_recorder                    ;
-; Top-level Entity Name           ; experiement_digital_recorder                    ;
+; Top-level Entity Name           ; test                                            ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSXFC6D6F31C6                                  ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 1,614 / 41,910 ( 4 % )                          ;
-; Total registers                 ; 3295                                            ;
-; Total pins                      ; 21 / 499 ( 4 % )                                ;
+; Logic utilization (in ALMs)     ; 1,610 / 41,910 ( 4 % )                          ;
+; Total registers                 ; 3307                                            ;
+; Total pins                      ; 18 / 499 ( 4 % )                                ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 4,370,464 / 5,662,720 ( 77 % )                  ;
-; Total DSP Blocks                ; 1 / 112 ( < 1 % )                               ;
+; Total PLLs                      ; 0 / 15 ( 0 % )                                  ;
+; Total DLLs                      ; 0 / 4 ( 0 % )                                   ;
+; Total DSP Blocks                ; 0 / 112 ( 0 % )                                 ;
 ; Total HSSI RX PCSs              ; 0 / 9 ( 0 % )                                   ;
 ; Total HSSI PMA RX Deserializers ; 0 / 9 ( 0 % )                                   ;
 ; Total HSSI TX PCSs              ; 0 / 9 ( 0 % )                                   ;
 ; Total HSSI PMA TX Serializers   ; 0 / 9 ( 0 % )                                   ;
-; Total PLLs                      ; 0 / 15 ( 0 % )                                  ;
-; Total DLLs                      ; 0 / 4 ( 0 % )                                   ;
 +---------------------------------+-------------------------------------------------+
 
 
@@ -68,59 +68,60 @@ agreement for further details.
 +-------------------+------------------------------+
 ; Option            ; Setting                      ;
 +-------------------+------------------------------+
-; Start date & time ; 06/05/2018 14:45:41          ;
+; Start date & time ; 06/09/2018 18:08:26          ;
 ; Main task         ; Compilation                  ;
 ; Revision Name     ; experiement_digital_recorder ;
 +-------------------+------------------------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ;
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+-------------+------------------+
-; Assignment Name                     ; Value                                                                                                                                                                                                                                                                                                                                                                                                                     ; Default Value ; Entity Name ; Section Id       ;
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+-------------+------------------+
-; COMPILER_SIGNATURE_ID               ; 48710646989424.152819914107028                                                                                                                                                                                                                                                                                                                                                                                            ; --            ; --          ; --               ;
-; ENABLE_SIGNALTAP                    ; On                                                                                                                                                                                                                                                                                                                                                                                                                        ; --            ; --          ; --               ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                                                                                                                                                                                                                                                                                                                                                                                                                        ; --            ; --          ; --               ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                                                                                                                                                                                                                                                                                                                                                                                                                         ; --            ; --          ; --               ;
-; MISC_FILE                           ; dpram.bsf                                                                                                                                                                                                                                                                                                                                                                                                                 ; --            ; --          ; --               ;
-; MISC_FILE                           ; dpram.cmp                                                                                                                                                                                                                                                                                                                                                                                                                 ; --            ; --          ; --               ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family)                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; Top              ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; Top              ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; Top              ;
-; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                                                                                                                                                                                                                                                                                                                                                                                       ; --            ; --          ; --               ;
-; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                                                                                                                                                                                                                                                                                                                                                                     ; --            ; --          ; --               ;
-; PROJECT_OUTPUT_DIRECTORY            ; output_files                                                                                                                                                                                                                                                                                                                                                                                                              ; --            ; --          ; --               ;
-; SLD_FILE                            ; db/stp2_auto_stripped.stp                                                                                                                                                                                                                                                                                                                                                                                                 ; --            ; --          ; --               ;
-; SLD_NODE_CREATOR_ID                 ; 110                                                                                                                                                                                                                                                                                                                                                                                                                       ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_ENTITY_NAME                ; sld_signaltap                                                                                                                                                                                                                                                                                                                                                                                                             ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_RAM_BLOCK_TYPE=AUTO                                                                                                                                                                                                                                                                                                                                                                                                   ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_NODE_INFO=805334528                                                                                                                                                                                                                                                                                                                                                                                                   ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_POWER_UP_TRIGGER=0                                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STORAGE_QUALIFIER_INVERSION_MASK_LENGTH=0                                                                                                                                                                                                                                                                                                                                                                             ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_ATTRIBUTE_MEM_MODE=OFF                                                                                                                                                                                                                                                                                                                                                                                                ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STATE_FLOW_USE_GENERATED=0                                                                                                                                                                                                                                                                                                                                                                                            ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STATE_BITS=11                                                                                                                                                                                                                                                                                                                                                                                                         ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_BUFFER_FULL_STOP=1                                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_CURRENT_RESOURCE_WIDTH=1                                                                                                                                                                                                                                                                                                                                                                                              ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_INCREMENTAL_ROUTING=1                                                                                                                                                                                                                                                                                                                                                                                                 ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_LEVEL=1                                                                                                                                                                                                                                                                                                                                                                                                       ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_IN_ENABLED=0                                                                                                                                                                                                                                                                                                                                                                                                  ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_PIPELINE=0                                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_RAM_PIPELINE=0                                                                                                                                                                                                                                                                                                                                                                                                        ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_COUNTER_PIPELINE=0                                                                                                                                                                                                                                                                                                                                                                                                    ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_ADVANCED_TRIGGER_ENTITY=basic,1,                                                                                                                                                                                                                                                                                                                                                                                      ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_LEVEL_PIPELINE=1                                                                                                                                                                                                                                                                                                                                                                                              ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_ENABLE_ADVANCED_TRIGGER=0                                                                                                                                                                                                                                                                                                                                                                                             ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_SEGMENT_SIZE=1024                                                                                                                                                                                                                                                                                                                                                                                                     ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_SAMPLE_DEPTH=1024                                                                                                                                                                                                                                                                                                                                                                                                     ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_DATA_BITS=122                                                                                                                                                                                                                                                                                                                                                                                                         ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_BITS=122                                                                                                                                                                                                                                                                                                                                                                                                      ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STORAGE_QUALIFIER_BITS=122                                                                                                                                                                                                                                                                                                                                                                                            ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_INVERSION_MASK=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; --            ; --          ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_INVERSION_MASK_LENGTH=390                                                                                                                                                                                                                                                                                                                                                                                             ; --            ; --          ; auto_signaltap_0 ;
-; USE_SIGNALTAP_FILE                  ; output_files/stp2.stp                                                                                                                                                                                                                                                                                                                                                                                                     ; --            ; --          ; --               ;
-+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+-------------+------------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ;
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------+-------------+------------------+
+; Assignment Name                     ; Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; Default Value                ; Entity Name ; Section Id       ;
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------+-------------+------------------+
+; COMPILER_SIGNATURE_ID               ; 48710646989424.152855690611780                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ; --                           ; --          ; --               ;
+; ENABLE_SIGNALTAP                    ; On                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; --                           ; --          ; --               ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; --                           ; --          ; --               ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; --                           ; --          ; --               ;
+; MISC_FILE                           ; dpram.bsf                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; --                           ; --          ; --               ;
+; MISC_FILE                           ; dpram.cmp                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; --                           ; --          ; --               ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; test        ; Top              ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; test        ; Top              ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; test        ; Top              ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ; --                           ; --          ; --               ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; --                           ; --          ; --               ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; --                           ; --          ; --               ;
+; SLD_FILE                            ; db/stp2_auto_stripped.stp                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; --                           ; --          ; --               ;
+; SLD_NODE_CREATOR_ID                 ; 110                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_ENTITY_NAME                ; sld_signaltap                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_RAM_BLOCK_TYPE=AUTO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_NODE_INFO=805334528                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_POWER_UP_TRIGGER=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STORAGE_QUALIFIER_INVERSION_MASK_LENGTH=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_ATTRIBUTE_MEM_MODE=OFF                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STATE_FLOW_USE_GENERATED=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STATE_BITS=11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_BUFFER_FULL_STOP=1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_CURRENT_RESOURCE_WIDTH=1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_INCREMENTAL_ROUTING=1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_LEVEL=1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_IN_ENABLED=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_PIPELINE=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_RAM_PIPELINE=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_COUNTER_PIPELINE=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_ADVANCED_TRIGGER_ENTITY=basic,1,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_LEVEL_PIPELINE=1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_ENABLE_ADVANCED_TRIGGER=0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_SEGMENT_SIZE=1024                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_SAMPLE_DEPTH=1024                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_DATA_BITS=171                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_TRIGGER_BITS=171                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_STORAGE_QUALIFIER_BITS=171                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_INVERSION_MASK=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; --                           ; --          ; auto_signaltap_0 ;
+; SLD_NODE_PARAMETER_ASSIGNMENT       ; SLD_INVERSION_MASK_LENGTH=537                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ; --                           ; --          ; auto_signaltap_0 ;
+; TOP_LEVEL_ENTITY                    ; test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ; experiement_digital_recorder ; --          ; --               ;
+; USE_SIGNALTAP_FILE                  ; output_files/stp2.stp                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ; --                           ; --          ; --               ;
++-------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------+-------------+------------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
@@ -128,116 +129,127 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:37     ; 1.0                     ; 851 MB              ; 00:00:51                           ;
-; Fitter                    ; 00:01:36     ; 1.2                     ; 2719 MB             ; 00:04:30                           ;
-; Assembler                 ; 00:00:15     ; 1.0                     ; 782 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:26     ; 1.6                     ; 1159 MB             ; 00:00:36                           ;
-; Analysis & Synthesis      ; 00:00:43     ; 1.0                     ; 856 MB              ; 00:00:53                           ;
-; Partition Merge           ; 00:00:12     ; 1.0                     ; 968 MB              ; 00:00:06                           ;
-; Analysis & Synthesis      ; 00:00:46     ; 1.0                     ; 868 MB              ; 00:00:55                           ;
-; Partition Merge           ; 00:00:03     ; 1.0                     ; 646 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:41     ; 1.3                     ; 2726 MB             ; 00:04:40                           ;
-; Assembler                 ; 00:00:17     ; 1.0                     ; 783 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:35     ; 1.5                     ; 1173 MB             ; 00:00:44                           ;
-; Analysis & Synthesis      ; 00:00:11     ; 1.0                     ; 779 MB              ; 00:00:22                           ;
-; Analysis & Synthesis      ; 00:00:26     ; 1.0                     ; 861 MB              ; 00:00:47                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 649 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:41     ; 1.3                     ; 2739 MB             ; 00:04:46                           ;
-; Assembler                 ; 00:00:12     ; 1.0                     ; 790 MB              ; 00:00:11                           ;
-; TimeQuest Timing Analyzer ; 00:00:28     ; 1.7                     ; 1179 MB             ; 00:00:43                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 743 MB              ; 00:00:22                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 728 MB              ; 00:00:21                           ;
-; Analysis & Synthesis      ; 00:00:09     ; 1.0                     ; 728 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 728 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 727 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:27     ; 1.0                     ; 842 MB              ; 00:00:48                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 732 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:26     ; 1.0                     ; 844 MB              ; 00:00:47                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 649 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:43     ; 1.2                     ; 2731 MB             ; 00:04:48                           ;
-; Assembler                 ; 00:00:12     ; 1.0                     ; 789 MB              ; 00:00:11                           ;
-; TimeQuest Timing Analyzer ; 00:00:28     ; 1.7                     ; 1169 MB             ; 00:00:43                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 742 MB              ; 00:00:22                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 728 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 728 MB              ; 00:00:21                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 730 MB              ; 00:00:21                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 763 MB              ; 00:00:21                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 728 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:26     ; 1.0                     ; 864 MB              ; 00:00:48                           ;
+; Analysis & Synthesis      ; 00:00:13     ; 1.0                     ; 876 MB              ; 00:00:23                           ;
+; Analysis & Synthesis      ; 00:00:11     ; 1.0                     ; 760 MB              ; 00:00:21                           ;
+; Analysis & Synthesis      ; 00:00:31     ; 1.4                     ; 833 MB              ; 00:00:57                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 639 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:48     ; 1.2                     ; 2691 MB             ; 00:05:15                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 785 MB              ; 00:00:11                           ;
+; TimeQuest Timing Analyzer ; 00:00:31     ; 1.6                     ; 1169 MB             ; 00:00:45                           ;
+; Analysis & Synthesis      ; 00:00:28     ; 1.0                     ; 865 MB              ; 00:00:51                           ;
 ; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:00:10     ; 1.0                     ; 1027 MB             ; 00:00:09                           ;
-; Analysis & Synthesis      ; 00:00:23     ; 1.0                     ; 829 MB              ; 00:00:45                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 649 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:00:09     ; 1.0                     ; 1027 MB             ; 00:00:09                           ;
-; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 831 MB              ; 00:00:44                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 650 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:47     ; 1.2                     ; 2739 MB             ; 00:04:58                           ;
-; Assembler                 ; 00:00:12     ; 1.0                     ; 785 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:28     ; 1.6                     ; 1170 MB             ; 00:00:43                           ;
-; Analysis & Synthesis      ; 00:00:10     ; 1.0                     ; 744 MB              ; 00:00:20                           ;
-; Analysis & Synthesis      ; 00:00:11     ; 1.0                     ; 764 MB              ; 00:00:21                           ;
-; Analysis & Synthesis      ; 00:00:26     ; 1.0                     ; 865 MB              ; 00:00:49                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 650 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:45     ; 1.2                     ; 2734 MB             ; 00:04:58                           ;
-; Assembler                 ; 00:00:13     ; 1.0                     ; 792 MB              ; 00:00:13                           ;
-; TimeQuest Timing Analyzer ; 00:00:28     ; 1.6                     ; 1178 MB             ; 00:00:44                           ;
-; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 821 MB              ; 00:00:46                           ;
-; Partition Merge           ; 00:00:01     ; 1.0                     ; 634 MB              ; 00:00:01                           ;
-; Fitter                    ; 00:00:53     ; 1.2                     ; 2672 MB             ; 00:01:49                           ;
-; Assembler                 ; 00:00:08     ; 1.0                     ; 718 MB              ; 00:00:07                           ;
-; TimeQuest Timing Analyzer ; 00:00:21     ; 1.2                     ; 1070 MB             ; 00:00:25                           ;
-; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 615 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 613 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 613 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 613 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 613 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 613 MB              ; 00:00:02                           ;
-; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 596 MB              ; 00:00:01                           ;
-; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 612 MB              ; 00:00:02                           ;
-; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 799 MB              ; 00:00:43                           ;
-; Analysis & Synthesis      ; 00:00:23     ; 1.0                     ; 788 MB              ; 00:00:43                           ;
-; Partition Merge           ; 00:00:01     ; 1.0                     ; 626 MB              ; 00:00:01                           ;
-; Fitter                    ; 00:00:58     ; 1.2                     ; 2643 MB             ; 00:02:09                           ;
-; Assembler                 ; 00:00:09     ; 1.0                     ; 720 MB              ; 00:00:08                           ;
-; TimeQuest Timing Analyzer ; 00:00:24     ; 1.2                     ; 1069 MB             ; 00:00:29                           ;
-; Analysis & Synthesis      ; 00:00:27     ; 1.0                     ; 836 MB              ; 00:00:49                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 641 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:50     ; 1.2                     ; 2718 MB             ; 00:05:00                           ;
-; Assembler                 ; 00:00:13     ; 1.0                     ; 791 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:30     ; 1.6                     ; 1172 MB             ; 00:00:45                           ;
-; Analysis & Synthesis      ; 00:00:27     ; 1.0                     ; 862 MB              ; 00:00:48                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:48     ; 1.2                     ; 2778 MB             ; 00:04:53                           ;
-; Assembler                 ; 00:00:13     ; 1.0                     ; 790 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1169 MB             ; 00:00:44                           ;
-; Analysis & Synthesis      ; 00:00:27     ; 1.0                     ; 860 MB              ; 00:00:48                           ;
+; Fitter                    ; 00:00:10     ; 1.0                     ; 994 MB              ; 00:00:09                           ;
+; Analysis & Synthesis      ; 00:00:28     ; 1.0                     ; 859 MB              ; 00:00:51                           ;
+; Partition Merge           ; 00:00:01     ; 1.0                     ; 652 MB              ; 00:00:02                           ;
+; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 820 MB              ; 00:00:47                           ;
 ; Partition Merge           ; 00:00:02     ; 1.0                     ; 651 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:46     ; 1.2                     ; 2727 MB             ; 00:05:08                           ;
-; Assembler                 ; 00:00:13     ; 1.0                     ; 790 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1178 MB             ; 00:00:44                           ;
-; Analysis & Synthesis      ; 00:00:28     ; 1.0                     ; 862 MB              ; 00:00:50                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 650 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:48     ; 1.2                     ; 2736 MB             ; 00:05:12                           ;
-; Assembler                 ; 00:00:13     ; 1.0                     ; 790 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1181 MB             ; 00:00:44                           ;
-; Analysis & Synthesis      ; 00:00:26     ; 1.0                     ; 860 MB              ; 00:00:46                           ;
-; Partition Merge           ; 00:00:02     ; 1.0                     ; 650 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:50     ; 1.2                     ; 2743 MB             ; 00:04:58                           ;
-; Assembler                 ; 00:00:13     ; 1.0                     ; 793 MB              ; 00:00:13                           ;
-; TimeQuest Timing Analyzer ; 00:00:30     ; 1.6                     ; 1180 MB             ; 00:00:45                           ;
-; Analysis & Synthesis      ; 00:00:27     ; 1.0                     ; 858 MB              ; 00:00:49                           ;
+; Fitter                    ; 00:01:42     ; 1.2                     ; 2700 MB             ; 00:04:56                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 784 MB              ; 00:00:11                           ;
+; TimeQuest Timing Analyzer ; 00:00:27     ; 1.6                     ; 1171 MB             ; 00:00:42                           ;
+; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 828 MB              ; 00:00:47                           ;
+; Analysis & Synthesis      ; 00:00:28     ; 1.0                     ; 845 MB              ; 00:00:49                           ;
 ; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:01:49     ; 1.2                     ; 2752 MB             ; 00:05:04                           ;
+; Fitter                    ; 00:01:45     ; 1.2                     ; 2690 MB             ; 00:04:56                           ;
 ; Assembler                 ; 00:00:12     ; 1.0                     ; 792 MB              ; 00:00:12                           ;
-; TimeQuest Timing Analyzer ; 00:00:30     ; 1.6                     ; 1180 MB             ; 00:00:45                           ;
-; Total                     ; 00:45:25     ; --                      ; --                  ; 01:36:40                           ;
+; TimeQuest Timing Analyzer ; 00:00:27     ; 1.6                     ; 1176 MB             ; 00:00:42                           ;
+; Analysis & Synthesis      ; 00:00:28     ; 1.0                     ; 865 MB              ; 00:00:49                           ;
+; Partition Merge           ; 00:00:01     ; 1.0                     ; 652 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:49     ; 1.2                     ; 2695 MB             ; 00:05:17                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 782 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:30     ; 1.6                     ; 1166 MB             ; 00:00:44                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 866 MB              ; 00:00:52                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:52     ; 1.2                     ; 2710 MB             ; 00:05:04                           ;
+; Assembler                 ; 00:00:13     ; 1.0                     ; 784 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1169 MB             ; 00:00:45                           ;
+; Analysis & Synthesis      ; 00:00:30     ; 1.0                     ; 864 MB              ; 00:00:51                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 652 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:52     ; 1.2                     ; 2698 MB             ; 00:05:15                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 787 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1173 MB             ; 00:00:44                           ;
+; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 817 MB              ; 00:00:48                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 639 MB              ; 00:00:01                           ;
+; Fitter                    ; 00:00:57     ; 1.2                     ; 2622 MB             ; 00:02:02                           ;
+; Assembler                 ; 00:00:08     ; 1.0                     ; 712 MB              ; 00:00:08                           ;
+; TimeQuest Timing Analyzer ; 00:00:24     ; 1.2                     ; 1063 MB             ; 00:00:26                           ;
+; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 591 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 607 MB              ; 00:00:02                           ;
+; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 592 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 607 MB              ; 00:00:02                           ;
+; Analysis & Synthesis      ; 00:00:24     ; 1.0                     ; 794 MB              ; 00:00:44                           ;
+; Partition Merge           ; 00:00:01     ; 1.0                     ; 626 MB              ; 00:00:01                           ;
+; Fitter                    ; 00:00:58     ; 1.2                     ; 2617 MB             ; 00:02:01                           ;
+; Assembler                 ; 00:00:09     ; 1.0                     ; 712 MB              ; 00:00:08                           ;
+; TimeQuest Timing Analyzer ; 00:00:23     ; 1.2                     ; 1061 MB             ; 00:00:27                           ;
+; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 592 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 610 MB              ; 00:00:02                           ;
+; EDA Netlist Writer        ; 00:00:02     ; 1.0                     ; 592 MB              ; 00:00:01                           ;
+; EDA Netlist Writer        ; 00:00:03     ; 1.0                     ; 610 MB              ; 00:00:02                           ;
+; Analysis & Synthesis      ; 00:00:31     ; 1.0                     ; 838 MB              ; 00:00:55                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 644 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:47     ; 1.2                     ; 2682 MB             ; 00:04:58                           ;
+; Assembler                 ; 00:00:13     ; 1.0                     ; 785 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:30     ; 1.6                     ; 1169 MB             ; 00:00:44                           ;
+; Analysis & Synthesis      ; 00:00:30     ; 1.0                     ; 866 MB              ; 00:00:51                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:00:10     ; 1.0                     ; 992 MB              ; 00:00:10                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 851 MB              ; 00:00:54                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:00:11     ; 1.0                     ; 993 MB              ; 00:00:10                           ;
+; Analysis & Synthesis      ; 00:00:30     ; 1.0                     ; 860 MB              ; 00:00:52                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 652 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:45     ; 1.2                     ; 2691 MB             ; 00:04:50                           ;
+; Assembler                 ; 00:00:13     ; 1.0                     ; 787 MB              ; 00:00:13                           ;
+; TimeQuest Timing Analyzer ; 00:00:30     ; 1.6                     ; 1169 MB             ; 00:00:44                           ;
+; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 838 MB              ; 00:00:47                           ;
+; Partition Merge           ; 00:00:03     ; 1.0                     ; 832 MB              ; 00:00:03                           ;
+; Fitter                    ; 00:00:12     ; 1.0                     ; 1059 MB             ; 00:00:12                           ;
+; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 837 MB              ; 00:00:47                           ;
+; Partition Merge           ; 00:00:03     ; 1.0                     ; 836 MB              ; 00:00:03                           ;
+; Fitter                    ; 00:00:13     ; 1.0                     ; 1059 MB             ; 00:00:12                           ;
+; Analysis & Synthesis      ; 00:00:30     ; 1.0                     ; 863 MB              ; 00:00:52                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 655 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:51     ; 1.2                     ; 2744 MB             ; 00:05:07                           ;
+; Assembler                 ; 00:00:13     ; 1.0                     ; 784 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1174 MB             ; 00:00:44                           ;
+; Analysis & Synthesis      ; 00:00:26     ; 1.0                     ; 837 MB              ; 00:00:47                           ;
+; Partition Merge           ; 00:00:03     ; 1.0                     ; 833 MB              ; 00:00:03                           ;
+; Fitter                    ; 00:01:16     ; 1.3                     ; 2780 MB             ; 00:02:28                           ;
+; Assembler                 ; 00:00:13     ; 1.0                     ; 785 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1176 MB             ; 00:00:43                           ;
+; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 838 MB              ; 00:00:44                           ;
+; Partition Merge           ; 00:00:03     ; 1.0                     ; 840 MB              ; 00:00:03                           ;
+; Fitter                    ; 00:01:17     ; 1.3                     ; 2786 MB             ; 00:02:34                           ;
+; Assembler                 ; 00:00:13     ; 1.0                     ; 784 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:29     ; 1.6                     ; 1174 MB             ; 00:00:43                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 867 MB              ; 00:00:50                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:41     ; 1.2                     ; 2739 MB             ; 00:04:43                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 788 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:28     ; 1.6                     ; 1169 MB             ; 00:00:43                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 858 MB              ; 00:00:50                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 654 MB              ; 00:00:02                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 856 MB              ; 00:00:50                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 652 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:43     ; 1.2                     ; 2731 MB             ; 00:04:49                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 784 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:28     ; 1.6                     ; 1172 MB             ; 00:00:42                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 866 MB              ; 00:00:50                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:43     ; 1.2                     ; 2730 MB             ; 00:04:52                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 784 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:28     ; 1.6                     ; 1174 MB             ; 00:00:43                           ;
+; Analysis & Synthesis      ; 00:00:29     ; 1.0                     ; 865 MB              ; 00:00:52                           ;
+; Partition Merge           ; 00:00:02     ; 1.0                     ; 653 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:01:45     ; 1.2                     ; 2723 MB             ; 00:05:03                           ;
+; Assembler                 ; 00:00:12     ; 1.0                     ; 788 MB              ; 00:00:12                           ;
+; TimeQuest Timing Analyzer ; 00:00:28     ; 1.6                     ; 1175 MB             ; 00:00:42                           ;
+; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 837 MB              ; 00:00:46                           ;
+; Partition Merge           ; 00:00:03     ; 1.0                     ; 831 MB              ; 00:00:03                           ;
+; Fitter                    ; 00:01:12     ; 1.3                     ; 2783 MB             ; 00:02:25                           ;
+; Assembler                 ; 00:00:11     ; 1.0                     ; 787 MB              ; 00:00:11                           ;
+; TimeQuest Timing Analyzer ; 00:00:27     ; 1.6                     ; 1173 MB             ; 00:00:42                           ;
+; Total                     ; 00:55:16     ; --                      ; --                  ; 01:56:41                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -247,6 +259,100 @@ agreement for further details.
 ; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
 +---------------------------+------------------+-----------+------------+----------------+
 ; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
 ; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
 ; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
 ; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
@@ -257,104 +363,21 @@ agreement for further details.
 ; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
 ; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
 ; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Analysis & Synthesis      ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Partition Merge           ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; ee-206-09        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Partition Merge           ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; ee-206-37        ; Windows 7 ; 6.1        ; x86_64         ;
 +---------------------------+------------------+-----------+------------+----------------+
 
 
@@ -362,52 +385,6 @@ agreement for further details.
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_sta experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --recompile=on
-quartus_cdb --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on --recompile=on
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_sta experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_sta experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_sta experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
-quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
-quartus_sta experiement_digital_recorder -c experiement_digital_recorder
-quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
@@ -417,23 +394,13 @@ quartus_sta experiement_digital_recorder -c experiement_digital_recorder
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
 quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_sta experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vht
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vht
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vht
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/modelsim/Waveform2.vwf.vht
-quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vht
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vt
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vt
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
-quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/Waveform2.vwf --testbench_file=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/Waveform2.vwf.vt
-quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory=C:/Users/tpe1/Desktop/gitshit/lab_project/Looper_trial/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
@@ -450,6 +417,73 @@ quartus_cdb --read_settings_files=off --write_settings_files=off experiement_dig
 quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf --testbench_file=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/Waveform3.vwf.vht
+quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
+quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf --testbench_file=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/Waveform3.vwf.vht
+quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf --testbench_file=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/Waveform3.vwf.vht
+quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
+quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --vector_source=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/Waveform3.vwf --testbench_file=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/Waveform3.vwf.vht
+quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory=C:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim/ experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
+quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_asm --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_sta experiement_digital_recorder -c experiement_digital_recorder
+quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
+quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
 quartus_map --read_settings_files=on --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder
 quartus_cdb --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder --merge=on
 quartus_fit --read_settings_files=off --write_settings_files=off experiement_digital_recorder -c experiement_digital_recorder

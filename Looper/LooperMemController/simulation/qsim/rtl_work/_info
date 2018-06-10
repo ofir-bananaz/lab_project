@@ -52,3 +52,95 @@ r1
 R3
 R4
 n@met_block_exp_vlg_vec_tst
+Emux_loop_test
+Z5 w1528561792
+Z6 DPx8 cyclonev 18 cyclonev_atom_pack 0 22 cD3@N^MdoDolN5@R6?T[V1
+Z7 DPx8 cyclonev 19 cyclonev_components 0 22 3BCIeZzdIHLCX<;R;K38G3
+Z8 DPx12 altera_lnsim 23 altera_lnsim_components 0 22 PQDYM9fR]Wek<A7X8bA8S1
+Z9 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
+Z10 DPx6 altera 11 dffeas_pack 0 22 >EJOc2K4@P4f?njWHdOcd0
+Z11 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
+Z12 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z13 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z14 DPx6 altera 28 altera_primitives_components 0 22 14j`ZKHCzSI;]V?hmAE6_1
+Z15 dC:/Users/tpe1/Desktop/project/Looper/LooperMemController/simulation/qsim
+Z16 8experiement_digital_recorder.vho
+Z17 Fexperiement_digital_recorder.vho
+l0
+L39
+VhgNORC6cbJaNId@^MBWn[3
+!s100 i4z@dKA6M?WeL9`kUAJYJ3
+Z18 OV;C;10.5b;63
+32
+Z19 !s110 1528561793
+!i10b 1
+Z20 !s108 1528561793.000000
+Z21 !s90 -work|work|experiement_digital_recorder.vho|
+Z22 !s107 experiement_digital_recorder.vho|
+!i113 1
+R3
+Z23 tExplicit 1 CvgOpt 0
+Astructure
+R6
+R7
+R8
+R9
+R10
+R11
+R12
+R13
+R14
+DEx4 work 13 mux_loop_test 0 22 hgNORC6cbJaNId@^MBWn[3
+l4638
+L90
+V[=;YzGA?0G@hzJDoo29da0
+!s100 =GfN3JVQ[`d7ISH^U1?Gb0
+R18
+32
+R19
+!i10b 1
+R20
+R21
+R22
+!i113 1
+R3
+R23
+Emux_loop_test_vhd_vec_tst
+Z24 w1528561789
+R12
+R13
+R15
+Z25 8Waveform3.vwf.vht
+Z26 FWaveform3.vwf.vht
+l0
+L32
+VIHdnR2cT>d;QcED0Q^n3P1
+!s100 :nTBSJ3jL[E8GP`FkGTSG3
+R18
+32
+Z27 !s110 1528561794
+!i10b 1
+Z28 !s108 1528561794.000000
+Z29 !s90 -work|work|Waveform3.vwf.vht|
+Z30 !s107 Waveform3.vwf.vht|
+!i113 1
+R3
+R23
+Amux_loop_test_arch
+R12
+R13
+Z31 DEx4 work 25 mux_loop_test_vhd_vec_tst 0 22 IHdnR2cT>d;QcED0Q^n3P1
+l63
+L34
+VYhCe5dKRL59cbMYZ9o>Pa1
+!s100 dNBiEM]?nDPP_0fCdWE681
+R18
+32
+R27
+!i10b 1
+R28
+R29
+R30
+!i113 1
+R3
+R23

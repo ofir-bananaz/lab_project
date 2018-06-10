@@ -39,10 +39,10 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSXFC6D6F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY Met_Top
+set_global_assignment -name TOP_LEVEL_ENTITY TOP
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:18:02  JUNE 05, 2018"
-set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Standard Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -50,11 +50,69 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_location_assignment PIN_AA16 -to CLK
-set_location_assignment PIN_AJ4 -to resetN
+set_location_assignment PIN_AD30 -to resetN
 set_location_assignment PIN_AB30 -to resetCount
-set_location_assignment PIN_AB23 -to DUTY20ms
+set_location_assignment PIN_AF19 -to DUTY20ms
 set_location_assignment PIN_AB25 -to KBD_CLK
 set_location_assignment PIN_AA25 -to KBD_DAT
+set_location_assignment PIN_AD21 -to HEX4[0]
+set_location_assignment PIN_AG22 -to HEX4[1]
+set_location_assignment PIN_AE22 -to HEX4[2]
+set_location_assignment PIN_AE23 -to HEX4[3]
+set_location_assignment PIN_AG23 -to HEX4[4]
+set_location_assignment PIN_AF23 -to HEX4[5]
+set_location_assignment PIN_AH22 -to HEX4[6]
+set_location_assignment PIN_AF21 -to HEX5[0]
+set_location_assignment PIN_AG21 -to HEX5[1]
+set_location_assignment PIN_AF20 -to HEX5[2]
+set_location_assignment PIN_AG20 -to HEX5[3]
+set_location_assignment PIN_AE19 -to HEX5[4]
+set_location_assignment PIN_AF19 -to HEX5[5]
+set_location_assignment PIN_AB21 -to HEX5[6]
+set_location_assignment PIN_AC23 -to OnOffSWITCH
+set_location_assignment PIN_AA16 -to CLOCK_50
+set_location_assignment PIN_AB30 -to mux[0]
+set_location_assignment PIN_Y27 -to mux[1]
+set_location_assignment PIN_AA30 -to MICROPHON_ON
+set_location_assignment PIN_AA24 -to TEST_LED
+set_location_assignment PIN_AC22 -to MICROPHON_LED
+set_location_assignment PIN_AK22 -to VGA_BLANK_N
+set_location_assignment PIN_AJ21 -to VGA_B[0]
+set_location_assignment PIN_AJ20 -to VGA_B[1]
+set_location_assignment PIN_AH20 -to VGA_B[2]
+set_location_assignment PIN_AJ19 -to VGA_B[3]
+set_location_assignment PIN_AH19 -to VGA_B[4]
+set_location_assignment PIN_AJ17 -to VGA_B[5]
+set_location_assignment PIN_AJ16 -to VGA_B[6]
+set_location_assignment PIN_AK16 -to VGA_B[7]
+set_location_assignment PIN_AK21 -to VGA_CLK
+set_location_assignment PIN_AK26 -to VGA_G[0]
+set_location_assignment PIN_AJ25 -to VGA_G[1]
+set_location_assignment PIN_AH25 -to VGA_G[2]
+set_location_assignment PIN_AK24 -to VGA_G[3]
+set_location_assignment PIN_AJ24 -to VGA_G[4]
+set_location_assignment PIN_AH24 -to VGA_G[5]
+set_location_assignment PIN_AK23 -to VGA_G[6]
+set_location_assignment PIN_AH23 -to VGA_G[7]
+set_location_assignment PIN_AK19 -to VGA_HS
+set_location_assignment PIN_AK29 -to VGA_R[0]
+set_location_assignment PIN_AK28 -to VGA_R[1]
+set_location_assignment PIN_AK27 -to VGA_R[2]
+set_location_assignment PIN_AJ27 -to VGA_R[3]
+set_location_assignment PIN_AH27 -to VGA_R[4]
+set_location_assignment PIN_AF26 -to VGA_R[5]
+set_location_assignment PIN_AG26 -to VGA_R[6]
+set_location_assignment PIN_AJ26 -to VGA_R[7]
+set_location_assignment PIN_AJ22 -to VGA_SYNC_N
+set_location_assignment PIN_AK18 -to VGA_VS
+set_location_assignment PIN_AJ29 -to AUD_ADCDAT
+set_location_assignment PIN_AH29 -to AUD_ADCLRCK
+set_location_assignment PIN_AF30 -to AUD_BCLK
+set_location_assignment PIN_AF29 -to AUD_DACDAT
+set_location_assignment PIN_AG30 -to AUD_DACLRCK
+set_location_assignment PIN_AH30 -to AUD_XCK
+set_location_assignment PIN_Y24 -to AUD_I2C_SCLK
+set_location_assignment PIN_Y23 -to AUD_I2C_SDAT
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
@@ -76,22 +134,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Beat
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DUTY20ms
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to newBPM
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to resetCount
-set_location_assignment PIN_AD21 -to HEX4[0]
-set_location_assignment PIN_AG22 -to HEX4[1]
-set_location_assignment PIN_AE22 -to HEX4[2]
-set_location_assignment PIN_AE23 -to HEX4[3]
-set_location_assignment PIN_AG23 -to HEX4[4]
-set_location_assignment PIN_AF23 -to HEX4[5]
-set_location_assignment PIN_AH22 -to HEX4[6]
-set_location_assignment PIN_AF21 -to HEX5[0]
-set_location_assignment PIN_AG21 -to HEX5[1]
-set_location_assignment PIN_AF20 -to HEX5[2]
-set_location_assignment PIN_AG20 -to HEX5[3]
-set_location_assignment PIN_AE19 -to HEX5[4]
-set_location_assignment PIN_AF19 -to HEX5[5]
-set_location_assignment PIN_AB21 -to HEX5[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to resetN
-set_location_assignment PIN_AC23 -to OnOffSWITCH
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[2]
@@ -107,6 +150,129 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[4]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[5]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to OnOffSWITCH
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_I2C_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_I2C_SDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_XCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_LED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_ON5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to mux[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to mux[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_BLANK_N
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_HS
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_SYNC_N
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/mux_loop_TEST.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/VGA_Controller/VGA_Controller.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/Looper_integrator.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/mux_loop.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/KEY_recived_2.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/KEY_recived_1.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/KEY_recived.vhd
+set_global_assignment -name BDF_FILE LooperMemController/looper_kbd/KEY_NOTE_4.bdf
+set_global_assignment -name BDF_FILE LooperMemController/looper_kbd/KEY_NOTE_3.bdf
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/KEY_2.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/KEY.vhd
+set_global_assignment -name BDF_FILE LooperMemController/looper_kbd/KBD_MOD_looper.bdf
+set_global_assignment -name BDF_FILE LooperMemController/recorder_module_looper.bdf
+set_global_assignment -name VHDL_FILE LooperMemController/dpram.vhd
+set_global_assignment -name QIP_FILE LooperMemController/dpram.qip
+set_global_assignment -name SOURCE_FILE LooperMemController/dpram.cmp
+set_global_assignment -name QXP_FILE LooperMemController/audio_codec_controller.qxp
+set_global_assignment -name BDF_FILE vga_8.6/rtl/TOP_SIFTACH.bdf
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/RECORD_4.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/RECORD_3.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/RECORD_2.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/RECORD_1.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/PLAY_4.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/PLAY_3.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/PLAY_2.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/PLAY_1.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/piano_stat.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/objects_mux.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_9_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_9_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_9.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_8_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_8_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_8.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_7_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_7_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_7.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_6_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_6_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_6.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_5_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_5_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_5.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_4_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_4_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_4.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_3_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_3_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_3.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_2_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_2_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_2_H.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_2.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_1_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_1_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_1_H.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_1.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_0_U.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_0_T.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_0_H.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NUM_0.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_Gm.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_G.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_Fm.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_F.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_E.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_Dm.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_D.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_CU.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_Cm.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_C.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_B.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_Am.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/NOTE_A.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/METRONOM_stat.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/looper_stat.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/EDIT_4.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/EDIT_3.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/EDIT_2.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/EDIT_1.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/back_ground_draw.vhd
 set_global_assignment -name VHDL_FILE LooperMemController/SM/LooperSM.vhd
 set_global_assignment -name BDF_FILE LooperMemController/LooperMemController.bdf
 set_global_assignment -name VHDL_FILE Metronome/HEXSS.vhd
@@ -117,7 +283,6 @@ set_global_assignment -name VHDL_FILE KBD/bitrec.vhd
 set_global_assignment -name VHDL_FILE Metronome/MET_kbd/setting.vhd
 set_global_assignment -name BDF_FILE Metronome/MET_kbd/KEY_NOTE_2.bdf
 set_global_assignment -name VHDL_FILE Metronome/MET_kbd/KEY_2.vhd
-set_global_assignment -name VHDL_FILE Metronome/MET_kbd/KEY.vhd
 set_global_assignment -name BDF_FILE Metronome/MET_kbd/KBD_MOD_met.bdf
 set_global_assignment -name VHDL_FILE Metronome/Metronome.vhd
 set_global_assignment -name BDF_FILE Metronome/Met_block_exp.bdf
@@ -149,11 +314,34 @@ set_global_assignment -name BDF_FILE piano/KEY_NOTE.bdf
 set_global_assignment -name VHDL_FILE piano/KEY.vhd
 set_global_assignment -name BDF_FILE piano/KBD_MOD.bdf
 set_global_assignment -name BDF_FILE piano/effect_adsr.bdf
-set_global_assignment -name QXP_FILE piano/audio_codec_controller.qxp
 set_global_assignment -name VHDL_FILE piano/ADSR_table.vhd
 set_global_assignment -name VHDL_FILE piano/addr_counter.vhd
 set_global_assignment -name BDF_FILE Looper_trial/KBD_MOD_LOOPER.bdf
 set_global_assignment -name BDF_FILE TOP.bdf
 set_global_assignment -name BDF_FILE Metronome/Met_Top.bdf
 set_global_assignment -name VHDL_FILE Metronome/MET_kbd/KEY_KBD.vhd
+set_global_assignment -name VHDL_FILE BPMvga.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/prescaler_loop.vhd
+set_global_assignment -name VHDL_FILE LooperMemController/addr_counter_zero.vhd
+set_global_assignment -name TCL_SCRIPT_FILE tcl/looper.tcl
+set_global_assignment -name VHDL_FILE piano/wave_integrator_loop.vhd
+set_global_assignment -name BDF_FILE piano/KEY_NOTE_1.bdf
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_ON
+set_location_assignment PIN_W17 -to chPlayingVGA[0]
+set_location_assignment PIN_AG16 -to arch_chRecordingVGA[0]
+set_location_assignment PIN_AH18 -to arch_chHasTrackVGA[0]
+set_location_assignment PIN_AF16 -to chPlayingVGA[1]
+set_location_assignment PIN_AD17 -to arch_chRecordingVGA[1]
+set_location_assignment PIN_V17 -to arch_chHasTrackVGA[1]
+set_location_assignment PIN_AA21 -to chPlayingVGA[2]
+set_location_assignment PIN_Y17 -to arch_chRecordingVGA[2]
+set_location_assignment PIN_W16 -to arch_chHasTrackVGA[2]
+set_location_assignment PIN_Y19 -to chPlayingVGA[3]
+set_location_assignment PIN_AA20 -to arch_chRecordingVGA[3]
+set_location_assignment PIN_AD20 -to arch_chHasTrackVGA[3]
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/back_ground_draw_new.vhd
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

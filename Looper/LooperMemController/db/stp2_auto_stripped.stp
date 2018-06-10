@@ -1,6 +1,5 @@
-<session jtag_chain="DE-SoC [USB-1]" jtag_device="@2: 5CSEBA6(.|ES)/5CSEMA6/.. (0x02D020DD)" sof_file="../output_files/experiement_digital_recorder.sof">
+<session jtag_chain="DE-SoC [USB-1]" jtag_device="@1: SOCVHPS (0x4BA00477)" sof_file="../output_files/experiement_digital_recorder.sof">
   <display_tree gui_logging_enabled="1">
-    <display_branch instance="auto_signaltap_0" log="log: Trig @ 2018/06/05 15:30:59 (0:0:1.0 elapsed)" signal_set="signal_set: 2018/06/05 15:03:50  #0" trigger="trigger: 2018/06/05 15:15:26  #0"/>
   </display_tree>
   <instance enabled="true" entity_name="sld_signaltap" is_auto_node="yes" is_expanded="true" name="auto_signaltap_0" source_file="sld_signaltap.vhd">
     <node_ip_info instance_id="0" mfg_id="110" node_id="0" version="6"/>
@@ -1126,7 +1125,7 @@
       </trigger>
     </signal_set>
     <position_info>
-      <single attribute="active tab" value="0"/>
+      <single attribute="active tab" value="1"/>
       <single attribute="data horizontal scroll position" value="106"/>
       <single attribute="data vertical scroll position" value="6"/>
       <single attribute="setup horizontal scroll position" value="0"/>

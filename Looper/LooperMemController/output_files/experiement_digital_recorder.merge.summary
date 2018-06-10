@@ -1,17 +1,17 @@
-Partition Merge Status : Successful - Thu Jun 07 16:28:30 2018
+Partition Merge Status : Successful - Sat Jun 09 21:23:54 2018
 Quartus Prime Version : 17.0.0 Build 595 04/25/2017 SJ Standard Edition
 Revision Name : experiement_digital_recorder
-Top-level Entity Name : experiement_digital_recorder
+Top-level Entity Name : test
 Family : Cyclone V
-Logic utilization (in ALMs) : N/A
-Total registers : 3226
-Total pins : 21
+Logic utilization (in ALMs) : 2,081 / 41,910 ( 5 % )
+Total registers : 3274
+Total pins : 18 / 499 ( 4 % )
 Total virtual pins : 0
-Total block memory bits : 4,370,464
-Total DSP Blocks : 1
-Total HSSI RX PCSs : 0
-Total HSSI PMA RX Deserializers : 0
-Total HSSI TX PCSs : 0
-Total HSSI PMA TX Serializers : 0
-Total PLLs : 0
-Total DLLs : 0
+Total block memory bits : 4,370,464 / 5,662,720 ( 77 % )
+Total DSP Blocks : 0 / 112 ( 0 % )
+Total HSSI RX PCSs : 0 / 9 ( 0 % )
+Total HSSI PMA RX Deserializers : 0 / 9 ( 0 % )
+Total HSSI TX PCSs : 0 / 9 ( 0 % )
+Total HSSI PMA TX Serializers : 0 / 9 ( 0 % )
+Total PLLs : 0 / 15 ( 0 % )
+Total DLLs : 0 / 4 ( 0 % )

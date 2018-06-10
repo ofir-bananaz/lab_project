@@ -267,8 +267,8 @@ agreement for further details.
 )
 (symbol
 	(rect 2200 128 2392 272)
-	(text "KEY_MET" (rect 5 0 54 12)(font "Arial" ))
-	(text "inst" (rect 8 128 25 140)(font "Arial" ))
+	(text "KEY" (rect 5 0 27 12)(font "Arial" ))
+	(text "inst1" (rect 8 128 30 145)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
