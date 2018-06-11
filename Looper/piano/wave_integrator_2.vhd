@@ -30,7 +30,7 @@ begin
 		sum<=zero;
 	elsif(rising_edge(clk)) then
 		IF EFFECT='1' THEN
-			sum<= conv_std_logic_vector((conv_integer(signed(data_in_1)))*(conv_integer(signed(data_in_2)))/164000,sum'length);
+			sum<= conv_std_logic_vector((conv_integer(signed(data_in_1)))*(conv_integer(signed(data_in_2)))/10000,sum'length);
 		ELSE
 			SUM<=ZERO;
 		END IF;

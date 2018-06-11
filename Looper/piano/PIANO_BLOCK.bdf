@@ -616,7 +616,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 1224 272 1288 320)
+	(rect 1240 272 1304 320)
 	(text "OR2" (rect 1 0 19 10)(font "Arial" (font_size 6)))
 	(text "inst1" (rect 3 37 25 54)(font "Intel Clear" ))
 	(port
@@ -917,16 +917,16 @@ agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1288 296)
+	(pt 1304 296)
 	(pt 1488 296)
 )
 (connector
-	(text "mux[0]" (rect 1208 272 1241 289)(font "Intel Clear" ))
-	(pt 1224 288)
-	(pt 1200 288)
+	(text "mux[0]" (rect 1224 272 1257 289)(font "Intel Clear" ))
+	(pt 1240 288)
+	(pt 1216 288)
 )
 (connector
-	(text "mux[1]" (rect 1208 288 1241 305)(font "Intel Clear" ))
-	(pt 1224 304)
-	(pt 1200 304)
+	(text "mux[1]" (rect 1224 288 1257 305)(font "Intel Clear" ))
+	(pt 1240 304)
+	(pt 1216 304)
 )

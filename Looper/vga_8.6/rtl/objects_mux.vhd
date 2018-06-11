@@ -110,6 +110,13 @@ port 	(
 		B_mVGA_RGB 	: in std_logic_vector(7 downto 0);
 		CU_drawing_request : in std_logic;
 		CU_mVGA_RGB 	: in std_logic_vector(7 downto 0);
+		-------------------------------------------------------------smiley
+		smiley_0_drawing_request : in std_logic;
+		smiley_0_mVGA_RGB 	: in std_logic_vector(7 downto 0);
+		smiley_1_drawing_request : in std_logic;
+		smiley_1_mVGA_RGB 	: in std_logic_vector(7 downto 0);
+		smiley_2_drawing_request : in std_logic;
+		smiley_2_mVGA_RGB 	: in std_logic_vector(7 downto 0);
 		-------------------------------------------------------------BACKGROUND
 		
 		PIANO_STAT_drawing_request : in std_logic;
@@ -245,7 +252,14 @@ begin
 			m_mVGA_t <= EDIT_3_mVGA_RGB;
 		ELSif (EDIT_4_drawing_request = '1' ) then  
 			m_mVGA_t <= EDIT_4_mVGA_RGB;
-------------------------------------------------------------------------	
+------------------------------------------------------------------------
+		ELSif (smiley_0_drawing_request = '1' ) then  
+			m_mVGA_t <= smiley_0_mVGA_RGB;
+		ELSif (smiley_1_drawing_request = '1' ) then  
+			m_mVGA_t <= smiley_1_mVGA_RGB;
+		ELSif (smiley_2_drawing_request = '1' ) then  
+			m_mVGA_t <= smiley_2_mVGA_RGB;
+------------------------------------------------------------------------
 		ELSif (METRONOM_STAT_drawing_request = '1' ) then  
 			m_mVGA_t <= METRONOM_STAT_mVGA_RGB; 
 		ELSif (PIANO_STAT_drawing_request = '1' ) then  

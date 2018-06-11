@@ -120,13 +120,11 @@ process ( RESETn, CLK)
 		drawing_request	<=  '0' ;
 
 		elsif rising_edge(CLK) then
-			if EDIT = '1' then
 
+
+			if edit='1' then
 			mVGA_RGB	<=  object_colors(bCoord_Y , bCoord_X);	--get from colors table 
 			drawing_request	<= object(bCoord_Y , bCoord_X) and drawing_X and drawing_Y ; -- get from mask table if inside rectangle
-			else
-			mVGA_RGB	<=  (others => '0') ; 
-			drawing_request	<=  '0' ;
 			end if;
 	end if;
 

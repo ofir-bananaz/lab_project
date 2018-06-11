@@ -19,23 +19,26 @@ end KEY_recived_2;
 architecture behavior of KEY_recived_2 is
 
  signal pressed: std_logic;
- signal out_X: std_logic;
-begin
 
- dout <= out_X;
+begin
  
  process ( resetN , clk)
 	 begin
 		 if resetN = '0' then
-			 out_X <= '0';
 			 pressed <= '0';
+			 
 		 elsif rising_edge(clk) then
-			 if (din(7 DOWNTO 0) = KEY_CODE) and (make = '1') and (pressed ='0')  Then
-			 pressed <= '1';
-			 out_X <= not(out_x);
-			 elsif (recived='1') then
-			 pressed <= '0';
-			 end if;
+			 if (din(7 DOWNTO 0) = KEY_CODE) and (make = '1') then
+					if pressed = '1' then
+						pressed <= '0';
+					else
+						pressed <= '1';
+					end if;
+			end if;
 		 end if;
 	 end process;
+	 
+	 dout <= pressed;
+
+	 
 end architecture;

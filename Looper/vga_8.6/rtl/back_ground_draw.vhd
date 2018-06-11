@@ -38,8 +38,8 @@ begin
 
 	if (oCoord_X = 0 or oCoord_y = 0  or oCoord_X = x_frame or oCoord_y = y_frame) then 
 			mVGA_R <= "111" ;	
-			mVGA_G <= "111"  ;	
-			mVGA_B <= "00" ;	 
+			mVGA_G <= "001"  ;	
+			mVGA_B <= "11" ;	 
 	end if ; 
 
 end process ; 

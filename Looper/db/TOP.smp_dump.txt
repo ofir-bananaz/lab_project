@@ -1,5 +1,5 @@
 
-State Machine - |TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|bitrec:inst2|present_state
+State Machine - |TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -7,7 +7,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|byterec:inst3|present_state
+State Machine - |TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -20,7 +20,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|bitrec:inst2|present_state
+State Machine - |TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -28,7 +28,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|byterec:inst3|present_state
+State Machine - |TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -41,7 +41,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst|bitrec:inst2|present_state
+State Machine - |TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -49,7 +49,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -62,7 +62,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -75,7 +75,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -88,7 +88,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -101,7 +101,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -114,7 +114,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -127,7 +127,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -140,7 +140,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -153,7 +153,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -166,7 +166,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -179,7 +179,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -192,7 +192,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -205,7 +205,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -218,7 +218,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -231,7 +231,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -244,7 +244,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -257,7 +257,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31|byterec:inst3|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -270,33 +270,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32|byterec:inst3|present_state
-Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
-present_state.idle 0 0 0 0 0 0 0 0 0 0 
-present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
-present_state.new_make 0 0 0 0 0 0 0 1 0 1 
-present_state.wait_rel 0 0 0 0 0 0 1 0 0 1 
-present_state.sample_rel 0 0 0 0 0 1 0 0 0 1 
-present_state.new_break 0 0 0 0 1 0 0 0 0 1 
-present_state.wait_ext 0 0 0 1 0 0 0 0 0 1 
-present_state.sample_ext 0 0 1 0 0 0 0 0 0 1 
-present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
-present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
-
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33|byterec:inst3|present_state
-Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
-present_state.idle 0 0 0 0 0 0 0 0 0 0 
-present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
-present_state.new_make 0 0 0 0 0 0 0 1 0 1 
-present_state.wait_rel 0 0 0 0 0 0 1 0 0 1 
-present_state.sample_rel 0 0 0 0 0 1 0 0 0 1 
-present_state.new_break 0 0 0 0 1 0 0 0 0 1 
-present_state.wait_ext 0 0 0 1 0 0 0 0 0 1 
-present_state.sample_ext 0 0 1 0 0 0 0 0 0 1 
-present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
-present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
-
-State Machine - |TOP|LooperMemController:inst7|LooperSM:inst3|state
+State Machine - |TOP|LooperMemController:inst6|LooperSM:inst3|state
 Name state.REC_OTHER state.PRE_REC state.CH_CONTROL state.REC_FIRST state.PRE_REC_FIRST state.EMPTY 
 state.EMPTY 0 0 0 0 0 0 
 state.PRE_REC_FIRST 0 0 0 0 1 1 
@@ -305,7 +279,20 @@ state.CH_CONTROL 0 0 1 0 0 1
 state.PRE_REC 0 1 0 0 0 1 
 state.REC_OTHER 1 0 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36|bitrec:inst2|present_state
+State Machine - |TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst|byterec:inst3|present_state
+Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
+present_state.idle 0 0 0 0 0 0 0 0 0 0 
+present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
+present_state.new_make 0 0 0 0 0 0 0 1 0 1 
+present_state.wait_rel 0 0 0 0 0 0 1 0 0 1 
+present_state.sample_rel 0 0 0 0 0 1 0 0 0 1 
+present_state.new_break 0 0 0 0 1 0 0 0 0 1 
+present_state.wait_ext 0 0 0 1 0 0 0 0 0 1 
+present_state.sample_ext 0 0 1 0 0 0 0 0 0 1 
+present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
+present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
+
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -313,7 +300,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -321,7 +308,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -329,7 +316,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -337,7 +324,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -345,7 +332,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -353,7 +340,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -361,7 +348,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -369,7 +356,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -377,7 +364,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -385,7 +372,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -393,7 +380,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -401,7 +388,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -409,7 +396,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -417,7 +404,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -425,7 +412,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -433,7 +420,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -441,7 +428,7 @@ present_state.LowClk 0 0 1 0 1
 present_state.ChkData 0 1 0 0 1 
 present_state.NewData 1 0 0 0 1 
 
-State Machine - |TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33|bitrec:inst2|present_state
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33|bitrec:inst2|present_state
 Name present_state.NewData present_state.ChkData present_state.LowClk present_state.HighClk present_state.idle 
 present_state.idle 0 0 0 0 0 
 present_state.HighClk 0 0 0 1 1 
@@ -869,7 +856,7 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|TOP_SIFTACH:inst1|KBD_MOD:inst44|KEY_NOTE:Cm|byterec:inst3|present_state
+State Machine - |TOP|TOP_SIFTACH:inst1|KBD_MOD:inst44|KEY_NOTE:E|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
@@ -1276,7 +1263,20 @@ present_state.sample_ext 0 0 1 0 0 0 0 0 0 1
 present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
 present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
 
-State Machine - |TOP|TOP_SIFTACH:inst1|KBD_MOD:inst44|KEY_NOTE:E|byterec:inst3|present_state
+State Machine - |TOP|TOP_SIFTACH:inst1|KBD_MOD:inst44|KEY_NOTE:Cm|byterec:inst3|present_state
+Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
+present_state.idle 0 0 0 0 0 0 0 0 0 0 
+present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 
+present_state.new_make 0 0 0 0 0 0 0 1 0 1 
+present_state.wait_rel 0 0 0 0 0 0 1 0 0 1 
+present_state.sample_rel 0 0 0 0 0 1 0 0 0 1 
+present_state.new_break 0 0 0 0 1 0 0 0 0 1 
+present_state.wait_ext 0 0 0 1 0 0 0 0 0 1 
+present_state.sample_ext 0 0 1 0 0 0 0 0 0 1 
+present_state.wait_ext_rel 0 1 0 0 0 0 0 0 0 1 
+present_state.sample_ext_rel 1 0 0 0 0 0 0 0 0 1 
+
+State Machine - |TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36|byterec:inst3|present_state
 Name present_state.sample_ext_rel present_state.wait_ext_rel present_state.sample_ext present_state.wait_ext present_state.new_break present_state.sample_rel present_state.wait_rel present_state.new_make present_state.sample_nor present_state.idle 
 present_state.idle 0 0 0 0 0 0 0 0 0 0 
 present_state.sample_nor 0 0 0 0 0 0 0 0 1 1 

@@ -166,22 +166,6 @@ agreement for further details.
 )
 (pin
 	(output)
-	(rect 2240 696 2419 712)
-	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "metronom_on/off" (rect 90 0 173 17)(font "Intel Clear" ))
-	(pt 0 8)
-	(drawing
-		(line (pt 0 8)(pt 52 8))
-		(line (pt 52 4)(pt 78 4))
-		(line (pt 52 12)(pt 78 12))
-		(line (pt 52 12)(pt 52 4))
-		(line (pt 78 4)(pt 82 8))
-		(line (pt 82 8)(pt 78 12))
-		(line (pt 78 12)(pt 82 8))
-	)
-)
-(pin
-	(output)
 	(rect 2256 544 2432 560)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "channel[1..0]" (rect 90 0 151 17)(font "Intel Clear" ))
@@ -201,6 +185,22 @@ agreement for further details.
 	(rect 2256 576 2432 592)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "play_all" (rect 90 0 127 12)(font "Arial" ))
+	(pt 0 8)
+	(drawing
+		(line (pt 0 8)(pt 52 8))
+		(line (pt 52 4)(pt 78 4))
+		(line (pt 52 12)(pt 78 12))
+		(line (pt 52 12)(pt 52 4))
+		(line (pt 78 4)(pt 82 8))
+		(line (pt 82 8)(pt 78 12))
+		(line (pt 78 12)(pt 82 8))
+	)
+)
+(pin
+	(output)
+	(rect 2240 696 2432 712)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "met_mode_ON/OFF" (rect 90 0 186 17)(font "Intel Clear" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -1404,7 +1404,7 @@ agreement for further details.
 	(annotation_block (parameter)(rect 688 856 825 913))
 )
 (symbol
-	(rect 1312 144 1424 192)
+	(rect 1304 48 1416 96)
 	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
 	(text "inst37" (rect 3 37 31 54)(font "Intel Clear" ))
 	(port
@@ -1432,10 +1432,10 @@ agreement for further details.
 		(line (pt 64 40)(pt 64 24))
 		(line (pt 16 40)(pt 16 24))
 	)
-	(annotation_block (parameter)(rect 1424 80 1561 137))
+	(annotation_block (parameter)(rect 1184 -120 1321 -63))
 )
 (symbol
-	(rect 1256 440 1368 488)
+	(rect 1224 440 1336 488)
 	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
 	(text "inst39" (rect 3 37 31 54)(font "Intel Clear" ))
 	(port
@@ -1463,7 +1463,7 @@ agreement for further details.
 		(line (pt 64 40)(pt 64 24))
 		(line (pt 16 40)(pt 16 24))
 	)
-	(annotation_block (parameter)(rect 1368 376 1505 433))
+	(annotation_block (parameter)(rect 1336 376 1473 433))
 )
 (symbol
 	(rect 1912 536 2120 680)
@@ -1768,9 +1768,9 @@ agreement for further details.
 	(annotation_block (parameter)(rect -840 32 -703 89))
 )
 (symbol
-	(rect 1520 144 1728 304)
+	(rect 1520 80 1728 240)
 	(text "KEY_NOTE_3" (rect 5 0 85 19)(font "Intel Clear" (font_size 8)))
-	(text "inst36" (rect 8 139 36 156)(font "Intel Clear" ))
+	(text "inst1" (rect 8 139 30 156)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -1826,8 +1826,8 @@ agreement for further details.
 )
 (symbol
 	(rect 1464 440 1672 600)
-	(text "KEY_NOTE_3" (rect 5 0 85 19)(font "Intel Clear" (font_size 8)))
-	(text "inst38" (rect 8 139 36 156)(font "Intel Clear" ))
+	(text "KEY_NOTE_4" (rect 5 0 85 19)(font "Intel Clear" (font_size 8)))
+	(text "inst36" (rect 8 139 36 156)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -2346,41 +2346,6 @@ agreement for further details.
 	(pt 1064 952)
 )
 (connector
-	(pt 1520 176)
-	(pt 1424 176)
-	(bus)
-)
-(connector
-	(text "KBD_DAT" (rect 1264 224 1311 241)(font "Intel Clear" ))
-	(pt 1520 240)
-	(pt 1256 240)
-)
-(connector
-	(text "KBD_CLK" (rect 1308 208 1355 225)(font "Intel Clear" ))
-	(pt 1520 224)
-	(pt 1256 224)
-)
-(connector
-	(text "CLK" (rect 1378 192 1398 209)(font "Intel Clear" ))
-	(pt 1256 208)
-	(pt 1520 208)
-)
-(connector
-	(text "RESET" (rect 1298 176 1328 193)(font "Intel Clear" ))
-	(pt 1520 192)
-	(pt 1256 192)
-)
-(connector
-	(text "recived" (rect 1456 240 1490 257)(font "Intel Clear" ))
-	(pt 1520 256)
-	(pt 1448 256)
-)
-(connector
-	(pt 1464 472)
-	(pt 1368 472)
-	(bus)
-)
-(connector
 	(text "KBD_DAT" (rect 1208 520 1255 537)(font "Intel Clear" ))
 	(pt 1464 536)
 	(pt 1200 536)
@@ -2572,11 +2537,6 @@ agreement for further details.
 	(pt 2232 496)
 )
 (connector
-	(text "PlayAll" (rect 1805 160 1841 177)(font "Intel Clear" ))
-	(pt 1728 176)
-	(pt 1824 176)
-)
-(connector
 	(pt 2120 568)
 	(pt 2120 552)
 	(bus)
@@ -2604,26 +2564,65 @@ agreement for further details.
 	(pt 2192 584)
 )
 (connector
-	(pt 1672 472)
-	(pt 1800 472)
-)
-(connector
-	(pt 1800 472)
-	(pt 1800 704)
-)
-(connector
 	(text "<<__$DEF_ALIAS7829>>" (rect 2184 688 2302 705)(font "Intel Clear" )(invisible))
 	(pt 1800 704)
 	(pt 2240 704)
 )
 (connector
-	(text "recived" (rect 1400 536 1434 553)(font "Intel Clear" ))
-	(pt 1464 552)
-	(pt 1392 552)
+	(pt 1800 704)
+	(pt 1800 472)
+)
+(connector
+	(pt 1672 472)
+	(pt 1800 472)
+)
+(connector
+	(text "CLK" (rect 1378 128 1398 145)(font "Intel Clear" ))
+	(pt 1256 144)
+	(pt 1520 144)
+)
+(connector
+	(text "RESET" (rect 1298 112 1328 129)(font "Intel Clear" ))
+	(pt 1520 128)
+	(pt 1256 128)
+)
+(connector
+	(text "recived" (rect 1456 176 1490 193)(font "Intel Clear" ))
+	(pt 1520 192)
+	(pt 1448 192)
+)
+(connector
+	(text "PlayAll" (rect 1805 96 1841 113)(font "Intel Clear" ))
+	(pt 1728 112)
+	(pt 1824 112)
+)
+(connector
+	(text "KBD_CLK" (rect 1428 144 1475 161)(font "Intel Clear" ))
+	(pt 1432 160)
+	(pt 1520 160)
+)
+(connector
+	(text "KBD_DAT" (rect 1424 160 1471 177)(font "Intel Clear" ))
+	(pt 1432 176)
+	(pt 1520 176)
+)
+(connector
+	(pt 1336 472)
+	(pt 1464 472)
+	(bus)
+)
+(connector
+	(pt 1520 112)
+	(pt 1416 112)
+	(bus)
+)
+(connector
+	(pt 1416 112)
+	(pt 1416 80)
+	(bus)
 )
 (text "play keys" (rect -1440 8 -1384 27)(font "Intel Clear" (font_size 8)))
 (text "record keys" (rect -664 16 -596 35)(font "Intel Clear" (font_size 8)))
 (text "stop keys" (rect 88 32 144 51)(font "Intel Clear" (font_size 8)))
 (text "clear keys" (rect 888 40 947 59)(font "Intel Clear" (font_size 8)))
-(text "clear keys" (rect 1544 360 1603 379)(font "Intel Clear" (font_size 8)))
-(text "PlayALL" (rect 1608 88 1656 107)(font "Intel Clear" (font_size 8)))
+(text "Met Mode" (rect 1544 360 1603 379)(font "Intel Clear" (font_size 8)))

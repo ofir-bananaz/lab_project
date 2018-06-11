@@ -104,7 +104,7 @@ agreement for further details.
 	(input)
 	(rect 784 464 952 480)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "recived" (rect 5 0 42 12)(font "Arial" ))
+	(text "recived" (rect 5 0 41 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))

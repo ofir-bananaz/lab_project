@@ -3,15 +3,15 @@ MICROPHON_LED <= audio_codec_controller:audio_codec_controller_inst.MICROPHON_LE
 CLOCK_50 => audio_codec_controller:audio_codec_controller_inst.CLOCK_50
 CLOCK_50 => wave_integrator_loop:32324.CLK
 CLOCK_50 => PIANO_BLOCK:inst.CLOCK_50
-CLOCK_50 => LooperMemController:inst7.CLOCK_50
-CLOCK_50 => Met_Top:inst5.CLK
+CLOCK_50 => LooperMemController:inst6.CLOCK_50
+CLOCK_50 => Met_Top:inst8.CLK
 CLOCK_50 => wave_integrator_loop:in235st.CLK
 CLOCK_50 => TOP_SIFTACH:inst1.CLOCK_50
 resetN => audio_codec_controller:audio_codec_controller_inst.resetN
 resetN => wave_integrator_loop:32324.resetN
 resetN => PIANO_BLOCK:inst.resetN
-resetN => LooperMemController:inst7.resetN
-resetN => Met_Top:inst5.resetN
+resetN => LooperMemController:inst6.resetN
+resetN => Met_Top:inst8.resetN
 resetN => wave_integrator_loop:in235st.resetN
 resetN => TOP_SIFTACH:inst1.resetN
 MICROPHON_ON => audio_codec_controller:audio_codec_controller_inst.MICROPHON_ON
@@ -21,12 +21,12 @@ AUD_BCLK => audio_codec_controller:audio_codec_controller_inst.AUD_BCLK
 AUD_DACLRCK => audio_codec_controller:audio_codec_controller_inst.AUD_DACLRCK
 AUD_I2C_SDAT <> audio_codec_controller:audio_codec_controller_inst.AUD_I2C_SDAT
 KBD_CLK => PIANO_BLOCK:inst.KBD_CLK
-KBD_CLK => LooperMemController:inst7.KBD_CLK
-KBD_CLK => Met_Top:inst5.KBD_CLK
+KBD_CLK => LooperMemController:inst6.KBD_CLK
+KBD_CLK => Met_Top:inst8.KBD_CLK
 KBD_CLK => TOP_SIFTACH:inst1.KBD_CLK
 KBD_DAT => PIANO_BLOCK:inst.KBD_DAT
-KBD_DAT => LooperMemController:inst7.KBD_DAT
-KBD_DAT => Met_Top:inst5.KBD_DAT
+KBD_DAT => LooperMemController:inst6.KBD_DAT
+KBD_DAT => Met_Top:inst8.KBD_DAT
 KBD_DAT => TOP_SIFTACH:inst1.KBD_DAT
 mux[0] => PIANO_BLOCK:inst.MUX[0]
 mux[1] => PIANO_BLOCK:inst.MUX[1]
@@ -39,9 +39,9 @@ VGA_HS <= TOP_SIFTACH:inst1.VGA_HS
 VGA_CLK <= TOP_SIFTACH:inst1.VGA_CLK
 VGA_BLANK_N <= TOP_SIFTACH:inst1.VGA_BLANK_N
 VGA_SYNC_N <= TOP_SIFTACH:inst1.VGA_SYNC_N
-state[0] <= LooperMemController:inst7.currState_debug[0]
-state[1] <= LooperMemController:inst7.currState_debug[1]
-state[2] <= LooperMemController:inst7.currState_debug[2]
+currState[0] <= LooperMemController:inst6.curr_state[0]
+currState[1] <= LooperMemController:inst6.curr_state[1]
+currState[2] <= LooperMemController:inst6.curr_state[2]
 VGA_B[0] <= TOP_SIFTACH:inst1.VGA_B[0]
 VGA_B[1] <= TOP_SIFTACH:inst1.VGA_B[1]
 VGA_B[2] <= TOP_SIFTACH:inst1.VGA_B[2]
@@ -367,10 +367,6 @@ Q[15] <= sig[15].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |TOP|PIANO_BLOCK:inst|wave_integrator_13:inst5
-CLK => modd[0].CLK
-CLK => modd[1].CLK
-CLK => modd[2].CLK
-CLK => modd[3].CLK
 CLK => sum[0].CLK
 CLK => sum[1].CLK
 CLK => sum[2].CLK
@@ -409,248 +405,133 @@ resetN => sum[15].ACLR
 resetN => sum[16].ACLR
 resetN => sum[17].ACLR
 resetN => sum[18].ACLR
-resetN => modd[0].ENA
-resetN => modd[3].ENA
-resetN => modd[2].ENA
-resetN => modd[1].ENA
 data_in_1[0] => Add0.IN16
-data_in_1[0] => Equal0.IN15
 data_in_1[1] => Add0.IN15
-data_in_1[1] => Equal0.IN14
 data_in_1[2] => Add0.IN14
-data_in_1[2] => Equal0.IN13
 data_in_1[3] => Add0.IN13
-data_in_1[3] => Equal0.IN12
 data_in_1[4] => Add0.IN12
-data_in_1[4] => Equal0.IN11
 data_in_1[5] => Add0.IN11
-data_in_1[5] => Equal0.IN10
 data_in_1[6] => Add0.IN10
-data_in_1[6] => Equal0.IN9
 data_in_1[7] => Add0.IN9
-data_in_1[7] => Equal0.IN8
 data_in_1[8] => Add0.IN8
-data_in_1[8] => Equal0.IN7
 data_in_1[9] => Add0.IN7
-data_in_1[9] => Equal0.IN6
 data_in_1[10] => Add0.IN6
-data_in_1[10] => Equal0.IN5
 data_in_1[11] => Add0.IN5
-data_in_1[11] => Equal0.IN4
 data_in_1[12] => Add0.IN4
-data_in_1[12] => Equal0.IN3
 data_in_1[13] => Add0.IN3
-data_in_1[13] => Equal0.IN2
 data_in_1[14] => Add0.IN2
-data_in_1[14] => Equal0.IN1
 data_in_1[15] => Add0.IN1
 data_in_1[15] => Add0.IN33
-data_in_1[15] => Equal0.IN0
 data_in_2[0] => Add0.IN32
-data_in_2[0] => Equal1.IN15
 data_in_2[1] => Add0.IN31
-data_in_2[1] => Equal1.IN14
 data_in_2[2] => Add0.IN30
-data_in_2[2] => Equal1.IN13
 data_in_2[3] => Add0.IN29
-data_in_2[3] => Equal1.IN12
 data_in_2[4] => Add0.IN28
-data_in_2[4] => Equal1.IN11
 data_in_2[5] => Add0.IN27
-data_in_2[5] => Equal1.IN10
 data_in_2[6] => Add0.IN26
-data_in_2[6] => Equal1.IN9
 data_in_2[7] => Add0.IN25
-data_in_2[7] => Equal1.IN8
 data_in_2[8] => Add0.IN24
-data_in_2[8] => Equal1.IN7
 data_in_2[9] => Add0.IN23
-data_in_2[9] => Equal1.IN6
 data_in_2[10] => Add0.IN22
-data_in_2[10] => Equal1.IN5
 data_in_2[11] => Add0.IN21
-data_in_2[11] => Equal1.IN4
 data_in_2[12] => Add0.IN20
-data_in_2[12] => Equal1.IN3
 data_in_2[13] => Add0.IN19
-data_in_2[13] => Equal1.IN2
 data_in_2[14] => Add0.IN18
-data_in_2[14] => Equal1.IN1
 data_in_2[15] => Add0.IN17
 data_in_2[15] => Add0.IN34
-data_in_2[15] => Equal1.IN0
 data_in_3[0] => Add1.IN34
-data_in_3[0] => Equal2.IN15
 data_in_3[1] => Add1.IN33
-data_in_3[1] => Equal2.IN14
 data_in_3[2] => Add1.IN32
-data_in_3[2] => Equal2.IN13
 data_in_3[3] => Add1.IN31
-data_in_3[3] => Equal2.IN12
 data_in_3[4] => Add1.IN30
-data_in_3[4] => Equal2.IN11
 data_in_3[5] => Add1.IN29
-data_in_3[5] => Equal2.IN10
 data_in_3[6] => Add1.IN28
-data_in_3[6] => Equal2.IN9
 data_in_3[7] => Add1.IN27
-data_in_3[7] => Equal2.IN8
 data_in_3[8] => Add1.IN26
-data_in_3[8] => Equal2.IN7
 data_in_3[9] => Add1.IN25
-data_in_3[9] => Equal2.IN6
 data_in_3[10] => Add1.IN24
-data_in_3[10] => Equal2.IN5
 data_in_3[11] => Add1.IN23
-data_in_3[11] => Equal2.IN4
 data_in_3[12] => Add1.IN22
-data_in_3[12] => Equal2.IN3
 data_in_3[13] => Add1.IN21
-data_in_3[13] => Equal2.IN2
 data_in_3[14] => Add1.IN20
-data_in_3[14] => Equal2.IN1
 data_in_3[15] => Add1.IN18
 data_in_3[15] => Add1.IN19
 data_in_3[15] => Add1.IN36
-data_in_3[15] => Equal2.IN0
 data_in_4[0] => Add2.IN36
-data_in_4[0] => Equal3.IN15
 data_in_4[1] => Add2.IN35
-data_in_4[1] => Equal3.IN14
 data_in_4[2] => Add2.IN34
-data_in_4[2] => Equal3.IN13
 data_in_4[3] => Add2.IN33
-data_in_4[3] => Equal3.IN12
 data_in_4[4] => Add2.IN32
-data_in_4[4] => Equal3.IN11
 data_in_4[5] => Add2.IN31
-data_in_4[5] => Equal3.IN10
 data_in_4[6] => Add2.IN30
-data_in_4[6] => Equal3.IN9
 data_in_4[7] => Add2.IN29
-data_in_4[7] => Equal3.IN8
 data_in_4[8] => Add2.IN28
-data_in_4[8] => Equal3.IN7
 data_in_4[9] => Add2.IN27
-data_in_4[9] => Equal3.IN6
 data_in_4[10] => Add2.IN26
-data_in_4[10] => Equal3.IN5
 data_in_4[11] => Add2.IN25
-data_in_4[11] => Equal3.IN4
 data_in_4[12] => Add2.IN24
-data_in_4[12] => Equal3.IN3
 data_in_4[13] => Add2.IN23
-data_in_4[13] => Equal3.IN2
 data_in_4[14] => Add2.IN22
-data_in_4[14] => Equal3.IN1
 data_in_4[15] => Add2.IN19
 data_in_4[15] => Add2.IN20
 data_in_4[15] => Add2.IN21
 data_in_4[15] => Add2.IN38
-data_in_4[15] => Equal3.IN0
 data_in_5[0] => Add3.IN38
-data_in_5[0] => Equal4.IN15
 data_in_5[1] => Add3.IN37
-data_in_5[1] => Equal4.IN14
 data_in_5[2] => Add3.IN36
-data_in_5[2] => Equal4.IN13
 data_in_5[3] => Add3.IN35
-data_in_5[3] => Equal4.IN12
 data_in_5[4] => Add3.IN34
-data_in_5[4] => Equal4.IN11
 data_in_5[5] => Add3.IN33
-data_in_5[5] => Equal4.IN10
 data_in_5[6] => Add3.IN32
-data_in_5[6] => Equal4.IN9
 data_in_5[7] => Add3.IN31
-data_in_5[7] => Equal4.IN8
 data_in_5[8] => Add3.IN30
-data_in_5[8] => Equal4.IN7
 data_in_5[9] => Add3.IN29
-data_in_5[9] => Equal4.IN6
 data_in_5[10] => Add3.IN28
-data_in_5[10] => Equal4.IN5
 data_in_5[11] => Add3.IN27
-data_in_5[11] => Equal4.IN4
 data_in_5[12] => Add3.IN26
-data_in_5[12] => Equal4.IN3
 data_in_5[13] => Add3.IN25
-data_in_5[13] => Equal4.IN2
 data_in_5[14] => Add3.IN24
-data_in_5[14] => Equal4.IN1
 data_in_5[15] => Add3.IN20
 data_in_5[15] => Add3.IN21
 data_in_5[15] => Add3.IN22
 data_in_5[15] => Add3.IN23
 data_in_5[15] => Add3.IN40
-data_in_5[15] => Equal4.IN0
 data_in_6[0] => Add4.IN40
-data_in_6[0] => Equal5.IN15
 data_in_6[1] => Add4.IN39
-data_in_6[1] => Equal5.IN14
 data_in_6[2] => Add4.IN38
-data_in_6[2] => Equal5.IN13
 data_in_6[3] => Add4.IN37
-data_in_6[3] => Equal5.IN12
 data_in_6[4] => Add4.IN36
-data_in_6[4] => Equal5.IN11
 data_in_6[5] => Add4.IN35
-data_in_6[5] => Equal5.IN10
 data_in_6[6] => Add4.IN34
-data_in_6[6] => Equal5.IN9
 data_in_6[7] => Add4.IN33
-data_in_6[7] => Equal5.IN8
 data_in_6[8] => Add4.IN32
-data_in_6[8] => Equal5.IN7
 data_in_6[9] => Add4.IN31
-data_in_6[9] => Equal5.IN6
 data_in_6[10] => Add4.IN30
-data_in_6[10] => Equal5.IN5
 data_in_6[11] => Add4.IN29
-data_in_6[11] => Equal5.IN4
 data_in_6[12] => Add4.IN28
-data_in_6[12] => Equal5.IN3
 data_in_6[13] => Add4.IN27
-data_in_6[13] => Equal5.IN2
 data_in_6[14] => Add4.IN26
-data_in_6[14] => Equal5.IN1
 data_in_6[15] => Add4.IN21
 data_in_6[15] => Add4.IN22
 data_in_6[15] => Add4.IN23
 data_in_6[15] => Add4.IN24
 data_in_6[15] => Add4.IN25
 data_in_6[15] => Add4.IN42
-data_in_6[15] => Equal5.IN0
 data_in_7[0] => Add5.IN42
-data_in_7[0] => Equal6.IN15
 data_in_7[1] => Add5.IN41
-data_in_7[1] => Equal6.IN14
 data_in_7[2] => Add5.IN40
-data_in_7[2] => Equal6.IN13
 data_in_7[3] => Add5.IN39
-data_in_7[3] => Equal6.IN12
 data_in_7[4] => Add5.IN38
-data_in_7[4] => Equal6.IN11
 data_in_7[5] => Add5.IN37
-data_in_7[5] => Equal6.IN10
 data_in_7[6] => Add5.IN36
-data_in_7[6] => Equal6.IN9
 data_in_7[7] => Add5.IN35
-data_in_7[7] => Equal6.IN8
 data_in_7[8] => Add5.IN34
-data_in_7[8] => Equal6.IN7
 data_in_7[9] => Add5.IN33
-data_in_7[9] => Equal6.IN6
 data_in_7[10] => Add5.IN32
-data_in_7[10] => Equal6.IN5
 data_in_7[11] => Add5.IN31
-data_in_7[11] => Equal6.IN4
 data_in_7[12] => Add5.IN30
-data_in_7[12] => Equal6.IN3
 data_in_7[13] => Add5.IN29
-data_in_7[13] => Equal6.IN2
 data_in_7[14] => Add5.IN28
-data_in_7[14] => Equal6.IN1
 data_in_7[15] => Add5.IN22
 data_in_7[15] => Add5.IN23
 data_in_7[15] => Add5.IN24
@@ -658,37 +539,21 @@ data_in_7[15] => Add5.IN25
 data_in_7[15] => Add5.IN26
 data_in_7[15] => Add5.IN27
 data_in_7[15] => Add5.IN44
-data_in_7[15] => Equal6.IN0
 data_in_8[0] => Add6.IN44
-data_in_8[0] => Equal7.IN15
 data_in_8[1] => Add6.IN43
-data_in_8[1] => Equal7.IN14
 data_in_8[2] => Add6.IN42
-data_in_8[2] => Equal7.IN13
 data_in_8[3] => Add6.IN41
-data_in_8[3] => Equal7.IN12
 data_in_8[4] => Add6.IN40
-data_in_8[4] => Equal7.IN11
 data_in_8[5] => Add6.IN39
-data_in_8[5] => Equal7.IN10
 data_in_8[6] => Add6.IN38
-data_in_8[6] => Equal7.IN9
 data_in_8[7] => Add6.IN37
-data_in_8[7] => Equal7.IN8
 data_in_8[8] => Add6.IN36
-data_in_8[8] => Equal7.IN7
 data_in_8[9] => Add6.IN35
-data_in_8[9] => Equal7.IN6
 data_in_8[10] => Add6.IN34
-data_in_8[10] => Equal7.IN5
 data_in_8[11] => Add6.IN33
-data_in_8[11] => Equal7.IN4
 data_in_8[12] => Add6.IN32
-data_in_8[12] => Equal7.IN3
 data_in_8[13] => Add6.IN31
-data_in_8[13] => Equal7.IN2
 data_in_8[14] => Add6.IN30
-data_in_8[14] => Equal7.IN1
 data_in_8[15] => Add6.IN23
 data_in_8[15] => Add6.IN24
 data_in_8[15] => Add6.IN25
@@ -697,37 +562,21 @@ data_in_8[15] => Add6.IN27
 data_in_8[15] => Add6.IN28
 data_in_8[15] => Add6.IN29
 data_in_8[15] => Add6.IN46
-data_in_8[15] => Equal7.IN0
 data_in_9[0] => Add7.IN46
-data_in_9[0] => Equal8.IN15
 data_in_9[1] => Add7.IN45
-data_in_9[1] => Equal8.IN14
 data_in_9[2] => Add7.IN44
-data_in_9[2] => Equal8.IN13
 data_in_9[3] => Add7.IN43
-data_in_9[3] => Equal8.IN12
 data_in_9[4] => Add7.IN42
-data_in_9[4] => Equal8.IN11
 data_in_9[5] => Add7.IN41
-data_in_9[5] => Equal8.IN10
 data_in_9[6] => Add7.IN40
-data_in_9[6] => Equal8.IN9
 data_in_9[7] => Add7.IN39
-data_in_9[7] => Equal8.IN8
 data_in_9[8] => Add7.IN38
-data_in_9[8] => Equal8.IN7
 data_in_9[9] => Add7.IN37
-data_in_9[9] => Equal8.IN6
 data_in_9[10] => Add7.IN36
-data_in_9[10] => Equal8.IN5
 data_in_9[11] => Add7.IN35
-data_in_9[11] => Equal8.IN4
 data_in_9[12] => Add7.IN34
-data_in_9[12] => Equal8.IN3
 data_in_9[13] => Add7.IN33
-data_in_9[13] => Equal8.IN2
 data_in_9[14] => Add7.IN32
-data_in_9[14] => Equal8.IN1
 data_in_9[15] => Add7.IN24
 data_in_9[15] => Add7.IN25
 data_in_9[15] => Add7.IN26
@@ -737,37 +586,21 @@ data_in_9[15] => Add7.IN29
 data_in_9[15] => Add7.IN30
 data_in_9[15] => Add7.IN31
 data_in_9[15] => Add7.IN48
-data_in_9[15] => Equal8.IN0
 data_in_1_0[0] => Add8.IN48
-data_in_1_0[0] => Equal9.IN15
 data_in_1_0[1] => Add8.IN47
-data_in_1_0[1] => Equal9.IN14
 data_in_1_0[2] => Add8.IN46
-data_in_1_0[2] => Equal9.IN13
 data_in_1_0[3] => Add8.IN45
-data_in_1_0[3] => Equal9.IN12
 data_in_1_0[4] => Add8.IN44
-data_in_1_0[4] => Equal9.IN11
 data_in_1_0[5] => Add8.IN43
-data_in_1_0[5] => Equal9.IN10
 data_in_1_0[6] => Add8.IN42
-data_in_1_0[6] => Equal9.IN9
 data_in_1_0[7] => Add8.IN41
-data_in_1_0[7] => Equal9.IN8
 data_in_1_0[8] => Add8.IN40
-data_in_1_0[8] => Equal9.IN7
 data_in_1_0[9] => Add8.IN39
-data_in_1_0[9] => Equal9.IN6
 data_in_1_0[10] => Add8.IN38
-data_in_1_0[10] => Equal9.IN5
 data_in_1_0[11] => Add8.IN37
-data_in_1_0[11] => Equal9.IN4
 data_in_1_0[12] => Add8.IN36
-data_in_1_0[12] => Equal9.IN3
 data_in_1_0[13] => Add8.IN35
-data_in_1_0[13] => Equal9.IN2
 data_in_1_0[14] => Add8.IN34
-data_in_1_0[14] => Equal9.IN1
 data_in_1_0[15] => Add8.IN25
 data_in_1_0[15] => Add8.IN26
 data_in_1_0[15] => Add8.IN27
@@ -778,37 +611,21 @@ data_in_1_0[15] => Add8.IN31
 data_in_1_0[15] => Add8.IN32
 data_in_1_0[15] => Add8.IN33
 data_in_1_0[15] => Add8.IN50
-data_in_1_0[15] => Equal9.IN0
 data_in_1_1[0] => Add9.IN50
-data_in_1_1[0] => Equal10.IN15
 data_in_1_1[1] => Add9.IN49
-data_in_1_1[1] => Equal10.IN14
 data_in_1_1[2] => Add9.IN48
-data_in_1_1[2] => Equal10.IN13
 data_in_1_1[3] => Add9.IN47
-data_in_1_1[3] => Equal10.IN12
 data_in_1_1[4] => Add9.IN46
-data_in_1_1[4] => Equal10.IN11
 data_in_1_1[5] => Add9.IN45
-data_in_1_1[5] => Equal10.IN10
 data_in_1_1[6] => Add9.IN44
-data_in_1_1[6] => Equal10.IN9
 data_in_1_1[7] => Add9.IN43
-data_in_1_1[7] => Equal10.IN8
 data_in_1_1[8] => Add9.IN42
-data_in_1_1[8] => Equal10.IN7
 data_in_1_1[9] => Add9.IN41
-data_in_1_1[9] => Equal10.IN6
 data_in_1_1[10] => Add9.IN40
-data_in_1_1[10] => Equal10.IN5
 data_in_1_1[11] => Add9.IN39
-data_in_1_1[11] => Equal10.IN4
 data_in_1_1[12] => Add9.IN38
-data_in_1_1[12] => Equal10.IN3
 data_in_1_1[13] => Add9.IN37
-data_in_1_1[13] => Equal10.IN2
 data_in_1_1[14] => Add9.IN36
-data_in_1_1[14] => Equal10.IN1
 data_in_1_1[15] => Add9.IN26
 data_in_1_1[15] => Add9.IN27
 data_in_1_1[15] => Add9.IN28
@@ -820,37 +637,21 @@ data_in_1_1[15] => Add9.IN33
 data_in_1_1[15] => Add9.IN34
 data_in_1_1[15] => Add9.IN35
 data_in_1_1[15] => Add9.IN52
-data_in_1_1[15] => Equal10.IN0
 data_in_1_2[0] => Add10.IN52
-data_in_1_2[0] => Equal11.IN15
 data_in_1_2[1] => Add10.IN51
-data_in_1_2[1] => Equal11.IN14
 data_in_1_2[2] => Add10.IN50
-data_in_1_2[2] => Equal11.IN13
 data_in_1_2[3] => Add10.IN49
-data_in_1_2[3] => Equal11.IN12
 data_in_1_2[4] => Add10.IN48
-data_in_1_2[4] => Equal11.IN11
 data_in_1_2[5] => Add10.IN47
-data_in_1_2[5] => Equal11.IN10
 data_in_1_2[6] => Add10.IN46
-data_in_1_2[6] => Equal11.IN9
 data_in_1_2[7] => Add10.IN45
-data_in_1_2[7] => Equal11.IN8
 data_in_1_2[8] => Add10.IN44
-data_in_1_2[8] => Equal11.IN7
 data_in_1_2[9] => Add10.IN43
-data_in_1_2[9] => Equal11.IN6
 data_in_1_2[10] => Add10.IN42
-data_in_1_2[10] => Equal11.IN5
 data_in_1_2[11] => Add10.IN41
-data_in_1_2[11] => Equal11.IN4
 data_in_1_2[12] => Add10.IN40
-data_in_1_2[12] => Equal11.IN3
 data_in_1_2[13] => Add10.IN39
-data_in_1_2[13] => Equal11.IN2
 data_in_1_2[14] => Add10.IN38
-data_in_1_2[14] => Equal11.IN1
 data_in_1_2[15] => Add10.IN27
 data_in_1_2[15] => Add10.IN28
 data_in_1_2[15] => Add10.IN29
@@ -863,37 +664,21 @@ data_in_1_2[15] => Add10.IN35
 data_in_1_2[15] => Add10.IN36
 data_in_1_2[15] => Add10.IN37
 data_in_1_2[15] => Add10.IN54
-data_in_1_2[15] => Equal11.IN0
 data_in_1_3[0] => Add11.IN54
-data_in_1_3[0] => Equal12.IN15
 data_in_1_3[1] => Add11.IN53
-data_in_1_3[1] => Equal12.IN14
 data_in_1_3[2] => Add11.IN52
-data_in_1_3[2] => Equal12.IN13
 data_in_1_3[3] => Add11.IN51
-data_in_1_3[3] => Equal12.IN12
 data_in_1_3[4] => Add11.IN50
-data_in_1_3[4] => Equal12.IN11
 data_in_1_3[5] => Add11.IN49
-data_in_1_3[5] => Equal12.IN10
 data_in_1_3[6] => Add11.IN48
-data_in_1_3[6] => Equal12.IN9
 data_in_1_3[7] => Add11.IN47
-data_in_1_3[7] => Equal12.IN8
 data_in_1_3[8] => Add11.IN46
-data_in_1_3[8] => Equal12.IN7
 data_in_1_3[9] => Add11.IN45
-data_in_1_3[9] => Equal12.IN6
 data_in_1_3[10] => Add11.IN44
-data_in_1_3[10] => Equal12.IN5
 data_in_1_3[11] => Add11.IN43
-data_in_1_3[11] => Equal12.IN4
 data_in_1_3[12] => Add11.IN42
-data_in_1_3[12] => Equal12.IN3
 data_in_1_3[13] => Add11.IN41
-data_in_1_3[13] => Equal12.IN2
 data_in_1_3[14] => Add11.IN40
-data_in_1_3[14] => Equal12.IN1
 data_in_1_3[15] => Add11.IN28
 data_in_1_3[15] => Add11.IN29
 data_in_1_3[15] => Add11.IN30
@@ -906,23 +691,22 @@ data_in_1_3[15] => Add11.IN36
 data_in_1_3[15] => Add11.IN37
 data_in_1_3[15] => Add11.IN38
 data_in_1_3[15] => Add11.IN39
-data_in_1_3[15] => Equal12.IN0
-data_out[0] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[1] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[2] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[3] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[4] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[5] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[6] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[7] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[8] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[9] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[10] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[11] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[12] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[13] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[14] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
-data_out[15] <= Div0.DB_MAX_OUTPUT_PORT_TYPE
+data_out[0] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[1] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[2] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[3] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[4] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[5] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[6] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[7] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[8] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[9] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[10] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[11] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[12] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[13] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[14] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
+data_out[15] <= Add12.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |TOP|PIANO_BLOCK:inst|PIANO_MOD_NEW:inst
@@ -15708,15 +15492,15 @@ result[18] <= <VCC>
 result[19] <= <GND>
 
 
-|TOP|LooperMemController:inst7
+|TOP|LooperMemController:inst6
 MetReset <= LooperSM:inst3.MetRESET
 resetN => recorder_module_looper:inst.resetN
 resetN => LooperSM:inst3.ResetN
-resetN => KBD_MOD_looper:inst2.RESET
+resetN => KBD_MOD_looper:inst5.RESET
 resetN => Looper_integrator:inst6.resetN
 CLOCK_50 => recorder_module_looper:inst.CLOCK_50
 CLOCK_50 => LooperSM:inst3.clk
-CLOCK_50 => KBD_MOD_looper:inst2.CLK
+CLOCK_50 => KBD_MOD_looper:inst5.CLK
 CLOCK_50 => Looper_integrator:inst6.clk
 DataIn[0] => recorder_module_looper:inst.Data_in[0]
 DataIn[1] => recorder_module_looper:inst.Data_in[1]
@@ -15734,9 +15518,10 @@ DataIn[12] => recorder_module_looper:inst.Data_in[12]
 DataIn[13] => recorder_module_looper:inst.Data_in[13]
 DataIn[14] => recorder_module_looper:inst.Data_in[14]
 DataIn[15] => recorder_module_looper:inst.Data_in[15]
-KBD_CLK => KBD_MOD_looper:inst2.KBD_CLK
-KBD_DAT => KBD_MOD_looper:inst2.KBD_DAT
+KBD_CLK => KBD_MOD_looper:inst5.KBD_CLK
+KBD_DAT => KBD_MOD_looper:inst5.KBD_DAT
 MetBarEndB => LooperSM:inst3.MetBarEND
+metMode <= LooperSM:inst3.metModeSM
 chHasTrackVGA[0] <= LooperSM:inst3.chHasTrackVGA[0]
 chHasTrackVGA[1] <= LooperSM:inst3.chHasTrackVGA[1]
 chHasTrackVGA[2] <= LooperSM:inst3.chHasTrackVGA[2]
@@ -15749,9 +15534,9 @@ chRecordingVGA[0] <= LooperSM:inst3.chRecordingVGA[0]
 chRecordingVGA[1] <= LooperSM:inst3.chRecordingVGA[1]
 chRecordingVGA[2] <= LooperSM:inst3.chRecordingVGA[2]
 chRecordingVGA[3] <= LooperSM:inst3.chRecordingVGA[3]
-currState_debug[0] <= LooperSM:inst3.CurrState[0]
-currState_debug[1] <= LooperSM:inst3.CurrState[1]
-currState_debug[2] <= LooperSM:inst3.CurrState[2]
+curr_state[0] <= LooperSM:inst3.CurrState[0]
+curr_state[1] <= LooperSM:inst3.CurrState[1]
+curr_state[2] <= LooperSM:inst3.CurrState[2]
 DataOut[0] <= Looper_integrator:inst6.dout[0]
 DataOut[1] <= Looper_integrator:inst6.dout[1]
 DataOut[2] <= Looper_integrator:inst6.dout[2]
@@ -15770,7 +15555,7 @@ DataOut[14] <= Looper_integrator:inst6.dout[14]
 DataOut[15] <= Looper_integrator:inst6.dout[15]
 
 
-|TOP|LooperMemController:inst7|LooperSM:inst3
+|TOP|LooperMemController:inst6|LooperSM:inst3
 enable => arch_MetRESET.OUTPUTSELECT
 enable => stateNum.OUTPUTSELECT
 enable => stateNum.OUTPUTSELECT
@@ -16384,6 +16169,7 @@ KB_PLAY => state.OUTPUTSELECT
 KB_PLAY => recCounter.OUTPUTSELECT
 KB_PLAY => recCounter.OUTPUTSELECT
 KB_PLAY => recCounter.OUTPUTSELECT
+KB_PLAY => arch_loop_start.OUTPUTSELECT
 KB_PLAY => arch_Ch0ACT.OUTPUTSELECT
 KB_PLAY => arch_Ch1ACT.OUTPUTSELECT
 KB_PLAY => arch_Ch2ACT.OUTPUTSELECT
@@ -16392,9 +16178,9 @@ KB_PLAY => ch0HT.OUTPUTSELECT
 KB_PLAY => ch1HT.OUTPUTSELECT
 KB_PLAY => ch2HT.OUTPUTSELECT
 KB_PLAY => ch3HT.OUTPUTSELECT
-KB_PLAY => arch_loop_start.OUTPUTSELECT
 KB_PLAY => process_0.IN1
 KB_REC => process_0.IN1
+KB_REC => MetBarENDTOKEN.OUTPUTSELECT
 KB_REC => arch_recSel.OUTPUTSELECT
 KB_REC => arch_recSel.OUTPUTSELECT
 KB_REC => state.OUTPUTSELECT
@@ -16416,6 +16202,7 @@ KB_REC => MetBarENDTOKEN.OUTPUTSELECT
 KB_REC => recCounter.OUTPUTSELECT
 KB_REC => recCounter.OUTPUTSELECT
 KB_REC => recCounter.OUTPUTSELECT
+KB_REC => arch_loop_start.OUTPUTSELECT
 KB_REC => arch_Ch0ACT.OUTPUTSELECT
 KB_REC => arch_Ch1ACT.OUTPUTSELECT
 KB_REC => arch_Ch2ACT.OUTPUTSELECT
@@ -16424,8 +16211,7 @@ KB_REC => ch0HT.OUTPUTSELECT
 KB_REC => ch1HT.OUTPUTSELECT
 KB_REC => ch2HT.OUTPUTSELECT
 KB_REC => ch3HT.OUTPUTSELECT
-KB_REC => arch_loop_start.OUTPUTSELECT
-KB_REC => Selector162.IN3
+KB_REC => Selector161.IN3
 KB_STOP => process_0.IN1
 KB_STOP => state.OUTPUTSELECT
 KB_STOP => state.OUTPUTSELECT
@@ -16436,6 +16222,7 @@ KB_STOP => state.OUTPUTSELECT
 KB_STOP => recCounter.OUTPUTSELECT
 KB_STOP => recCounter.OUTPUTSELECT
 KB_STOP => recCounter.OUTPUTSELECT
+KB_STOP => arch_loop_start.OUTPUTSELECT
 KB_STOP => arch_Ch0ACT.OUTPUTSELECT
 KB_STOP => arch_Ch1ACT.OUTPUTSELECT
 KB_STOP => arch_Ch2ACT.OUTPUTSELECT
@@ -16444,7 +16231,6 @@ KB_STOP => ch0HT.OUTPUTSELECT
 KB_STOP => ch1HT.OUTPUTSELECT
 KB_STOP => ch2HT.OUTPUTSELECT
 KB_STOP => ch3HT.OUTPUTSELECT
-KB_STOP => arch_loop_start.OUTPUTSELECT
 KB_STOP => state.OUTPUTSELECT
 KB_STOP => state.OUTPUTSELECT
 KB_STOP => state.OUTPUTSELECT
@@ -16598,6 +16384,7 @@ KB_ClearCH => state.OUTPUTSELECT
 KB_ClearCH => recCounter.OUTPUTSELECT
 KB_ClearCH => recCounter.OUTPUTSELECT
 KB_ClearCH => recCounter.OUTPUTSELECT
+KB_ClearCH => arch_loop_start.OUTPUTSELECT
 KB_ClearCH => arch_Ch0ACT.OUTPUTSELECT
 KB_ClearCH => arch_Ch1ACT.OUTPUTSELECT
 KB_ClearCH => arch_Ch2ACT.OUTPUTSELECT
@@ -16606,7 +16393,6 @@ KB_ClearCH => ch0HT.OUTPUTSELECT
 KB_ClearCH => ch1HT.OUTPUTSELECT
 KB_ClearCH => ch2HT.OUTPUTSELECT
 KB_ClearCH => ch3HT.OUTPUTSELECT
-KB_ClearCH => arch_loop_start.OUTPUTSELECT
 KB_ALLPLAY => process_0.IN1
 KB_ALLPLAY => process_0.IN1
 MetMode => process_0.IN1
@@ -16907,9 +16693,10 @@ chRecordingVGA[0] <= arch_chRecordingVGA[0].DB_MAX_OUTPUT_PORT_TYPE
 chRecordingVGA[1] <= arch_chRecordingVGA[1].DB_MAX_OUTPUT_PORT_TYPE
 chRecordingVGA[2] <= arch_chRecordingVGA[2].DB_MAX_OUTPUT_PORT_TYPE
 chRecordingVGA[3] <= arch_chRecordingVGA[3].DB_MAX_OUTPUT_PORT_TYPE
+metModeSM <= arch_MetModeFlag.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst
+|TOP|LooperMemController:inst6|recorder_module_looper:inst
 enable <= prescaler_loop:inst4.prescaler_1
 CLOCK_50 => prescaler_loop:inst4.CLK_IN
 CLOCK_50 => addr_counter_zero:inst2.CLK_IN
@@ -16973,7 +16760,7 @@ Data_in[14] => dpram:inst1.data[14]
 Data_in[15] => dpram:inst1.data[15]
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|prescaler_loop:inst4
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|prescaler_loop:inst4
 CLK_IN => prescaler_2~reg0.CLK
 CLK_IN => PRESCALER_COUNTER[0].CLK
 CLK_IN => PRESCALER_COUNTER[1].CLK
@@ -17057,7 +16844,7 @@ prescaler_1 <= prescaler_1_t.DB_MAX_OUTPUT_PORT_TYPE
 prescaler_2 <= prescaler_2~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|LPM_CONSTANT:inst
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|LPM_CONSTANT:inst
 result[0] <= <VCC>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -17071,7 +16858,7 @@ result[9] <= <VCC>
 result[10] <= <VCC>
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|addr_counter_zero:inst2
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|addr_counter_zero:inst2
 resetN => sig[0].ACLR
 resetN => sig[1].ACLR
 resetN => sig[2].ACLR
@@ -17226,7 +17013,7 @@ addr[16] <= sig[16].DB_MAX_OUTPUT_PORT_TYPE
 addr[17] <= sig[17].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1
 clock => altsyncram:altsyncram_component.clock0
 data[0] => altsyncram:altsyncram_component.data_a[0]
 data[1] => altsyncram:altsyncram_component.data_a[1]
@@ -17300,7 +17087,7 @@ q[14] <= altsyncram:altsyncram_component.q_b[14]
 q[15] <= altsyncram:altsyncram_component.q_b[15]
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component
 wren_a => altsyncram_o6v3:auto_generated.wren_a
 rden_a => ~NO_FANOUT~
 wren_b => ~NO_FANOUT~
@@ -17422,7 +17209,7 @@ eccstatus[1] <= <GND>
 eccstatus[2] <= <GND>
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated
 address_a[0] => ram_block1a0.PORTAADDR
 address_a[0] => ram_block1a1.PORTAADDR
 address_a[0] => ram_block1a2.PORTAADDR
@@ -32327,7 +32114,7 @@ wren_a => decode_sma:decode2.enable
 wren_a => decode_sma:wren_decode_a.enable
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:decode2
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:decode2
 data[0] => w_anode4329w[1].IN0
 data[0] => w_anode4346w[1].IN1
 data[0] => w_anode4356w[1].IN0
@@ -32470,7 +32257,7 @@ eq[30] <= w_anode4670w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[31] <= w_anode4680w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:rden_decode_b
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:rden_decode_b
 data[0] => w_anode4329w[1].IN0
 data[0] => w_anode4346w[1].IN1
 data[0] => w_anode4356w[1].IN0
@@ -32613,7 +32400,7 @@ eq[30] <= w_anode4670w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[31] <= w_anode4680w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:wren_decode_a
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|decode_sma:wren_decode_a
 data[0] => w_anode4329w[1].IN0
 data[0] => w_anode4346w[1].IN1
 data[0] => w_anode4356w[1].IN0
@@ -32756,7 +32543,7 @@ eq[30] <= w_anode4670w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[31] <= w_anode4680w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|mux_rib:mux3
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|dpram:inst1|altsyncram:altsyncram_component|altsyncram_o6v3:auto_generated|mux_rib:mux3
 data[0] => l1_w0_n0_mux_dataout.IN1
 data[1] => l1_w1_n0_mux_dataout.IN1
 data[2] => l1_w2_n0_mux_dataout.IN1
@@ -34279,7 +34066,7 @@ sel[4] => l5_w9_n0_mux_dataout.IN0
 sel[4] => _.IN0
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|LPM_COMPARE:inst24
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|LPM_COMPARE:inst24
 dataa[0] => cmpr_ihd:auto_generated.dataa[0]
 dataa[1] => cmpr_ihd:auto_generated.dataa[1]
 datab[0] => cmpr_ihd:auto_generated.datab[0]
@@ -34295,7 +34082,7 @@ aneb <= <GND>
 ageb <= <GND>
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|LPM_COMPARE:inst24|cmpr_ihd:auto_generated
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|LPM_COMPARE:inst24|cmpr_ihd:auto_generated
 aeb <= aeb_result_wire[0].DB_MAX_OUTPUT_PORT_TYPE
 dataa[0] => aneb_result_wire[0].IN0
 dataa[1] => aneb_result_wire[0].IN0
@@ -34303,11 +34090,11 @@ datab[0] => aneb_result_wire[0].IN1
 datab[1] => aneb_result_wire[0].IN1
 
 
-|TOP|LooperMemController:inst7|recorder_module_looper:inst|LPM_CONSTANT:inst3
+|TOP|LooperMemController:inst6|recorder_module_looper:inst|LPM_CONSTANT:inst3
 result[0] <= <VCC>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5
 play <= mux_loop_TEST:inst.play_out
 RESET => mux_loop_TEST:inst.resetN
 RESET => KEY_NOTE_3:inst33.resetN
@@ -34326,8 +34113,8 @@ RESET => KEY_NOTE_3:inst27.resetN
 RESET => KEY_NOTE_3:inst26.resetN
 RESET => KEY_NOTE_3:inst25.resetN
 RESET => KEY_NOTE_3:inst24.resetN
-RESET => KEY_NOTE_3:inst38.resetN
-RESET => KEY_NOTE_3:inst36.resetN
+RESET => KEY_NOTE_3:inst1.resetN
+RESET => KEY_NOTE_4:inst36.resetN
 CLK => mux_loop_TEST:inst.clk
 CLK => KEY_NOTE_3:inst33.clk
 CLK => KEY_NOTE_3:inst32.clk
@@ -34345,8 +34132,8 @@ CLK => KEY_NOTE_3:inst27.clk
 CLK => KEY_NOTE_3:inst26.clk
 CLK => KEY_NOTE_3:inst25.clk
 CLK => KEY_NOTE_3:inst24.clk
-CLK => KEY_NOTE_3:inst38.clk
-CLK => KEY_NOTE_3:inst36.clk
+CLK => KEY_NOTE_3:inst1.clk
+CLK => KEY_NOTE_4:inst36.clk
 KBD_CLK => KEY_NOTE_3:inst33.KBD_CLK
 KBD_CLK => KEY_NOTE_3:inst32.KBD_CLK
 KBD_CLK => KEY_NOTE_3:inst31.KBD_CLK
@@ -34363,8 +34150,8 @@ KBD_CLK => KEY_NOTE_3:inst27.KBD_CLK
 KBD_CLK => KEY_NOTE_3:inst26.KBD_CLK
 KBD_CLK => KEY_NOTE_3:inst25.KBD_CLK
 KBD_CLK => KEY_NOTE_3:inst24.KBD_CLK
-KBD_CLK => KEY_NOTE_3:inst38.KBD_CLK
-KBD_CLK => KEY_NOTE_3:inst36.KBD_CLK
+KBD_CLK => KEY_NOTE_3:inst1.KBD_CLK
+KBD_CLK => KEY_NOTE_4:inst36.KBD_CLK
 KBD_DAT => KEY_NOTE_3:inst33.KBD_DAT
 KBD_DAT => KEY_NOTE_3:inst32.KBD_DAT
 KBD_DAT => KEY_NOTE_3:inst31.KBD_DAT
@@ -34381,8 +34168,8 @@ KBD_DAT => KEY_NOTE_3:inst27.KBD_DAT
 KBD_DAT => KEY_NOTE_3:inst26.KBD_DAT
 KBD_DAT => KEY_NOTE_3:inst25.KBD_DAT
 KBD_DAT => KEY_NOTE_3:inst24.KBD_DAT
-KBD_DAT => KEY_NOTE_3:inst38.KBD_DAT
-KBD_DAT => KEY_NOTE_3:inst36.KBD_DAT
+KBD_DAT => KEY_NOTE_3:inst1.KBD_DAT
+KBD_DAT => KEY_NOTE_4:inst36.KBD_DAT
 recieved => KEY_NOTE_3:inst33.recived
 recieved => KEY_NOTE_3:inst32.recived
 recieved => KEY_NOTE_3:inst31.recived
@@ -34399,18 +34186,17 @@ recieved => KEY_NOTE_3:inst27.recived
 recieved => KEY_NOTE_3:inst26.recived
 recieved => KEY_NOTE_3:inst25.recived
 recieved => KEY_NOTE_3:inst24.recived
-recieved => KEY_NOTE_3:inst38.recived
-recieved => KEY_NOTE_3:inst36.recived
+recieved => KEY_NOTE_3:inst1.recived
 rec <= mux_loop_TEST:inst.rec_out
 stop <= mux_loop_TEST:inst.stop_out
 clear <= mux_loop_TEST:inst.clear_out
-metronom_on/off <= KEY_NOTE_3:inst38.PRESSED
 play_all <= PlayAll.DB_MAX_OUTPUT_PORT_TYPE
+met_mode_ON/OFF <= KEY_NOTE_4:inst36.PRESSED
 channel[0] <= mux_loop_TEST:inst.channel_out[0]
 channel[1] <= mux_loop_TEST:inst.channel_out[1]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|mux_loop_TEST:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|mux_loop_TEST:inst
 resetN => channel_sig[0].ACLR
 resetN => channel_sig[1].ACLR
 resetN => clear_sig.ACLR
@@ -34501,7 +34287,7 @@ stop_out <= stop_sig.DB_MAX_OUTPUT_PORT_TYPE
 clear_out <= clear_sig.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -34524,7 +34310,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -34553,7 +34339,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -34636,7 +34422,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -34731,7 +34517,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst33|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst33|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -34746,7 +34532,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst34
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst34
 result[0] <= <GND>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -34757,7 +34543,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -34780,7 +34566,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -34809,7 +34595,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -34892,7 +34678,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -34987,7 +34773,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst32|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst32|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -35002,7 +34788,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst35
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst35
 result[0] <= <VCC>
 result[1] <= <VCC>
 result[2] <= <GND>
@@ -35013,7 +34799,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -35036,7 +34822,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -35065,7 +34851,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35148,7 +34934,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35243,7 +35029,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst31|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst31|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -35258,7 +35044,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst13
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst13
 result[0] <= <GND>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -35269,7 +35055,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -35292,7 +35078,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -35321,7 +35107,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35404,7 +35190,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35499,7 +35285,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst30|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst30|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -35514,7 +35300,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst12
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst12
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -35525,7 +35311,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -35548,7 +35334,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -35577,7 +35363,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35660,7 +35446,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35755,7 +35541,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst19|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst19|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -35770,7 +35556,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst6
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst6
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -35781,7 +35567,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -35804,7 +35590,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -35833,7 +35619,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -35916,7 +35702,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36011,7 +35797,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst18|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst18|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -36026,7 +35812,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst3
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -36037,7 +35823,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -36060,7 +35846,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -36089,7 +35875,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36172,7 +35958,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36267,7 +36053,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst17|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst17|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -36282,7 +36068,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst4
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst4
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -36293,7 +36079,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -36316,7 +36102,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -36345,7 +36131,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36428,7 +36214,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36523,7 +36309,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst16|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst16|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -36538,7 +36324,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst2
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -36549,7 +36335,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -36572,7 +36358,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -36601,7 +36387,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36684,7 +36470,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36779,7 +36565,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst23|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst23|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -36794,7 +36580,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst15
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst15
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -36805,7 +36591,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -36828,7 +36614,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -36857,7 +36643,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -36940,7 +36726,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37035,7 +36821,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst22|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst22|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -37050,7 +36836,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst14
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst14
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -37061,7 +36847,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -37084,7 +36870,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -37113,7 +36899,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37196,7 +36982,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37291,7 +37077,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst21|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst21|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -37306,7 +37092,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst9
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst9
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -37317,7 +37103,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -37340,7 +37126,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -37369,7 +37155,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37452,7 +37238,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37547,7 +37333,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst20|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst20|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -37562,7 +37348,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst8
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst8
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <VCC>
@@ -37573,7 +37359,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -37596,7 +37382,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -37625,7 +37411,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37708,7 +37494,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37803,7 +37589,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst27|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst27|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -37818,7 +37604,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst28
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst28
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -37829,7 +37615,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -37852,7 +37638,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -37881,7 +37667,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -37964,7 +37750,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38059,7 +37845,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst26|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst26|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -38074,7 +37860,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst29
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst29
 result[0] <= <GND>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -38085,7 +37871,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -38108,7 +37894,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -38137,7 +37923,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38220,7 +38006,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38315,7 +38101,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst25|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst25|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -38330,7 +38116,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst11
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst11
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -38341,7 +38127,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -38364,7 +38150,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -38393,7 +38179,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38476,7 +38262,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38571,7 +38357,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst24|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst24|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -38586,7 +38372,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst10
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst10
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <VCC>
@@ -38597,7 +38383,7 @@ result[6] <= <GND>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1
 PRESSED <= KEY_recived:inst.dout
 resetN => KEY_recived:inst.resetN
 resetN => byterec:inst3.resetN
@@ -38620,7 +38406,7 @@ KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38|KEY_recived:inst
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1|KEY_recived:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -38649,7 +38435,7 @@ recived => out_X.OUTPUTSELECT
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38|byterec:inst3
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38732,7 +38518,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38|bitrec:inst2
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -38827,7 +38613,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst38|lpf:cleaner
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_3:inst1|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -38842,7 +38628,260 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst39
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst37
+result[0] <= <VCC>
+result[1] <= <GND>
+result[2] <= <GND>
+result[3] <= <VCC>
+result[4] <= <GND>
+result[5] <= <VCC>
+result[6] <= <GND>
+result[7] <= <GND>
+
+
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36
+PRESSED <= KEY_recived_2:inst.dout
+resetN => KEY_recived_2:inst.resetN
+resetN => byterec:inst3.resetN
+resetN => bitrec:inst2.resetN
+resetN => lpf:cleaner.resetN
+clk => KEY_recived_2:inst.clk
+clk => byterec:inst3.clk
+clk => bitrec:inst2.clk
+clk => lpf:cleaner.clk
+KBD_CLK => lpf:cleaner.din
+KBD_DAT => bitrec:inst2.kbd_dat
+recived => KEY_recived_2:inst.recived
+KEY_CODE[0] => KEY_recived_2:inst.KEY_CODE[0]
+KEY_CODE[1] => KEY_recived_2:inst.KEY_CODE[1]
+KEY_CODE[2] => KEY_recived_2:inst.KEY_CODE[2]
+KEY_CODE[3] => KEY_recived_2:inst.KEY_CODE[3]
+KEY_CODE[4] => KEY_recived_2:inst.KEY_CODE[4]
+KEY_CODE[5] => KEY_recived_2:inst.KEY_CODE[5]
+KEY_CODE[6] => KEY_recived_2:inst.KEY_CODE[6]
+KEY_CODE[7] => KEY_recived_2:inst.KEY_CODE[7]
+
+
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36|KEY_recived_2:inst
+resetN => pressed.ACLR
+clk => pressed.CLK
+din[0] => Equal0.IN7
+din[1] => Equal0.IN6
+din[2] => Equal0.IN5
+din[3] => Equal0.IN4
+din[4] => Equal0.IN3
+din[5] => Equal0.IN2
+din[6] => Equal0.IN1
+din[7] => Equal0.IN0
+din[8] => ~NO_FANOUT~
+KEY_CODE[0] => Equal0.IN15
+KEY_CODE[1] => Equal0.IN14
+KEY_CODE[2] => Equal0.IN13
+KEY_CODE[3] => Equal0.IN12
+KEY_CODE[4] => Equal0.IN11
+KEY_CODE[5] => Equal0.IN10
+KEY_CODE[6] => Equal0.IN9
+KEY_CODE[7] => Equal0.IN8
+make => process_0.IN1
+break => ~NO_FANOUT~
+recived => ~NO_FANOUT~
+dout <= pressed.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36|byterec:inst3
+resetN => dout[0]~reg0.ACLR
+resetN => dout[1]~reg0.ACLR
+resetN => dout[2]~reg0.ACLR
+resetN => dout[3]~reg0.ACLR
+resetN => dout[4]~reg0.ACLR
+resetN => dout[5]~reg0.ACLR
+resetN => dout[6]~reg0.ACLR
+resetN => dout[7]~reg0.ACLR
+resetN => dout[8]~reg0.ACLR
+resetN => present_state~3.DATAIN
+clk => dout[0]~reg0.CLK
+clk => dout[1]~reg0.CLK
+clk => dout[2]~reg0.CLK
+clk => dout[3]~reg0.CLK
+clk => dout[4]~reg0.CLK
+clk => dout[5]~reg0.CLK
+clk => dout[6]~reg0.CLK
+clk => dout[7]~reg0.CLK
+clk => dout[8]~reg0.CLK
+clk => present_state~1.DATAIN
+din_new => next_state.OUTPUTSELECT
+din_new => next_state.OUTPUTSELECT
+din_new => next_state.OUTPUTSELECT
+din_new => next_state.OUTPUTSELECT
+din_new => next_state.OUTPUTSELECT
+din_new => next_state.OUTPUTSELECT
+din_new => Selector1.IN2
+din_new => Selector2.IN2
+din_new => Selector3.IN2
+din[0] => LessThan0.IN16
+din[0] => LessThan1.IN16
+din[0] => Equal0.IN15
+din[0] => Equal1.IN15
+din[0] => dout[0]~reg0.DATAIN
+din[1] => LessThan0.IN15
+din[1] => LessThan1.IN15
+din[1] => Equal0.IN14
+din[1] => Equal1.IN14
+din[1] => dout[1]~reg0.DATAIN
+din[2] => LessThan0.IN14
+din[2] => LessThan1.IN14
+din[2] => Equal0.IN13
+din[2] => Equal1.IN13
+din[2] => dout[2]~reg0.DATAIN
+din[3] => LessThan0.IN13
+din[3] => LessThan1.IN13
+din[3] => Equal0.IN12
+din[3] => Equal1.IN12
+din[3] => dout[3]~reg0.DATAIN
+din[4] => LessThan0.IN12
+din[4] => LessThan1.IN12
+din[4] => Equal0.IN11
+din[4] => Equal1.IN11
+din[4] => dout[4]~reg0.DATAIN
+din[5] => LessThan0.IN11
+din[5] => LessThan1.IN11
+din[5] => Equal0.IN10
+din[5] => Equal1.IN10
+din[5] => dout[5]~reg0.DATAIN
+din[6] => LessThan0.IN10
+din[6] => LessThan1.IN10
+din[6] => Equal0.IN9
+din[6] => Equal1.IN9
+din[6] => dout[6]~reg0.DATAIN
+din[7] => LessThan0.IN9
+din[7] => LessThan1.IN9
+din[7] => Equal0.IN8
+din[7] => Equal1.IN8
+din[7] => dout[7]~reg0.DATAIN
+make <= make.DB_MAX_OUTPUT_PORT_TYPE
+break <= break.DB_MAX_OUTPUT_PORT_TYPE
+dout[0] <= dout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[1] <= dout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[2] <= dout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[3] <= dout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[4] <= dout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[5] <= dout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36|bitrec:inst2
+resetN => dout[0]~reg0.ACLR
+resetN => dout[1]~reg0.ACLR
+resetN => dout[2]~reg0.ACLR
+resetN => dout[3]~reg0.ACLR
+resetN => dout[4]~reg0.ACLR
+resetN => dout[5]~reg0.ACLR
+resetN => dout[6]~reg0.ACLR
+resetN => dout[7]~reg0.ACLR
+resetN => dout_new~reg0.ACLR
+resetN => count[0].ACLR
+resetN => count[1].ACLR
+resetN => count[2].ACLR
+resetN => count[3].ACLR
+resetN => present_state~8.DATAIN
+resetN => shift_reg[0].ENA
+resetN => shift_reg[9].ENA
+resetN => shift_reg[8].ENA
+resetN => shift_reg[7].ENA
+resetN => shift_reg[6].ENA
+resetN => shift_reg[5].ENA
+resetN => shift_reg[4].ENA
+resetN => shift_reg[3].ENA
+resetN => shift_reg[2].ENA
+resetN => shift_reg[1].ENA
+clk => shift_reg[0].CLK
+clk => shift_reg[1].CLK
+clk => shift_reg[2].CLK
+clk => shift_reg[3].CLK
+clk => shift_reg[4].CLK
+clk => shift_reg[5].CLK
+clk => shift_reg[6].CLK
+clk => shift_reg[7].CLK
+clk => shift_reg[8].CLK
+clk => shift_reg[9].CLK
+clk => dout[0]~reg0.CLK
+clk => dout[1]~reg0.CLK
+clk => dout[2]~reg0.CLK
+clk => dout[3]~reg0.CLK
+clk => dout[4]~reg0.CLK
+clk => dout[5]~reg0.CLK
+clk => dout[6]~reg0.CLK
+clk => dout[7]~reg0.CLK
+clk => dout_new~reg0.CLK
+clk => count[0].CLK
+clk => count[1].CLK
+clk => count[2].CLK
+clk => count[3].CLK
+clk => present_state~6.DATAIN
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => shift_reg.OUTPUTSELECT
+kbd_clk => count.OUTPUTSELECT
+kbd_clk => count.OUTPUTSELECT
+kbd_clk => count.OUTPUTSELECT
+kbd_clk => count.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_clk => present_state.OUTPUTSELECT
+kbd_dat => shift_reg.DATAB
+kbd_dat => present_state.OUTPUTSELECT
+kbd_dat => present_state.OUTPUTSELECT
+kbd_dat => present_state.OUTPUTSELECT
+kbd_dat => present_state.OUTPUTSELECT
+kbd_dat => present_state.OUTPUTSELECT
+dout_new <= dout_new~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[0] <= dout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[1] <= dout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[2] <= dout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[3] <= dout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[4] <= dout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[5] <= dout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|KEY_NOTE_4:inst36|lpf:cleaner
+resetN => shiftreg[0].ACLR
+resetN => shiftreg[1].ACLR
+resetN => shiftreg[2].ACLR
+resetN => shiftreg[3].ACLR
+resetN => dout~reg0.ACLR
+clk => dout~reg0.CLK
+clk => shiftreg[0].CLK
+clk => shiftreg[1].CLK
+clk => shiftreg[2].CLK
+clk => shiftreg[3].CLK
+din => shiftreg[0].DATAIN
+dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|TOP|LooperMemController:inst6|KBD_MOD_looper:inst5|LPM_CONSTANT:inst39
 result[0] <= <GND>
 result[1] <= <GND>
 result[2] <= <GND>
@@ -38853,263 +38892,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36
-PRESSED <= KEY_recived:inst.dout
-resetN => KEY_recived:inst.resetN
-resetN => byterec:inst3.resetN
-resetN => bitrec:inst2.resetN
-resetN => lpf:cleaner.resetN
-clk => KEY_recived:inst.clk
-clk => byterec:inst3.clk
-clk => bitrec:inst2.clk
-clk => lpf:cleaner.clk
-KBD_CLK => lpf:cleaner.din
-KBD_DAT => bitrec:inst2.kbd_dat
-recived => KEY_recived:inst.recived
-KEY_CODE[0] => KEY_recived:inst.KEY_CODE[0]
-KEY_CODE[1] => KEY_recived:inst.KEY_CODE[1]
-KEY_CODE[2] => KEY_recived:inst.KEY_CODE[2]
-KEY_CODE[3] => KEY_recived:inst.KEY_CODE[3]
-KEY_CODE[4] => KEY_recived:inst.KEY_CODE[4]
-KEY_CODE[5] => KEY_recived:inst.KEY_CODE[5]
-KEY_CODE[6] => KEY_recived:inst.KEY_CODE[6]
-KEY_CODE[7] => KEY_recived:inst.KEY_CODE[7]
-
-
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36|KEY_recived:inst
-resetN => pressed.ACLR
-resetN => out_X.ACLR
-clk => pressed.CLK
-clk => out_X.CLK
-din[0] => Equal0.IN7
-din[1] => Equal0.IN6
-din[2] => Equal0.IN5
-din[3] => Equal0.IN4
-din[4] => Equal0.IN3
-din[5] => Equal0.IN2
-din[6] => Equal0.IN1
-din[7] => Equal0.IN0
-din[8] => ~NO_FANOUT~
-KEY_CODE[0] => Equal0.IN15
-KEY_CODE[1] => Equal0.IN14
-KEY_CODE[2] => Equal0.IN13
-KEY_CODE[3] => Equal0.IN12
-KEY_CODE[4] => Equal0.IN11
-KEY_CODE[5] => Equal0.IN10
-KEY_CODE[6] => Equal0.IN9
-KEY_CODE[7] => Equal0.IN8
-make => process_0.IN1
-break => ~NO_FANOUT~
-recived => pressed.OUTPUTSELECT
-recived => out_X.OUTPUTSELECT
-dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36|byterec:inst3
-resetN => dout[0]~reg0.ACLR
-resetN => dout[1]~reg0.ACLR
-resetN => dout[2]~reg0.ACLR
-resetN => dout[3]~reg0.ACLR
-resetN => dout[4]~reg0.ACLR
-resetN => dout[5]~reg0.ACLR
-resetN => dout[6]~reg0.ACLR
-resetN => dout[7]~reg0.ACLR
-resetN => dout[8]~reg0.ACLR
-resetN => present_state~3.DATAIN
-clk => dout[0]~reg0.CLK
-clk => dout[1]~reg0.CLK
-clk => dout[2]~reg0.CLK
-clk => dout[3]~reg0.CLK
-clk => dout[4]~reg0.CLK
-clk => dout[5]~reg0.CLK
-clk => dout[6]~reg0.CLK
-clk => dout[7]~reg0.CLK
-clk => dout[8]~reg0.CLK
-clk => present_state~1.DATAIN
-din_new => next_state.OUTPUTSELECT
-din_new => next_state.OUTPUTSELECT
-din_new => next_state.OUTPUTSELECT
-din_new => next_state.OUTPUTSELECT
-din_new => next_state.OUTPUTSELECT
-din_new => next_state.OUTPUTSELECT
-din_new => Selector1.IN2
-din_new => Selector2.IN2
-din_new => Selector3.IN2
-din[0] => LessThan0.IN16
-din[0] => LessThan1.IN16
-din[0] => Equal0.IN15
-din[0] => Equal1.IN15
-din[0] => dout[0]~reg0.DATAIN
-din[1] => LessThan0.IN15
-din[1] => LessThan1.IN15
-din[1] => Equal0.IN14
-din[1] => Equal1.IN14
-din[1] => dout[1]~reg0.DATAIN
-din[2] => LessThan0.IN14
-din[2] => LessThan1.IN14
-din[2] => Equal0.IN13
-din[2] => Equal1.IN13
-din[2] => dout[2]~reg0.DATAIN
-din[3] => LessThan0.IN13
-din[3] => LessThan1.IN13
-din[3] => Equal0.IN12
-din[3] => Equal1.IN12
-din[3] => dout[3]~reg0.DATAIN
-din[4] => LessThan0.IN12
-din[4] => LessThan1.IN12
-din[4] => Equal0.IN11
-din[4] => Equal1.IN11
-din[4] => dout[4]~reg0.DATAIN
-din[5] => LessThan0.IN11
-din[5] => LessThan1.IN11
-din[5] => Equal0.IN10
-din[5] => Equal1.IN10
-din[5] => dout[5]~reg0.DATAIN
-din[6] => LessThan0.IN10
-din[6] => LessThan1.IN10
-din[6] => Equal0.IN9
-din[6] => Equal1.IN9
-din[6] => dout[6]~reg0.DATAIN
-din[7] => LessThan0.IN9
-din[7] => LessThan1.IN9
-din[7] => Equal0.IN8
-din[7] => Equal1.IN8
-din[7] => dout[7]~reg0.DATAIN
-make <= make.DB_MAX_OUTPUT_PORT_TYPE
-break <= break.DB_MAX_OUTPUT_PORT_TYPE
-dout[0] <= dout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[1] <= dout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[2] <= dout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[3] <= dout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[4] <= dout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[5] <= dout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36|bitrec:inst2
-resetN => dout[0]~reg0.ACLR
-resetN => dout[1]~reg0.ACLR
-resetN => dout[2]~reg0.ACLR
-resetN => dout[3]~reg0.ACLR
-resetN => dout[4]~reg0.ACLR
-resetN => dout[5]~reg0.ACLR
-resetN => dout[6]~reg0.ACLR
-resetN => dout[7]~reg0.ACLR
-resetN => dout_new~reg0.ACLR
-resetN => count[0].ACLR
-resetN => count[1].ACLR
-resetN => count[2].ACLR
-resetN => count[3].ACLR
-resetN => present_state~8.DATAIN
-resetN => shift_reg[0].ENA
-resetN => shift_reg[9].ENA
-resetN => shift_reg[8].ENA
-resetN => shift_reg[7].ENA
-resetN => shift_reg[6].ENA
-resetN => shift_reg[5].ENA
-resetN => shift_reg[4].ENA
-resetN => shift_reg[3].ENA
-resetN => shift_reg[2].ENA
-resetN => shift_reg[1].ENA
-clk => shift_reg[0].CLK
-clk => shift_reg[1].CLK
-clk => shift_reg[2].CLK
-clk => shift_reg[3].CLK
-clk => shift_reg[4].CLK
-clk => shift_reg[5].CLK
-clk => shift_reg[6].CLK
-clk => shift_reg[7].CLK
-clk => shift_reg[8].CLK
-clk => shift_reg[9].CLK
-clk => dout[0]~reg0.CLK
-clk => dout[1]~reg0.CLK
-clk => dout[2]~reg0.CLK
-clk => dout[3]~reg0.CLK
-clk => dout[4]~reg0.CLK
-clk => dout[5]~reg0.CLK
-clk => dout[6]~reg0.CLK
-clk => dout[7]~reg0.CLK
-clk => dout_new~reg0.CLK
-clk => count[0].CLK
-clk => count[1].CLK
-clk => count[2].CLK
-clk => count[3].CLK
-clk => present_state~6.DATAIN
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => shift_reg.OUTPUTSELECT
-kbd_clk => count.OUTPUTSELECT
-kbd_clk => count.OUTPUTSELECT
-kbd_clk => count.OUTPUTSELECT
-kbd_clk => count.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_clk => present_state.OUTPUTSELECT
-kbd_dat => shift_reg.DATAB
-kbd_dat => present_state.OUTPUTSELECT
-kbd_dat => present_state.OUTPUTSELECT
-kbd_dat => present_state.OUTPUTSELECT
-kbd_dat => present_state.OUTPUTSELECT
-kbd_dat => present_state.OUTPUTSELECT
-dout_new <= dout_new~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[0] <= dout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[1] <= dout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[2] <= dout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[3] <= dout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[4] <= dout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[5] <= dout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|KEY_NOTE_3:inst36|lpf:cleaner
-resetN => shiftreg[0].ACLR
-resetN => shiftreg[1].ACLR
-resetN => shiftreg[2].ACLR
-resetN => shiftreg[3].ACLR
-resetN => dout~reg0.ACLR
-clk => dout~reg0.CLK
-clk => shiftreg[0].CLK
-clk => shiftreg[1].CLK
-clk => shiftreg[2].CLK
-clk => shiftreg[3].CLK
-din => shiftreg[0].DATAIN
-dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|TOP|LooperMemController:inst7|KBD_MOD_looper:inst2|LPM_CONSTANT:inst37
-result[0] <= <VCC>
-result[1] <= <GND>
-result[2] <= <GND>
-result[3] <= <VCC>
-result[4] <= <GND>
-result[5] <= <VCC>
-result[6] <= <GND>
-result[7] <= <GND>
-
-
-|TOP|LooperMemController:inst7|Looper_integrator:inst6
+|TOP|LooperMemController:inst6|Looper_integrator:inst6
 resetN => proc_out[0].ACLR
 resetN => proc_out[1].ACLR
 resetN => proc_out[2].ACLR
@@ -39380,13 +39163,13 @@ dout[14] <= proc_out[14].DB_MAX_OUTPUT_PORT_TYPE
 dout[15] <= proc_out[15].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|LooperMemController:inst7|LPM_CONSTANT:inst31
+|TOP|LooperMemController:inst6|LPM_CONSTANT:inst31
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <GND>
 
 
-|TOP|Met_Top:inst5
+|TOP|Met_Top:inst8
 DUTY20ms <= Metronome:inst.duty20ms
 resetN => Metronome:inst.RESETN
 resetN => KBD_MOD_met:inst2.RESET
@@ -39394,6 +39177,7 @@ CLK => Metronome:inst.CLK
 CLK => KBD_MOD_met:inst2.CLK
 KBD_CLK => KBD_MOD_met:inst2.KBD_CLK
 KBD_DAT => KBD_MOD_met:inst2.KBD_DAT
+alwaysON => inst4.IN1
 resetCount => Metronome:inst.resetCount
 Beat <= Metronome:inst.quater
 4BeatBar <= Metronome:inst.barEND
@@ -39423,7 +39207,7 @@ HEX7segMSB[5] <= hexss:inst3.ss[5]
 HEX7segMSB[6] <= hexss:inst3.ss[6]
 
 
-|TOP|Met_Top:inst5|Metronome:inst
+|TOP|Met_Top:inst8|Metronome:inst
 RESETN => arch_duty20ms.ACLR
 RESETN => arch_newBPM.ACLR
 RESETN => arch_dout.ACLR
@@ -39976,7 +39760,7 @@ barEND <= arch_barEND.DB_MAX_OUTPUT_PORT_TYPE
 newBPM <= arch_newBPM.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2
 on/off <= on.DB_MAX_OUTPUT_PORT_TYPE
 RESET => KEY_NOTE_2:inst.resetN
 RESET => setting:inst1.resetN
@@ -40002,7 +39786,7 @@ met_value[6] <= setting:inst1.dout[6]
 met_value[7] <= setting:inst1.dout[7]
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst
 PRESSED <= KEY_2:inst.dout
 resetN => KEY_2:inst.resetN
 resetN => byterec:inst3.resetN
@@ -40024,7 +39808,7 @@ KEY_CODE[6] => KEY_2:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_2:inst.KEY_CODE[7]
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst|KEY_2:inst
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst|KEY_2:inst
 resetN => pressed.ACLR
 resetN => out_X.ACLR
 clk => pressed.CLK
@@ -40051,7 +39835,7 @@ break => process_0.IN1
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst|byterec:inst3
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -40134,7 +39918,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst|bitrec:inst2
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -40229,7 +40013,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_2:inst|lpf:cleaner
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_2:inst|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -40244,7 +40028,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|LPM_CONSTANT:inst3
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|LPM_CONSTANT:inst3
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <GND>
@@ -40255,7 +40039,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|setting:inst1
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|setting:inst1
 resetN => counter[0].ACLR
 resetN => counter[1].ACLR
 resetN => counter[2].PRESET
@@ -40348,7 +40132,7 @@ dout[6] <= arch_counter[6].DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= arch_counter[7].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4
 PRESSED <= KEY_kbd:inst.dout
 resetN => KEY_kbd:inst.resetN
 resetN => byterec:inst3.resetN
@@ -40370,7 +40154,7 @@ KEY_CODE[6] => KEY_kbd:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_kbd:inst.KEY_CODE[7]
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|KEY_kbd:inst
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|KEY_kbd:inst
 resetN => out_X.ACLR
 clk => out_X.CLK
 din[0] => Equal0.IN7
@@ -40395,7 +40179,7 @@ break => ~NO_FANOUT~
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|byterec:inst3
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -40478,7 +40262,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|bitrec:inst2
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -40573,7 +40357,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|lpf:cleaner
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst4|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -40588,7 +40372,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|LPM_CONSTANT:inst5
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|LPM_CONSTANT:inst5
 result[0] <= <GND>
 result[1] <= <VCC>
 result[2] <= <GND>
@@ -40599,7 +40383,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2
 PRESSED <= KEY_kbd:inst.dout
 resetN => KEY_kbd:inst.resetN
 resetN => byterec:inst3.resetN
@@ -40621,7 +40405,7 @@ KEY_CODE[6] => KEY_kbd:inst.KEY_CODE[6]
 KEY_CODE[7] => KEY_kbd:inst.KEY_CODE[7]
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|KEY_kbd:inst
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|KEY_kbd:inst
 resetN => out_X.ACLR
 clk => out_X.CLK
 din[0] => Equal0.IN7
@@ -40646,7 +40430,7 @@ break => ~NO_FANOUT~
 dout <= out_X.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|byterec:inst3
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|byterec:inst3
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -40729,7 +40513,7 @@ dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[8] <= dout[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|bitrec:inst2
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|bitrec:inst2
 resetN => dout[0]~reg0.ACLR
 resetN => dout[1]~reg0.ACLR
 resetN => dout[2]~reg0.ACLR
@@ -40824,7 +40608,7 @@ dout[6] <= dout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 dout[7] <= dout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|lpf:cleaner
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|KEY_NOTE_1:inst2|lpf:cleaner
 resetN => shiftreg[0].ACLR
 resetN => shiftreg[1].ACLR
 resetN => shiftreg[2].ACLR
@@ -40839,7 +40623,7 @@ din => shiftreg[0].DATAIN
 dout <= dout~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|KBD_MOD_met:inst2|LPM_CONSTANT:2456754
+|TOP|Met_Top:inst8|KBD_MOD_met:inst2|LPM_CONSTANT:2456754
 result[0] <= <VCC>
 result[1] <= <GND>
 result[2] <= <GND>
@@ -40850,7 +40634,7 @@ result[6] <= <VCC>
 result[7] <= <GND>
 
 
-|TOP|Met_Top:inst5|hexss:inst1
+|TOP|Met_Top:inst8|hexss:inst1
 din[0] => Mux0.IN19
 din[0] => Mux1.IN19
 din[0] => Mux2.IN19
@@ -40902,11 +40686,11 @@ ss[5] <= ss[5]$latch.DB_MAX_OUTPUT_PORT_TYPE
 ss[6] <= ss[6]$latch.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|Met_Top:inst5|LPM_CONSTANT:inst20
+|TOP|Met_Top:inst8|LPM_CONSTANT:inst20
 result[0] <= <VCC>
 
 
-|TOP|Met_Top:inst5|hexss:inst3
+|TOP|Met_Top:inst8|hexss:inst3
 din[0] => Mux0.IN19
 din[0] => Mux1.IN19
 din[0] => Mux2.IN19
@@ -41044,7 +40828,7 @@ data_out[15] <= sum[15].DB_MAX_OUTPUT_PORT_TYPE
 |TOP|TOP_SIFTACH:inst1
 VGA_VS <= VGA_Controller:inst.oVGA_V_SYNC
 CLOCK_50 => VGA_Controller:inst.iCLK
-CLOCK_50 => objects_mux:inst56.CLK
+CLOCK_50 => objects_mux:inst39.CLK
 CLOCK_50 => NUM_0_U:inst19.CLK
 CLOCK_50 => BPMvga:inst5.clk
 CLOCK_50 => NUM_1_U:inst61.CLK
@@ -41095,6 +40879,9 @@ CLOCK_50 => NOTE_A:inst35.CLK
 CLOCK_50 => NOTE_Am:inst36.CLK
 CLOCK_50 => NOTE_B:inst37.CLK
 CLOCK_50 => NOTE_CU:inst38.CLK
+CLOCK_50 => smileyface_object_1:inst30.CLK
+CLOCK_50 => smileyface_object_2:inst31.CLK
+CLOCK_50 => smileyface_object_3:inst33.CLK
 CLOCK_50 => piano_stat:inst1.CLK
 CLOCK_50 => METRONOM_stat:inst4.CLK
 CLOCK_50 => looper_stat:inst45.CLK
@@ -41150,10 +40937,13 @@ resetN => NOTE_A:inst35.RESETn
 resetN => NOTE_Am:inst36.RESETn
 resetN => NOTE_B:inst37.RESETn
 resetN => NOTE_CU:inst38.RESETn
+resetN => smileyface_object_1:inst30.RESETn
+resetN => smileyface_object_2:inst31.RESETn
+resetN => smileyface_object_3:inst33.RESETn
 resetN => piano_stat:inst1.RESETn
 resetN => METRONOM_stat:inst4.RESETn
 resetN => looper_stat:inst45.RESETn
-resetN => objects_mux:inst56.RESETn
+resetN => objects_mux:inst39.RESETn
 resetN => back_ground_draw:inst2.RESETn
 metronom[0] => BPMvga:inst5.currentBPM[0]
 metronom[1] => BPMvga:inst5.currentBPM[1]
@@ -41177,6 +40967,9 @@ EDIT_IN[2] => EDIT_3:inst14.EDIT
 EDIT_IN[3] => EDIT_4:inst18.EDIT
 KBD_CLK => KBD_MOD:inst44.KBD_CLK
 KBD_DAT => KBD_MOD:inst44.KBD_DAT
+metronom_smiley => smileyface_object_1:inst30.met
+metronom_smiley => smileyface_object_2:inst31.met
+metronom_smiley => smileyface_object_3:inst33.met
 VGA_HS <= VGA_Controller:inst.oVGA_H_SYNC
 VGA_CLK <= VGA_Controller:inst.oVGA_CLOCK
 VGA_BLANK_N <= VGA_Controller:inst.oVGA_BLANK
@@ -41641,7 +41434,7 @@ oVGA_CLOCK <= iCLK.DB_MAX_OUTPUT_PORT_TYPE
 endOfFrame <= endOfFrame~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|TOP|TOP_SIFTACH:inst1|objects_mux:inst56
+|TOP|TOP_SIFTACH:inst1|objects_mux:inst39
 CLK => m_mVGA_t[0].CLK
 CLK => m_mVGA_t[1].CLK
 CLK => m_mVGA_t[2].CLK
@@ -42418,6 +42211,54 @@ CU_mVGA_RGB[4] => m_mVGA_t.DATAB
 CU_mVGA_RGB[5] => m_mVGA_t.DATAB
 CU_mVGA_RGB[6] => m_mVGA_t.DATAB
 CU_mVGA_RGB[7] => m_mVGA_t.DATAB
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_0_mVGA_RGB[0] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[1] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[2] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[3] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[4] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[5] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[6] => m_mVGA_t.DATAB
+smiley_0_mVGA_RGB[7] => m_mVGA_t.DATAB
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_1_mVGA_RGB[0] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[1] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[2] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[3] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[4] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[5] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[6] => m_mVGA_t.DATAB
+smiley_1_mVGA_RGB[7] => m_mVGA_t.DATAB
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_drawing_request => m_mVGA_t.OUTPUTSELECT
+smiley_2_mVGA_RGB[0] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[1] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[2] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[3] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[4] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[5] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[6] => m_mVGA_t.DATAB
+smiley_2_mVGA_RGB[7] => m_mVGA_t.DATAB
 PIANO_STAT_drawing_request => m_mVGA_t.OUTPUTSELECT
 PIANO_STAT_drawing_request => m_mVGA_t.OUTPUTSELECT
 PIANO_STAT_drawing_request => m_mVGA_t.OUTPUTSELECT
@@ -46494,11 +46335,15 @@ oCoord_Y[30] => Add1.IN34
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN33
-NUM => mVGA_RGB.OUTPUTSELECT
-NUM => mVGA_RGB.OUTPUTSELECT
-NUM => mVGA_RGB.OUTPUTSELECT
-NUM => mVGA_RGB.OUTPUTSELECT
-NUM => drawing_request.OUTPUTSELECT
+NUM => drawing_request~reg0.ENA
+NUM => mVGA_RGB[7]~reg0.ENA
+NUM => mVGA_RGB[6]~reg0.ENA
+NUM => mVGA_RGB[5]~reg0.ENA
+NUM => mVGA_RGB[4]~reg0.ENA
+NUM => mVGA_RGB[3]~reg0.ENA
+NUM => mVGA_RGB[2]~reg0.ENA
+NUM => mVGA_RGB[1]~reg0.ENA
+NUM => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -48338,15 +48183,15 @@ oCoord_Y[30] => Add1.IN31
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN30
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => drawing_request.OUTPUTSELECT
+PLAY => drawing_request~reg0.ENA
+PLAY => mVGA_RGB[7]~reg0.ENA
+PLAY => mVGA_RGB[6]~reg0.ENA
+PLAY => mVGA_RGB[5]~reg0.ENA
+PLAY => mVGA_RGB[4]~reg0.ENA
+PLAY => mVGA_RGB[3]~reg0.ENA
+PLAY => mVGA_RGB[2]~reg0.ENA
+PLAY => mVGA_RGB[1]~reg0.ENA
+PLAY => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -48569,15 +48414,15 @@ oCoord_Y[30] => Add1.IN31
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN30
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => drawing_request.OUTPUTSELECT
+PLAY => drawing_request~reg0.ENA
+PLAY => mVGA_RGB[7]~reg0.ENA
+PLAY => mVGA_RGB[6]~reg0.ENA
+PLAY => mVGA_RGB[5]~reg0.ENA
+PLAY => mVGA_RGB[4]~reg0.ENA
+PLAY => mVGA_RGB[3]~reg0.ENA
+PLAY => mVGA_RGB[2]~reg0.ENA
+PLAY => mVGA_RGB[1]~reg0.ENA
+PLAY => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -48800,15 +48645,15 @@ oCoord_Y[30] => Add1.IN31
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN30
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => drawing_request.OUTPUTSELECT
+PLAY => drawing_request~reg0.ENA
+PLAY => mVGA_RGB[7]~reg0.ENA
+PLAY => mVGA_RGB[6]~reg0.ENA
+PLAY => mVGA_RGB[5]~reg0.ENA
+PLAY => mVGA_RGB[4]~reg0.ENA
+PLAY => mVGA_RGB[3]~reg0.ENA
+PLAY => mVGA_RGB[2]~reg0.ENA
+PLAY => mVGA_RGB[1]~reg0.ENA
+PLAY => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -49031,15 +48876,15 @@ oCoord_Y[30] => Add1.IN31
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN30
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => mVGA_RGB.OUTPUTSELECT
-PLAY => drawing_request.OUTPUTSELECT
+PLAY => drawing_request~reg0.ENA
+PLAY => mVGA_RGB[7]~reg0.ENA
+PLAY => mVGA_RGB[6]~reg0.ENA
+PLAY => mVGA_RGB[5]~reg0.ENA
+PLAY => mVGA_RGB[4]~reg0.ENA
+PLAY => mVGA_RGB[3]~reg0.ENA
+PLAY => mVGA_RGB[2]~reg0.ENA
+PLAY => mVGA_RGB[1]~reg0.ENA
+PLAY => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -49262,15 +49107,15 @@ oCoord_Y[30] => Add1.IN28
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN27
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => drawing_request.OUTPUTSELECT
+RECORDX => drawing_request~reg0.ENA
+RECORDX => mVGA_RGB[7]~reg0.ENA
+RECORDX => mVGA_RGB[6]~reg0.ENA
+RECORDX => mVGA_RGB[5]~reg0.ENA
+RECORDX => mVGA_RGB[4]~reg0.ENA
+RECORDX => mVGA_RGB[3]~reg0.ENA
+RECORDX => mVGA_RGB[2]~reg0.ENA
+RECORDX => mVGA_RGB[1]~reg0.ENA
+RECORDX => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -49493,15 +49338,15 @@ oCoord_Y[30] => Add1.IN28
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN27
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => drawing_request.OUTPUTSELECT
+RECORDX => drawing_request~reg0.ENA
+RECORDX => mVGA_RGB[7]~reg0.ENA
+RECORDX => mVGA_RGB[6]~reg0.ENA
+RECORDX => mVGA_RGB[5]~reg0.ENA
+RECORDX => mVGA_RGB[4]~reg0.ENA
+RECORDX => mVGA_RGB[3]~reg0.ENA
+RECORDX => mVGA_RGB[2]~reg0.ENA
+RECORDX => mVGA_RGB[1]~reg0.ENA
+RECORDX => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -49955,15 +49800,15 @@ oCoord_Y[30] => Add1.IN28
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN27
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => mVGA_RGB.OUTPUTSELECT
-RECORDX => drawing_request.OUTPUTSELECT
+RECORDX => drawing_request~reg0.ENA
+RECORDX => mVGA_RGB[7]~reg0.ENA
+RECORDX => mVGA_RGB[6]~reg0.ENA
+RECORDX => mVGA_RGB[5]~reg0.ENA
+RECORDX => mVGA_RGB[4]~reg0.ENA
+RECORDX => mVGA_RGB[3]~reg0.ENA
+RECORDX => mVGA_RGB[2]~reg0.ENA
+RECORDX => mVGA_RGB[1]~reg0.ENA
+RECORDX => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -50186,15 +50031,15 @@ oCoord_Y[30] => Add1.IN34
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN33
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => drawing_request.OUTPUTSELECT
+EDIT => drawing_request~reg0.ENA
+EDIT => mVGA_RGB[7]~reg0.ENA
+EDIT => mVGA_RGB[6]~reg0.ENA
+EDIT => mVGA_RGB[5]~reg0.ENA
+EDIT => mVGA_RGB[4]~reg0.ENA
+EDIT => mVGA_RGB[3]~reg0.ENA
+EDIT => mVGA_RGB[2]~reg0.ENA
+EDIT => mVGA_RGB[1]~reg0.ENA
+EDIT => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -50417,15 +50262,15 @@ oCoord_Y[30] => Add1.IN34
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN33
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => drawing_request.OUTPUTSELECT
+EDIT => drawing_request~reg0.ENA
+EDIT => mVGA_RGB[7]~reg0.ENA
+EDIT => mVGA_RGB[6]~reg0.ENA
+EDIT => mVGA_RGB[5]~reg0.ENA
+EDIT => mVGA_RGB[4]~reg0.ENA
+EDIT => mVGA_RGB[3]~reg0.ENA
+EDIT => mVGA_RGB[2]~reg0.ENA
+EDIT => mVGA_RGB[1]~reg0.ENA
+EDIT => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -50648,15 +50493,15 @@ oCoord_Y[30] => Add1.IN34
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN33
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => drawing_request.OUTPUTSELECT
+EDIT => drawing_request~reg0.ENA
+EDIT => mVGA_RGB[7]~reg0.ENA
+EDIT => mVGA_RGB[6]~reg0.ENA
+EDIT => mVGA_RGB[5]~reg0.ENA
+EDIT => mVGA_RGB[4]~reg0.ENA
+EDIT => mVGA_RGB[3]~reg0.ENA
+EDIT => mVGA_RGB[2]~reg0.ENA
+EDIT => mVGA_RGB[1]~reg0.ENA
+EDIT => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -50879,15 +50724,15 @@ oCoord_Y[30] => Add1.IN34
 oCoord_Y[31] => LessThan2.IN33
 oCoord_Y[31] => LessThan3.IN33
 oCoord_Y[31] => Add1.IN33
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => mVGA_RGB.OUTPUTSELECT
-EDIT => drawing_request.OUTPUTSELECT
+EDIT => drawing_request~reg0.ENA
+EDIT => mVGA_RGB[7]~reg0.ENA
+EDIT => mVGA_RGB[6]~reg0.ENA
+EDIT => mVGA_RGB[5]~reg0.ENA
+EDIT => mVGA_RGB[4]~reg0.ENA
+EDIT => mVGA_RGB[3]~reg0.ENA
+EDIT => mVGA_RGB[2]~reg0.ENA
+EDIT => mVGA_RGB[1]~reg0.ENA
+EDIT => mVGA_RGB[0]~reg0.ENA
 drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -59065,6 +58910,618 @@ mVGA_RGB[6] <= mVGA_RGB[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 mVGA_RGB[7] <= mVGA_RGB[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
+|TOP|TOP_SIFTACH:inst1|smileyface_object_1:inst30
+CLK => drawing_request~reg0.CLK
+CLK => mVGA_RGB[0]~reg0.CLK
+CLK => mVGA_RGB[1]~reg0.CLK
+CLK => mVGA_RGB[2]~reg0.CLK
+CLK => mVGA_RGB[3]~reg0.CLK
+CLK => mVGA_RGB[4]~reg0.CLK
+CLK => mVGA_RGB[5]~reg0.CLK
+CLK => mVGA_RGB[6]~reg0.CLK
+CLK => mVGA_RGB[7]~reg0.CLK
+RESETn => drawing_request~reg0.ACLR
+RESETn => mVGA_RGB[0]~reg0.ACLR
+RESETn => mVGA_RGB[1]~reg0.ACLR
+RESETn => mVGA_RGB[2]~reg0.ACLR
+RESETn => mVGA_RGB[3]~reg0.ACLR
+RESETn => mVGA_RGB[4]~reg0.ACLR
+RESETn => mVGA_RGB[5]~reg0.ACLR
+RESETn => mVGA_RGB[6]~reg0.ACLR
+RESETn => mVGA_RGB[7]~reg0.ACLR
+oCoord_X[0] => LessThan0.IN64
+oCoord_X[0] => LessThan1.IN64
+oCoord_X[0] => bCoord_X[0].DATAB
+oCoord_X[1] => LessThan0.IN63
+oCoord_X[1] => LessThan1.IN63
+oCoord_X[1] => bCoord_X[1].DATAB
+oCoord_X[2] => LessThan0.IN62
+oCoord_X[2] => LessThan1.IN62
+oCoord_X[2] => bCoord_X[2].DATAB
+oCoord_X[3] => LessThan0.IN61
+oCoord_X[3] => LessThan1.IN61
+oCoord_X[3] => bCoord_X[3].DATAB
+oCoord_X[4] => LessThan0.IN60
+oCoord_X[4] => LessThan1.IN60
+oCoord_X[4] => bCoord_X[4].DATAB
+oCoord_X[5] => LessThan0.IN59
+oCoord_X[5] => LessThan1.IN59
+oCoord_X[6] => LessThan0.IN58
+oCoord_X[6] => LessThan1.IN58
+oCoord_X[7] => LessThan0.IN57
+oCoord_X[7] => LessThan1.IN57
+oCoord_X[8] => LessThan0.IN56
+oCoord_X[8] => LessThan1.IN56
+oCoord_X[9] => LessThan0.IN55
+oCoord_X[9] => LessThan1.IN55
+oCoord_X[10] => LessThan0.IN54
+oCoord_X[10] => LessThan1.IN54
+oCoord_X[11] => LessThan0.IN53
+oCoord_X[11] => LessThan1.IN53
+oCoord_X[12] => LessThan0.IN52
+oCoord_X[12] => LessThan1.IN52
+oCoord_X[13] => LessThan0.IN51
+oCoord_X[13] => LessThan1.IN51
+oCoord_X[14] => LessThan0.IN50
+oCoord_X[14] => LessThan1.IN50
+oCoord_X[15] => LessThan0.IN49
+oCoord_X[15] => LessThan1.IN49
+oCoord_X[16] => LessThan0.IN48
+oCoord_X[16] => LessThan1.IN48
+oCoord_X[17] => LessThan0.IN47
+oCoord_X[17] => LessThan1.IN47
+oCoord_X[18] => LessThan0.IN46
+oCoord_X[18] => LessThan1.IN46
+oCoord_X[19] => LessThan0.IN45
+oCoord_X[19] => LessThan1.IN45
+oCoord_X[20] => LessThan0.IN44
+oCoord_X[20] => LessThan1.IN44
+oCoord_X[21] => LessThan0.IN43
+oCoord_X[21] => LessThan1.IN43
+oCoord_X[22] => LessThan0.IN42
+oCoord_X[22] => LessThan1.IN42
+oCoord_X[23] => LessThan0.IN41
+oCoord_X[23] => LessThan1.IN41
+oCoord_X[24] => LessThan0.IN40
+oCoord_X[24] => LessThan1.IN40
+oCoord_X[25] => LessThan0.IN39
+oCoord_X[25] => LessThan1.IN39
+oCoord_X[26] => LessThan0.IN38
+oCoord_X[26] => LessThan1.IN38
+oCoord_X[27] => LessThan0.IN37
+oCoord_X[27] => LessThan1.IN37
+oCoord_X[28] => LessThan0.IN36
+oCoord_X[28] => LessThan1.IN36
+oCoord_X[29] => LessThan0.IN35
+oCoord_X[29] => LessThan1.IN35
+oCoord_X[30] => LessThan0.IN34
+oCoord_X[30] => LessThan1.IN34
+oCoord_X[31] => LessThan0.IN33
+oCoord_X[31] => LessThan1.IN33
+oCoord_Y[0] => LessThan2.IN64
+oCoord_Y[0] => LessThan3.IN64
+oCoord_Y[0] => bCoord_Y[0].DATAB
+oCoord_Y[1] => LessThan2.IN63
+oCoord_Y[1] => LessThan3.IN63
+oCoord_Y[1] => bCoord_Y[1].DATAB
+oCoord_Y[2] => LessThan2.IN62
+oCoord_Y[2] => LessThan3.IN62
+oCoord_Y[2] => Add0.IN60
+oCoord_Y[3] => LessThan2.IN61
+oCoord_Y[3] => LessThan3.IN61
+oCoord_Y[3] => Add0.IN59
+oCoord_Y[4] => LessThan2.IN60
+oCoord_Y[4] => LessThan3.IN60
+oCoord_Y[4] => Add0.IN58
+oCoord_Y[5] => LessThan2.IN59
+oCoord_Y[5] => LessThan3.IN59
+oCoord_Y[5] => Add0.IN57
+oCoord_Y[6] => LessThan2.IN58
+oCoord_Y[6] => LessThan3.IN58
+oCoord_Y[6] => Add0.IN56
+oCoord_Y[7] => LessThan2.IN57
+oCoord_Y[7] => LessThan3.IN57
+oCoord_Y[7] => Add0.IN55
+oCoord_Y[8] => LessThan2.IN56
+oCoord_Y[8] => LessThan3.IN56
+oCoord_Y[8] => Add0.IN54
+oCoord_Y[9] => LessThan2.IN55
+oCoord_Y[9] => LessThan3.IN55
+oCoord_Y[9] => Add0.IN53
+oCoord_Y[10] => LessThan2.IN54
+oCoord_Y[10] => LessThan3.IN54
+oCoord_Y[10] => Add0.IN52
+oCoord_Y[11] => LessThan2.IN53
+oCoord_Y[11] => LessThan3.IN53
+oCoord_Y[11] => Add0.IN51
+oCoord_Y[12] => LessThan2.IN52
+oCoord_Y[12] => LessThan3.IN52
+oCoord_Y[12] => Add0.IN50
+oCoord_Y[13] => LessThan2.IN51
+oCoord_Y[13] => LessThan3.IN51
+oCoord_Y[13] => Add0.IN49
+oCoord_Y[14] => LessThan2.IN50
+oCoord_Y[14] => LessThan3.IN50
+oCoord_Y[14] => Add0.IN48
+oCoord_Y[15] => LessThan2.IN49
+oCoord_Y[15] => LessThan3.IN49
+oCoord_Y[15] => Add0.IN47
+oCoord_Y[16] => LessThan2.IN48
+oCoord_Y[16] => LessThan3.IN48
+oCoord_Y[16] => Add0.IN46
+oCoord_Y[17] => LessThan2.IN47
+oCoord_Y[17] => LessThan3.IN47
+oCoord_Y[17] => Add0.IN45
+oCoord_Y[18] => LessThan2.IN46
+oCoord_Y[18] => LessThan3.IN46
+oCoord_Y[18] => Add0.IN44
+oCoord_Y[19] => LessThan2.IN45
+oCoord_Y[19] => LessThan3.IN45
+oCoord_Y[19] => Add0.IN43
+oCoord_Y[20] => LessThan2.IN44
+oCoord_Y[20] => LessThan3.IN44
+oCoord_Y[20] => Add0.IN42
+oCoord_Y[21] => LessThan2.IN43
+oCoord_Y[21] => LessThan3.IN43
+oCoord_Y[21] => Add0.IN41
+oCoord_Y[22] => LessThan2.IN42
+oCoord_Y[22] => LessThan3.IN42
+oCoord_Y[22] => Add0.IN40
+oCoord_Y[23] => LessThan2.IN41
+oCoord_Y[23] => LessThan3.IN41
+oCoord_Y[23] => Add0.IN39
+oCoord_Y[24] => LessThan2.IN40
+oCoord_Y[24] => LessThan3.IN40
+oCoord_Y[24] => Add0.IN38
+oCoord_Y[25] => LessThan2.IN39
+oCoord_Y[25] => LessThan3.IN39
+oCoord_Y[25] => Add0.IN37
+oCoord_Y[26] => LessThan2.IN38
+oCoord_Y[26] => LessThan3.IN38
+oCoord_Y[26] => Add0.IN36
+oCoord_Y[27] => LessThan2.IN37
+oCoord_Y[27] => LessThan3.IN37
+oCoord_Y[27] => Add0.IN35
+oCoord_Y[28] => LessThan2.IN36
+oCoord_Y[28] => LessThan3.IN36
+oCoord_Y[28] => Add0.IN34
+oCoord_Y[29] => LessThan2.IN35
+oCoord_Y[29] => LessThan3.IN35
+oCoord_Y[29] => Add0.IN33
+oCoord_Y[30] => LessThan2.IN34
+oCoord_Y[30] => LessThan3.IN34
+oCoord_Y[30] => Add0.IN32
+oCoord_Y[31] => LessThan2.IN33
+oCoord_Y[31] => LessThan3.IN33
+oCoord_Y[31] => Add0.IN31
+met => drawing_request~reg0.ENA
+met => mVGA_RGB[7]~reg0.ENA
+met => mVGA_RGB[6]~reg0.ENA
+met => mVGA_RGB[5]~reg0.ENA
+met => mVGA_RGB[4]~reg0.ENA
+met => mVGA_RGB[3]~reg0.ENA
+met => mVGA_RGB[2]~reg0.ENA
+met => mVGA_RGB[1]~reg0.ENA
+met => mVGA_RGB[0]~reg0.ENA
+drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[2] <= mVGA_RGB[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[3] <= mVGA_RGB[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[4] <= mVGA_RGB[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[5] <= mVGA_RGB[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[6] <= mVGA_RGB[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[7] <= mVGA_RGB[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|TOP|TOP_SIFTACH:inst1|smileyface_object_2:inst31
+CLK => drawing_request~reg0.CLK
+CLK => mVGA_RGB[0]~reg0.CLK
+CLK => mVGA_RGB[1]~reg0.CLK
+CLK => mVGA_RGB[2]~reg0.CLK
+CLK => mVGA_RGB[3]~reg0.CLK
+CLK => mVGA_RGB[4]~reg0.CLK
+CLK => mVGA_RGB[5]~reg0.CLK
+CLK => mVGA_RGB[6]~reg0.CLK
+CLK => mVGA_RGB[7]~reg0.CLK
+RESETn => drawing_request~reg0.ACLR
+RESETn => mVGA_RGB[0]~reg0.ACLR
+RESETn => mVGA_RGB[1]~reg0.ACLR
+RESETn => mVGA_RGB[2]~reg0.ACLR
+RESETn => mVGA_RGB[3]~reg0.ACLR
+RESETn => mVGA_RGB[4]~reg0.ACLR
+RESETn => mVGA_RGB[5]~reg0.ACLR
+RESETn => mVGA_RGB[6]~reg0.ACLR
+RESETn => mVGA_RGB[7]~reg0.ACLR
+oCoord_X[0] => LessThan0.IN64
+oCoord_X[0] => LessThan1.IN64
+oCoord_X[0] => bCoord_X[0].DATAB
+oCoord_X[1] => LessThan0.IN63
+oCoord_X[1] => LessThan1.IN63
+oCoord_X[1] => bCoord_X[1].DATAB
+oCoord_X[2] => LessThan0.IN62
+oCoord_X[2] => LessThan1.IN62
+oCoord_X[2] => bCoord_X[2].DATAB
+oCoord_X[3] => LessThan0.IN61
+oCoord_X[3] => LessThan1.IN61
+oCoord_X[3] => bCoord_X[3].DATAB
+oCoord_X[4] => LessThan0.IN60
+oCoord_X[4] => LessThan1.IN60
+oCoord_X[4] => bCoord_X[4].DATAB
+oCoord_X[5] => LessThan0.IN59
+oCoord_X[5] => LessThan1.IN59
+oCoord_X[6] => LessThan0.IN58
+oCoord_X[6] => LessThan1.IN58
+oCoord_X[7] => LessThan0.IN57
+oCoord_X[7] => LessThan1.IN57
+oCoord_X[8] => LessThan0.IN56
+oCoord_X[8] => LessThan1.IN56
+oCoord_X[9] => LessThan0.IN55
+oCoord_X[9] => LessThan1.IN55
+oCoord_X[10] => LessThan0.IN54
+oCoord_X[10] => LessThan1.IN54
+oCoord_X[11] => LessThan0.IN53
+oCoord_X[11] => LessThan1.IN53
+oCoord_X[12] => LessThan0.IN52
+oCoord_X[12] => LessThan1.IN52
+oCoord_X[13] => LessThan0.IN51
+oCoord_X[13] => LessThan1.IN51
+oCoord_X[14] => LessThan0.IN50
+oCoord_X[14] => LessThan1.IN50
+oCoord_X[15] => LessThan0.IN49
+oCoord_X[15] => LessThan1.IN49
+oCoord_X[16] => LessThan0.IN48
+oCoord_X[16] => LessThan1.IN48
+oCoord_X[17] => LessThan0.IN47
+oCoord_X[17] => LessThan1.IN47
+oCoord_X[18] => LessThan0.IN46
+oCoord_X[18] => LessThan1.IN46
+oCoord_X[19] => LessThan0.IN45
+oCoord_X[19] => LessThan1.IN45
+oCoord_X[20] => LessThan0.IN44
+oCoord_X[20] => LessThan1.IN44
+oCoord_X[21] => LessThan0.IN43
+oCoord_X[21] => LessThan1.IN43
+oCoord_X[22] => LessThan0.IN42
+oCoord_X[22] => LessThan1.IN42
+oCoord_X[23] => LessThan0.IN41
+oCoord_X[23] => LessThan1.IN41
+oCoord_X[24] => LessThan0.IN40
+oCoord_X[24] => LessThan1.IN40
+oCoord_X[25] => LessThan0.IN39
+oCoord_X[25] => LessThan1.IN39
+oCoord_X[26] => LessThan0.IN38
+oCoord_X[26] => LessThan1.IN38
+oCoord_X[27] => LessThan0.IN37
+oCoord_X[27] => LessThan1.IN37
+oCoord_X[28] => LessThan0.IN36
+oCoord_X[28] => LessThan1.IN36
+oCoord_X[29] => LessThan0.IN35
+oCoord_X[29] => LessThan1.IN35
+oCoord_X[30] => LessThan0.IN34
+oCoord_X[30] => LessThan1.IN34
+oCoord_X[31] => LessThan0.IN33
+oCoord_X[31] => LessThan1.IN33
+oCoord_Y[0] => LessThan2.IN64
+oCoord_Y[0] => LessThan3.IN64
+oCoord_Y[0] => bCoord_Y[0].DATAB
+oCoord_Y[1] => LessThan2.IN63
+oCoord_Y[1] => LessThan3.IN63
+oCoord_Y[1] => Add0.IN62
+oCoord_Y[2] => LessThan2.IN62
+oCoord_Y[2] => LessThan3.IN62
+oCoord_Y[2] => Add0.IN61
+oCoord_Y[3] => LessThan2.IN61
+oCoord_Y[3] => LessThan3.IN61
+oCoord_Y[3] => Add0.IN60
+oCoord_Y[4] => LessThan2.IN60
+oCoord_Y[4] => LessThan3.IN60
+oCoord_Y[4] => Add0.IN59
+oCoord_Y[5] => LessThan2.IN59
+oCoord_Y[5] => LessThan3.IN59
+oCoord_Y[5] => Add0.IN58
+oCoord_Y[6] => LessThan2.IN58
+oCoord_Y[6] => LessThan3.IN58
+oCoord_Y[6] => Add0.IN57
+oCoord_Y[7] => LessThan2.IN57
+oCoord_Y[7] => LessThan3.IN57
+oCoord_Y[7] => Add0.IN56
+oCoord_Y[8] => LessThan2.IN56
+oCoord_Y[8] => LessThan3.IN56
+oCoord_Y[8] => Add0.IN55
+oCoord_Y[9] => LessThan2.IN55
+oCoord_Y[9] => LessThan3.IN55
+oCoord_Y[9] => Add0.IN54
+oCoord_Y[10] => LessThan2.IN54
+oCoord_Y[10] => LessThan3.IN54
+oCoord_Y[10] => Add0.IN53
+oCoord_Y[11] => LessThan2.IN53
+oCoord_Y[11] => LessThan3.IN53
+oCoord_Y[11] => Add0.IN52
+oCoord_Y[12] => LessThan2.IN52
+oCoord_Y[12] => LessThan3.IN52
+oCoord_Y[12] => Add0.IN51
+oCoord_Y[13] => LessThan2.IN51
+oCoord_Y[13] => LessThan3.IN51
+oCoord_Y[13] => Add0.IN50
+oCoord_Y[14] => LessThan2.IN50
+oCoord_Y[14] => LessThan3.IN50
+oCoord_Y[14] => Add0.IN49
+oCoord_Y[15] => LessThan2.IN49
+oCoord_Y[15] => LessThan3.IN49
+oCoord_Y[15] => Add0.IN48
+oCoord_Y[16] => LessThan2.IN48
+oCoord_Y[16] => LessThan3.IN48
+oCoord_Y[16] => Add0.IN47
+oCoord_Y[17] => LessThan2.IN47
+oCoord_Y[17] => LessThan3.IN47
+oCoord_Y[17] => Add0.IN46
+oCoord_Y[18] => LessThan2.IN46
+oCoord_Y[18] => LessThan3.IN46
+oCoord_Y[18] => Add0.IN45
+oCoord_Y[19] => LessThan2.IN45
+oCoord_Y[19] => LessThan3.IN45
+oCoord_Y[19] => Add0.IN44
+oCoord_Y[20] => LessThan2.IN44
+oCoord_Y[20] => LessThan3.IN44
+oCoord_Y[20] => Add0.IN43
+oCoord_Y[21] => LessThan2.IN43
+oCoord_Y[21] => LessThan3.IN43
+oCoord_Y[21] => Add0.IN42
+oCoord_Y[22] => LessThan2.IN42
+oCoord_Y[22] => LessThan3.IN42
+oCoord_Y[22] => Add0.IN41
+oCoord_Y[23] => LessThan2.IN41
+oCoord_Y[23] => LessThan3.IN41
+oCoord_Y[23] => Add0.IN40
+oCoord_Y[24] => LessThan2.IN40
+oCoord_Y[24] => LessThan3.IN40
+oCoord_Y[24] => Add0.IN39
+oCoord_Y[25] => LessThan2.IN39
+oCoord_Y[25] => LessThan3.IN39
+oCoord_Y[25] => Add0.IN38
+oCoord_Y[26] => LessThan2.IN38
+oCoord_Y[26] => LessThan3.IN38
+oCoord_Y[26] => Add0.IN37
+oCoord_Y[27] => LessThan2.IN37
+oCoord_Y[27] => LessThan3.IN37
+oCoord_Y[27] => Add0.IN36
+oCoord_Y[28] => LessThan2.IN36
+oCoord_Y[28] => LessThan3.IN36
+oCoord_Y[28] => Add0.IN35
+oCoord_Y[29] => LessThan2.IN35
+oCoord_Y[29] => LessThan3.IN35
+oCoord_Y[29] => Add0.IN34
+oCoord_Y[30] => LessThan2.IN34
+oCoord_Y[30] => LessThan3.IN34
+oCoord_Y[30] => Add0.IN33
+oCoord_Y[31] => LessThan2.IN33
+oCoord_Y[31] => LessThan3.IN33
+oCoord_Y[31] => Add0.IN32
+met => drawing_request~reg0.ENA
+met => mVGA_RGB[7]~reg0.ENA
+met => mVGA_RGB[6]~reg0.ENA
+met => mVGA_RGB[5]~reg0.ENA
+met => mVGA_RGB[4]~reg0.ENA
+met => mVGA_RGB[3]~reg0.ENA
+met => mVGA_RGB[2]~reg0.ENA
+met => mVGA_RGB[1]~reg0.ENA
+met => mVGA_RGB[0]~reg0.ENA
+drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[2] <= mVGA_RGB[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[3] <= mVGA_RGB[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[4] <= mVGA_RGB[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[5] <= mVGA_RGB[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[6] <= mVGA_RGB[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[7] <= mVGA_RGB[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|TOP|TOP_SIFTACH:inst1|smileyface_object_3:inst33
+CLK => drawing_request~reg0.CLK
+CLK => mVGA_RGB[0]~reg0.CLK
+CLK => mVGA_RGB[1]~reg0.CLK
+CLK => mVGA_RGB[2]~reg0.CLK
+CLK => mVGA_RGB[3]~reg0.CLK
+CLK => mVGA_RGB[4]~reg0.CLK
+CLK => mVGA_RGB[5]~reg0.CLK
+CLK => mVGA_RGB[6]~reg0.CLK
+CLK => mVGA_RGB[7]~reg0.CLK
+RESETn => drawing_request~reg0.ACLR
+RESETn => mVGA_RGB[0]~reg0.ACLR
+RESETn => mVGA_RGB[1]~reg0.ACLR
+RESETn => mVGA_RGB[2]~reg0.ACLR
+RESETn => mVGA_RGB[3]~reg0.ACLR
+RESETn => mVGA_RGB[4]~reg0.ACLR
+RESETn => mVGA_RGB[5]~reg0.ACLR
+RESETn => mVGA_RGB[6]~reg0.ACLR
+RESETn => mVGA_RGB[7]~reg0.ACLR
+oCoord_X[0] => LessThan0.IN64
+oCoord_X[0] => LessThan1.IN64
+oCoord_X[0] => bCoord_X[0].DATAB
+oCoord_X[1] => LessThan0.IN63
+oCoord_X[1] => LessThan1.IN63
+oCoord_X[1] => bCoord_X[1].DATAB
+oCoord_X[2] => LessThan0.IN62
+oCoord_X[2] => LessThan1.IN62
+oCoord_X[2] => bCoord_X[2].DATAB
+oCoord_X[3] => LessThan0.IN61
+oCoord_X[3] => LessThan1.IN61
+oCoord_X[3] => bCoord_X[3].DATAB
+oCoord_X[4] => LessThan0.IN60
+oCoord_X[4] => LessThan1.IN60
+oCoord_X[4] => bCoord_X[4].DATAB
+oCoord_X[5] => LessThan0.IN59
+oCoord_X[5] => LessThan1.IN59
+oCoord_X[6] => LessThan0.IN58
+oCoord_X[6] => LessThan1.IN58
+oCoord_X[7] => LessThan0.IN57
+oCoord_X[7] => LessThan1.IN57
+oCoord_X[8] => LessThan0.IN56
+oCoord_X[8] => LessThan1.IN56
+oCoord_X[9] => LessThan0.IN55
+oCoord_X[9] => LessThan1.IN55
+oCoord_X[10] => LessThan0.IN54
+oCoord_X[10] => LessThan1.IN54
+oCoord_X[11] => LessThan0.IN53
+oCoord_X[11] => LessThan1.IN53
+oCoord_X[12] => LessThan0.IN52
+oCoord_X[12] => LessThan1.IN52
+oCoord_X[13] => LessThan0.IN51
+oCoord_X[13] => LessThan1.IN51
+oCoord_X[14] => LessThan0.IN50
+oCoord_X[14] => LessThan1.IN50
+oCoord_X[15] => LessThan0.IN49
+oCoord_X[15] => LessThan1.IN49
+oCoord_X[16] => LessThan0.IN48
+oCoord_X[16] => LessThan1.IN48
+oCoord_X[17] => LessThan0.IN47
+oCoord_X[17] => LessThan1.IN47
+oCoord_X[18] => LessThan0.IN46
+oCoord_X[18] => LessThan1.IN46
+oCoord_X[19] => LessThan0.IN45
+oCoord_X[19] => LessThan1.IN45
+oCoord_X[20] => LessThan0.IN44
+oCoord_X[20] => LessThan1.IN44
+oCoord_X[21] => LessThan0.IN43
+oCoord_X[21] => LessThan1.IN43
+oCoord_X[22] => LessThan0.IN42
+oCoord_X[22] => LessThan1.IN42
+oCoord_X[23] => LessThan0.IN41
+oCoord_X[23] => LessThan1.IN41
+oCoord_X[24] => LessThan0.IN40
+oCoord_X[24] => LessThan1.IN40
+oCoord_X[25] => LessThan0.IN39
+oCoord_X[25] => LessThan1.IN39
+oCoord_X[26] => LessThan0.IN38
+oCoord_X[26] => LessThan1.IN38
+oCoord_X[27] => LessThan0.IN37
+oCoord_X[27] => LessThan1.IN37
+oCoord_X[28] => LessThan0.IN36
+oCoord_X[28] => LessThan1.IN36
+oCoord_X[29] => LessThan0.IN35
+oCoord_X[29] => LessThan1.IN35
+oCoord_X[30] => LessThan0.IN34
+oCoord_X[30] => LessThan1.IN34
+oCoord_X[31] => LessThan0.IN33
+oCoord_X[31] => LessThan1.IN33
+oCoord_Y[0] => LessThan2.IN64
+oCoord_Y[0] => LessThan3.IN64
+oCoord_Y[0] => bCoord_Y[0].DATAB
+oCoord_Y[1] => LessThan2.IN63
+oCoord_Y[1] => LessThan3.IN63
+oCoord_Y[1] => bCoord_Y[1].DATAB
+oCoord_Y[2] => LessThan2.IN62
+oCoord_Y[2] => LessThan3.IN62
+oCoord_Y[2] => bCoord_Y[2].DATAB
+oCoord_Y[3] => LessThan2.IN61
+oCoord_Y[3] => LessThan3.IN61
+oCoord_Y[3] => Add0.IN58
+oCoord_Y[4] => LessThan2.IN60
+oCoord_Y[4] => LessThan3.IN60
+oCoord_Y[4] => Add0.IN57
+oCoord_Y[5] => LessThan2.IN59
+oCoord_Y[5] => LessThan3.IN59
+oCoord_Y[5] => Add0.IN56
+oCoord_Y[6] => LessThan2.IN58
+oCoord_Y[6] => LessThan3.IN58
+oCoord_Y[6] => Add0.IN55
+oCoord_Y[7] => LessThan2.IN57
+oCoord_Y[7] => LessThan3.IN57
+oCoord_Y[7] => Add0.IN54
+oCoord_Y[8] => LessThan2.IN56
+oCoord_Y[8] => LessThan3.IN56
+oCoord_Y[8] => Add0.IN53
+oCoord_Y[9] => LessThan2.IN55
+oCoord_Y[9] => LessThan3.IN55
+oCoord_Y[9] => Add0.IN52
+oCoord_Y[10] => LessThan2.IN54
+oCoord_Y[10] => LessThan3.IN54
+oCoord_Y[10] => Add0.IN51
+oCoord_Y[11] => LessThan2.IN53
+oCoord_Y[11] => LessThan3.IN53
+oCoord_Y[11] => Add0.IN50
+oCoord_Y[12] => LessThan2.IN52
+oCoord_Y[12] => LessThan3.IN52
+oCoord_Y[12] => Add0.IN49
+oCoord_Y[13] => LessThan2.IN51
+oCoord_Y[13] => LessThan3.IN51
+oCoord_Y[13] => Add0.IN48
+oCoord_Y[14] => LessThan2.IN50
+oCoord_Y[14] => LessThan3.IN50
+oCoord_Y[14] => Add0.IN47
+oCoord_Y[15] => LessThan2.IN49
+oCoord_Y[15] => LessThan3.IN49
+oCoord_Y[15] => Add0.IN46
+oCoord_Y[16] => LessThan2.IN48
+oCoord_Y[16] => LessThan3.IN48
+oCoord_Y[16] => Add0.IN45
+oCoord_Y[17] => LessThan2.IN47
+oCoord_Y[17] => LessThan3.IN47
+oCoord_Y[17] => Add0.IN44
+oCoord_Y[18] => LessThan2.IN46
+oCoord_Y[18] => LessThan3.IN46
+oCoord_Y[18] => Add0.IN43
+oCoord_Y[19] => LessThan2.IN45
+oCoord_Y[19] => LessThan3.IN45
+oCoord_Y[19] => Add0.IN42
+oCoord_Y[20] => LessThan2.IN44
+oCoord_Y[20] => LessThan3.IN44
+oCoord_Y[20] => Add0.IN41
+oCoord_Y[21] => LessThan2.IN43
+oCoord_Y[21] => LessThan3.IN43
+oCoord_Y[21] => Add0.IN40
+oCoord_Y[22] => LessThan2.IN42
+oCoord_Y[22] => LessThan3.IN42
+oCoord_Y[22] => Add0.IN39
+oCoord_Y[23] => LessThan2.IN41
+oCoord_Y[23] => LessThan3.IN41
+oCoord_Y[23] => Add0.IN38
+oCoord_Y[24] => LessThan2.IN40
+oCoord_Y[24] => LessThan3.IN40
+oCoord_Y[24] => Add0.IN37
+oCoord_Y[25] => LessThan2.IN39
+oCoord_Y[25] => LessThan3.IN39
+oCoord_Y[25] => Add0.IN36
+oCoord_Y[26] => LessThan2.IN38
+oCoord_Y[26] => LessThan3.IN38
+oCoord_Y[26] => Add0.IN35
+oCoord_Y[27] => LessThan2.IN37
+oCoord_Y[27] => LessThan3.IN37
+oCoord_Y[27] => Add0.IN34
+oCoord_Y[28] => LessThan2.IN36
+oCoord_Y[28] => LessThan3.IN36
+oCoord_Y[28] => Add0.IN33
+oCoord_Y[29] => LessThan2.IN35
+oCoord_Y[29] => LessThan3.IN35
+oCoord_Y[29] => Add0.IN32
+oCoord_Y[30] => LessThan2.IN34
+oCoord_Y[30] => LessThan3.IN34
+oCoord_Y[30] => Add0.IN31
+oCoord_Y[31] => LessThan2.IN33
+oCoord_Y[31] => LessThan3.IN33
+oCoord_Y[31] => Add0.IN30
+met => drawing_request~reg0.ENA
+met => mVGA_RGB[7]~reg0.ENA
+met => mVGA_RGB[6]~reg0.ENA
+met => mVGA_RGB[5]~reg0.ENA
+met => mVGA_RGB[4]~reg0.ENA
+met => mVGA_RGB[3]~reg0.ENA
+met => mVGA_RGB[2]~reg0.ENA
+met => mVGA_RGB[1]~reg0.ENA
+met => mVGA_RGB[0]~reg0.ENA
+drawing_request <= drawing_request~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[0] <= mVGA_RGB[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[1] <= mVGA_RGB[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[2] <= mVGA_RGB[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[3] <= mVGA_RGB[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[4] <= mVGA_RGB[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[5] <= mVGA_RGB[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[6] <= mVGA_RGB[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+mVGA_RGB[7] <= mVGA_RGB[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
 |TOP|TOP_SIFTACH:inst1|piano_stat:inst1
 CLK => drawing_request~reg0.CLK
 CLK => mVGA_RGB[0]~reg0.CLK
@@ -59798,11 +60255,11 @@ oCoord_Y[28] => ~NO_FANOUT~
 oCoord_Y[29] => ~NO_FANOUT~
 oCoord_Y[30] => ~NO_FANOUT~
 oCoord_Y[31] => ~NO_FANOUT~
-mVGA_RGB[0] <= <GND>
-mVGA_RGB[1] <= <GND>
+mVGA_RGB[0] <= <VCC>
+mVGA_RGB[1] <= <VCC>
 mVGA_RGB[2] <= <VCC>
-mVGA_RGB[3] <= <VCC>
-mVGA_RGB[4] <= <VCC>
+mVGA_RGB[3] <= <GND>
+mVGA_RGB[4] <= <GND>
 mVGA_RGB[5] <= <VCC>
 mVGA_RGB[6] <= <VCC>
 mVGA_RGB[7] <= <VCC>

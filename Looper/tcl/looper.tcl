@@ -12,7 +12,7 @@ set_location_assignment PIN_AA16 -to CLOCK_50;
 #============================================================
 # KEY
 #============================================================
-#set_location_assignment PIN_AJ4 -to resetN ; # KEY0
+set_location_assignment PIN_AJ4 -to resetN ; # KEY0
 #set_location_assignment PIN_AK4 -to ENA
 #set_location_assignment PIN_AA14 -to KEY[2]	
 #set_location_assignment PIN_AA15 -to KEY[3]
@@ -27,7 +27,7 @@ set_location_assignment PIN_Y27 -to mux[1] ; # SW[1]
 #set_location_assignment PIN_W25 -to input[4] ; # SW[4]
 #set_location_assignment PIN_V25 -to input[5] ; # SW[5]
 #set_location_assignment PIN_AC28 -to input[6] ; # SW[6]
-set_location_assignment PIN_AD30 -to resetN ; # SW[7]
+#set_location_assignment PIN_AD30 -to resetN ; # SW[7]
 #set_location_assignment PIN_AC29 -to SW[8]
 set_location_assignment PIN_AA30 -to MICROPHON_ON ; # SW[9]
 
@@ -35,60 +35,60 @@ set_location_assignment PIN_AA30 -to MICROPHON_ON ; # SW[9]
 # LED
 #============================================================
 set_location_assignment PIN_AA24 -to DUTY20ms
-#set_location_assignment PIN_AB23 -to OUT_1[1]
+set_location_assignment PIN_AB23 -to SMmet
 #set_location_assignment PIN_AC23 -to OUT_1[2]
-#set_location_assignment PIN_AD24 -to OUT_1[3]
+#set_location_assignment PIN_AD24 -to SMmet
 #set_location_assignment PIN_AG25 -to OUT_1[4]
-#set_location_assignment PIN_AF25 -to OUT_1[5]
-#set_location_assignment PIN_AE24 -to OUT_1[6]
-#set_location_assignment PIN_AF24 -to OUT_1[7]
+#set_location_assignment PIN_AF25 -to currState[0]
+#set_location_assignment PIN_AE24 -to currState[1]
+#set_location_assignment PIN_AF24 -to currState[2]
 #set_location_assignment PIN_AB22 -to rise
 set_location_assignment PIN_AC22 -to MICROPHON_LED ; # pulse
 
 #============================================================
 # Seg7
 #============================================================
-set_location_assignment PIN_W17 -to chPlayingVGA[0]
-#set_location_assignment PIN_V18 -to HEX0[1]
-#set_location_assignment PIN_AG17 -to HEX0[2]
-set_location_assignment PIN_AG16 -to arch_chRecordingVGA[0]
-#set_location_assignment PIN_AH17 -to HEX0[4]
-#set_location_assignment PIN_AG18 -to HEX0[5]
-set_location_assignment PIN_AH18 -to arch_chHasTrackVGA[0]
-set_location_assignment PIN_AF16 -to chPlayingVGA[1]
-#set_location_assignment PIN_V16 -to HEX1[1]
-#set_location_assignment PIN_AE16 -to HEX1[2]
-set_location_assignment PIN_AD17 -to arch_chRecordingVGA[1]
-#set_location_assignment PIN_AE18 -to HEX1[4]
-#set_location_assignment PIN_AE17 -to HEX1[5]
-set_location_assignment PIN_V17 -to arch_chHasTrackVGA[1]
-set_location_assignment PIN_AA21 -to chPlayingVGA[2]
-#set_location_assignment PIN_AB17 -to HEX2[1]
-#set_location_assignment PIN_AA18 -to HEX2[2]
-set_location_assignment PIN_Y17 -to arch_chRecordingVGA[2]
-#set_location_assignment PIN_Y18 -to HEX2[4]
-#set_location_assignment PIN_AF18 -to HEX2[5]
-set_location_assignment PIN_W16 -to arch_chHasTrackVGA[2]
-set_location_assignment PIN_Y19 -to chPlayingVGA[3]
-#set_location_assignment PIN_W19 -to HEX3[1]
-#set_location_assignment PIN_AD19 -to HEX3[2]
-set_location_assignment PIN_AA20 -to arch_chRecordingVGA[3]
-#set_location_assignment PIN_AC20 -to HEX3[4]
-#set_location_assignment PIN_AA19 -to HEX3[5]
-set_location_assignment PIN_AD20 -to arch_chHasTrackVGA[3]
-#set_location_assignment PIN_AD21 -to DUTY20ms[0]
-set_location_assignment PIN_AG22 -to DUTY20ms
-set_location_assignment PIN_AE22 -to DUTY20ms
+#set_location_assignment PIN_W17 -to  DUTY20ms
+#set_location_assignment PIN_V18 -to  DUTY20ms
+#set_location_assignment PIN_AG17 -to DUTY20ms
+#set_location_assignment PIN_AG16 -to DUTY20ms
+#set_location_assignment PIN_AH17 -to DUTY20ms
+#set_location_assignment PIN_AG18 -to DUTY20ms
+#set_location_assignment PIN_AH18 -to DUTY20ms
+#set_location_assignment PIN_AF16 -to COUNTONE[0]
+#set_location_assignment PIN_V16 -to  COUNTONE[1]
+#set_location_assignment PIN_AE16 -to COUNTONE[2]
+#set_location_assignment PIN_AD17 -to COUNTONE[3]
+#set_location_assignment PIN_AE18 -to COUNTONE[4]
+#set_location_assignment PIN_AE17 -to COUNTONE[5]
+#set_location_assignment PIN_V17 -to  COUNTONE[6]
+#set_location_assignment PIN_AA21 -to RANDOMZERO[0]
+#set_location_assignment PIN_AB17 -to RANDOMZERO[1]
+#set_location_assignment PIN_AA18 -to RANDOMZERO[2]
+#set_location_assignment PIN_Y17 -to  RANDOMZERO[3]
+#set_location_assignment PIN_Y18 -to  RANDOMZERO[4]
+#set_location_assignment PIN_AF18 -to RANDOMZERO[5]
+#set_location_assignment PIN_W16 -to  RANDOMZERO[6]
+#set_location_assignment PIN_Y19 -to  RANDOMONE[0]
+#set_location_assignment PIN_W19 -to  RANDOMONE[1]
+#set_location_assignment PIN_AD19 -to RANDOMONE[2]
+#set_location_assignment PIN_AA20 -to RANDOMONE[3]
+#set_location_assignment PIN_AC20 -to RANDOMONE[4]
+#set_location_assignment PIN_AA19 -to RANDOMONE[5]
+#set_location_assignment PIN_AD20 -to RANDOMONE[6]
+#set_location_assignment PIN_AD21 -to HEX4[0]
+#set_location_assignment PIN_AG22 -to HEX4[1]
+#set_location_assignment PIN_AE22 -to HEX4[2]
 #set_location_assignment PIN_AE23 -to HEX4[3]
-set_location_assignment PIN_AG23 -to DUTY20ms
-set_location_assignment PIN_AF23 -to DUTY20ms
+#set_location_assignment PIN_AG23 -to HEX4[4]
+#set_location_assignment PIN_AF23 -to HEX4[5]
 #set_location_assignment PIN_AH22 -to HEX4[6]
-set_location_assignment PIN_AF21 -to DUTY20ms
-set_location_assignment PIN_AG21 -to DUTY20ms
-set_location_assignment PIN_AF20 -to DUTY20ms
+#set_location_assignment PIN_AF21 -to HEX5[0]
+#set_location_assignment PIN_AG21 -to HEX5[1]
+#set_location_assignment PIN_AF20 -to HEX5[2]
 #set_location_assignment PIN_AG20 -to HEX5[3]
-set_location_assignment PIN_AE19 -to DUTY20ms
-set_location_assignment PIN_AF19 -to DUTY20ms
+#set_location_assignment PIN_AE19 -to HEX5[4]
+#set_location_assignment PIN_AF19 -to HEX5[5]
 #set_location_assignment PIN_AB21 -to HEX5[6]
 
 #============================================================

@@ -47,7 +47,8 @@ entity LooperSM is
 		
 		chPlayingVGA                       : out std_logic_vector(3 downto 0);-- play or stopped
 		chHasTrackVGA                      : out std_logic_vector(3 downto 0);--
-		chRecordingVGA                     : out std_logic_vector(3 downto 0)
+		chRecordingVGA                     : out std_logic_vector(3 downto 0);
+		metModeSM									: out std_logic
 
 		
 	);
@@ -93,7 +94,6 @@ begin
 -- Synchronous Part
 	process(clk,ResetN)		
 		variable recCounter : integer range 0 to 4; -- Count how many channels have record on them
-		variable stpCounter : integer range 0 to 4; -- Count how many channels have been stopped
 		variable memEndAddr : integer range 0 to 262143; -- MAX_ADDRESS must be plus always plus 1 - see addr counter to get the point -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		constant MAX_ADDR   : integer := 262143; --constant MAX_ADDR didn't work using raw values
 
@@ -135,7 +135,6 @@ begin
 			
 			--ARCH VARIABLES-- 
 			recCounter := 0;
-			stpCounter := 0;
 			memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
 			
 			
@@ -151,12 +150,12 @@ begin
     		MetBarENDTOKEN <= '1';
 		end if;
 
-      if (MetMode = '1' and arch_MetModeFlag /= '1')  then
+      if (MetMode = '1' and arch_MetModeFlag = '0')  then
     		MetBarENDTOKEN <= '0'   ;
 			state <= EMPTY          ;
       	arch_MetModeFlag  <= '1';
   		
-      elsif (MetMode = '0' and arch_MetModeFlag /= '0') then -- Switch Met-mode OFF
+      elsif (MetMode = '0' and arch_MetModeFlag = '1') then -- Switch Met-mode OFF
       	state <= EMPTY          ;
       	arch_MetModeFlag  <= '0';
       end if;
@@ -208,19 +207,25 @@ begin
     					
     					--ARCH VARIABLES-- 
     					recCounter := 0;
-    					stpCounter := 0;
     					memEndAddr := 262143; -- MAX_ADDR constant didn't work - using raw values
-    					MetBarENDTOKEN <= '0';
     
     					if KB_REC = '1' then
-							arch_MetRESET <='1';
+							arch_MetRESET <= '1';
+							MetBarENDTOKEN <= '0';
     						arch_recSel <= KB_Selchannel;
     						state<=PRE_REC_FIRST;
     					end if;
     					
     				------------------------------				
     				when PRE_REC_FIRST=> stateNum <= 1 ;-- debug
-    				------------------------------						
+    				------------------------------
+						case arch_recSel is
+							when "00" =>  ch0HT <= '1';
+							when "01" =>  ch1HT <= '1';
+							when "10" =>  ch2HT <= '1';
+							when "11" =>  ch3HT <= '1';
+						end case;
+						
 						if (arch_MetModeFlag ='1' and MetBarENDTOKEN = '1') or --MET-Mode cond
 							(arch_MetModeFlag ='0') then
 							
@@ -229,10 +234,10 @@ begin
 							arch_recording <='1';
 							arch_loop_start <='1';
 							case arch_recSel is
-								when "00" => arch_Ch0ACT <='1' ; ch0HT <= '1';
-								when "01" => arch_Ch1ACT <='1' ; ch1HT <= '1';
-								when "10" => arch_Ch2ACT <='1' ; ch2HT <= '1';
-								when "11" => arch_Ch3ACT <='1' ; ch3HT <= '1';
+								when "00" => arch_Ch0ACT <='1' ; 
+								when "01" => arch_Ch1ACT <='1' ; 
+								when "10" => arch_Ch2ACT <='1' ; 
+								when "11" => arch_Ch3ACT <='1' ; 
 							end case;
 						
 							state<=REC_FIRST;
@@ -243,11 +248,11 @@ begin
     				------------------------------				
     				when REC_FIRST=> stateNum <= 2 ;-- debug
     				------------------------------
-    					recCounter:= 1;
+						recCounter:= 1;
     					arch_recording <='1';
     					
-    					if (arch_MetModeFlag ='1' and MetBarENDTOKEN = '1') or --MET-Mode cond
-							(arch_MetModeFlag ='0' and ( KB_PLAY ='1' or KB_ALLPLAY = '1')) or (conv_integer(CurrMemAddress) = memEndAddr -1) then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
+    					if ((arch_MetModeFlag ='1' and MetBarENDTOKEN = '1') or --MET-Mode cond
+							(arch_MetModeFlag ='0' and ( KB_PLAY ='1' or KB_ALLPLAY = '1'))) or (conv_integer(CurrMemAddress) = memEndAddr -1) then -- end of recording  -- MAX_ADDR constant didn't work - using raw values
 							
 							MetBarENDTOKEN <= '0'; --used token
     						arch_recording <='0';
@@ -280,13 +285,19 @@ begin
     						end if;
     						if (KB_Selchannel = "00" and ch0HT='0') or (KB_Selchannel = "01" and ch1HT='0') or (KB_Selchannel = "10" and ch2HT='0') or (KB_Selchannel = "11" and ch3HT='0') then
     							recCounter:= recCounter+1;
-    						
     						end if;
     						
     						
     					-----
     					elsif KB_PLAY = '1' then -- CHANGE TO IF HAS TRACK --> PLAY
     					-----
+
+							if arch_Ch0ACT='0' and arch_Ch1ACT='0' and arch_Ch2ACT='0' and arch_Ch3ACT='0' then --first loop played from beginning
+								arch_loop_start <='1';
+								arch_MetRESET <='1';
+							end if;
+
+							
     						case KB_Selchannel is
     							when "00" => if ch0HT='1' then arch_Ch0ACT <='1'; end if;
     							when "01" => if ch1HT='1' then arch_Ch1ACT <='1'; end if;
@@ -296,8 +307,10 @@ begin
     					-----
     					elsif KB_STOP = '1' then
     					-----
+						
+						
     						case KB_Selchannel is
-    							when "00" => arch_Ch0ACT <='0';
+    							when "00" => arch_Ch0ACT <='0'; 
     							when "01" => arch_Ch1ACT <='0';
     							when "10" => arch_Ch2ACT <='0';
     							when "11" => arch_Ch3ACT <='0';
@@ -462,7 +475,7 @@ end process;
 	
 	
 	CurrState   <=  conv_std_logic_vector(stateNum,3); --debug
-	
+	metModeSM <= arch_MetModeFlag; --debug
 	--ENDMemAddress<=endAddr; --debug
 	--currentMemAddress <= currMemAddress; --debug
 	

@@ -42,7 +42,7 @@ set_global_assignment -name DEVICE 5CSXFC6D6F31C6
 set_global_assignment -name TOP_LEVEL_ENTITY TOP
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:18:02  JUNE 05, 2018"
-set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Standard Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -50,9 +50,9 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_location_assignment PIN_AA16 -to CLK
-set_location_assignment PIN_AD30 -to resetN
+set_location_assignment PIN_AJ4 -to resetN
 set_location_assignment PIN_AB30 -to resetCount
-set_location_assignment PIN_AF19 -to DUTY20ms
+set_location_assignment PIN_AA24 -to DUTY20ms
 set_location_assignment PIN_AB25 -to KBD_CLK
 set_location_assignment PIN_AA25 -to KBD_DAT
 set_location_assignment PIN_AD21 -to HEX4[0]
@@ -113,9 +113,6 @@ set_location_assignment PIN_AG30 -to AUD_DACLRCK
 set_location_assignment PIN_AH30 -to AUD_XCK
 set_location_assignment PIN_Y24 -to AUD_I2C_SCLK
 set_location_assignment PIN_Y23 -to AUD_I2C_SDAT
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KBD_CLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KBD_DAT
@@ -192,6 +189,33 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_SYNC_N
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_ON
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MUX[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MUX[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SOUND[15]
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/smileyface_object.vhd
 set_global_assignment -name VHDL_FILE LooperMemController/looper_kbd/mux_loop_TEST.vhd
 set_global_assignment -name VHDL_FILE vga_8.6/VGA_Controller/VGA_Controller.vhd
 set_global_assignment -name VHDL_FILE LooperMemController/Looper_integrator.vhd
@@ -289,7 +313,6 @@ set_global_assignment -name BDF_FILE Metronome/Met_block_exp.bdf
 set_global_assignment -name VHDL_FILE Looper_trial/addr_counter_zero.vhd
 set_global_assignment -name BDF_FILE Looper_trial/LooperMemController.bdf
 set_global_assignment -name BDF_FILE piano/experiment_sinus_generator.bdf
-set_global_assignment -name VHDL_FILE Looper_trial/SM/LooperSM.vhd
 set_global_assignment -name BDF_FILE Looper_trial/recorder_module_looper.bdf
 set_global_assignment -name VHDL_FILE Looper_trial/prescaler_new.vhd
 set_global_assignment -name VHDL_FILE Looper_trial/prescaler.vhd
@@ -326,22 +349,23 @@ set_global_assignment -name VHDL_FILE LooperMemController/addr_counter_zero.vhd
 set_global_assignment -name TCL_SCRIPT_FILE tcl/looper.tcl
 set_global_assignment -name VHDL_FILE piano/wave_integrator_loop.vhd
 set_global_assignment -name BDF_FILE piano/KEY_NOTE_1.bdf
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MICROPHON_ON
-set_location_assignment PIN_W17 -to chPlayingVGA[0]
-set_location_assignment PIN_AG16 -to arch_chRecordingVGA[0]
-set_location_assignment PIN_AH18 -to arch_chHasTrackVGA[0]
-set_location_assignment PIN_AF16 -to chPlayingVGA[1]
-set_location_assignment PIN_AD17 -to arch_chRecordingVGA[1]
-set_location_assignment PIN_V17 -to arch_chHasTrackVGA[1]
-set_location_assignment PIN_AA21 -to chPlayingVGA[2]
-set_location_assignment PIN_Y17 -to arch_chRecordingVGA[2]
-set_location_assignment PIN_W16 -to arch_chHasTrackVGA[2]
-set_location_assignment PIN_Y19 -to chPlayingVGA[3]
-set_location_assignment PIN_AA20 -to arch_chRecordingVGA[3]
-set_location_assignment PIN_AD20 -to arch_chHasTrackVGA[3]
-set_global_assignment -name VHDL_FILE vga_8.6/rtl/back_ground_draw_new.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/back_ground_object.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/smileyface_object_1.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/smileyface_object_2.vhd
+set_global_assignment -name VHDL_FILE vga_8.6/rtl/smileyface_object_3.vhd
+set_location_assignment PIN_AF25 -to currState[0]
+set_location_assignment PIN_AE24 -to currState[1]
+set_location_assignment PIN_AF24 -to currState[2]
+set_location_assignment PIN_W17 -to DUTY20ms[0]
+set_location_assignment PIN_V18 -to DUTY20ms[1]
+set_location_assignment PIN_AG17 -to DUTY20ms[2]
+set_location_assignment PIN_AG16 -to DUTY20ms[3]
+set_location_assignment PIN_AH17 -to DUTY20ms[4]
+set_location_assignment PIN_AG18 -to DUTY20ms[5]
+set_location_assignment PIN_AH18 -to DUTY20ms[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currState[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currState[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to currState[2]
+set_location_assignment PIN_AD24 -to SMmet
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SMmet
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
